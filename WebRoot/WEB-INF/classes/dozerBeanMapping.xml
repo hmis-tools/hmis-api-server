@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+     
+    <mapping>
+        <class-a>org.openhmis.domain.Client</class-a>
+        <class-b>org.openhmis.vo.ClientVO</class-b>
+        
+        
+        <field>
+			  <a date-format="yyyy-MM-dd HH:mm:ss:SS">entryDateTime</a>
+			  <b>entryDateTime</b>
+		</field>
+		<field>
+			<a date-format="yyyy-MM-dd HH:mm:ss:SS">logDateTime</a>
+			  <b>logDateTime</b>
+		</field>
+        <!--  
+        <field>
+        	<a>races</a>
+        	<b>racesVO</b>
+        	<a-hint>org.openhmis.domain.Race</a-hint>
+        	<b-hint>org.openhmis.vo.RaceVO</b-hint>
+        </field>
+        <field>
+        	<a>ethnicity</a>
+        	<b>ethnicityVO</b>
+        	<a-hint>org.openhmis.domain.Ethnicity</a-hint>
+        	<b-hint>org.openhmis.vo.EthnicityVO</b-hint>
+        </field>
+        <field>
+        	<a>gender</a>
+        	<b>genderVO</b>
+        	<a-hint>org.openhmis.domain.Gender</a-hint>
+        	<b-hint>org.openhmis.vo.GenderVO</b-hint>
+        </field>
+        -->
+    </mapping>
+  
+   
+    
+    <mapping>
+    	<class-a>org.openhmis.domain.CodeGender</class-a>
+    	<class-b>org.openhmis.vo.GenderVO</class-b>
+    </mapping>
+    
+    <mapping>
+    	<class-a>org.openhmis.domain.CodeEthnicity</class-a>
+    	<class-b>org.openhmis.vo.EthnicityVO</class-b>
+    </mapping>
+    
+    <mapping>
+    	<class-a>org.openhmis.domain.Race</class-a>
+    	<class-b>org.openhmis.vo.RaceVO</class-b>
+    </mapping>
+       
+</mappings>
