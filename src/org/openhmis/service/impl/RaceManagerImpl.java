@@ -2,14 +2,14 @@ package org.openhmis.service.impl;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.openhmis.dao.RaceDAO;
 import org.openhmis.dao.impl.RaceDAOImpl;
 import org.openhmis.domain.CodeRace;
 import org.openhmis.exception.race.RaceAlreadyExistException;
 import org.openhmis.exception.race.RaceNotFoundException;
 import org.openhmis.service.RaceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 /**
  * 
@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  */
 public class RaceManagerImpl implements RaceManager 
 {
-	private static final Logger log = LoggerFactory.getLogger(RaceManagerImpl.class);
+	private static final Logger log = Logger.getLogger(RaceManagerImpl.class);
 	private RaceDAO raceDAO = null;
 	
 	// default constructor

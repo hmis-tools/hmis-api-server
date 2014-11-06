@@ -11,6 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 
+import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.dozer.Mapper;
 import org.openhmis.domain.CodeGender;
@@ -18,14 +19,13 @@ import org.openhmis.exception.gender.GenderNotFoundException;
 import org.openhmis.service.GenderManager;
 import org.openhmis.service.impl.GenderManagerImpl;
 import org.openhmis.vo.GenderVO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 
 @Path("/genders")
 public class GenderService 
 {
-	private static final Logger log = LoggerFactory.getLogger(GenderService.class);
+	private static final Logger log = Logger.getLogger(GenderService.class);
 	private GenderManager genderManager;
 	Mapper mapper = DozerBeanMapperSingletonWrapper.getInstance();
 	public GenderService()

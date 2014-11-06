@@ -13,10 +13,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 
+import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.dozer.Mapper;
 import org.openhmis.domain.Client;
-import org.openhmis.domain.Ethnicity;
 import org.openhmis.exception.client.ClientAlreadyExistException;
 import org.openhmis.exception.client.ClientNotFoundException;
 import org.openhmis.exception.client.InValidClientException;
@@ -25,14 +25,12 @@ import org.openhmis.exception.client.UnableToUpdateClientException;
 import org.openhmis.service.ClientManager;
 import org.openhmis.service.impl.ClientManagerImpl;
 import org.openhmis.vo.ClientVO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 @Path("/clients")
 public class ClientService 
 {	
-	private static final Logger log = LoggerFactory.getLogger(ClientService.class);
+	private static final Logger log = Logger.getLogger(ClientService.class);
 	private ClientManager clientManager;
 	Mapper mapper = DozerBeanMapperSingletonWrapper.getInstance();
 	public ClientService()

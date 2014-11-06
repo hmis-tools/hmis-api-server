@@ -2,6 +2,7 @@ package org.openhmis.service.impl;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.openhmis.dao.ClientDAO;
 import org.openhmis.dao.impl.ClientDAOImpl;
 import org.openhmis.domain.Client;
@@ -9,13 +10,11 @@ import org.openhmis.exception.client.ClientNotFoundException;
 import org.openhmis.exception.client.InValidClientException;
 import org.openhmis.service.ClientManager;
 import org.openhmis.util.HmisConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ClientManagerImpl implements ClientManager 
 {
 	
-	private static final Logger log = LoggerFactory.getLogger(ClientManagerImpl.class);
+	private static final Logger log = Logger.getLogger(ClientManagerImpl.class);
 
 	private ClientDAO clientDAO;
 	

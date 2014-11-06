@@ -2,16 +2,15 @@ package org.openhmis.dao.impl;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.openhmis.dao.RaceDAO;
 import org.openhmis.domain.CodeRace;
-import org.openhmis.exception.race.RaceNotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 public class RaceDAOImpl extends BaseDAOImpl implements RaceDAO
 {
-	private static final Logger log = LoggerFactory.getLogger(RaceDAOImpl.class);
+	private static final Logger log = Logger.getLogger(RaceDAOImpl.class);
 	
 	// default constructor
 	public RaceDAOImpl()

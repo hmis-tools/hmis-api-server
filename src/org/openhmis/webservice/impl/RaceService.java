@@ -5,10 +5,10 @@ import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.dozer.Mapper;
 import org.openhmis.domain.CodeRace;
@@ -16,13 +16,11 @@ import org.openhmis.exception.race.RaceNotFoundException;
 import org.openhmis.service.RaceManager;
 import org.openhmis.service.impl.RaceManagerImpl;
 import org.openhmis.vo.RaceVO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Path("/races")
 public class RaceService 
 {
-	private static final Logger log = LoggerFactory.getLogger(RaceService.class);
+	private static final Logger log = Logger.getLogger(RaceService.class);
 	private RaceManager raceManager;
 	Mapper mapper = DozerBeanMapperSingletonWrapper.getInstance();
 	public RaceService() 

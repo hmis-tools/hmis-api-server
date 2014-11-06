@@ -2,15 +2,14 @@ package org.openhmis.dao.impl;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.openhmis.dao.EthnicityDAO;
 import org.openhmis.domain.CodeEthnicity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class EthnicityDAOImpl extends BaseDAOImpl implements EthnicityDAO 
 {
-	private static final Logger log = LoggerFactory.getLogger(EthnicityDAOImpl.class);
+	private static final Logger log = Logger.getLogger(EthnicityDAOImpl.class);
 	
 	// default constructor
 	public EthnicityDAOImpl()

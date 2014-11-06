@@ -11,6 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 
+import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.dozer.Mapper;
 import org.openhmis.domain.CodeEthnicity;
@@ -19,13 +20,11 @@ import org.openhmis.exception.ethnicity.UnableToAddEthnicityException;
 import org.openhmis.service.EthnicityManager;
 import org.openhmis.service.impl.EthnicityManagerImpl;
 import org.openhmis.vo.EthnicityVO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Path("/ethnicities")
 public class EthnicityService 
 {
-	private static final Logger log = LoggerFactory.getLogger(GenderService.class);
+	private static final Logger log = Logger.getLogger(GenderService.class);
 	private EthnicityManager ethnicityManager;
 	Mapper mapper = DozerBeanMapperSingletonWrapper.getInstance();
 	
