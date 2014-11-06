@@ -6,6 +6,8 @@ import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.openhmis.dao.ClientDAO;
 import org.openhmis.domain.Client;
+import org.openhmis.util.HmisConstants;
+
 
 public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO 
 {
@@ -30,16 +32,26 @@ private static final Logger log = Logger.getLogger(ClientDAOImpl.class);
 		return null;
 	}
 	@Override
-	public Client findClientById(Long clientKey) 
+	public List<Object[]> findClientById(Long clientKey) 
 	{
 		log.debug("find Client By Id");
 		try
 		{
-			Client client = (Client)getSession().get("org.openhmis.domain.Client", clientKey);
-			return client;
+//			Client client = (Client)getSession().get("org.openhmis.domain.Client", clientKey);
+//			return client;
+			String queryString = "select c.clientKey as clientKey, c.socSecNumber as SSN, c.nameFirst as FirstName, c.nameLast as LastName,c.nameMiddle as MiddleName,c.dateOfBirth as DOB," +
+					"ce.description as Ethnicity, cg.description as Gender " +
+					"from Client c " +
+					"join c.codeEthnicity ce " +
+					"join c.codeGender cg where c.clientKey =:cclientKey";
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameter("cclientKey", clientKey);
+			queryObject.setMaxResults(HmisConstants.MAX_RESULT);
+			return (List<Object[]>)queryObject.list();
 		}
 		catch (RuntimeException re)
 		{
+			re.printStackTrace();
 			log.error("find Client By Id failed", re);
 			throw re;
 		}

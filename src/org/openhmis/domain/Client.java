@@ -4,8 +4,11 @@ import java.sql.Timestamp;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,11 +23,9 @@ public class Client implements java.io.Serializable {
 
 	// Fields
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7124033731855670381L;
 	private Long clientKey;
+	private CodeEthnicity codeEthnicity;
+	private CodeGender codeGender;
 	private String nameMiddle;
 	private String nameLast;
 	private String nameFirst;
@@ -33,8 +34,6 @@ public class Client implements java.io.Serializable {
 	private String socSecNumber;
 	private Integer dobTypeCode;
 	private Date dateOfBirth;
-	private Integer ethnicityCode;
-	private Integer genderCode;
 	private Integer veteranStatusGct;
 	private Integer recActiveGct;
 	private Timestamp entryDateTime;
@@ -54,12 +53,14 @@ public class Client implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Client(String nameMiddle, String nameLast, String nameFirst,
+	public Client(CodeEthnicity codeEthnicity, CodeGender codeGender,
+			String nameMiddle, String nameLast, String nameFirst,
 			String nameSuffix, Integer socSecTypeCode, String socSecNumber,
-			Integer dobTypeCode, Date dateOfBirth, Integer ethnicityCode,
-			Integer genderCode, Integer veteranStatusGct, Integer recActiveGct,
-			Timestamp entryDateTime, Long entryUserKey, Timestamp logDateTime,
-			Long logUserKey) {
+			Integer dobTypeCode, Date dateOfBirth, Integer veteranStatusGct,
+			Integer recActiveGct, Timestamp entryDateTime, Long entryUserKey,
+			Timestamp logDateTime, Long logUserKey) {
+		this.codeEthnicity = codeEthnicity;
+		this.codeGender = codeGender;
 		this.nameMiddle = nameMiddle;
 		this.nameLast = nameLast;
 		this.nameFirst = nameFirst;
@@ -68,8 +69,6 @@ public class Client implements java.io.Serializable {
 		this.socSecNumber = socSecNumber;
 		this.dobTypeCode = dobTypeCode;
 		this.dateOfBirth = dateOfBirth;
-		this.ethnicityCode = ethnicityCode;
-		this.genderCode = genderCode;
 		this.veteranStatusGct = veteranStatusGct;
 		this.recActiveGct = recActiveGct;
 		this.entryDateTime = entryDateTime;
@@ -89,6 +88,26 @@ public class Client implements java.io.Serializable {
 
 	public void setClientKey(Long clientKey) {
 		this.clientKey = clientKey;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ETHNICITY_CODE")
+	public CodeEthnicity getCodeEthnicity() {
+		return this.codeEthnicity;
+	}
+
+	public void setCodeEthnicity(CodeEthnicity codeEthnicity) {
+		this.codeEthnicity = codeEthnicity;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "GENDER_CODE")
+	public CodeGender getCodeGender() {
+		return this.codeGender;
+	}
+
+	public void setCodeGender(CodeGender codeGender) {
+		this.codeGender = codeGender;
 	}
 
 	@Column(name = "NAME_MIDDLE", length = 200)
@@ -162,24 +181,6 @@ public class Client implements java.io.Serializable {
 
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
-	}
-
-	@Column(name = "ETHNICITY_CODE")
-	public Integer getEthnicityCode() {
-		return this.ethnicityCode;
-	}
-
-	public void setEthnicityCode(Integer ethnicityCode) {
-		this.ethnicityCode = ethnicityCode;
-	}
-
-	@Column(name = "GENDER_CODE")
-	public Integer getGenderCode() {
-		return this.genderCode;
-	}
-
-	public void setGenderCode(Integer genderCode) {
-		this.genderCode = genderCode;
 	}
 
 	@Column(name = "VETERAN_STATUS_GCT")

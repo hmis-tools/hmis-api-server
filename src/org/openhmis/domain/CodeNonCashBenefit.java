@@ -1,58 +1,51 @@
 package org.openhmis.domain;
 
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
- * CodeGender entity. @author MyEclipse Persistence Tools
+ * CodeNonCashBenefit entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "CODE_GENDER", catalog = "OPENHMIS2")
-public class CodeGender implements java.io.Serializable {
+@Table(name = "CODE_NON_CASH_BENEFIT", catalog = "OPENHMIS2")
+public class CodeNonCashBenefit implements java.io.Serializable {
 
 	// Fields
 
 	private Integer codeKey;
 	private String description;
-	private String shortDesc;
+	private String shortDescription;
+	private Integer recActive;
 	private String notes;
-	private Integer recActiveGct;
 	private Timestamp logDateTime;
 	private Long logUserKey;
-	private Set<Client> clients = new HashSet<Client>(0);
 
 	// Constructors
 
 	/** default constructor */
-	public CodeGender() {
+	public CodeNonCashBenefit() {
 	}
 
 	/** minimal constructor */
-	public CodeGender(Timestamp logDateTime) {
+	public CodeNonCashBenefit(Timestamp logDateTime) {
 		this.logDateTime = logDateTime;
 	}
 
 	/** full constructor */
-	public CodeGender(String description, String shortDesc, String notes,
-			Integer recActiveGct, Timestamp logDateTime, Long logUserKey,
-			Set<Client> clients) {
+	public CodeNonCashBenefit(String description, String shortDescription,
+			Integer recActive, String notes, Timestamp logDateTime,
+			Long logUserKey) {
 		this.description = description;
-		this.shortDesc = shortDesc;
+		this.shortDescription = shortDescription;
+		this.recActive = recActive;
 		this.notes = notes;
-		this.recActiveGct = recActiveGct;
 		this.logDateTime = logDateTime;
 		this.logUserKey = logUserKey;
-		this.clients = clients;
 	}
 
 	// Property accessors
@@ -77,31 +70,31 @@ public class CodeGender implements java.io.Serializable {
 		this.description = description;
 	}
 
-	@Column(name = "SHORT_DESC", length = 200)
-	public String getShortDesc() {
-		return this.shortDesc;
+	@Column(name = "SHORT_DESCRIPTION", length = 200)
+	public String getShortDescription() {
+		return this.shortDescription;
 	}
 
-	public void setShortDesc(String shortDesc) {
-		this.shortDesc = shortDesc;
+	public void setShortDescription(String shortDescription) {
+		this.shortDescription = shortDescription;
 	}
 
-	@Column(name = "NOTES")
+	@Column(name = "REC_ACTIVE")
+	public Integer getRecActive() {
+		return this.recActive;
+	}
+
+	public void setRecActive(Integer recActive) {
+		this.recActive = recActive;
+	}
+
+	@Column(name = "NOTES", length = 400)
 	public String getNotes() {
 		return this.notes;
 	}
 
 	public void setNotes(String notes) {
 		this.notes = notes;
-	}
-
-	@Column(name = "REC_ACTIVE_GCT")
-	public Integer getRecActiveGct() {
-		return this.recActiveGct;
-	}
-
-	public void setRecActiveGct(Integer recActiveGct) {
-		this.recActiveGct = recActiveGct;
 	}
 
 	@Column(name = "LOG_DATE_TIME", nullable = false, length = 19)
@@ -120,15 +113,6 @@ public class CodeGender implements java.io.Serializable {
 
 	public void setLogUserKey(Long logUserKey) {
 		this.logUserKey = logUserKey;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "codeGender")
-	public Set<Client> getClients() {
-		return this.clients;
-	}
-
-	public void setClients(Set<Client> clients) {
-		this.clients = clients;
 	}
 
 }

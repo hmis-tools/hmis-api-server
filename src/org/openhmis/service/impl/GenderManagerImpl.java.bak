@@ -9,7 +9,6 @@ import org.openhmis.domain.CodeGender;
 import org.openhmis.exception.gender.GenderAlreadyExistException;
 import org.openhmis.service.GenderManager;
 
-
 /**
  * 
  * @author Ashaar Riaz

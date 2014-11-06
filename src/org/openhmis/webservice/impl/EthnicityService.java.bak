@@ -21,7 +21,6 @@ import org.openhmis.service.EthnicityManager;
 import org.openhmis.service.impl.EthnicityManagerImpl;
 import org.openhmis.vo.EthnicityVO;
 
-
 @Path("/ethnicities")
 public class EthnicityService 
 {

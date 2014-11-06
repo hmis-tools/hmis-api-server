@@ -3,6 +3,7 @@ package org.openhmis.service;
 import java.util.List;
 
 import org.openhmis.domain.CodeGender;
+import org.openhmis.domain.Gender;
 import org.openhmis.exception.gender.GenderAlreadyExistException;
 import org.openhmis.exception.gender.GenderNotFoundException;
 

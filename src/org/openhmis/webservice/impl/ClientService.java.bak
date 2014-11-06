@@ -3,7 +3,6 @@ package org.openhmis.webservice.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -28,7 +27,6 @@ import org.openhmis.service.impl.ClientManagerImpl;
 import org.openhmis.vo.ClientVO;
 
 
-
 @Path("/clients")
 public class ClientService 
 {	
@@ -43,18 +41,18 @@ public class ClientService
 	@GET
 	@Path("/client/{clientKey}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	@RolesAllowed({"ADMIN","CUSTOMER"})
 	public ClientVO getClient(@PathParam("clientKey") Long clientKey) throws ClientNotFoundException
 	{
 		log.debug("getClient");
 		ClientVO clientVO = new ClientVO();
 		try
 		{
-			clientVO = clientManager.getClientById(clientKey);
-			if (clientVO == null)
+			Client client = clientManager.getClientById(clientKey);
+			if (client == null)
 			{
 				throw new ClientNotFoundException(clientKey + " doesn't exist");
 			}
+			clientVO = mapper.map(client, ClientVO.class);
 		}
 		catch(Exception e)
 		{
@@ -67,7 +65,6 @@ public class ClientService
 	@GET
 	@Path("lastName/{lastName}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	
 	public List<ClientVO> getClientByLastName(
 			@PathParam("lastName") String lastName) throws ClientNotFoundException 
 	{

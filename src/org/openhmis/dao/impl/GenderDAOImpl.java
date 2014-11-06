@@ -7,6 +7,7 @@ import org.hibernate.Query;
 import org.openhmis.dao.GenderDAO;
 import org.openhmis.domain.CodeGender;
 
+
 public class GenderDAOImpl extends BaseDAOImpl implements GenderDAO 
 {
 	private static final Logger log = Logger.getLogger(GenderDAOImpl.class);

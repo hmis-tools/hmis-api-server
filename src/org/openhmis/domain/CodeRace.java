@@ -1,10 +1,15 @@
 package org.openhmis.domain;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -24,6 +29,7 @@ public class CodeRace implements java.io.Serializable {
 	private Integer recActiveGct;
 	private Timestamp logDateTime;
 	private Long logUserKey;
+	private Set<ClientRace> clientRaces = new HashSet<ClientRace>(0);
 
 	// Constructors
 
@@ -38,13 +44,15 @@ public class CodeRace implements java.io.Serializable {
 
 	/** full constructor */
 	public CodeRace(String description, String shortDesc, String notes,
-			Integer recActiveGct, Timestamp logDateTime, Long logUserKey) {
+			Integer recActiveGct, Timestamp logDateTime, Long logUserKey,
+			Set<ClientRace> clientRaces) {
 		this.description = description;
 		this.shortDesc = shortDesc;
 		this.notes = notes;
 		this.recActiveGct = recActiveGct;
 		this.logDateTime = logDateTime;
 		this.logUserKey = logUserKey;
+		this.clientRaces = clientRaces;
 	}
 
 	// Property accessors
@@ -112,6 +120,15 @@ public class CodeRace implements java.io.Serializable {
 
 	public void setLogUserKey(Long logUserKey) {
 		this.logUserKey = logUserKey;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "codeRace")
+	public Set<ClientRace> getClientRaces() {
+		return this.clientRaces;
+	}
+
+	public void setClientRaces(Set<ClientRace> clientRaces) {
+		this.clientRaces = clientRaces;
 	}
 
 }
