@@ -12,4 +12,4 @@ Development](http://hud.gov/).
 
 The latest OpenHMIS API documentation is currently in [this Google Doc](https://docs.google.com/document/d/15-7OoU0fRtdq9IUuATA9AQfZsuDnkq03X9ORbs94udE/edit?pli=1).
 
-(Historical background: ["API Methods for 3^rd Party Developers"](https://code.google.com/p/openciss/wiki/openCISS_API_v2) describes an earlier version of the API, but needs updating to conform to 2014 data standards and use cases.)
+(Historical background: ["API Methods for 3rd Party Developers"](https://code.google.com/p/openciss/wiki/openCISS_API_v2) describes an earlier version of the API, but needs updating to conform to 2014 data standards and use cases.)
