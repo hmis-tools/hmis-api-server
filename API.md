@@ -28,6 +28,6 @@ based on the HUD 2010 data standards.  Neither should be used as a
 basis for new development now, since they are based on HUD 2010
 instead of on HUD 2014, but we list them here for reference:
 
-* [OpenHMIS API v1](https://drive.google.com/viewerng/viewer?a=v&pid=sites&srcid=cGNuaS5vcmd8b3BlbmhtaXN8Z3g6NGVmMWE3NzQ5OWRlOTA0Mw).  This API is implemented by [github.com/PCNI/OpenHMIS](https://github.com/PCNI/OpenHMIS), and is the API currently used by the [Homeless Helper](https://github.com/PCNI/homeless-helper) application.
+* [OpenHMIS API v1](https://drive.google.com/viewerng/viewer?a=v&pid=sites&srcid=cGNuaS5vcmd8b3BlbmhtaXN8Z3g6NGVmMWE3NzQ5OWRlOTA0Mw).  This API is implemented by the [deprecated_v1_api branch](https://github.com/PCNI/OpenHMIS/tree/deprecated_v1_api), and is the API currently used by the [Homeless Helper](https://github.com/PCNI/homeless-helper) application.
 
 * [OpenHMIS API v2](https://code.google.com/p/openciss/wiki/openCISS_API_v2).  No clients use this version and no known servers implement it.
