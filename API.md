@@ -5,16 +5,20 @@ The OpenHMIS API is a web-based API for collecting data and generating
 reports about sources and users of social services.  The latest
 version of the API is version 3 and it is currently under development:
 
-* [OpenHMIS API v3 documentation](https://docs.google.com/document/d/15-7OoU0fRtdq9IUuATA9AQfZsuDnkq03X9ORbs94udE/edit?pli=1).
+* [OpenHMIS API v3 documentation](https://docs.google.com/document/d/15-7OoU0fRtdq9IUuATA9AQfZsuDnkq03X9ORbs94udE/edit) (draft API specification based on the in-progress Outreach Mobile App).
 
 Although this API is still in development, there is an
 incomplete/unstable version of it (both server and demo client)
-[running here](http://108.59.80.159:8080/HMISClient/).
+[running here](http://108.59.80.159:8080/HMISClient/).  The API is
+still fairly minimal; this [schema diagram](doc/schema-diagram.jpg)
+gives an idea of what is supported so far (note that the schema
+diagram is not always kept in sync with the database or API
+implementations, so it may be a bit out of date).
 
-The OpenHMIS v3 API's underlying data schema is based on the 2014 data
-standards from the [U.S. Department of Housing and Urban Development
-(HUD)](http://hud.gov/).  For more information about those standards,
-see:
+Our long-term goal is for the API's underlying data schema to be based
+on the 2014 data standards from the [U.S. Department of Housing and
+Urban Development (HUD)](http://hud.gov/).  For more information about
+those standards, see:
 
 * [HMIS Data Exchange Resources](http://www.hudhdx.info/VendorResources.aspx) (pay attention only to things with "2014" or later next to them)
 * [2014 HMIS Logical Model UML diagram](http://www.hudhdx.info/Resources/Vendors/4_0/HMIS_Logical_Model.pdf)
