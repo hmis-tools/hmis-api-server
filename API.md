@@ -9,16 +9,19 @@ version of the API is version 3 and it is currently under development:
 
 Although this API is still in development, there is an
 incomplete/unstable version of it (both server and demo client)
-[running here](http://108.59.80.159:8080/HMISClient/).  The API is
-still fairly minimal; this [schema diagram](doc/schema-diagram.jpg)
-gives an idea of what is supported so far (note that the schema
-diagram is not always kept in sync with the database or API
-implementations, so it may be a bit out of date).
+[running here](http://108.59.80.159:8080/HMISClient/).
 
-Our long-term goal is for the API's underlying data schema to be based
-on the 2014 data standards from the [U.S. Department of Housing and
-Urban Development (HUD)](http://hud.gov/).  For more information about
-those standards, see:
+Our long-term goal is for the API to reflect the full data schema from
+the 2014 data standards from the [U.S. Department of Housing and Urban
+Development (HUD)](http://hud.gov/).  While the API is still fairly
+minimal, this [schema based on the full HUD 2014 Data
+Standards](doc/2014StandardOpenHMIS.png) gives an idea of what the API
+will eventually support, and this [smaller
+schema](doc/current-schema-diagram.jpg) gives an idea of what the API
+supports so far.  (The latter diagram is not always kept in sync with
+the database or API implementations, so it may be a bit out of date.)
+
+For more information about the HUD 2014 standards, see:
 
 * [HMIS Data Exchange Resources](http://www.hudhdx.info/VendorResources.aspx) (pay attention only to things with "2014" or later next to them)
 * [2014 HMIS Logical Model UML diagram](http://www.hudhdx.info/Resources/Vendors/4_0/HMIS_Logical_Model.pdf)
