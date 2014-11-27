@@ -3,11 +3,13 @@ OpenHMIS API
 
 The OpenHMIS API is a web-based API for collecting data and generating
 reports about sources and users of social services.  The latest
-version of the API is version 3 and it is currently under development:
+version of the API is version 3 and it is currently under development.
+The closest thing we currently have to a draft of the v3 API is the
+partial API specification in this document:
 
-* [OpenHMIS API v3 documentation](https://docs.google.com/document/d/15-7OoU0fRtdq9IUuATA9AQfZsuDnkq03X9ORbs94udE/edit) (draft API specification based on the in-progress Outreach Mobile App).
+* [OpenHMIS Outreach Mobile Web App, with partial API specification](https://github.com/PCNI/outreach-app/blob/master/outreach-app-design.docx)
 
-Although this API is still in development, there is an
+Although the API is still in development, there is an
 incomplete/unstable version of it (both server and demo client)
 [running here](http://108.59.80.159:8080/HMISClient/).
 
