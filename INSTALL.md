@@ -6,7 +6,7 @@ credentials from the property file.  These instructions should be
 updated and subsumed into more complete installation documentation
 eventually.
 
-1. First create a `hiberante.properties` file.  I have the following values in my property file.
+1. First create a `hibernate.properties` file.  I have the following values in my property file.
 
             hibernate.dialect=org.hibernate.dialect.MySQLDialect
             hibernate.connection.driver_class=com.mysql.jdbc.Driver
