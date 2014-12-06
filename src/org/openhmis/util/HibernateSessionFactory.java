@@ -1,14 +1,5 @@
 package org.openhmis.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
@@ -27,33 +18,23 @@ public class HibernateSessionFactory {
      * The default classpath location of the hibernate config file is 
      * in the default package. Use #setConfigFile() to update 
      * the location of the configuration file for the current session.   
-     */ 	
- 	 private static String CONFIG_FILE_LOCATION = "/hibernate.cfg.xml";
- 	 private static final ThreadLocal<Session> threadLocal = new ThreadLocal<Session>();
-     private  static Configuration configuration = new Configuration();    
-     private static org.hibernate.SessionFactory sessionFactory;
-     private static String configFile = CONFIG_FILE_LOCATION;
-     private static Properties properties = new Properties();
+     */
+    private static String CONFIG_FILE_LOCATION = "/hibernate.cfg.xml";
+	private static final ThreadLocal<Session> threadLocal = new ThreadLocal<Session>();
+    private  static Configuration configuration = new Configuration();    
+    private static org.hibernate.SessionFactory sessionFactory;
+    private static String configFile = CONFIG_FILE_LOCATION;
 
- 	static {
-     	try {
-     		InitialContext context = new InitialContext();
-     		String propertyFileLocation = (String) context.lookup("java:comp/env/config");
-     		if (propertyFileLocation!= null)
-     		{
-     			File propertyFile = new File(propertyFileLocation  +"//hibernate.properties");
-   			    InputStream is = new FileInputStream(propertyFile);
-  		        properties.load(is);
-  		        configuration.setProperties(properties);
-     		}
- 			configuration.configure();
- 			sessionFactory = configuration.buildSessionFactory();
- 		} catch (Exception e) {
- 			System.err
- 					.println("%%%% Error Creating SessionFactory %%%%");
- 			e.printStackTrace();
- 		}
-     }
+	static {
+    	try {
+			configuration.configure(configFile);
+			sessionFactory = configuration.buildSessionFactory();
+		} catch (Exception e) {
+			System.err
+					.println("%%%% Error Creating SessionFactory %%%%");
+			e.printStackTrace();
+		}
+    }
     private HibernateSessionFactory() {
     }
 	

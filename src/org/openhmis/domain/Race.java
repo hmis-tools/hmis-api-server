@@ -2,17 +2,17 @@ package org.openhmis.domain;
 
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
+//import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
+//import javax.persistence.FetchType;
+//import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
+//import javax.persistence.JoinColumn;
+//import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
+//import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Race entity. @author MyEclipse Persistence Tools
@@ -21,6 +21,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "race", catalog = "openhmis2")
 public class Race implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
 	// Fields
 
 	private String raceKey;
@@ -42,9 +43,9 @@ public class Race implements java.io.Serializable {
 	}
 
 	// Property accessors
-	@GenericGenerator(name = "generator", strategy = "increment")
+	//@GenericGenerator(name = "generator", strategy = "increment")
 	@Id
-	@GeneratedValue(generator = "generator")
+	//@GeneratedValue(generator = "generator")
 	@Column(name = "race_key", unique = true, nullable = false, length = 20)
 	public String getRaceKey() {
 		return this.raceKey;
@@ -72,8 +73,10 @@ public class Race implements java.io.Serializable {
 		this.active = active;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "client_has_race", catalog = "openhmis2", joinColumns = { @JoinColumn(name = "race_key", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "client_key", nullable = false, updatable = false) })
+	//@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	//@ManyToMany(cascade = CascadeType.ALL)
+	//@JoinTable(name = "client_has_race", catalog = "openhmis2", joinColumns = { @JoinColumn(name = "race_key", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "client_key", nullable = false, updatable = false) })
+	@ManyToMany(mappedBy="races")
 	public Set<Client> getClients() {
 		return this.clients;
 	}

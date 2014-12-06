@@ -3,7 +3,6 @@ package org.openhmis.webservice.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,28 +12,33 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 
-import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.dozer.Mapper;
 import org.openhmis.domain.Client;
-import org.openhmis.exception.client.ClientAlreadyExistException;
-import org.openhmis.exception.client.ClientNotFoundException;
-import org.openhmis.exception.client.InValidClientException;
-import org.openhmis.exception.client.UnableToAddClientException;
-import org.openhmis.exception.client.UnableToUpdateClientException;
+//import org.openhmis.domain.Ethnicity;
 import org.openhmis.service.ClientManager;
 import org.openhmis.service.impl.ClientManagerImpl;
 import org.openhmis.vo.ClientVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-
+// GG mod
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.openhmis.util.*;
 
 @Path("/clients")
 public class ClientService 
 {	
-	private static final Logger log = Logger.getLogger(ClientService.class);
+	private static final Logger log = LoggerFactory.getLogger(GenderService.class);
 	private ClientManager clientManager;
 	Mapper mapper = DozerBeanMapperSingletonWrapper.getInstance();
+	Session session = null;
+	Transaction tx = null;
+	
 	public ClientService()
 	{
 		clientManager = new ClientManagerImpl();
@@ -43,33 +47,29 @@ public class ClientService
 	@GET
 	@Path("/client/{clientKey}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	@RolesAllowed({"ADMIN","CUSTOMER"})
-	public ClientVO getClient(@PathParam("clientKey") Long clientKey) throws ClientNotFoundException
+	public ClientVO getClient(@PathParam("clientKey") Integer clientKey)
 	{
+				
 		log.debug("getClient");
 		ClientVO clientVO = new ClientVO();
 		try
 		{
-			clientVO = clientManager.getClientById(clientKey);
-			if (clientVO == null)
-			{
-				throw new ClientNotFoundException(clientKey + " doesn't exist");
-			}
-		}
+			
+			Client client = clientManager.getClientById(clientKey);
+			clientVO = mapper.map(client, ClientVO.class);
+					}
 		catch(Exception e)
 		{
-			log.error("Couldn't get the client " + e.getMessage());
-			throw new ClientNotFoundException(e.getMessage());
+			e.printStackTrace();
 		}
 		return clientVO;
 	}
 	
 	@GET
-	@Path("lastName/{lastName}")
+	@Path("/lastName/{lastName}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	
 	public List<ClientVO> getClientByLastName(
-			@PathParam("lastName") String lastName) throws ClientNotFoundException 
+			@PathParam("lastName") String lastName) 
 	{
 		log.debug("getClientByLastName");
 		List<ClientVO> clientVOList = null;
@@ -77,10 +77,6 @@ public class ClientService
 		{
 			clientVOList = new ArrayList<ClientVO>();			
 			List<Client> clientList = clientManager.getClientByLastName(lastName);
-			if (( clientList == null) || (clientList.isEmpty()))
-			{
-				throw new ClientNotFoundException(" No Client exist with last name " + lastName);
-			}
 			for(Client c: clientList)
 			{
 				ClientVO clientVO = mapper.map(c, ClientVO.class);
@@ -89,8 +85,8 @@ public class ClientService
 		}
 		catch(Exception e)
 		{
-			log.error("Couldn't get the client By Last Name " + e.getMessage());
-			throw new ClientNotFoundException(e.getMessage());
+			// in case exception is thrown 
+			e.printStackTrace();								// Stack Trace will be remove with the actual message
 		}
 		return clientVOList;
 	}
@@ -99,29 +95,29 @@ public class ClientService
 	@Path("/addClient")
 	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public ClientVO addClient(JAXBElement<ClientVO> client) throws ClientAlreadyExistException, InValidClientException, UnableToAddClientException
+	public ClientVO addClient(JAXBElement<ClientVO> client)
 	{
 		log.debug("addClient");
 		ClientVO clientVO = null;
 		try
 		{
+			session = HibernateSessionFactory.getSession();
+			tx = session.beginTransaction();
+			
 			clientVO = client.getValue();
 			Client newClient = mapper.map(clientVO, Client.class);
-			// first check if this client already exist in the database
-			if (newClient.getSocSecNumber() == null){
-				throw new InValidClientException("Client doesn't have all the mandatory data.");
-			}
-			Client existingClient = clientManager.getClientBySSN(newClient.getSocSecNumber());
-			if (existingClient != null)
-			{
-				throw new ClientAlreadyExistException("Client already exist in the system.");
-			}
 			clientManager.addClient(newClient);
+					 
+			session.save(newClient);
+			session.getTransaction().commit();
+			HibernateSessionFactory.closeSession();
+		    
 		}
 		catch(Exception e)
 		{
-			log.error("Couldn't add the client " + e.getMessage());
-			throw new UnableToAddClientException(e.getMessage());
+			e.printStackTrace();
+			if( tx != null ) tx.rollback();
+			throw new WebApplicationException(Response.Status.NOT_FOUND);
 		}
 		return clientVO;
 	}
@@ -130,23 +126,35 @@ public class ClientService
 	@Path("/update/{clientKey}")
 	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public ClientVO updateClient(@PathParam("clientKey") Long clientKey,JAXBElement<ClientVO> client) throws UnableToUpdateClientException
+	public ClientVO updateClient(@PathParam("clientKey") Integer clientKey,JAXBElement<ClientVO> client)
 	{
 		log.debug("updateClient");
 		ClientVO updatedClientVO = null;
 		try
 		{
+			session = HibernateSessionFactory.getSession();
+			tx = session.beginTransaction();
+			
 			updatedClientVO = client.getValue();
 			Client updatedClient = mapper.map(updatedClientVO, Client.class);
 			clientManager.updateClient(updatedClient);
+		
+			session.save(updatedClient);
+			session.getTransaction().commit();
+			HibernateSessionFactory.closeSession();
+		
 		}
 		catch(Exception e)
 		{
-			log.error("Couldn't update the client " + e.getMessage());
-			throw new UnableToUpdateClientException(e.getMessage());
+			// in case exception is thrown 
+			e.printStackTrace();
+			// Stack Trace will be remove with the actual message
+			if( tx != null ) tx.rollback();
+			throw new WebApplicationException(Response.Status.NOT_FOUND);
 		}		
 		return updatedClientVO;
 	}
+	
 	
 	public ClientManager getClientManager() {
 		return clientManager;
@@ -155,4 +163,6 @@ public class ClientService
 	public void setClientManager(ClientManager clientManager) {
 		this.clientManager = clientManager;
 	}
+
+	
 }

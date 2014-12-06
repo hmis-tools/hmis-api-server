@@ -6,11 +6,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
+//import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
+//import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Gender entity. @author MyEclipse Persistence Tools
@@ -19,6 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "gender", catalog = "openhmis2")
 public class Gender implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
 	// Fields
 
 	private String genderKey;
@@ -40,9 +41,9 @@ public class Gender implements java.io.Serializable {
 	}
 
 	// Property accessors
-	@GenericGenerator(name = "generator", strategy = "increment")
+	//@GenericGenerator(name = "generator", strategy = "increment")
 	@Id
-	@GeneratedValue(generator = "generator")
+	//@GeneratedValue(generator = "generator")
 	@Column(name = "gender_key", unique = true, nullable = false, length = 20)
 	public String getGenderKey() {
 		return this.genderKey;

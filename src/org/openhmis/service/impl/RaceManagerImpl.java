@@ -2,14 +2,14 @@ package org.openhmis.service.impl;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.openhmis.dao.RaceDAO;
 import org.openhmis.dao.impl.RaceDAOImpl;
-import org.openhmis.domain.CodeRace;
+import org.openhmis.domain.Race;
 import org.openhmis.exception.race.RaceAlreadyExistException;
 import org.openhmis.exception.race.RaceNotFoundException;
 import org.openhmis.service.RaceManager;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -21,7 +21,7 @@ import org.openhmis.service.RaceManager;
  */
 public class RaceManagerImpl implements RaceManager 
 {
-	private static final Logger log = Logger.getLogger(RaceManagerImpl.class);
+	private static final Logger log = LoggerFactory.getLogger(RaceManagerImpl.class);
 	private RaceDAO raceDAO = null;
 	
 	// default constructor
@@ -31,7 +31,7 @@ public class RaceManagerImpl implements RaceManager
 	}
 		
 	@Override
-	public Boolean addRace(CodeRace race) throws RaceAlreadyExistException 
+	public Boolean addRace(Race race) throws RaceAlreadyExistException 
 	{
 		log.debug("addRace");
 		return raceDAO.save(race);
@@ -44,19 +44,9 @@ public class RaceManagerImpl implements RaceManager
 		return raceDAO.findRaceCodes();
 	}
 	@Override
-	public List<CodeRace> getRaces() throws RaceNotFoundException
+	public List<Race> getRaces() throws RaceNotFoundException
 	{
 		log.debug("getRaces");
 		return raceDAO.findRaces();
-	}
-
-//	@Override
-//	public List<CodeRace> getRacesByClientKey(Long clientKey)
-//			throws RaceNotFoundException
-//	{
-//		log.debug("getRacesByClientKey");
-//		return raceDAO.findRacesByClientKey(clientKey);
-//	}	
-//	
-	
+	}	
 }

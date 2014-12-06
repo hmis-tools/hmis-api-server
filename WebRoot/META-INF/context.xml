@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/HMIS-API" docBase="../HMIS-API" debug="0" reloadable="true">
+    <Resource name="jdbc/HMISDB" auth="Container" type="javax.sql.DataSource"
+         username="root"
+         password="change_me"
+         driverClassName="com.mysql.jdbc.Driver"
+         url="jdbc:mysql://173.194.240.108:3306/openhmis2?autoReconnect=true"
+         maxActive="15"
+         maxIdle="7"
+         validationQuery="Select 1" />
+</Context>
+

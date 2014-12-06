@@ -1,8 +1,6 @@
 package org.openhmis.vo;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -10,88 +8,111 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 /**
- * @author Ashaar Riaz
+ * @author adeel.butt
  *
  */
 @XmlRootElement
 public class ClientVO 
 {
-	private Long clientKey;
-	private String nameMiddle;
-	private String nameLast;
-	private String nameFirst;
-	private String socSecNumber;
-	private String dateOfBirth;
+	private Integer clientKey;
+	private String fistName;
+	private String lastName;
+	private String middleInitial;
+	private String ssn;
+	private String dob;
+	private String veteranStatus;
+	private String disablingCondition;
 	
-	private String ethnicityDescription;
-	private String genderDescription;
+	private List<RaceVO> racesVO = null;
 	
-	
-	public ClientVO() {
+	private EthnicityVO ethnicityVO = null;
+	private GenderVO genderVO = null;
+	public ClientVO() 
+	{
 		super();
+		racesVO = new ArrayList<RaceVO>();
+		ethnicityVO = new EthnicityVO();
+		genderVO = new GenderVO();
 	}
-	public ClientVO(Long clientKey) {
+	public ClientVO(Integer clientKey, String fistName, String lastName,
+			String middleInitial, String ssn, String dob, String veteranStatus,
+			String disablingCondition) {
 		super();
 		this.clientKey = clientKey;
+		this.fistName = fistName;
+		this.lastName = lastName;
+		this.middleInitial = middleInitial;
+		this.ssn = ssn;
+		this.dob = dob;
+		this.veteranStatus = veteranStatus;
+		this.disablingCondition = disablingCondition;
 	}
-	public ClientVO(Long clientKey, String nameMiddle, String nameLast,
-			String nameFirst, String socSecNumber, String dateOfBirth) {
-		super();
-		this.clientKey = clientKey;
-		this.nameMiddle = nameMiddle;
-		this.nameLast = nameLast;
-		this.nameFirst = nameFirst;
-		this.socSecNumber = socSecNumber;
-		this.dateOfBirth = dateOfBirth;
-	}
-	public Long getClientKey() {
+	public Integer getClientKey() {
 		return clientKey;
 	}
-	public void setClientKey(Long clientKey) {
+	public void setClientKey(Integer clientKey) {
 		this.clientKey = clientKey;
 	}
-	public String getNameMiddle() {
-		return nameMiddle;
+	public String getFistName() {
+		return fistName;
 	}
-	public void setNameMiddle(String nameMiddle) {
-		this.nameMiddle = nameMiddle;
+	public void setFistName(String fistName) {
+		this.fistName = fistName;
 	}
-	public String getNameLast() {
-		return nameLast;
+	public String getLastName() {
+		return lastName;
 	}
-	public void setNameLast(String nameLast) {
-		this.nameLast = nameLast;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
-	public String getNameFirst() {
-		return nameFirst;
+	public String getMiddleInitial() {
+		return middleInitial;
 	}
-	public void setNameFirst(String nameFirst) {
-		this.nameFirst = nameFirst;
+	public void setMiddleInitial(String middleInitial) {
+		this.middleInitial = middleInitial;
 	}
-	public String getSocSecNumber() {
-		return socSecNumber;
+	public String getSsn() {
+		return ssn;
 	}
-	public void setSocSecNumber(String socSecNumber) {
-		this.socSecNumber = socSecNumber;
+	public void setSsn(String ssn) {
+		this.ssn = ssn;
 	}
-	public String getDateOfBirth() {
-		return dateOfBirth;
+	public String getDob() {
+		return dob;
 	}
-	public void setDateOfBirth(String dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
+	public void setDob(String dob) {
+		this.dob = dob;
+	}
+	public String getVeteranStatus() {
+		return veteranStatus;
+	}
+	public void setVeteranStatus(String veteranStatus) {
+		this.veteranStatus = veteranStatus;
+	}
+	public String getDisablingCondition() {
+		return disablingCondition;
+	}
+	public void setDisablingCondition(String disablingCondition) {
+		this.disablingCondition = disablingCondition;
 	}
 	
-	public String getEthnicityDescription() {
-		return ethnicityDescription;
+	public List<RaceVO> getRacesVO() {
+		return racesVO;
 	}
-	public void setEthnicityDescription(String ethnicityDescription) {
-		this.ethnicityDescription = ethnicityDescription;
+	public void setRacesVO(List<RaceVO> racesVO) {
+		this.racesVO = racesVO;
 	}
-	public String getGenderDescription() {
-		return genderDescription;
+	public EthnicityVO getEthnicityVO() {
+		return ethnicityVO;
 	}
-	public void setGenderDescription(String genderDescription) {
-		this.genderDescription = genderDescription;
+	public void setEthnicityVO(EthnicityVO ethnicityVO) {
+		this.ethnicityVO = ethnicityVO;
+	}
+	public GenderVO getGenderVO() {
+		return genderVO;
+	}
+	public void setGenderVO(GenderVO genderVO) {
+		this.genderVO = genderVO;
 	}
 	@Override
 	public int hashCode() {
@@ -99,16 +120,20 @@ public class ClientVO
 		int result = 1;
 		result = prime * result
 				+ ((clientKey == null) ? 0 : clientKey.hashCode());
+		result = prime
+				* result
+				+ ((disablingCondition == null) ? 0 : disablingCondition
+						.hashCode());
+		result = prime * result + ((dob == null) ? 0 : dob.hashCode());
 		result = prime * result
-				+ ((dateOfBirth == null) ? 0 : dateOfBirth.hashCode());
+				+ ((fistName == null) ? 0 : fistName.hashCode());
 		result = prime * result
-				+ ((nameFirst == null) ? 0 : nameFirst.hashCode());
+				+ ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result
-				+ ((nameLast == null) ? 0 : nameLast.hashCode());
+				+ ((middleInitial == null) ? 0 : middleInitial.hashCode());
+		result = prime * result + ((ssn == null) ? 0 : ssn.hashCode());
 		result = prime * result
-				+ ((nameMiddle == null) ? 0 : nameMiddle.hashCode());
-		result = prime * result
-				+ ((socSecNumber == null) ? 0 : socSecNumber.hashCode());
+				+ ((veteranStatus == null) ? 0 : veteranStatus.hashCode());
 		return result;
 	}
 	@Override
@@ -125,38 +150,41 @@ public class ClientVO
 				return false;
 		} else if (!clientKey.equals(other.clientKey))
 			return false;
-		if (dateOfBirth == null) {
-			if (other.dateOfBirth != null)
+		if (disablingCondition == null) {
+			if (other.disablingCondition != null)
 				return false;
-		} else if (!dateOfBirth.equals(other.dateOfBirth))
+		} else if (!disablingCondition.equals(other.disablingCondition))
 			return false;
-		if (nameFirst == null) {
-			if (other.nameFirst != null)
+		if (dob == null) {
+			if (other.dob != null)
 				return false;
-		} else if (!nameFirst.equals(other.nameFirst))
+		} else if (!dob.equals(other.dob))
 			return false;
-		if (nameLast == null) {
-			if (other.nameLast != null)
+		if (fistName == null) {
+			if (other.fistName != null)
 				return false;
-		} else if (!nameLast.equals(other.nameLast))
+		} else if (!fistName.equals(other.fistName))
 			return false;
-		if (nameMiddle == null) {
-			if (other.nameMiddle != null)
+		if (lastName == null) {
+			if (other.lastName != null)
 				return false;
-		} else if (!nameMiddle.equals(other.nameMiddle))
+		} else if (!lastName.equals(other.lastName))
 			return false;
-		if (socSecNumber == null) {
-			if (other.socSecNumber != null)
+		if (middleInitial == null) {
+			if (other.middleInitial != null)
 				return false;
-		} else if (!socSecNumber.equals(other.socSecNumber))
+		} else if (!middleInitial.equals(other.middleInitial))
+			return false;
+		if (ssn == null) {
+			if (other.ssn != null)
+				return false;
+		} else if (!ssn.equals(other.ssn))
+			return false;
+		if (veteranStatus == null) {
+			if (other.veteranStatus != null)
+				return false;
+		} else if (!veteranStatus.equals(other.veteranStatus))
 			return false;
 		return true;
-	}
-	@Override
-	public String toString() {
-		return "ClientVO [clientKey=" + clientKey + ", nameMiddle="
-				+ nameMiddle + ", nameLast=" + nameLast + ", nameFirst="
-				+ nameFirst + ", socSecNumber=" + socSecNumber
-				+ ", dateOfBirth=" + dateOfBirth + "]";
 	}
 }

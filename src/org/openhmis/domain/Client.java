@@ -1,240 +1,180 @@
 package org.openhmis.domain;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
 import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Client entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "CLIENT", catalog = "OPENHMIS2")
+@Table(name = "client", catalog = "openhmis2")
+
 public class Client implements java.io.Serializable {
 
-	// Fields
+	    private static final long serialVersionUID = 1L;
+	    // Fields
+	    private Integer clientKey;
+        private Ethnicity ethnicity;
+        private Gender gender;
+        private String fistName;
+        private String lastName;
+        private String middleInitial;
+        private String ssn;
+        private String dob;
+        private String veteranStatus;
+        private String disablingCondition;
+        private List<Race> races = new ArrayList<Race>(0);
 
-	private Long clientKey;
-	private CodeEthnicity codeEthnicity;
-	private CodeGender codeGender;
-	private String nameMiddle;
-	private String nameLast;
-	private String nameFirst;
-	private String nameSuffix;
-	private Integer socSecTypeCode;
-	private String socSecNumber;
-	private Integer dobTypeCode;
-	private Date dateOfBirth;
-	private Integer veteranStatusGct;
-	private Integer recActiveGct;
-	private Timestamp entryDateTime;
-	private Long entryUserKey;
-	private Timestamp logDateTime;
-	private Long logUserKey;
+        // Constructors
 
-	// Constructors
+        /** default constructor */
+        public Client() {
+        }
 
-	/** default constructor */
-	public Client() {
-	}
+        /** minimal constructor */
+        public Client(Ethnicity ethnicity, Gender gender) {
+                this.ethnicity = ethnicity;
+                this.gender = gender;
+        }
 
-	/** minimal constructor */
-	public Client(Timestamp logDateTime) {
-		this.logDateTime = logDateTime;
-	}
+        /** full constructor */
+        public Client(Ethnicity ethnicity, Gender gender, String fistName,
+                        String lastName, String middleInitial, String ssn, String dob,
+                        String veteranStatus, String disablingCondition, List<Race> races) {
+                this.ethnicity = ethnicity;
+                this.gender = gender;
+                this.fistName = fistName;
+                this.lastName = lastName;
+                this.middleInitial = middleInitial;
+                this.ssn = ssn;
+                this.dob = dob;
+                this.veteranStatus = veteranStatus;
+                this.disablingCondition = disablingCondition;
+                this.races = races;
+        }
 
-	/** full constructor */
-	public Client(CodeEthnicity codeEthnicity, CodeGender codeGender,
-			String nameMiddle, String nameLast, String nameFirst,
-			String nameSuffix, Integer socSecTypeCode, String socSecNumber,
-			Integer dobTypeCode, Date dateOfBirth, Integer veteranStatusGct,
-			Integer recActiveGct, Timestamp entryDateTime, Long entryUserKey,
-			Timestamp logDateTime, Long logUserKey) {
-		this.codeEthnicity = codeEthnicity;
-		this.codeGender = codeGender;
-		this.nameMiddle = nameMiddle;
-		this.nameLast = nameLast;
-		this.nameFirst = nameFirst;
-		this.nameSuffix = nameSuffix;
-		this.socSecTypeCode = socSecTypeCode;
-		this.socSecNumber = socSecNumber;
-		this.dobTypeCode = dobTypeCode;
-		this.dateOfBirth = dateOfBirth;
-		this.veteranStatusGct = veteranStatusGct;
-		this.recActiveGct = recActiveGct;
-		this.entryDateTime = entryDateTime;
-		this.entryUserKey = entryUserKey;
-		this.logDateTime = logDateTime;
-		this.logUserKey = logUserKey;
-	}
+        // Property accessors
+        @GenericGenerator(name = "generator", strategy = "increment")
+        @Id
+        @GeneratedValue(generator = "generator")
+        @Column(name = "client_key", unique = true, nullable = false)
+        public Integer getClientKey() {
+                return this.clientKey;
+        }
 
-	// Property accessors
-	@GenericGenerator(name = "generator", strategy = "increment")
-	@Id
-	@GeneratedValue(generator = "generator")
-	@Column(name = "CLIENT_KEY", unique = true, nullable = false)
-	public Long getClientKey() {
-		return this.clientKey;
-	}
+        public void setClientKey(Integer clientKey) {
+                this.clientKey = clientKey;
+        }
 
-	public void setClientKey(Long clientKey) {
-		this.clientKey = clientKey;
-	}
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "ethnicity_key", nullable = false)
+        public Ethnicity getEthnicity() {
+                return this.ethnicity;
+        }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ETHNICITY_CODE")
-	public CodeEthnicity getCodeEthnicity() {
-		return this.codeEthnicity;
-	}
+        public void setEthnicity(Ethnicity ethnicity) {
+                this.ethnicity = ethnicity;
+        }
 
-	public void setCodeEthnicity(CodeEthnicity codeEthnicity) {
-		this.codeEthnicity = codeEthnicity;
-	}
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "gender_key", nullable = false)
+        public Gender getGender() {
+                return this.gender;
+        }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "GENDER_CODE")
-	public CodeGender getCodeGender() {
-		return this.codeGender;
-	}
+        public void setGender(Gender gender) {
+                this.gender = gender;
+        }
 
-	public void setCodeGender(CodeGender codeGender) {
-		this.codeGender = codeGender;
-	}
+        @Column(name = "fist_name", length = 45)
+        public String getFistName() {
+                return this.fistName;
+        }
 
-	@Column(name = "NAME_MIDDLE", length = 200)
-	public String getNameMiddle() {
-		return this.nameMiddle;
-	}
+        public void setFistName(String fistName) {
+                this.fistName = fistName;
+        }
 
-	public void setNameMiddle(String nameMiddle) {
-		this.nameMiddle = nameMiddle;
-	}
+        @Column(name = "last_name", length = 45)
+        public String getLastName() {
+                return this.lastName;
+        }
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
+    }
 
-	@Column(name = "NAME_LAST", length = 200)
-	public String getNameLast() {
-		return this.nameLast;
-	}
+    @Column(name = "middle_initial", length = 45)
+    public String getMiddleInitial() {
+            return this.middleInitial;
+    }
 
-	public void setNameLast(String nameLast) {
-		this.nameLast = nameLast;
-	}
+    public void setMiddleInitial(String middleInitial) {
+            this.middleInitial = middleInitial;
+    }
 
-	@Column(name = "NAME_FIRST", length = 200)
-	public String getNameFirst() {
-		return this.nameFirst;
-	}
+    @Column(name = "ssn", length = 9)
+    public String getSsn() {
+            return this.ssn;
+    }
 
-	public void setNameFirst(String nameFirst) {
-		this.nameFirst = nameFirst;
-	}
+    public void setSsn(String ssn) {
+            this.ssn = ssn;
+    }
 
-	@Column(name = "NAME_SUFFIX", length = 200)
-	public String getNameSuffix() {
-		return this.nameSuffix;
-	}
+    @Column(name = "dob", length = 20)
+    public String getDob() {
+            return this.dob;
+    }
 
-	public void setNameSuffix(String nameSuffix) {
-		this.nameSuffix = nameSuffix;
-	}
+    public void setDob(String dob) {
+            this.dob = dob;
+    }
 
-	@Column(name = "SOC_SEC_TYPE_CODE")
-	public Integer getSocSecTypeCode() {
-		return this.socSecTypeCode;
-	}
+    @Column(name = "veteran_status", length = 45)
+    public String getVeteranStatus() {
+            return this.veteranStatus;
+    }
 
-	public void setSocSecTypeCode(Integer socSecTypeCode) {
-		this.socSecTypeCode = socSecTypeCode;
-	}
+    public void setVeteranStatus(String veteranStatus) {
+            this.veteranStatus = veteranStatus;
+    }
 
-	@Column(name = "SOC_SEC_NUMBER", length = 40)
-	public String getSocSecNumber() {
-		return this.socSecNumber;
-	}
+    @Column(name = "disabling_condition", length = 45)
+    public String getDisablingCondition() {
+            return this.disablingCondition;
+    }
 
-	public void setSocSecNumber(String socSecNumber) {
-		this.socSecNumber = socSecNumber;
-	}
+    public void setDisablingCondition(String disablingCondition) {
+    	this.disablingCondition = disablingCondition;
+    }
 
-	@Column(name = "DOB_TYPE_CODE")
-	public Integer getDobTypeCode() {
-		return this.dobTypeCode;
-	}
+    //@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "clients")
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "client_has_race", catalog = "openhmis2",
+    joinColumns = { @JoinColumn(name = "client_key", nullable = false, updatable = false) },
+    inverseJoinColumns = { @JoinColumn(name = "race_key", nullable = false, updatable = false) })
+    
+    public List<Race> getRaces() {
+    	return this.races;
+    }
 
-	public void setDobTypeCode(Integer dobTypeCode) {
-		this.dobTypeCode = dobTypeCode;
-	}
-
-	@Temporal(TemporalType.DATE)
-	@Column(name = "DATE_OF_BIRTH", length = 10)
-	public Date getDateOfBirth() {
-		return this.dateOfBirth;
-	}
-
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-
-	@Column(name = "VETERAN_STATUS_GCT")
-	public Integer getVeteranStatusGct() {
-		return this.veteranStatusGct;
-	}
-
-	public void setVeteranStatusGct(Integer veteranStatusGct) {
-		this.veteranStatusGct = veteranStatusGct;
-	}
-
-	@Column(name = "REC_ACTIVE_GCT")
-	public Integer getRecActiveGct() {
-		return this.recActiveGct;
-	}
-
-	public void setRecActiveGct(Integer recActiveGct) {
-		this.recActiveGct = recActiveGct;
-	}
-
-	@Column(name = "ENTRY_DATE_TIME", length = 19)
-	public Timestamp getEntryDateTime() {
-		return this.entryDateTime;
-	}
-
-	public void setEntryDateTime(Timestamp entryDateTime) {
-		this.entryDateTime = entryDateTime;
-	}
-
-	@Column(name = "ENTRY_USER_KEY")
-	public Long getEntryUserKey() {
-		return this.entryUserKey;
-	}
-
-	public void setEntryUserKey(Long entryUserKey) {
-		this.entryUserKey = entryUserKey;
-	}
-
-	@Column(name = "LOG_DATE_TIME", nullable = false, length = 19)
-	public Timestamp getLogDateTime() {
-		return this.logDateTime;
-	}
-
-	public void setLogDateTime(Timestamp logDateTime) {
-		this.logDateTime = logDateTime;
-	}
-
-	@Column(name = "LOG_USER_KEY")
-	public Long getLogUserKey() {
-		return this.logUserKey;
-	}
-
-	public void setLogUserKey(Long logUserKey) {
-		this.logUserKey = logUserKey;
-	}
+    public void setRaces(List<Race> races) {
+    	this.races = races;
+    }
 
 }
+
