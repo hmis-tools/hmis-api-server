@@ -1,9 +1,7 @@
 package org.openhmis.service.impl;
 
-import java.util.Date;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.openhmis.dao.ClientDAO;
 import org.openhmis.dao.impl.ClientDAOImpl;
 import org.openhmis.domain.Client;
@@ -11,13 +9,13 @@ import org.openhmis.exception.client.ClientNotFoundException;
 import org.openhmis.exception.client.InValidClientException;
 import org.openhmis.service.ClientManager;
 import org.openhmis.util.HmisConstants;
-import org.openhmis.vo.ClientVO;
-
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 public class ClientManagerImpl implements ClientManager 
 {
 	
-	private static final Logger log = Logger.getLogger(ClientManagerImpl.class);
+	//private static final Logger log = LoggerFactory.getLogger(ClientManagerImpl.class);
 
 	private ClientDAO clientDAO;
 	
@@ -51,9 +49,9 @@ public class ClientManagerImpl implements ClientManager
 	public Boolean validateClient(Client client) throws InValidClientException
 	{
 		Boolean isValid = Boolean.FALSE;															// we assume we didn't find anything in the database
-		if ((client.getSocSecNumber() != null) && (client.getSocSecNumber().length()== HmisConstants.SSN_LENGTH))
+		if ((client.getSsn() != null) && (client.getSsn().length()== HmisConstants.SSN_LENGTH))
 		{
-			Client existingClient = clientDAO.findClientBySSN(client.getSocSecNumber());	
+			Client existingClient = clientDAO.findClientBySSN(client.getSsn());	
 			if (existingClient != null)																// if we have the ssn in the database then it exist
 			{
 				isValid = Boolean.TRUE;
@@ -69,29 +67,9 @@ public class ClientManagerImpl implements ClientManager
 	}
 
 	@Override
-	public ClientVO getClientById(Long clientKey) throws ClientNotFoundException
+	public Client getClientById(Integer clientKey) throws ClientNotFoundException
 	{
-		ClientVO clientVO = new ClientVO();
-		try
-		{
-			List<Object[]> clientObject = clientDAO.findClientById(clientKey);
-			Object[] clientArray = clientObject.get(0);
-			
-			clientVO.setClientKey((Long)clientArray[0]);
-			clientVO.setSocSecNumber((String)clientArray[1]);
-			clientVO.setNameFirst((String)clientArray[2]);
-			clientVO.setNameLast((String)clientArray[3]);
-			clientVO.setNameMiddle((String)clientArray[4]);
-			clientVO.setDateOfBirth(((Date)clientArray[5]).toString());
-			clientVO.setEthnicityDescription((String)clientArray[6]);
-			clientVO.setGenderDescription((String)clientArray[7]);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			throw new ClientNotFoundException(e.getMessage());
-		}
-		return clientVO;
+		return clientDAO.findClientById(clientKey);
 	}
 
 	@Override

@@ -2,16 +2,15 @@ package org.openhmis.dao.impl;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.openhmis.dao.ClientDAO;
 import org.openhmis.domain.Client;
-import org.openhmis.util.HmisConstants;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO 
 {
-private static final Logger log = Logger.getLogger(ClientDAOImpl.class);
+private static final Logger log = LoggerFactory.getLogger(ClientDAOImpl.class);
 	
 	// default constructor
 	public ClientDAOImpl()
@@ -32,26 +31,16 @@ private static final Logger log = Logger.getLogger(ClientDAOImpl.class);
 		return null;
 	}
 	@Override
-	public List<Object[]> findClientById(Long clientKey) 
+	public Client findClientById(Integer clientKey) 
 	{
 		log.debug("find Client By Id");
 		try
 		{
-//			Client client = (Client)getSession().get("org.openhmis.domain.Client", clientKey);
-//			return client;
-			String queryString = "select c.clientKey as clientKey, c.socSecNumber as SSN, c.nameFirst as FirstName, c.nameLast as LastName,c.nameMiddle as MiddleName,c.dateOfBirth as DOB," +
-					"ce.description as Ethnicity, cg.description as Gender " +
-					"from Client c " +
-					"join c.codeEthnicity ce " +
-					"join c.codeGender cg where c.clientKey =:cclientKey";
-			Query queryObject = getSession().createQuery(queryString);
-			queryObject.setParameter("cclientKey", clientKey);
-			queryObject.setMaxResults(HmisConstants.MAX_RESULT);
-			return (List<Object[]>)queryObject.list();
+			Client client = (Client)getSession().get("org.openhmis.domain.Client", clientKey);
+			return client;
 		}
 		catch (RuntimeException re)
 		{
-			re.printStackTrace();
 			log.error("find Client By Id failed", re);
 			throw re;
 		}
@@ -85,7 +74,7 @@ private static final Logger log = Logger.getLogger(ClientDAOImpl.class);
 	{
 		try
 		{
-			String queryString = "select c from Client c where c.nameLast like :llastName";
+			String queryString = "select c from Client c where c.lastName like :llastName";
 			Query queryObject = getSession().createQuery(queryString);
 			queryObject.setParameter("llastName", lastName);
 			return (List<Client>)queryObject.list();
@@ -102,9 +91,9 @@ private static final Logger log = Logger.getLogger(ClientDAOImpl.class);
 		log.debug("find Client By ssn");
 		try
 		{
-			String queryString = "select c from Client c where c.socSecNumber = :sssn";
+			String queryString = "select c from Client c where c.ssn = '?1'";
 			Query queryObject = getSession().createQuery(queryString);
-			queryObject.setParameter("sssn", ssn);
+			queryObject.setParameter(1, ssn);
 			return (Client)queryObject.uniqueResult();
 		}
 		catch (RuntimeException re)

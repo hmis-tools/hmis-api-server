@@ -1,12 +1,8 @@
 package org.openhmis.exception.client;
 
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
+import org.openhmis.exception.HMISAPIException;
 
-@Provider
-public class ClientNotFoundException extends NotFoundException implements ExceptionMapper<ClientNotFoundException>
+public class ClientNotFoundException extends HMISAPIException
 {
 
 	/**
@@ -22,12 +18,6 @@ public class ClientNotFoundException extends NotFoundException implements Except
 	public ClientNotFoundException(String message)
 	{
 		super(message);
-	}
-
-	@Override
-	public Response toResponse(ClientNotFoundException clientNotFoundException) 
-	{
-		return Response.status(Response.Status.NOT_FOUND).build();
 	}
 
 }

@@ -2,13 +2,13 @@ package org.openhmis.service.impl;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.openhmis.dao.GenderDAO;
 import org.openhmis.dao.impl.GenderDAOImpl;
-import org.openhmis.domain.CodeGender;
+import org.openhmis.domain.Gender;
 import org.openhmis.exception.gender.GenderAlreadyExistException;
 import org.openhmis.service.GenderManager;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -18,7 +18,7 @@ import org.openhmis.service.GenderManager;
  */
 public class GenderManagerImpl implements GenderManager 
 {
-	private static final Logger log = Logger.getLogger(GenderManagerImpl.class);
+	private static final Logger log = LoggerFactory.getLogger(GenderManagerImpl.class);
 	private GenderDAO genderDAO = null;
 	
 	// default Constructor
@@ -28,7 +28,7 @@ public class GenderManagerImpl implements GenderManager
 	}
 		
 	@Override
-	public Boolean addGender(CodeGender gender) throws GenderAlreadyExistException
+	public Boolean addGender(Gender gender) throws GenderAlreadyExistException
 	{
 		return genderDAO.save(gender);
 	}
@@ -40,7 +40,7 @@ public class GenderManagerImpl implements GenderManager
 		return this.genderDAO.findGenderCodes();
 	}
 	@Override
-	public List<CodeGender> getGenders() 
+	public List<Gender> getGenders() 
 	{
 		log.debug("getGenders");
 		return this.genderDAO.findGenders();
