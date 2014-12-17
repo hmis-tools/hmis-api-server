@@ -1,14 +1,14 @@
 package org.openhmis.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.openhmis.dao.BaseDAO;
 import org.openhmis.util.HibernateSessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 public class BaseDAOImpl implements BaseDAO 
 {
-	private static final Logger log = LoggerFactory.getLogger(BaseDAOImpl.class);
+	private static final Logger log = Logger.getLogger(BaseDAOImpl.class);
 	@Override
 	public Boolean save(Object object) 
 	{

@@ -10,36 +10,24 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.WebApplicationException;
 
+import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.dozer.Mapper;
-import org.openhmis.domain.Ethnicity;
+import org.openhmis.domain.CodeEthnicity;
+import org.openhmis.exception.ethnicity.EthnicityNotFoundException;
+import org.openhmis.exception.ethnicity.UnableToAddEthnicityException;
 import org.openhmis.service.EthnicityManager;
 import org.openhmis.service.impl.EthnicityManagerImpl;
-import org.openhmis.util.HibernateSessionFactory;
 import org.openhmis.vo.EthnicityVO;
-
-import org.hibernate.Transaction;
-import org.hibernate.Session;
-
-//import org.openhmis.vo.GenderVO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 
 @Path("/ethnicities")
 public class EthnicityService 
 {
-	private static final Logger log = LoggerFactory.getLogger(EthnicityService.class);
+	private static final Logger log = Logger.getLogger(GenderService.class);
 	private EthnicityManager ethnicityManager;
 	Mapper mapper = DozerBeanMapperSingletonWrapper.getInstance();
-	
-	//GG mod
-	Session session = null;
-	Transaction tx = null;
 	
 	public EthnicityService()
 	{
@@ -48,31 +36,28 @@ public class EthnicityService
 	
 	@GET
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public List<EthnicityVO> getEthnicities()
+	public List<EthnicityVO> getEthnicities() throws EthnicityNotFoundException
 	{
-							
 		log.debug("getEthnicities");
 		List<EthnicityVO> ehnicityVOList = null;
 		try
 		{
-			
 			ehnicityVOList = new ArrayList<EthnicityVO>();
-			List<Ethnicity> ethnicityList = ethnicityManager.getEthnicities();
-			for (Ethnicity e: ethnicityList )
+			List<CodeEthnicity> ethnicityList = ethnicityManager.getEthnicities();
+			if ((ethnicityList == null) ||(ethnicityList.isEmpty()))
+			{
+				throw new EthnicityNotFoundException("No Ethnicity Found");
+			}
+			for (CodeEthnicity e: ethnicityList )
 			{
 				EthnicityVO ethnicityVO = mapper.map(e, EthnicityVO.class);
 				ehnicityVOList.add(ethnicityVO);
 			}
-			
-		
-		
 		}
-		
 		catch(Exception e)
 		{
-			e.printStackTrace();
-		
-			
+			log.error("Couldn't get the ethnicity " + e.getMessage());
+			throw new EthnicityNotFoundException(e.getMessage());
 		}
 		return ehnicityVOList;
 	}
@@ -81,30 +66,19 @@ public class EthnicityService
 	@Path("/addEthnicity")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public EthnicityVO addEthnicity(JAXBElement<EthnicityVO> ethnicity)
+	public EthnicityVO addEthnicity(JAXBElement<EthnicityVO> ethnicity) throws UnableToAddEthnicityException
 	{
 		log.debug("addEthnicity");
 		EthnicityVO ethnicityVO = null;
 		try
 		{
-			session = HibernateSessionFactory.getSession();
-			tx = session.beginTransaction();
-			ethnicityVO = ethnicity.getValue();
-			Ethnicity newEthnicity = mapper.map(ethnicityVO, Ethnicity.class);
+			CodeEthnicity newEthnicity = mapper.map(ethnicityVO, CodeEthnicity.class);
 			ethnicityManager.addEthnicity(newEthnicity);
-			
-			//String k = newEthnicity.getEthnicityKey();
-			
-			session.save(newEthnicity);
-			session.getTransaction().commit();
-			HibernateSessionFactory.closeSession();
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
-			if( tx != null ) tx.rollback();
-			throw new WebApplicationException(Response.Status.NOT_FOUND);
-		
+			log.error("Couldn't add the ethnicity " + e.getMessage());
+			throw new UnableToAddEthnicityException(e.getMessage());
 		}
 		return ethnicityVO;
 	}

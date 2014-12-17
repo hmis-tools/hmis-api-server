@@ -1,8 +1,10 @@
 package org.openhmis.exception.gender;
 
-import org.openhmis.exception.HMISAPIException;
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
 
-public class GenderNotFoundException extends HMISAPIException
+public class GenderNotFoundException extends NotFoundException implements ExceptionMapper<GenderNotFoundException>
 {
 
 	/**
@@ -18,4 +20,9 @@ public class GenderNotFoundException extends HMISAPIException
 	{
 		super(message);
 	}
+	@Override
+	public Response toResponse(GenderNotFoundException genderNotFoundException) 
+	{
+		return Response.status(Response.Status.NOT_FOUND).build();
+	}	
 }

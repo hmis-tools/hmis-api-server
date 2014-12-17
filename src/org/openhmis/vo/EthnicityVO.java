@@ -1,6 +1,7 @@
 package org.openhmis.vo;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -13,23 +14,33 @@ public class EthnicityVO implements Serializable
 	 */
 	private static final long serialVersionUID = 6834343043981583144L;
 	
-	private String ethnicityKey;
+	private Integer codeKey;
 	private String description;
-	private String active;
+	private String shortDesc;
+	private String notes;
+	private Integer recActiveGct;
+	private Timestamp logDateTime;
+	private Long logUserKey;
 	public EthnicityVO() {
 		super();
 	}
-	public EthnicityVO(String ethnicityKey, String description, String active) {
+	public EthnicityVO(Integer codeKey, String description, String shortDesc,
+			String notes, Integer recActiveGct, Timestamp logDateTime,
+			Long logUserKey) {
 		super();
-		this.ethnicityKey = ethnicityKey;
+		this.codeKey = codeKey;
 		this.description = description;
-		this.active = active;
+		this.shortDesc = shortDesc;
+		this.notes = notes;
+		this.recActiveGct = recActiveGct;
+		this.logDateTime = logDateTime;
+		this.logUserKey = logUserKey;
 	}
-	public String getEthnicityKey() {
-		return ethnicityKey;
+	public Integer getCodeKey() {
+		return codeKey;
 	}
-	public void setEthnicityKey(String ethnicityKey) {
-		this.ethnicityKey = ethnicityKey;
+	public void setCodeKey(Integer codeKey) {
+		this.codeKey = codeKey;
 	}
 	public String getDescription() {
 		return description;
@@ -37,24 +48,52 @@ public class EthnicityVO implements Serializable
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getActive() {
-		return active;
+	public String getShortDesc() {
+		return shortDesc;
 	}
-	public void setActive(String active) {
-		this.active = active;
+	public void setShortDesc(String shortDesc) {
+		this.shortDesc = shortDesc;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public String getNotes() {
+		return notes;
+	}
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+	public Integer getRecActiveGct() {
+		return recActiveGct;
+	}
+	public void setRecActiveGct(Integer recActiveGct) {
+		this.recActiveGct = recActiveGct;
+	}
+	public Timestamp getLogDateTime() {
+		return logDateTime;
+	}
+	public void setLogDateTime(Timestamp logDateTime) {
+		this.logDateTime = logDateTime;
+	}
+	public Long getLogUserKey() {
+		return logUserKey;
+	}
+	public void setLogUserKey(Long logUserKey) {
+		this.logUserKey = logUserKey;
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((active == null) ? 0 : active.hashCode());
+		result = prime * result + ((codeKey == null) ? 0 : codeKey.hashCode());
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result
-				+ ((ethnicityKey == null) ? 0 : ethnicityKey.hashCode());
+				+ ((logDateTime == null) ? 0 : logDateTime.hashCode());
+		result = prime * result
+				+ ((logUserKey == null) ? 0 : logUserKey.hashCode());
+		result = prime * result + ((notes == null) ? 0 : notes.hashCode());
+		result = prime * result
+				+ ((recActiveGct == null) ? 0 : recActiveGct.hashCode());
+		result = prime * result
+				+ ((shortDesc == null) ? 0 : shortDesc.hashCode());
 		return result;
 	}
 	@Override
@@ -66,24 +105,41 @@ public class EthnicityVO implements Serializable
 		if (getClass() != obj.getClass())
 			return false;
 		EthnicityVO other = (EthnicityVO) obj;
-		if (active == null) {
-			if (other.active != null)
+		if (codeKey == null) {
+			if (other.codeKey != null)
 				return false;
-		} else if (!active.equals(other.active))
+		} else if (!codeKey.equals(other.codeKey))
 			return false;
 		if (description == null) {
 			if (other.description != null)
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		if (ethnicityKey == null) {
-			if (other.ethnicityKey != null)
+		if (logDateTime == null) {
+			if (other.logDateTime != null)
 				return false;
-		} else if (!ethnicityKey.equals(other.ethnicityKey))
+		} else if (!logDateTime.equals(other.logDateTime))
+			return false;
+		if (logUserKey == null) {
+			if (other.logUserKey != null)
+				return false;
+		} else if (!logUserKey.equals(other.logUserKey))
+			return false;
+		if (notes == null) {
+			if (other.notes != null)
+				return false;
+		} else if (!notes.equals(other.notes))
+			return false;
+		if (recActiveGct == null) {
+			if (other.recActiveGct != null)
+				return false;
+		} else if (!recActiveGct.equals(other.recActiveGct))
+			return false;
+		if (shortDesc == null) {
+			if (other.shortDesc != null)
+				return false;
+		} else if (!shortDesc.equals(other.shortDesc))
 			return false;
 		return true;
 	}
-	
-	
-
 }

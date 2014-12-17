@@ -6,11 +6,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-//import javax.persistence.GeneratedValue;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-//import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Ethnicity entity. @author MyEclipse Persistence Tools
@@ -18,8 +18,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "ethnicity", catalog = "openhmis2")
 public class Ethnicity implements java.io.Serializable {
-          
-	private static final long serialVersionUID = 1L;
+
 	// Fields
 
 	private String ethnicityKey;
@@ -41,9 +40,9 @@ public class Ethnicity implements java.io.Serializable {
 	}
 
 	// Property accessors
-	//@GenericGenerator(name = "generator", strategy = "increment")
+	@GenericGenerator(name = "generator", strategy = "increment")
 	@Id
-	//@GeneratedValue(generator = "generator")
+	@GeneratedValue(generator = "generator")
 	@Column(name = "ethnicity_key", unique = true, nullable = false, length = 20)
 	public String getEthnicityKey() {
 		return this.ethnicityKey;

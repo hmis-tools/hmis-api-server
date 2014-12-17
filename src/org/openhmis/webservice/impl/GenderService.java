@@ -10,49 +10,44 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
 
+import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.dozer.Mapper;
-import org.openhmis.domain.Gender;
+import org.openhmis.domain.CodeGender;
+import org.openhmis.exception.gender.GenderNotFoundException;
 import org.openhmis.service.GenderManager;
 import org.openhmis.service.impl.GenderManagerImpl;
-//import org.openhmis.vo.ClientVO;
 import org.openhmis.vo.GenderVO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.openhmis.util.*;
 
 @Path("/genders")
 public class GenderService 
 {
-	private static final Logger log = LoggerFactory.getLogger(GenderService.class);
+	private static final Logger log = Logger.getLogger(GenderService.class);
 	private GenderManager genderManager;
 	Mapper mapper = DozerBeanMapperSingletonWrapper.getInstance();
-	Session session = null;
-	Transaction tx = null;
 	public GenderService()
-	
 	{
 		genderManager = new GenderManagerImpl();
 	}
 	
 	@GET
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public List<GenderVO> getAllGenders()
+	public List<GenderVO> getAllGenders() throws GenderNotFoundException
 	{
 		log.debug("getAllGenders");
 		List<GenderVO> genderVOList = null;
 		try
 		{
 			genderVOList = new ArrayList<GenderVO>();
-			List<Gender> genderList = genderManager.getGenders();
+			List<CodeGender> genderList = genderManager.getGenders();
+			if ((genderList == null) || (genderList.isEmpty()))
+			{
+				throw new GenderNotFoundException("No Gender Found");
+			}
 			log.debug("retrieve gender list" + genderList.toString());
-			for (Gender g: genderList)
+			for (CodeGender g: genderList)
 			{
 				GenderVO genderVO = mapper.map(g, GenderVO.class);
 				genderVOList.add(genderVO);
@@ -61,7 +56,7 @@ public class GenderService
 		catch(Exception e)
 		{
 			log.error("exception in get All Genders");
-			e.printStackTrace();
+			throw new GenderNotFoundException(e.getMessage());
 		}
 		return genderVOList;
 	}
@@ -76,23 +71,14 @@ public class GenderService
 		GenderVO genderVO = null;
 		try
 		{
-			session = HibernateSessionFactory.getSession();
-			tx = session.beginTransaction();
-			
 			genderVO = gender.getValue();
-			Gender newGender = mapper.map(genderVO, Gender.class);
+			CodeGender newGender = mapper.map(genderVO, CodeGender.class);
 			genderManager.addGender(newGender);
-		
-			session.save(newGender);
-			session.getTransaction().commit();
-			HibernateSessionFactory.closeSession();
-		
 		}
 		catch(Exception e)
 		{
+			log.error("Couldn't add the gender " + e.getMessage());
 			e.printStackTrace();
-			if( tx != null ) tx.rollback();
-			throw new WebApplicationException(Response.Status.NOT_FOUND);
 		}
 		return genderVO;
 	}

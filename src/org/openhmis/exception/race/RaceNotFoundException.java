@@ -1,8 +1,10 @@
 package org.openhmis.exception.race;
 
-import org.openhmis.exception.HMISAPIException;
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
 
-public class RaceNotFoundException extends HMISAPIException 
+public class RaceNotFoundException extends NotFoundException implements ExceptionMapper<RaceNotFoundException>
 {
 
 	/**
@@ -18,4 +20,9 @@ public class RaceNotFoundException extends HMISAPIException
 	{
 		super(message);
 	}
+	@Override
+	public Response toResponse(RaceNotFoundException raceNotFoundException) 
+	{
+		return Response.status(Response.Status.NOT_FOUND).build();
+	}	
 }

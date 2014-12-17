@@ -2,15 +2,15 @@ package org.openhmis.dao.impl;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.openhmis.dao.GenderDAO;
-import org.openhmis.domain.Gender;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.openhmis.domain.CodeGender;
+
 
 public class GenderDAOImpl extends BaseDAOImpl implements GenderDAO 
 {
-	private static final Logger log = LoggerFactory.getLogger(GenderDAOImpl.class);
+	private static final Logger log = Logger.getLogger(GenderDAOImpl.class);
 	
 	// default constructor
 	public GenderDAOImpl()
@@ -37,14 +37,14 @@ public class GenderDAOImpl extends BaseDAOImpl implements GenderDAO
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Gender> findGenders()
+	public List<CodeGender> findGenders()
 	{
 		log.debug("finding all Gender instances");
 		try 
 		{
-			String queryString = "from Gender";
+			String queryString = "from CodeGender";
 			Query queryObject = getSession().createQuery(queryString);
-			return (List<Gender>)queryObject.list();
+			return (List<CodeGender>)queryObject.list();
 		}
 		catch (RuntimeException re)
 		{
