@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hmis:Sources xmlns:hmis="http://www.hudhdx.info/Resources/Vendors/4_0/HUD_HMIS.xsd"
+ xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.hudhdx.info/Resources/Vendors/4_0/HUD_HMIS.xsd https://github.com/hmis-interop/xml/raw/master/src/HUD_HMIS.xsd">
+    <hmis:Source>
+        <hmis:SourceID>12345</hmis:SourceID>
+        <hmis:SoftwareVendor>HMISSoft Inc.</hmis:SoftwareVendor>
+        <hmis:SoftwareVersion>3</hmis:SoftwareVersion>
+        <hmis:SourceContactEmail>bill@gsnail.com</hmis:SourceContactEmail>
+        <hmis:SourceContactExtension>775</hmis:SourceContactExtension>
+        <hmis:SourceContactFirst>Patricia</hmis:SourceContactFirst>
+        <hmis:SourceContactLast>Duke</hmis:SourceContactLast>
+        <hmis:SourceContactPhone>5939698367</hmis:SourceContactPhone>
+        <hmis:SourceName>County HMIS</hmis:SourceName>
+        <hmis:Export>
+            <hmis:ExportID>37</hmis:ExportID>
+            <hmis:ExportDate>2015-02-27T23:14:59</hmis:ExportDate>
+            <hmis:ExportPeriod>
+                <hmis:StartDate>2015-01-04T23:14:59</hmis:StartDate>
+                <hmis:EndDate>2015-03-26T23:14:59Z</hmis:EndDate>
+            </hmis:ExportPeriod>
+            <hmis:ExportPeriodType>effective</hmis:ExportPeriodType>
+            <hmis:ExportDirective>deltaRefresh</hmis:ExportDirective>
+            <hmis:Affiliation hmis:dateCreated="2016-04-11T23:14:59Z" hmis:dateUpdated="2015-05-30T23:14:59" hmis:userID="nf">
+                <hmis:AffiliationID>76yt</hmis:AffiliationID>
+                <hmis:ProjectID>222E</hmis:ProjectID>
+                <hmis:ResProjectID>222D</hmis:ResProjectID>
+            </hmis:Affiliation>
+            <hmis:Client hmis:dateCreated="2016-04-11T23:14:59Z" hmis:dateUpdated="2015-05-30T23:14:59" hmis:userID="ned100">
+                <hmis:PersonalID>A1a1</hmis:PersonalID>
+                <hmis:FirstName>Edward</hmis:FirstName>
+                <hmis:MiddleName>Barnaby</hmis:MiddleName>
+                <hmis:LastName>Jones</hmis:LastName>
+                <hmis:NameSuffix>Sr.</hmis:NameSuffix>
+                <hmis:NameDataQuality>9</hmis:NameDataQuality>
+                <hmis:SSN>7xxx9xx8x</hmis:SSN>
+                <hmis:SSNDataQuality>2</hmis:SSNDataQuality>
+                <hmis:DOB>2014-11-18</hmis:DOB>
+                <hmis:DOBDataQuality>1</hmis:DOBDataQuality>
+                <hmis:Gender>3</hmis:Gender>
+                <hmis:OtherGender>intersex</hmis:OtherGender>
+                <hmis:Ethnicity>0</hmis:Ethnicity>
+                <hmis:Race>8</hmis:Race>
+                <hmis:VeteranStatus>9</hmis:VeteranStatus>
+            </hmis:Client>
+            <hmis:CommercialSexualExploitation hmis:dataCollectionStage="1" hmis:dateCreated="2016-05-08T23:14:59" hmis:dateUpdated="2016-05-06T23:14:59Z" hmis:userID="DG4IfIQuAFF6I.yl7">
+                <hmis:CommercialSexualExploitationID>787h</hmis:CommercialSexualExploitationID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:ExchangeForSexPastThreeMonths>0</hmis:ExchangeForSexPastThreeMonths>
+                <hmis:CountOfExchangeForSex>3</hmis:CountOfExchangeForSex>
+                <hmis:AskedOrForcedToExchangeForSex>8</hmis:AskedOrForcedToExchangeForSex>
+            </hmis:CommercialSexualExploitation>
+            <hmis:ConnectionWithSOAR hmis:dateCreated="2015-05-20T23:14:59Z" hmis:dateUpdated="2016-05-21T23:14:59" hmis:userID="y9SC3Udh_t0aJCX">
+                <hmis:ConnectionWithSOARID>676rt</hmis:ConnectionWithSOARID>
+                <hmis:ExitID>C2x</hmis:ExitID>
+                <hmis:ConnectionWithSOAR>0</hmis:ConnectionWithSOAR>
+            </hmis:ConnectionWithSOAR>
+            <hmis:DateOfEngagement hmis:dateCreated="2015-08-13T23:14:59" hmis:dateUpdated="2015-03-30T23:14:59" hmis:userID="IFmMP">
+                <hmis:DateOfEngagementID>4321s</hmis:DateOfEngagementID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:DateOfEngagement>2016-04-17</hmis:DateOfEngagement>
+            </hmis:DateOfEngagement>
+            <hmis:Disabilities hmis:dataCollectionStage="1" hmis:informationDate="2014-09-01" hmis:dateCreated="2014-09-01T23:14:59" hmis:dateUpdated="2016-04-17T23:14:59Z"
+                 hmis:userID="YBR5goXMKigc.">
+                <hmis:DisabilitiesID>6743e</hmis:DisabilitiesID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:DisabilityType>10</hmis:DisabilityType>
+                <hmis:DisabilityResponse>2</hmis:DisabilityResponse>
+                <hmis:IndefiniteAndImpairs>9</hmis:IndefiniteAndImpairs>
+                <hmis:DocumentationOnFile>1</hmis:DocumentationOnFile>
+                <hmis:ReceivingServices>99</hmis:ReceivingServices>
+                <hmis:PATHHowConfirmed>1</hmis:PATHHowConfirmed>
+                <hmis:PATHSMIInformation>3</hmis:PATHSMIInformation>
+            </hmis:Disabilities>
+            <hmis:DomesticViolence hmis:dataCollectionStage="1" hmis:informationDate="2014-11-21" hmis:dateCreated="2014-11-21T23:14:59"
+                 hmis:dateUpdated="2016-01-05T23:14:59Z" hmis:userID="fPKfm5Rtfi0m3OhjeFL_pozaSRUUA">
+                <hmis:DomesticViolenceID>87865g</hmis:DomesticViolenceID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:DomesticViolenceVictim>8</hmis:DomesticViolenceVictim>
+                <hmis:WhenOccurred>2</hmis:WhenOccurred>
+            </hmis:DomesticViolence>
+            <hmis:SchoolStatus hmis:dataCollectionStage="5" hmis:informationDate="2014-11-21" hmis:dateCreated="2015-01-31T23:14:59"
+                 hmis:dateUpdated="2016-01-10T23:14:59Z" hmis:userID="ZY_LSOlhidHlBIqeiqvbi1Oosl">
+                <hmis:SchoolStatusID>a76752a</hmis:SchoolStatusID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:SchoolStatus>8</hmis:SchoolStatus>
+            </hmis:SchoolStatus>
+            <hmis:Employment hmis:dataCollectionStage="5" hmis:informationDate="2014-11-21" hmis:dateCreated="2016-03-26T23:14:59Z"
+                 hmis:dateUpdated="2015-04-01T23:14:59Z" hmis:userID="sXKqL">
+                <hmis:EmploymentID>344r445y</hmis:EmploymentID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:Employed>8</hmis:Employed>
+                <hmis:EmploymentType>2</hmis:EmploymentType>
+                <hmis:NotEmployedReason>3</hmis:NotEmployedReason>
+            </hmis:Employment>
+            <hmis:Enrollment hmis:dateCreated="2015-05-08T23:14:59" hmis:dateUpdated="2015-01-27T23:14:59Z" hmis:userID="Hc8CQeYVWWj0dA9cWkDLe">
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:PersonalID>A1a1</hmis:PersonalID>
+                <hmis:ProjectID>222D</hmis:ProjectID>
+                <hmis:EntryDate>2016-04-12Z</hmis:EntryDate>
+                <hmis:HouseholdID>a34563w</hmis:HouseholdID>
+                <hmis:RelationshipToHoH>1</hmis:RelationshipToHoH>
+                <hmis:ResidencePrior>12</hmis:ResidencePrior>
+                <hmis:OtherResidencePrior>some other residence text here</hmis:OtherResidencePrior>
+                <hmis:ResidencePriorLengthOfStay>8</hmis:ResidencePriorLengthOfStay>
+                <hmis:ContinuouslyHomelessOneYear>8</hmis:ContinuouslyHomelessOneYear>
+                <hmis:TimesHomelessPastThreeYears>0</hmis:TimesHomelessPastThreeYears>
+                <hmis:MonthsHomelessPastThreeYears>103</hmis:MonthsHomelessPastThreeYears>
+                <hmis:MonthsHomelessThisTime>101</hmis:MonthsHomelessThisTime>
+                <hmis:YearsHomeless>3</hmis:YearsHomeless>
+                <hmis:StatusDocumented>1</hmis:StatusDocumented>
+                <hmis:DisablingCondition>9</hmis:DisablingCondition>
+                <hmis:HousingStatus>6</hmis:HousingStatus>
+            </hmis:Enrollment>
+            <hmis:Enrollment hmis:dateCreated="2015-05-08T23:14:59" hmis:dateUpdated="2015-01-27T23:14:59Z" hmis:userID="Hc8CQeYVWWj0dA9cWkDLe">
+                <hmis:ProjectEntryID>w5642</hmis:ProjectEntryID>
+                <hmis:PersonalID>A1a1</hmis:PersonalID>
+                <hmis:ProjectID>222E</hmis:ProjectID>
+                <hmis:EntryDate>2016-04-12Z</hmis:EntryDate>
+                <hmis:HouseholdID>a34563w</hmis:HouseholdID>
+                <hmis:RelationshipToHoH>1</hmis:RelationshipToHoH>
+                <hmis:ResidencePrior>12</hmis:ResidencePrior>
+                <hmis:OtherResidencePrior>some other residence text here</hmis:OtherResidencePrior>
+                <hmis:ResidencePriorLengthOfStay>8</hmis:ResidencePriorLengthOfStay>
+                <hmis:ContinuouslyHomelessOneYear>8</hmis:ContinuouslyHomelessOneYear>
+                <hmis:TimesHomelessPastThreeYears>0</hmis:TimesHomelessPastThreeYears>
+                <hmis:MonthsHomelessPastThreeYears>103</hmis:MonthsHomelessPastThreeYears>
+                <hmis:MonthsHomelessThisTime>101</hmis:MonthsHomelessThisTime>
+                <hmis:YearsHomeless>3</hmis:YearsHomeless>
+                <hmis:StatusDocumented>1</hmis:StatusDocumented>
+                <hmis:DisablingCondition>9</hmis:DisablingCondition>
+                <hmis:HousingStatus>6</hmis:HousingStatus>
+            </hmis:Enrollment>
+            <hmis:EnrollmentCoC hmis:dataCollectionStage="1" hmis:informationDate="2015-06-24" hmis:dateCreated="2016-02-13T23:14:59Z"
+                 hmis:dateUpdated="2016-02-19T23:14:59" hmis:userID="DU5m">
+                <hmis:EnrollmentCoCID>56332</hmis:EnrollmentCoCID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:ProjectCoCID>343</hmis:ProjectCoCID>
+            </hmis:EnrollmentCoC>
+            <hmis:EnrollmentCoC hmis:dataCollectionStage="1" hmis:informationDate="2015-06-24" hmis:dateCreated="2016-02-13T23:14:59Z"
+                hmis:dateUpdated="2016-02-19T23:14:59" hmis:userID="DU5m">
+                <hmis:EnrollmentCoCID>56332</hmis:EnrollmentCoCID>
+                <hmis:ProjectEntryID>w5642</hmis:ProjectEntryID>
+                <hmis:ProjectCoCID>344</hmis:ProjectCoCID>
+            </hmis:EnrollmentCoC>
+            <hmis:Exit hmis:dateCreated="2014-10-07T23:14:59Z" hmis:dateUpdated="2015-11-06T23:14:59Z" hmis:userID="GO">
+                <hmis:ExitID>C2x</hmis:ExitID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:ExitDate>2016-11-16Z</hmis:ExitDate>
+                <hmis:Destination>22</hmis:Destination>
+                <hmis:OtherDestination>w</hmis:OtherDestination>
+            </hmis:Exit>
+            <hmis:Exit hmis:dateCreated="2014-10-07T23:14:59Z" hmis:dateUpdated="2015-11-06T23:14:59Z" hmis:userID="GO">
+                <hmis:ExitID>C3x</hmis:ExitID>
+                <hmis:ProjectEntryID>w5642</hmis:ProjectEntryID>
+                <hmis:ExitDate>2016-11-16Z</hmis:ExitDate>
+                <hmis:Destination>22</hmis:Destination>
+                <hmis:OtherDestination>w</hmis:OtherDestination>
+            </hmis:Exit>
+            <hmis:ExitHousingAssessment hmis:dateCreated="2015-02-09T23:14:59" hmis:dateUpdated="2015-08-17T23:14:59" hmis:userID="l_Xj">
+                <hmis:ExitHousingAssessmentID>326</hmis:ExitHousingAssessmentID>
+                <hmis:ExitID>C2x</hmis:ExitID>
+                <hmis:HousingAssessment>6</hmis:HousingAssessment>
+                <hmis:SubsidyInformation>2</hmis:SubsidyInformation>
+            </hmis:ExitHousingAssessment>
+            <hmis:ExitPlansActions hmis:dateCreated="2015-11-22T23:14:59" hmis:dateUpdated="2015-10-11T23:14:59Z" hmis:userID="Zu6Nb5-">
+                <hmis:ExitPlansActionsID>342r</hmis:ExitPlansActionsID>
+                <hmis:ExitID>C2x</hmis:ExitID>
+                <hmis:WrittenAftercarePlan>9</hmis:WrittenAftercarePlan>
+                <hmis:AssistanceMainstreamBenefits>0</hmis:AssistanceMainstreamBenefits>
+                <hmis:PermanentHousingPlacement>0</hmis:PermanentHousingPlacement>
+                <hmis:TemporaryShelterPlacement>0</hmis:TemporaryShelterPlacement>
+                <hmis:ExitCounseling>0</hmis:ExitCounseling>
+                <hmis:FurtherFollowUpServices>1</hmis:FurtherFollowUpServices>
+                <hmis:ScheduledFollowUpContacts>1</hmis:ScheduledFollowUpContacts>
+                <hmis:ResourcePackage>9</hmis:ResourcePackage>
+                <hmis:OtherAftercarePlanOrAction>0</hmis:OtherAftercarePlanOrAction>
+            </hmis:ExitPlansActions>
+            <hmis:FamilyReunification hmis:dateCreated="2015-11-22T23:14:59" hmis:dateUpdated="2015-10-11T23:14:59Z" hmis:userID="Zu6Nb5-">
+                <hmis:FamilyReunificationID>C2x</hmis:FamilyReunificationID>
+                <hmis:ExitID>C2x</hmis:ExitID>
+                <hmis:FamilyReunificationAchieved>1</hmis:FamilyReunificationAchieved>
+            </hmis:FamilyReunification>
+            <hmis:FamilyReunification hmis:dateCreated="2015-11-22T23:14:59" hmis:dateUpdated="2015-10-11T23:14:59Z" hmis:userID="Zu6Nb5-">
+                <hmis:FamilyReunificationID>C2x</hmis:FamilyReunificationID>
+                <hmis:ExitID>C3x</hmis:ExitID>
+                <hmis:FamilyReunificationAchieved>1</hmis:FamilyReunificationAchieved>
+            </hmis:FamilyReunification>
+            <hmis:FormerWardChildWelfare hmis:dataCollectionStage="5" hmis:informationDate="2015-06-24" hmis:dateCreated="2016-05-08T23:14:59" hmis:dateUpdated="2016-05-06T23:14:59Z" hmis:userID="DG4IfIQuAFF6I.yl7">
+                <hmis:FormerWardChildWelfareID>87655fdd5</hmis:FormerWardChildWelfareID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:FormerWardChildWelfare>1</hmis:FormerWardChildWelfare>
+                <hmis:ChildWelfareYears>2</hmis:ChildWelfareYears>
+                <hmis:ChildWelfareMonths>42</hmis:ChildWelfareMonths>
+            </hmis:FormerWardChildWelfare>
+            <hmis:FormerWardJuvenileJustice hmis:dataCollectionStage="5" hmis:informationDate="2015-06-24" hmis:dateCreated="2016-05-08T23:14:59" hmis:dateUpdated="2016-05-06T23:14:59Z" hmis:userID="DG4IfIQuAFF6I.yl7">
+                <hmis:FormerWardJuvenileJusticeID>87676c</hmis:FormerWardJuvenileJusticeID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:FormerWardJuvenileJustice>9</hmis:FormerWardJuvenileJustice>
+                <hmis:JuvenileJusticeYears>3</hmis:JuvenileJusticeYears>
+                <hmis:JuvenileJusticeMonths>2</hmis:JuvenileJusticeMonths>
+            </hmis:FormerWardJuvenileJustice>
+            <hmis:Funder hmis:dateCreated="2015-09-19T23:14:59" hmis:dateUpdated="2016-01-29T23:14:59Z" hmis:userID="m2Pym5-77tSVuI-IjerY">
+                <hmis:FunderID>76g</hmis:FunderID>
+                <hmis:ProjectID>222D</hmis:ProjectID>
+                <hmis:Funder>16</hmis:Funder>
+                <hmis:GrantID>S_w9P0npP</hmis:GrantID>
+                <hmis:StartDate>2016-06-11Z</hmis:StartDate>
+                <hmis:EndDate>2016-04-08</hmis:EndDate>
+            </hmis:Funder>
+            <hmis:Funder hmis:dateCreated="2015-09-19T23:14:59" hmis:dateUpdated="2016-01-29T23:14:59Z" hmis:userID="m2Pym5-77tSVuI-IjerY">
+                <hmis:FunderID>76g</hmis:FunderID>
+                <hmis:ProjectID>222E</hmis:ProjectID>
+                <hmis:Funder>16</hmis:Funder>
+                <hmis:GrantID>S_w9P0npP</hmis:GrantID>
+                <hmis:StartDate>2016-06-11Z</hmis:StartDate>
+                <hmis:EndDate>2016-04-08</hmis:EndDate>
+            </hmis:Funder>
+            <hmis:HealthInsurance hmis:dataCollectionStage="1" hmis:informationDate="2014-11-21" hmis:dateCreated="2016-01-13T23:14:59" hmis:dateUpdated="2014-09-29T23:14:59Z"
+                 hmis:userID="NdLgvXYr7g">
+                <hmis:HealthInsuranceID>sw1ws2</hmis:HealthInsuranceID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:InsuranceFromAnySource>8</hmis:InsuranceFromAnySource>
+                <hmis:Medicaid>0</hmis:Medicaid>
+                <hmis:NoMedicaidReason>1</hmis:NoMedicaidReason>
+                <hmis:Medicare>0</hmis:Medicare>
+                <hmis:NoMedicareReason>4</hmis:NoMedicareReason>
+                <hmis:SCHIP>1</hmis:SCHIP>
+                <hmis:NoSCHIPReason>3</hmis:NoSCHIPReason>
+                <hmis:VAMedicalServices>0</hmis:VAMedicalServices>
+                <hmis:NoVAMedReason>99</hmis:NoVAMedReason>
+                <hmis:EmployerProvided>1</hmis:EmployerProvided>
+                <hmis:NoEmployerProvidedReason>9</hmis:NoEmployerProvidedReason>
+                <hmis:COBRA>1</hmis:COBRA>
+                <hmis:NoCOBRAReason>9</hmis:NoCOBRAReason>
+                <hmis:PrivatePay>1</hmis:PrivatePay>
+                <hmis:NoPrivatePayReason>8</hmis:NoPrivatePayReason>
+                <hmis:StateHealthIns>0</hmis:StateHealthIns>
+                <hmis:NoStateHealthInsReason>4</hmis:NoStateHealthInsReason>
+            </hmis:HealthInsurance>
+            <hmis:HealthInsurance hmis:dataCollectionStage="1" hmis:informationDate="2014-11-21" hmis:dateCreated="2016-01-13T23:14:59" hmis:dateDeleted="2016-01-14T21:11:19" hmis:dateUpdated="2016-01-13T23:14:59" hmis:userID="NdLgvXYr7g">
+                <hmis:HealthInsuranceID>sw1ws3</hmis:HealthInsuranceID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:InsuranceFromAnySource>8</hmis:InsuranceFromAnySource>
+                <hmis:Medicaid>0</hmis:Medicaid>
+                <hmis:NoMedicaidReason>1</hmis:NoMedicaidReason>
+                <hmis:Medicare>0</hmis:Medicare>
+                <hmis:NoMedicareReason>4</hmis:NoMedicareReason>
+                <hmis:SCHIP>1</hmis:SCHIP>
+                <hmis:NoSCHIPReason>3</hmis:NoSCHIPReason>
+                <hmis:VAMedicalServices>0</hmis:VAMedicalServices>
+                <hmis:NoVAMedReason>99</hmis:NoVAMedReason>
+                <hmis:EmployerProvided>1</hmis:EmployerProvided>
+                <hmis:NoEmployerProvidedReason>9</hmis:NoEmployerProvidedReason>
+                <hmis:COBRA>1</hmis:COBRA>
+                <hmis:NoCOBRAReason>9</hmis:NoCOBRAReason>
+                <hmis:PrivatePay>1</hmis:PrivatePay>
+                <hmis:NoPrivatePayReason>8</hmis:NoPrivatePayReason>
+                <hmis:StateHealthIns>0</hmis:StateHealthIns>
+                <hmis:NoStateHealthInsReason>4</hmis:NoStateHealthInsReason>
+            </hmis:HealthInsurance>
+            <hmis:HealthStatus hmis:dataCollectionStage="5" hmis:informationDate="2014-11-21" hmis:dateCreated="2015-07-02T23:14:59Z"
+                 hmis:dateUpdated="2014-08-05T23:14:59Z" hmis:userID="e79Gzul_HbyrI9JY">
+                <hmis:HealthStatusID>y676755</hmis:HealthStatusID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:HealthCategory>27</hmis:HealthCategory>
+                <hmis:HealthStatus>4</hmis:HealthStatus>
+                <hmis:DueDate>2015-04-15Z</hmis:DueDate>
+            </hmis:HealthStatus>
+            <hmis:HousingAssessmentDisposition hmis:dateCreated="2015-04-09T23:14:59Z" hmis:dateUpdated="2016-07-01T23:14:59Z" hmis:userID="BtcDoTPF4UC-8ybtUm-woIM">
+                <hmis:HousingAssessmentDispositionID>456q</hmis:HousingAssessmentDispositionID>
+                <hmis:ExitID>C2x</hmis:ExitID>
+                <hmis:AssessmentDisposition>9</hmis:AssessmentDisposition>
+                <hmis:OtherDisposition>some other disposition text here</hmis:OtherDisposition>
+            </hmis:HousingAssessmentDisposition>
+            <hmis:IncomeAndSources hmis:dataCollectionStage="1" hmis:informationDate="2016-07-15" hmis:dateCreated="2016-01-13T23:14:59"
+                 hmis:dateUpdated="2015-04-17T23:14:59" hmis:userID="DN2J6hP2SNfgBs30u8dgkh8cVjY4jApG">
+                <hmis:IncomeAndSourcesID>32dd</hmis:IncomeAndSourcesID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:IncomeFromAnySource>1</hmis:IncomeFromAnySource>
+                <hmis:TotalMonthlyIncome>1889.22</hmis:TotalMonthlyIncome>
+                <hmis:Earned>1</hmis:Earned>
+                <hmis:EarnedAmount>13916.10</hmis:EarnedAmount>
+                <hmis:Unemployment>0</hmis:Unemployment>
+                <hmis:UnemploymentAmount>315.87</hmis:UnemploymentAmount>
+                <hmis:SSI>1</hmis:SSI>
+                <hmis:SSIAmount>2885.09</hmis:SSIAmount>
+                <hmis:SSDI>0</hmis:SSDI>
+                <hmis:SSDIAmount>41016.91</hmis:SSDIAmount>
+                <hmis:VADisabilityService>1</hmis:VADisabilityService>
+                <hmis:VADisabilityServiceAmount>5642.48</hmis:VADisabilityServiceAmount>
+                <hmis:VADisabilityNonService>0</hmis:VADisabilityNonService>
+                <hmis:VADisabilityNonServiceAmount>6847.91</hmis:VADisabilityNonServiceAmount>
+                <hmis:PrivateDisability>0</hmis:PrivateDisability>
+                <hmis:PrivateDisabilityAmount>11484.77</hmis:PrivateDisabilityAmount>
+                <hmis:WorkersComp>1</hmis:WorkersComp>
+                <hmis:WorkersCompAmount>8951855.15</hmis:WorkersCompAmount>
+                <hmis:TANF>0</hmis:TANF>
+                <hmis:TANFAmount>963412872.89</hmis:TANFAmount>
+                <hmis:GA>1</hmis:GA>
+                <hmis:GAAmount>15254.55</hmis:GAAmount>
+                <hmis:SocSecRetirement>1</hmis:SocSecRetirement>
+                <hmis:SocSecRetirementAmount>4784.72</hmis:SocSecRetirementAmount>
+                <hmis:Pension>1</hmis:Pension>
+                <hmis:PensionAmount>7865.32</hmis:PensionAmount>
+                <hmis:ChildSupport>1</hmis:ChildSupport>
+                <hmis:ChildSupportAmount>562.40</hmis:ChildSupportAmount>
+                <hmis:Alimony>1</hmis:Alimony>
+                <hmis:AlimonyAmount>1121.76</hmis:AlimonyAmount>
+                <hmis:OtherSource>1</hmis:OtherSource>
+                <hmis:OtherSourceAmount>156.47</hmis:OtherSourceAmount>
+                <hmis:OtherSourceIdentify>some other source here</hmis:OtherSourceIdentify>
+            </hmis:IncomeAndSources>
+            <hmis:Inventory hmis:informationDate="2015-04-04Z" hmis:dateCreated="2015-09-12T23:14:59Z" hmis:dateUpdated="2015-08-29T23:14:59Z"
+                 hmis:userID="billj">
+                <hmis:InventoryID>56563a</hmis:InventoryID>
+                <hmis:ProjectCoCID>343</hmis:ProjectCoCID>
+                <hmis:HouseholdType>1</hmis:HouseholdType>
+                <hmis:BedType>3</hmis:BedType>
+                <hmis:Availabilty>3</hmis:Availabilty>
+                <hmis:UnitInventory>1595973432</hmis:UnitInventory>
+                <hmis:BedInventory>
+                    <hmis:BedInventory>130</hmis:BedInventory>
+                    <hmis:CHBedInventory>17</hmis:CHBedInventory>
+                    <hmis:VetBedInventory>14</hmis:VetBedInventory>
+                    <hmis:YouthBedInventory>16</hmis:YouthBedInventory>
+                    <hmis:YouthAgeGroup>1</hmis:YouthAgeGroup>
+                </hmis:BedInventory>
+                <hmis:InventoryStartDate>2014-10-31</hmis:InventoryStartDate>
+                <hmis:InventoryEndDate>2015-05-12Z</hmis:InventoryEndDate>
+                <hmis:HMISParticipatingBeds>539390492</hmis:HMISParticipatingBeds>
+            </hmis:Inventory>
+            <hmis:LastGradeCompleted hmis:dataCollectionStage="5" hmis:informationDate="2014-11-21" hmis:dateCreated="2015-01-31T23:14:59"
+                hmis:dateUpdated="2016-01-10T23:14:59Z" hmis:userID="billj">
+                <hmis:LastGradeCompletedID>34433w</hmis:LastGradeCompletedID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:LastGradeCompleted>3</hmis:LastGradeCompleted>
+            </hmis:LastGradeCompleted>
+            <hmis:LastPermanentAddress hmis:dateCreated="2014-11-21T23:14:59Z" hmis:dateUpdated="2015-06-11T23:14:59" hmis:userID="J6FewJxbZC12u1g2Ep.0hnCH">
+                <hmis:LastPermanentAddressID>87hh6t</hmis:LastPermanentAddressID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:LastPermanentStreet>13th Ave W</hmis:LastPermanentStreet>
+                <hmis:LastPermanentCity>Yreka</hmis:LastPermanentCity>
+                <hmis:LastPermanentState>AR</hmis:LastPermanentState>
+                <hmis:LastPermanentZIP>57601</hmis:LastPermanentZIP>
+                <hmis:AddressDataQuality>2</hmis:AddressDataQuality>
+            </hmis:LastPermanentAddress>
+            <hmis:MedicalAssistance hmis:dataCollectionStage="1" hmis:informationDate="2014-11-21" hmis:dateCreated="2015-08-22T23:14:59"
+                 hmis:dateUpdated="2014-10-25T23:14:59" hmis:userID="ptravis">
+                <hmis:MedicalAssistanceID>y7665</hmis:MedicalAssistanceID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:HIVAIDSAssistance>99</hmis:HIVAIDSAssistance>
+                <hmis:NoHIVAIDSAssistanceReason>1</hmis:NoHIVAIDSAssistanceReason>
+                <hmis:ADAP>9</hmis:ADAP>
+                <hmis:NoADAPReason>9</hmis:NoADAPReason>
+            </hmis:MedicalAssistance>
+            <hmis:NonCashBenefits hmis:dataCollectionStage="1" hmis:informationDate="2016-05-03" hmis:dateCreated="2014-11-19T23:14:59"
+                 hmis:dateUpdated="2015-02-27T23:14:59" hmis:userID="ptravis">
+                <hmis:NonCashBenefitsID>766ww</hmis:NonCashBenefitsID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:BenefitsFromAnySource>1</hmis:BenefitsFromAnySource>
+                <hmis:SNAP>0</hmis:SNAP>
+                <hmis:WIC>0</hmis:WIC>
+                <hmis:TANFChildCare>0</hmis:TANFChildCare>
+                <hmis:TANFTransportation>0</hmis:TANFTransportation>
+                <hmis:OtherTANF>0</hmis:OtherTANF>
+                <hmis:RentalAssistanceOngoing>1</hmis:RentalAssistanceOngoing>
+                <hmis:RentalAssistanceTemp>1</hmis:RentalAssistanceTemp>
+                <hmis:OtherSource>0</hmis:OtherSource>
+                <hmis:OtherSourceIdentify>some other source name</hmis:OtherSourceIdentify>
+            </hmis:NonCashBenefits>
+            <hmis:Organization hmis:dateCreated="2015-02-17T23:14:59" hmis:dateUpdated="2016-02-29T23:14:59" hmis:userID="ptravis">
+                <hmis:OrganizationID>34</hmis:OrganizationID>
+                <hmis:OrganizationName>Helping People, Inc.</hmis:OrganizationName>
+                <hmis:OrganizationCommonName>Helping</hmis:OrganizationCommonName>
+            </hmis:Organization>
+            <hmis:PATHStatus hmis:dateCreated="2014-08-31T23:14:59" hmis:dateUpdated="2016-01-06T23:14:59" hmis:userID="bmerriweather">
+                <hmis:PathStatusID>453332</hmis:PathStatusID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:DateOfStatus>2016-04-23</hmis:DateOfStatus>
+                <hmis:ClientEnrolledInPATH>0</hmis:ClientEnrolledInPATH>
+                <hmis:ReasonNotEnrolled>2</hmis:ReasonNotEnrolled>
+            </hmis:PATHStatus>
+            <hmis:PercentAMI hmis:dateCreated="2014-11-21T23:14:59Z" hmis:dateUpdated="2015-06-11T23:14:59" hmis:userID="7653">
+                <hmis:PercentAMIID>787ughj55</hmis:PercentAMIID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:PercentAMI>1</hmis:PercentAMI>
+            </hmis:PercentAMI>
+            <hmis:Project hmis:dateCreated="2016-02-17T23:14:59" hmis:dateUpdated="2015-03-14T23:14:59Z" hmis:userID="j2ZsRLAPv">
+                <hmis:ProjectID>222D</hmis:ProjectID>
+                <hmis:OrganizationID>34</hmis:OrganizationID>
+                <hmis:ProjectName>Residence Enablers</hmis:ProjectName>
+                <hmis:ContinuumProject>0</hmis:ContinuumProject>
+                <hmis:ProjectType>9</hmis:ProjectType>
+                <hmis:ResidentialAffiliation>0</hmis:ResidentialAffiliation>
+                <hmis:TrackingMethod>0</hmis:TrackingMethod>
+                <hmis:TargetPopulation>4</hmis:TargetPopulation>
+                <hmis:ProjectCommonName>Residence Enablers</hmis:ProjectCommonName>
+            </hmis:Project>
+            <hmis:Project hmis:dateCreated="2016-02-17T23:14:59" hmis:dateUpdated="2015-03-14T23:14:59Z" hmis:userID="j2ZsRLAPv">
+                <hmis:ProjectID>222E</hmis:ProjectID>
+                <hmis:OrganizationID>34</hmis:OrganizationID>
+                <hmis:ProjectName>City Shelter</hmis:ProjectName>
+                <hmis:ContinuumProject>0</hmis:ContinuumProject>
+                <hmis:ProjectType>9</hmis:ProjectType>
+                <hmis:ResidentialAffiliation>1</hmis:ResidentialAffiliation>
+                <hmis:TrackingMethod>0</hmis:TrackingMethod>
+                <hmis:TargetPopulation>4</hmis:TargetPopulation>
+                <hmis:ProjectCommonName>City Shelter</hmis:ProjectCommonName>
+            </hmis:Project>
+            <hmis:ProjectCoC  hmis:dateCreated="2015-11-22T23:14:59" hmis:dateUpdated="2015-10-11T23:14:59Z" hmis:userID="bmerriweather">
+                <hmis:ProjectCoCID>343</hmis:ProjectCoCID>
+                <hmis:CoCCode>MA-500</hmis:CoCCode>
+                <hmis:ProjectID>222D</hmis:ProjectID>
+            </hmis:ProjectCoC>
+            <hmis:ProjectCoC  hmis:dateCreated="2015-11-22T23:14:59" hmis:dateUpdated="2015-10-11T23:14:59Z" hmis:userID="bmerriweather">
+                <hmis:ProjectCoCID>344</hmis:ProjectCoCID>
+                <hmis:CoCCode>MA-500</hmis:CoCCode>
+                <hmis:ProjectID>222E</hmis:ProjectID>
+            </hmis:ProjectCoC>
+            <hmis:ProjectCompletionStatus hmis:dateCreated="2015-11-22T23:14:59" hmis:dateUpdated="2015-10-11T23:14:59Z" hmis:userID="bmerriweather">
+                <hmis:ProjectCompletionStatusID>4533wwq</hmis:ProjectCompletionStatusID>
+                <hmis:ExitID>C2x</hmis:ExitID>
+                <hmis:ProjectCompletionStatus>3</hmis:ProjectCompletionStatus>
+                <hmis:EarlyExitReason>1</hmis:EarlyExitReason>
+            </hmis:ProjectCompletionStatus>
+            <hmis:ReferralSource hmis:dataCollectionStage="5" hmis:dateCreated="2015-11-22T23:14:59" hmis:dateUpdated="2015-10-11T23:14:59Z" hmis:userID="byoung32">
+                <hmis:ReferralSourceID>jhjhyyy</hmis:ReferralSourceID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:ReferralSource>18</hmis:ReferralSource>
+                <hmis:CountOutreachReferralApproaches>3</hmis:CountOutreachReferralApproaches>
+            </hmis:ReferralSource>
+            <hmis:ResidentialMoveInDate hmis:dateCreated="2015-04-25T23:14:59" hmis:dateUpdated="2015-07-23T23:14:59Z" hmis:userID="AUfZ2">
+                <hmis:ResidentialMoveInDateID>z44332</hmis:ResidentialMoveInDateID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:InPermanentHousing>1</hmis:InPermanentHousing>
+                <hmis:ResidentialMoveInDate>2016-05-19Z</hmis:ResidentialMoveInDate>
+            </hmis:ResidentialMoveInDate>
+            <hmis:RHYBCPStatus hmis:dateCreated="2014-10-25T23:14:59Z" hmis:dateUpdated="2015-03-27T23:14:59Z" hmis:userID="ryu">
+                <hmis:RHYBCPStatusID>erffedyte1</hmis:RHYBCPStatusID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:StatusDate>2014-09-20</hmis:StatusDate>
+                <hmis:FYSBYouth>1</hmis:FYSBYouth>
+                <hmis:ReasonNoServices>3</hmis:ReasonNoServices>
+            </hmis:RHYBCPStatus>
+            <hmis:Services hmis:dateCreated="2015-09-04T23:14:59" hmis:dateUpdated="2015-02-28T23:14:59Z" hmis:userID="CoaTbskfRfTvBSHN8_eRmMF4.4O-A">
+                <hmis:ServicesID>44gg</hmis:ServicesID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:DateProvided>2015-09-06</hmis:DateProvided>
+                <hmis:RecordType>16</hmis:RecordType>
+                <hmis:TypeProvided>11</hmis:TypeProvided>
+                <hmis:OtherTypeProvided>some other type here</hmis:OtherTypeProvided>
+                <hmis:SubTypeProvided>12</hmis:SubTypeProvided>
+                <hmis:FAAmount>1145.59</hmis:FAAmount>
+                <hmis:ReferralOutcome>2</hmis:ReferralOutcome>
+            </hmis:Services>
+            <hmis:SexualOrientation hmis:dataCollectionStage="1" hmis:dateCreated="2016-05-08T23:14:59" hmis:dateUpdated="2016-05-06T23:14:59Z" hmis:userID="DG4IfIQuAFF6I.yl7">
+                <hmis:SexualOrientationID>767ggg</hmis:SexualOrientationID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:SexualOrientation>99</hmis:SexualOrientation>               
+            </hmis:SexualOrientation>
+            <hmis:Site hmis:dateCreated="2014-09-03T23:14:59" hmis:dateUpdated="2016-02-25T23:14:59Z" hmis:userID="ck">
+                <hmis:SiteID>4526</hmis:SiteID>
+                <hmis:ProjectCoCID>343</hmis:ProjectCoCID>
+                <hmis:PrincipalSite>1</hmis:PrincipalSite>
+                <hmis:Address>111 Pine St.</hmis:Address>
+                <hmis:City>Tuscaloosa</hmis:City>
+                <hmis:State>OK</hmis:State>
+                <hmis:ZIP>84683</hmis:ZIP>
+                <hmis:Geocode>177988</hmis:Geocode>
+            </hmis:Site>
+            <hmis:VeteranInfo hmis:dateCreated="2014-12-17T23:14:59" hmis:dateUpdated="2016-03-10T23:14:59" hmis:userID="dZPlRM">
+                <hmis:VeteranInfoID>7878665s</hmis:VeteranInfoID>
+                <hmis:PersonalID>A1a1</hmis:PersonalID>
+                <hmis:YearEnteredService>2002</hmis:YearEnteredService>
+                <hmis:YearSeparated>2004</hmis:YearSeparated>
+                <hmis:WorldWarII>0</hmis:WorldWarII>
+                <hmis:KoreanWar>99</hmis:KoreanWar>
+                <hmis:VietnamWar>1</hmis:VietnamWar>
+                <hmis:DesertStorm>0</hmis:DesertStorm>
+                <hmis:AfghanistanOEF>8</hmis:AfghanistanOEF>
+                <hmis:IraqOIF>9</hmis:IraqOIF>
+                <hmis:IraqOND>99</hmis:IraqOND>
+                <hmis:OtherTheater>8</hmis:OtherTheater>
+                <hmis:MilitaryBranch>8</hmis:MilitaryBranch>
+                <hmis:DischargeStatus>6</hmis:DischargeStatus>
+            </hmis:VeteranInfo>
+            <hmis:WorstHousingSituation hmis:dateCreated="2015-06-24T23:14:59" hmis:dateUpdated="2015-02-13T23:14:59Z" hmis:userID="as1Peee5hTGWNY6mtD1O_M">
+                <hmis:WorstHousingSituationID>8i76</hmis:WorstHousingSituationID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:WorstHousingSituation>9</hmis:WorstHousingSituation>
+            </hmis:WorstHousingSituation>
+            <hmis:YouthCriticalIssues hmis:dataCollectionStage="1" hmis:dateCreated="2016-05-08T23:14:59" hmis:dateUpdated="2016-05-06T23:14:59Z" hmis:userID="DG4IfIQuAFF6I.yl7">
+                <hmis:YouthCriticalIssuesID>y76754</hmis:YouthCriticalIssuesID>
+                <hmis:ProjectEntryID>w5641</hmis:ProjectEntryID>
+                <hmis:HouseholdDynamics>0</hmis:HouseholdDynamics>
+                <hmis:SexualOrientationGenderIDYouth>1</hmis:SexualOrientationGenderIDYouth>
+                <hmis:SexualOrientationGenderIDFam>0</hmis:SexualOrientationGenderIDFam>
+                <hmis:HousingIssuesYouth>1</hmis:HousingIssuesYouth>
+                <hmis:HousingIssuesFam>1</hmis:HousingIssuesFam>
+                <hmis:SchoolEducationalIssuesYouth>0</hmis:SchoolEducationalIssuesYouth>
+                <hmis:SchoolEducationalIssuesFam>0</hmis:SchoolEducationalIssuesFam>
+                <hmis:UnemploymentYouth>1</hmis:UnemploymentYouth>
+                <hmis:UnemploymentFam>0</hmis:UnemploymentFam>
+                <hmis:MentalHealthIssuesYouth>0</hmis:MentalHealthIssuesYouth>
+                <hmis:MentalHealthIssuesFam>0</hmis:MentalHealthIssuesFam>
+                <hmis:HealthIssuesYouth>1</hmis:HealthIssuesYouth>
+                <hmis:HealthIssuesFam>0</hmis:HealthIssuesFam>
+                <hmis:PhysicalDisabilityYouth>0</hmis:PhysicalDisabilityYouth>
+                <hmis:PhysicalDisabilityFam>0</hmis:PhysicalDisabilityFam>
+                <hmis:MentalDisabilityYouth>1</hmis:MentalDisabilityYouth>
+                <hmis:MentalDisabilityFam>0</hmis:MentalDisabilityFam>
+                <hmis:AbuseAndNeglectYouth>0</hmis:AbuseAndNeglectYouth>
+                <hmis:AbuseAndNeglectFam>1</hmis:AbuseAndNeglectFam>
+                <hmis:AlcoholDrugAbuseYouth>0</hmis:AlcoholDrugAbuseYouth>
+                <hmis:AlcoholDrugAbuseFam>0</hmis:AlcoholDrugAbuseFam>
+                <hmis:InsufficientIncome>0</hmis:InsufficientIncome>
+                <hmis:ActiveMilitaryParent>1</hmis:ActiveMilitaryParent>
+                <hmis:IncarceratedParent>1</hmis:IncarceratedParent>
+                <hmis:IncarceratedParentStatus>1</hmis:IncarceratedParentStatus>
+            </hmis:YouthCriticalIssues>
+        </hmis:Export>
+    </hmis:Source>
+</hmis:Sources>

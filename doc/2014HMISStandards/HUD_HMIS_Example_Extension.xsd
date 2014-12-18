@@ -1,0 +1,124 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<xs:schema
+	targetNamespace="http://www.hudhdx.info/Resources/Vendors/4_0/HUD_HMIS_Example_Extension.xsd"
+	xmlns="http://www.hudhdx.info/Resources/Vendors/4_0/HUD_HMIS_Example_Extension.xsd"	
+	xmlns:ext="http://www.hudhdx.info/Resources/Vendors/4_0/HUD_HMIS_Example_Extension.xsd"	
+	xmlns:hmis="http://www.hudhdx.info/Resources/Vendors/4_0/HUD_HMIS.xsd"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:fn="http://www.w3.org/2005/xpath-functions"
+	xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+	vc:minVersion = "1.1"
+	elementFormDefault="qualified"
+	attributeFormDefault="qualified"
+	version="4.0">
+	<xs:import namespace="http://www.hudhdx.info/Resources/Vendors/4_0/HUD_HMIS.xsd" schemaLocation="	https://raw.githubusercontent.com/hmis-interop/xml/v4.0.0-rc.1/src/HUD_HMIS.xsd"/>
+	
+	<!-- Adding hashing capabilities to the client's first name with this extension -->
+	<xs:attribute name="hashValue" type="hmis:string50"/>	
+
+	<xs:element name="Client" type="ext:client"/>
+	
+	<xs:complexType name="client">
+		<xs:sequence>
+			<xs:element name="PersonalID" type="hmis:string32">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Dictionary, Section 3.13.</xs:documentation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Manual, Section 3.13.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- Here's where we add the extension attribute to FirstName -->
+			<xs:element name="FirstName" type="ext:hashedFirstName"/>
+			<xs:element name="MiddleName" type="hmis:string50">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Dictionary, Section 3.1, #2.</xs:documentation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Manual, Section 3.1.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LastName" type="hmis:string50">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Dictionary, Section 3.1, #3.</xs:documentation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Manual, Section 3.1.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NameSuffix" type="hmis:string50">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Dictionary, Section 3.1, #4.</xs:documentation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Manual, Section 3.1.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NameDataQuality" type="hmis:nameDataQuality">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Dictionary, Section 3.1, #5.</xs:documentation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Manual, Section 3.1.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SSN" type="hmis:ssn">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Dictionary, Section 3.2, #1.</xs:documentation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Manual, Section 3.2.</xs:documentation>
+					<xs:documentation xml:lang="en">Unknown SSN digits should be indicated with a lower case "x".</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SSNDataQuality" type="hmis:ssnDataQuality">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Dictionary, Section 3.2, #2.</xs:documentation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Manual, Section 3.2.</xs:documentation>
+				</xs:annotation>
+			</xs:element>			
+			<xs:element name="DOB" type="xs:date">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Dictionary, Section 3.3, #1.</xs:documentation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Manual, Section 3.3.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DOBDataQuality" type="hmis:dobDataQuality">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Dictionary, Section 3.3, #2.</xs:documentation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Manual, Section 3.3.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Gender" type="hmis:gender">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Dictionary, Section 3.6, #1.</xs:documentation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Manual, Section 3.6.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OtherGender" type="hmis:string50" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Dictionary, Section 3.6, #1A.</xs:documentation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Manual, Section 3.6.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Ethnicity" type="hmis:ethnicity">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Dictionary, Section 3.5, #1.</xs:documentation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Manual, Section 3.5.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Race" type="hmis:race" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Dictionary, Section 3.4, #1.</xs:documentation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Manual, Section 3.4.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VeteranStatus" type="hmis:fiveValDKRefused">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Dictionary, Section 3.7, #1.</xs:documentation>
+					<xs:documentation xml:lang="en">See May 2014 HMIS Data Manual, Section 3.7.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attributeGroup ref="hmis:baseMetaData"/>
+	</xs:complexType>
+		
+	<!-- New complex type to add hashing -->
+	<xs:complexType name="hashedFirstName">
+		<xs:simpleContent>
+			<xs:extension base="hmis:string50">
+				<xs:attribute name="hashValue" type="hmis:string50" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+</xs:schema>
