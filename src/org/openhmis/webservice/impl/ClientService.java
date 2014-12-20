@@ -23,7 +23,9 @@ import org.openhmis.exception.client.ClientNotFoundException;
 import org.openhmis.exception.client.InValidClientException;
 import org.openhmis.exception.client.UnableToAddClientException;
 import org.openhmis.exception.client.UnableToUpdateClientException;
+import org.openhmis.service.AuthenticateManager;
 import org.openhmis.service.ClientManager;
+import org.openhmis.service.impl.AuthenticateManagerImpl;
 import org.openhmis.service.impl.ClientManagerImpl;
 import org.openhmis.vo.ClientVO;
 
@@ -34,10 +36,13 @@ public class ClientService
 {	
 	private static final Logger log = Logger.getLogger(ClientService.class);
 	private ClientManager clientManager;
+	private AuthenticateManager authenticateManager;
 	Mapper mapper = DozerBeanMapperSingletonWrapper.getInstance();
 	public ClientService()
 	{
 		clientManager = new ClientManagerImpl();
+		authenticateManager = new AuthenticateManagerImpl();
+		
 	}
 
 	@GET
@@ -50,14 +55,19 @@ public class ClientService
 		ClientVO clientVO = new ClientVO();
 		try
 		{
-			clientVO = clientManager.getClientById(clientKey);
-			if (clientVO == null)
+			boolean isAuthenticate = authenticateManager.authenticateUser(username, password);
+			if (isAuthenticate)
 			{
-				throw new ClientNotFoundException(clientKey + " doesn't exist");
+				clientVO = clientManager.getClientById(clientKey);
+				if (clientVO == null)
+				{
+					throw new ClientNotFoundException(clientKey + " doesn't exist");
+				}
 			}
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error("Couldn't get the client " + e.getMessage());
 			throw new ClientNotFoundException(e.getMessage());
 		}
