@@ -41,10 +41,10 @@ public class ClientService
 	}
 
 	@GET
-	@Path("/client/{clientKey}")
+	@Path("/client/{clientKey}/{username}/{password}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	@RolesAllowed({"ADMIN","CUSTOMER"})
-	public ClientVO getClient(@PathParam("clientKey") Long clientKey) throws ClientNotFoundException
+	public ClientVO getClient(@PathParam("clientKey") Long clientKey, @PathParam("username") String username, @PathParam("password") String password) throws ClientNotFoundException
 	{
 		log.debug("getClient");
 		ClientVO clientVO = new ClientVO();
