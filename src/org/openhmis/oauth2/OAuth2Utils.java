@@ -202,7 +202,6 @@ public class OAuth2Utils
 		try
 		{
 			post.setEntity(new UrlEncodedFormEntity(parametersBody, HTTP.UTF_8));
-	
 			response = httpClient.execute(post);
 			int code = response.getStatusLine().getStatusCode();
 			if (code >= 400) 
