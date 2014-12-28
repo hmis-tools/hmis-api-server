@@ -10,7 +10,7 @@ public class OAuthConstants
 	public static final String PASSWORD = "password";
 	public static final String AUTHENTICATION_SERVER_URL = "authentication_server_url";
 	public static final String CONFIG_FILE_PATH = "org/openhmis/oauth2/Oauth2Client.config";
-//	public static final String CONFIG_FILE_PATH = "Oauth2Client.config";
+	public static final String PRIVATE_KEY_FILE_PATH = "org/openhmis/oauth2/key/";
 	public static final String RESOURCE_SERVER_URL = "resource_server_url";
 	public static final String GRANT_TYPE = "grant_type";
 	public static final String SCOPE = "scope";
@@ -25,5 +25,7 @@ public class OAuthConstants
 	public static final int HTTP_FORBIDDEN = 403;
 	public static final int HTTP_UNAUTHORIZED = 401;
 	
+	
+	public static final String PRIVATE_KEY_FILE_NAME = "APIProject-7caa8bb92eb0.p12";						// name of the private key in the service account
 
 }

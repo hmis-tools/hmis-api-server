@@ -42,7 +42,6 @@ public class ClientService
 	{
 		clientManager = new ClientManagerImpl();
 		authenticateManager = new AuthenticateManagerImpl();
-		
 	}
 
 	@GET
@@ -106,27 +105,31 @@ public class ClientService
 	}
 
 	@POST
-	@Path("/addClient")
+	@Path("/addClient/{username}/{password}")
 	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public ClientVO addClient(JAXBElement<ClientVO> client) throws ClientAlreadyExistException, InValidClientException, UnableToAddClientException
+	public ClientVO addClient(JAXBElement<ClientVO> client, @PathParam("username") String username, @PathParam("password") String password) throws ClientAlreadyExistException, InValidClientException, UnableToAddClientException
 	{
 		log.debug("addClient");
 		ClientVO clientVO = null;
 		try
 		{
-			clientVO = client.getValue();
-			Client newClient = mapper.map(clientVO, Client.class);
-			// first check if this client already exist in the database
-			if (newClient.getSocSecNumber() == null){
-				throw new InValidClientException("Client doesn't have all the mandatory data.");
-			}
-			Client existingClient = clientManager.getClientBySSN(newClient.getSocSecNumber());
-			if (existingClient != null)
+			boolean isAuthenticate = authenticateManager.authenticateUser(username, password);
+			if (isAuthenticate)
 			{
-				throw new ClientAlreadyExistException("Client already exist in the system.");
+				clientVO = client.getValue();
+				Client newClient = mapper.map(clientVO, Client.class);
+				// first check if this client already exist in the database
+				if (newClient.getSocSecNumber() == null){
+					throw new InValidClientException("Client doesn't have all the mandatory data.");
+				}
+				Client existingClient = clientManager.getClientBySSN(newClient.getSocSecNumber());
+				if (existingClient != null)
+				{
+					throw new ClientAlreadyExistException("Client already exist in the system.");
+				}
+				clientManager.addClient(newClient);
 			}
-			clientManager.addClient(newClient);
 		}
 		catch(Exception e)
 		{
@@ -137,10 +140,10 @@ public class ClientService
 	}
 
 	@PUT
-	@Path("/update/{clientKey}")
+	@Path("/update/{clientKey}/{username}/{password}")
 	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public ClientVO updateClient(@PathParam("clientKey") Long clientKey,JAXBElement<ClientVO> client) throws UnableToUpdateClientException
+	public ClientVO updateClient(@PathParam("clientKey") Long clientKey,JAXBElement<ClientVO> client, @PathParam("username") String username, @PathParam("password") String password) throws UnableToUpdateClientException
 	{
 		log.debug("updateClient");
 		ClientVO updatedClientVO = null;

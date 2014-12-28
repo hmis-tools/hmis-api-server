@@ -1,4 +1,4 @@
-package org.openhmis.oauth2;
+package org.openhmis.oauth2.salesforce;
 
 import java.io.IOException;
 import java.io.InputStream;

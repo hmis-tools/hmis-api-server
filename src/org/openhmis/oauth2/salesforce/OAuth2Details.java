@@ -1,4 +1,4 @@
-package org.openhmis.oauth2;
+package org.openhmis.oauth2.salesforce;
 
 public class OAuth2Details
 {
