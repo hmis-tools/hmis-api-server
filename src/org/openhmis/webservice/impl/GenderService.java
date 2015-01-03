@@ -7,6 +7,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
@@ -16,7 +17,9 @@ import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.dozer.Mapper;
 import org.openhmis.domain.CodeGender;
 import org.openhmis.exception.gender.GenderNotFoundException;
+import org.openhmis.service.AuthenticateManager;
 import org.openhmis.service.GenderManager;
+import org.openhmis.service.impl.AuthenticateManagerImpl;
 import org.openhmis.service.impl.GenderManagerImpl;
 import org.openhmis.vo.GenderVO;
 
@@ -26,31 +29,38 @@ public class GenderService
 {
 	private static final Logger log = Logger.getLogger(GenderService.class);
 	private GenderManager genderManager;
+	private AuthenticateManager authenticateManager;
 	Mapper mapper = DozerBeanMapperSingletonWrapper.getInstance();
 	public GenderService()
 	{
 		genderManager = new GenderManagerImpl();
+		authenticateManager = new AuthenticateManagerImpl();
 	}
 	
 	@GET
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public List<GenderVO> getAllGenders() throws GenderNotFoundException
+	@Path("/gender/{username}/{password}")
+	public List<GenderVO> getAllGenders(@PathParam("username") String username, @PathParam("password") String password) throws GenderNotFoundException
 	{
 		log.debug("getAllGenders");
 		List<GenderVO> genderVOList = null;
 		try
 		{
-			genderVOList = new ArrayList<GenderVO>();
-			List<CodeGender> genderList = genderManager.getGenders();
-			if ((genderList == null) || (genderList.isEmpty()))
+			boolean isAutenticate = authenticateManager.authenticateUser(username, password);
+			if(isAutenticate)
 			{
-				throw new GenderNotFoundException("No Gender Found");
-			}
-			log.debug("retrieve gender list" + genderList.toString());
-			for (CodeGender g: genderList)
-			{
-				GenderVO genderVO = mapper.map(g, GenderVO.class);
-				genderVOList.add(genderVO);
+				genderVOList = new ArrayList<GenderVO>();
+				List<CodeGender> genderList = genderManager.getGenders();
+				if ((genderList == null) || (genderList.isEmpty()))
+				{
+					throw new GenderNotFoundException("No Gender Found");
+				}
+				log.debug("retrieve gender list" + genderList.toString());
+				for (CodeGender g: genderList)
+				{
+					GenderVO genderVO = mapper.map(g, GenderVO.class);
+					genderVOList.add(genderVO);
+				}
 			}
 		}
 		catch(Exception e)
@@ -61,19 +71,23 @@ public class GenderService
 		return genderVOList;
 	}
 	
-	@Path("/addGender")
+	@Path("/addGender/{username}/{password}")
 	@POST
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public GenderVO addGender(JAXBElement<GenderVO> gender)
+	public GenderVO addGender(JAXBElement<GenderVO> gender, @PathParam("username") String username, @PathParam("password") String password)
 	{
 		log.debug("addGender");
 		GenderVO genderVO = null;
 		try
 		{
-			genderVO = gender.getValue();
-			CodeGender newGender = mapper.map(genderVO, CodeGender.class);
-			genderManager.addGender(newGender);
+			boolean isAuthenticate = authenticateManager.authenticateUser(username, password);
+			if (isAuthenticate)
+			{
+				genderVO = gender.getValue();
+				CodeGender newGender = mapper.map(genderVO, CodeGender.class);
+				genderManager.addGender(newGender);
+			}
 		}
 		catch(Exception e)
 		{

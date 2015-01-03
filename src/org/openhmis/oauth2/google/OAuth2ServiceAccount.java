@@ -85,7 +85,7 @@ public class OAuth2ServiceAccount
 		}
 		catch(Exception e)
 		{
-			throw new FileNotFoundException("File doesn't exist");
+			throw new FileNotFoundException("File doesn't exist " +e.getMessage());
 		}
 		return file;
 	}	

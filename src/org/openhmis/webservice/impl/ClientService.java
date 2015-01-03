@@ -74,26 +74,29 @@ public class ClientService
 	}
 	
 	@GET
-	@Path("lastName/{lastName}")
+	@Path("lastName/{lastName}/{username}/{password}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	
-	public List<ClientVO> getClientByLastName(
-			@PathParam("lastName") String lastName) throws ClientNotFoundException 
+	public List<ClientVO> getClientByLastName(@PathParam("lastName") String lastName, @PathParam("username") String username, @PathParam("password") String password) throws ClientNotFoundException 
 	{
 		log.debug("getClientByLastName");
 		List<ClientVO> clientVOList = null;
 		try
 		{
-			clientVOList = new ArrayList<ClientVO>();			
-			List<Client> clientList = clientManager.getClientByLastName(lastName);
-			if (( clientList == null) || (clientList.isEmpty()))
+			boolean isAuthenticate = authenticateManager.authenticateUser(username, password);
+			if (isAuthenticate)
 			{
-				throw new ClientNotFoundException(" No Client exist with last name " + lastName);
-			}
-			for(Client c: clientList)
-			{
-				ClientVO clientVO = mapper.map(c, ClientVO.class);
-				clientVOList.add(clientVO);
+				clientVOList = new ArrayList<ClientVO>();			
+				List<Client> clientList = clientManager.getClientByLastName(lastName);
+				if (( clientList == null) || (clientList.isEmpty()))
+				{
+					throw new ClientNotFoundException(" No Client exist with last name " + lastName);
+				}
+				for(Client c: clientList)
+				{
+					ClientVO clientVO = mapper.map(c, ClientVO.class);
+					clientVOList.add(clientVO);
+				}
 			}
 		}
 		catch(Exception e)
@@ -149,9 +152,13 @@ public class ClientService
 		ClientVO updatedClientVO = null;
 		try
 		{
-			updatedClientVO = client.getValue();
-			Client updatedClient = mapper.map(updatedClientVO, Client.class);
-			clientManager.updateClient(updatedClient);
+			boolean isAuthenticate = authenticateManager.authenticateUser(username, password);
+			if (isAuthenticate)
+			{
+				updatedClientVO = client.getValue();
+				Client updatedClient = mapper.map(updatedClientVO, Client.class);
+				clientManager.updateClient(updatedClient);
+			}
 		}
 		catch(Exception e)
 		{
