@@ -31,14 +31,13 @@ private static final Logger log = Logger.getLogger(ClientDAOImpl.class);
 		log.debug("find Client");
 		return null;
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Object[]> findClientById(Long clientKey) 
 	{
 		log.debug("find Client By Id");
 		try
 		{
-//			Client client = (Client)getSession().get("org.openhmis.domain.Client", clientKey);
-//			return client;
 			String queryString = "select c.clientKey as clientKey, c.socSecNumber as SSN, c.nameFirst as FirstName, c.nameLast as LastName,c.nameMiddle as MiddleName,c.dateOfBirth as DOB," +
 					"ce.description as Ethnicity, cg.description as Gender " +
 					"from Client c " +
@@ -56,6 +55,8 @@ private static final Logger log = Logger.getLogger(ClientDAOImpl.class);
 			throw re;
 		}
 	}
+	
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Client> findClientByName(String firstName, String lastName) 
@@ -79,6 +80,22 @@ private static final Logger log = Logger.getLogger(ClientDAOImpl.class);
 	}
 	
 	
+	@Override
+	public Client findClientDetailById(Long clientKey) 
+	{
+		log.debug("find Client Detail By Id");
+		Client client = null;
+		try
+		{
+			client = (Client)getSession().get("org.openhmis.domain.Client", clientKey);
+		}
+		catch (RuntimeException re)
+		{
+			log.error("fine Client By First Name and Last Name failed" , re);
+			throw re;
+		}
+		return client;
+	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Client> findClientByLastName(String lastName) 

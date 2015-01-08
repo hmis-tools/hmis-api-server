@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -18,6 +19,7 @@ import org.dozer.Mapper;
 import org.openhmis.domain.CodeEthnicity;
 import org.openhmis.exception.ethnicity.EthnicityNotFoundException;
 import org.openhmis.exception.ethnicity.UnableToAddEthnicityException;
+import org.openhmis.exception.ethnicity.UnableToUpdateEthnicityException;
 import org.openhmis.service.AuthenticateManager;
 import org.openhmis.service.EthnicityManager;
 import org.openhmis.service.impl.AuthenticateManagerImpl;
@@ -85,6 +87,7 @@ public class EthnicityService
 			boolean isAuthenticate = authenticateManager.authenticateUser(username, password);
 			if(isAuthenticate)
 			{
+				ethnicityVO = ethnicity.getValue();
 				CodeEthnicity newEthnicity = mapper.map(ethnicityVO, CodeEthnicity.class);
 				ethnicityManager.addEthnicity(newEthnicity);
 			}
@@ -95,6 +98,32 @@ public class EthnicityService
 			throw new UnableToAddEthnicityException(e.getMessage());
 		}
 		return ethnicityVO;
+	}
+	
+	@PUT
+	@Path("/updateEthnicity/{username}/{password}")
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	public EthnicityVO updateEthnicity(JAXBElement<EthnicityVO> ethnicity,@PathParam("username") String username, @PathParam("password") String password)
+	{
+		log.debug("updateEthnicity");
+		EthnicityVO enthnicityVO = null;
+		try
+		{
+			boolean isAuthenticate = authenticateManager.authenticateUser(username, password);
+			if(isAuthenticate)
+			{
+				enthnicityVO = ethnicity.getValue();
+				CodeEthnicity updateEthnicity = mapper.map(enthnicityVO, CodeEthnicity.class);
+				ethnicityManager.updateEthnicity(updateEthnicity);
+			}
+		}
+		catch(Exception e)
+		{
+			log.error("Couldn't update the ethnicity " + e.getMessage());
+			throw new UnableToUpdateEthnicityException(e.getMessage());
+		}
+		return enthnicityVO;
 	}
 
 	public EthnicityManager getEthnicityManager() {

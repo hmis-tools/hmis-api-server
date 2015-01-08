@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.dozer.DozerBeanMapperSingletonWrapper;
+import org.dozer.Mapper;
 import org.openhmis.dao.ClientDAO;
 import org.openhmis.dao.impl.ClientDAOImpl;
 import org.openhmis.domain.Client;
@@ -11,6 +13,7 @@ import org.openhmis.exception.client.ClientNotFoundException;
 import org.openhmis.exception.client.InValidClientException;
 import org.openhmis.service.ClientManager;
 import org.openhmis.util.HmisConstants;
+import org.openhmis.vo.ClientDetailVO;
 import org.openhmis.vo.ClientVO;
 
 
@@ -18,7 +21,7 @@ public class ClientManagerImpl implements ClientManager
 {
 	
 	private static final Logger log = Logger.getLogger(ClientManagerImpl.class);
-
+	Mapper mapper = DozerBeanMapperSingletonWrapper.getInstance();
 	private ClientDAO clientDAO;
 	
 	public ClientManagerImpl()
@@ -92,6 +95,25 @@ public class ClientManagerImpl implements ClientManager
 			throw new ClientNotFoundException(e.getMessage());
 		}
 		return clientVO;
+	}
+
+	@Override
+	public ClientDetailVO getClientDetailById(Long clientKey)
+			throws ClientNotFoundException 
+	{
+		ClientDetailVO clientDetailVO = new ClientDetailVO();
+		try
+		{
+			Client client = clientDAO.findClientDetailById(clientKey);
+			clientDetailVO = mapper.map(client,ClientDetailVO.class);
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			throw new ClientNotFoundException(e.getMessage());
+		}
+		return clientDetailVO;
 	}
 
 	@Override

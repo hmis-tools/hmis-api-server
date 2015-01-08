@@ -27,6 +27,7 @@ import org.openhmis.service.AuthenticateManager;
 import org.openhmis.service.ClientManager;
 import org.openhmis.service.impl.AuthenticateManagerImpl;
 import org.openhmis.service.impl.ClientManagerImpl;
+import org.openhmis.vo.ClientDetailVO;
 import org.openhmis.vo.ClientVO;
 
 
@@ -74,6 +75,35 @@ public class ClientService
 	}
 	
 	@GET
+	@Path("/clientDetail/{clientKey}/{username}/{password}")
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	public ClientDetailVO getClientDetail(@PathParam("clientKey") Long clientKey, @PathParam("username") String username, @PathParam("password") String password)
+	{
+		log.debug("get Client Detail");
+		ClientDetailVO clientDetailVO = new ClientDetailVO();
+		try
+		{
+			boolean isAuthenticate = authenticateManager.authenticateUser(username, password);
+			if (isAuthenticate)
+			{
+				clientDetailVO = clientManager.getClientDetailById(clientKey);
+				if (clientDetailVO == null)
+				{
+					throw new ClientNotFoundException(clientKey + " doesn't exist");
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			log.error("Couldn't get the client " + e.getMessage());
+			throw new ClientNotFoundException(e.getMessage());
+		}
+		return clientDetailVO;
+	}
+	
+	
+	@GET
 	@Path("lastName/{lastName}/{username}/{password}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	
@@ -111,17 +141,17 @@ public class ClientService
 	@Path("/addClient/{username}/{password}")
 	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public ClientVO addClient(JAXBElement<ClientVO> client, @PathParam("username") String username, @PathParam("password") String password) throws ClientAlreadyExistException, InValidClientException, UnableToAddClientException
+	public ClientDetailVO addClient(JAXBElement<ClientDetailVO> client, @PathParam("username") String username, @PathParam("password") String password) throws ClientAlreadyExistException, InValidClientException, UnableToAddClientException
 	{
 		log.debug("addClient");
-		ClientVO clientVO = null;
+		ClientDetailVO clientDetailVO = null;
 		try
 		{
 			boolean isAuthenticate = authenticateManager.authenticateUser(username, password);
 			if (isAuthenticate)
 			{
-				clientVO = client.getValue();
-				Client newClient = mapper.map(clientVO, Client.class);
+				clientDetailVO = client.getValue();
+				Client newClient = mapper.map(clientDetailVO, Client.class);
 				// first check if this client already exist in the database
 				if (newClient.getSocSecNumber() == null){
 					throw new InValidClientException("Client doesn't have all the mandatory data.");
@@ -136,20 +166,21 @@ public class ClientService
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error("Couldn't add the client " + e.getMessage());
 			throw new UnableToAddClientException(e.getMessage());
 		}
-		return clientVO;
+		return clientDetailVO;
 	}
 
 	@PUT
 	@Path("/update/{clientKey}/{username}/{password}")
 	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public ClientVO updateClient(@PathParam("clientKey") Long clientKey,JAXBElement<ClientVO> client, @PathParam("username") String username, @PathParam("password") String password) throws UnableToUpdateClientException
+	public ClientDetailVO updateClient(@PathParam("clientKey") Long clientKey,JAXBElement<ClientDetailVO> client, @PathParam("username") String username, @PathParam("password") String password) throws UnableToUpdateClientException
 	{
 		log.debug("updateClient");
-		ClientVO updatedClientVO = null;
+		ClientDetailVO updatedClientVO = null;
 		try
 		{
 			boolean isAuthenticate = authenticateManager.authenticateUser(username, password);
@@ -162,6 +193,7 @@ public class ClientService
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error("Couldn't update the client " + e.getMessage());
 			throw new UnableToUpdateClientException(e.getMessage());
 		}		

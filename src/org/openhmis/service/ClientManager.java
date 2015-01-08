@@ -9,6 +9,7 @@ import org.openhmis.exception.client.DeleteClientException;
 import org.openhmis.exception.client.InValidClientException;
 import org.openhmis.exception.client.UnableToAddClientException;
 import org.openhmis.exception.client.UnableToUpdateClientException;
+import org.openhmis.vo.ClientDetailVO;
 import org.openhmis.vo.ClientVO;
 
 
@@ -20,6 +21,7 @@ public interface ClientManager
 	public Boolean validateClient(Client client) throws InValidClientException;																		// check that a client exist in the database and a valid client
 	public Client searchClient(Client client) throws ClientNotFoundException;																		// search that a client exist in the database
 	public ClientVO getClientById(Long clientKey) throws ClientNotFoundException;																	// search a client by Id
+	public ClientDetailVO getClientDetailById(Long clientKey) throws ClientNotFoundException;
 	public List<Client> getClientByName(String firstName, String lastName) throws ClientNotFoundException;											// search a client by first name and last name
 	public List<Client> getClientByLastName(String lastName) throws ClientNotFoundException;
 	public Client getClientBySSN(String ssn) throws ClientNotFoundException;																		// search a client by ssn

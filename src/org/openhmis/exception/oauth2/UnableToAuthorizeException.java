@@ -4,7 +4,6 @@ import org.openhmis.exception.HMISAPIException;
 
 public class UnableToAuthorizeException extends HMISAPIException
 {
-
 	/**
 	 * 
 	 */

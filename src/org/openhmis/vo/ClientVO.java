@@ -31,8 +31,8 @@ public class ClientVO implements Serializable
 	private String ethnicityDescription;
 	private String genderDescription;
 	
-	
-	public ClientVO() {
+	public ClientVO() 
+	{
 		super();
 	}
 	public ClientVO(Long clientKey) {
@@ -98,6 +98,7 @@ public class ClientVO implements Serializable
 	public void setGenderDescription(String genderDescription) {
 		this.genderDescription = genderDescription;
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

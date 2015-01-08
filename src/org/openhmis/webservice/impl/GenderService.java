@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -17,6 +18,7 @@ import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.dozer.Mapper;
 import org.openhmis.domain.CodeGender;
 import org.openhmis.exception.gender.GenderNotFoundException;
+import org.openhmis.exception.gender.UnableToUpdateGenderException;
 import org.openhmis.service.AuthenticateManager;
 import org.openhmis.service.GenderManager;
 import org.openhmis.service.impl.AuthenticateManagerImpl;
@@ -95,6 +97,32 @@ public class GenderService
 			e.printStackTrace();
 		}
 		return genderVO;
+	}
+	@Path("/updateGender/{username}/{password}")
+	@PUT
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	public GenderVO updateGender(JAXBElement<GenderVO> gender,@PathParam("username") String username , @PathParam("password") String password)
+	{
+		log.debug("updateGender");
+		GenderVO genderVO = null;
+		try
+		{
+			boolean isAuthenticate = authenticateManager.authenticateUser(username, password);
+			if(isAuthenticate)
+			{
+				genderVO = gender.getValue();
+				CodeGender updateGender = mapper.map(genderVO, CodeGender.class);
+				genderManager.updateGender(updateGender);
+			}
+		}
+		catch(Exception e)
+		{
+			log.error("Couldn't update the ethnicity " + e.getMessage());
+			throw new UnableToUpdateGenderException(e.getMessage());
+		}
+		return genderVO;
+		
 	}
 	public GenderManager getGenderManager() {
 		return genderManager;
