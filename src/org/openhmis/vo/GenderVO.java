@@ -18,7 +18,7 @@ public class GenderVO implements Serializable
 	private String shortDesc;
 	private String notes;
 	private Integer recActiveGct;
-	private Timestamp logDateTime;
+	private String logDateTime;
 	private Long logUserKey;
 	
 	public GenderVO() {
@@ -26,7 +26,7 @@ public class GenderVO implements Serializable
 	}
 
 	public GenderVO(Integer codeKey, String description, String shortDesc,
-			String notes, Integer recActiveGct, Timestamp logDateTime,
+			String notes, Integer recActiveGct, String logDateTime,
 			Long logUserKey) {
 		super();
 		this.codeKey = codeKey;
@@ -78,11 +78,11 @@ public class GenderVO implements Serializable
 		this.recActiveGct = recActiveGct;
 	}
 
-	public Timestamp getLogDateTime() {
+	public String getLogDateTime() {
 		return logDateTime;
 	}
 
-	public void setLogDateTime(Timestamp logDateTime) {
+	public void setLogDateTime(String logDateTime) {
 		this.logDateTime = logDateTime;
 	}
 
@@ -159,4 +159,14 @@ public class GenderVO implements Serializable
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "GenderVO [codeKey=" + codeKey + ", description=" + description
+				+ ", shortDesc=" + shortDesc + ", notes=" + notes
+				+ ", recActiveGct=" + recActiveGct + ", logDateTime="
+				+ logDateTime + ", logUserKey=" + logUserKey + "]";
+	}
+
+	
 }

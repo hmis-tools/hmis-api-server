@@ -174,10 +174,10 @@ public class ClientService
 	}
 
 	@PUT
-	@Path("/update/{clientKey}/{username}/{password}")
+	@Path("/updateClient/{clientKey}/{username}/{password}")
 	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public ClientDetailVO updateClient(@PathParam("clientKey") Long clientKey,JAXBElement<ClientDetailVO> client, @PathParam("username") String username, @PathParam("password") String password) throws UnableToUpdateClientException
+	public ClientDetailVO updateClient(JAXBElement<ClientDetailVO> client,@PathParam("clientKey") Long clientKey, @PathParam("username") String username, @PathParam("password") String password) throws UnableToUpdateClientException
 	{
 		log.debug("updateClient");
 		ClientDetailVO updatedClientVO = null;

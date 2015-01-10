@@ -104,7 +104,7 @@
 			<b>recActiveGct</b>
 		</field> 
 		<field>
-			<a date-format="yyyy-MM-dd HH:mm:ss:SS">entryDateTime</a>
+			<a date-format="yyyy-MM-dd HH:mm:ss">entryDateTime</a>
 			<b>entryDateTime</b>
 		</field>
 		<field>
@@ -112,7 +112,7 @@
 			<b>entryUserKey</b>
 		</field>
 		<field>
-			<a date-format="yyyy-MM-dd HH:mm:ss:SS">logDateTime</a>
+			<a date-format="yyyy-MM-dd HH:mm:ss">logDateTime</a>
 			<b>logDateTime</b>
 		</field>
 		<field>
@@ -136,11 +136,20 @@
     <mapping>
     	<class-a>org.openhmis.domain.CodeGender</class-a>
     	<class-b>org.openhmis.vo.GenderVO</class-b>
+    	<field>
+			<a date-format="yyyy-MM-dd HH:mm:ss">logDateTime</a>
+			<b>logDateTime</b>
+		</field>
     </mapping>
     
     <mapping>
     	<class-a>org.openhmis.domain.CodeEthnicity</class-a>
     	<class-b>org.openhmis.vo.EthnicityVO</class-b>
+    	
+    	<field>
+			<a date-format="yyyy-MM-dd HH:mm:ss">logDateTime</a>
+			<b>logDateTime</b>
+		</field>
     </mapping>
     
     <mapping>
