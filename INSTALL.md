@@ -20,7 +20,7 @@ eventually.
 
 2. Save the property file in some directory location, for example `D:\Temp`.
 
-3. Locate your Tomcat folder and find the conf directory.
+3. Locate your Tomcat folder, find the conf directory and locate context.xml
 
 4. Add the following line in the `<Context></Context>`
 

@@ -155,6 +155,10 @@
     <mapping>
     	<class-a>org.openhmis.domain.CodeRace</class-a>
     	<class-b>org.openhmis.vo.RaceVO</class-b>
+    	<field>
+			<a date-format="yyyy-MM-dd HH:mm:ss">logDateTime</a>
+			<b>logDateTime</b>
+		</field>
     </mapping>
        
 </mappings>

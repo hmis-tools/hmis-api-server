@@ -6,7 +6,7 @@
 <hibernate-configuration>
 
 <session-factory>
-	<property name="dialect">
+	<!-- property name="dialect">
 		org.hibernate.dialect.MySQLDialect
 	</property>
 	<property name="connection.url">
@@ -21,7 +21,7 @@
 			hmis-MySQL
 		</property>
 	<property name="javax.persistence.validation.mode">none</property>
-	<property name="connection.autocommit">true</property>
+	<property name="connection.autocommit">true</property> -->
 	<mapping class="org.openhmis.domain.ProjectParticipation" />
 		<mapping class="org.openhmis.domain.ClientVeteranInfo" />
 		<mapping class="org.openhmis.domain.CodeMilitaryTheatre" />
