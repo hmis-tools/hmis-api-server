@@ -3,15 +3,21 @@ OpenHMIS API
 
 The OpenHMIS API is a web-based API for collecting data and generating
 reports about sources and users of social services.  The latest
-version of the API is version 3 and it is currently under development.
-The closest thing we currently have to a draft of the v3 API is the
-partial API specification in this document:
+version of the API is version 3 and it is currently under development:
 
-* [OpenHMIS Outreach Mobile Web App, with partial API specification](https://github.com/PCNI/outreach-app/blob/master/outreach-app-design.docx)
+* [OpenHMIS API, v3](doc/openhmis-api.raml) _(RAML-format master document)_
+
+We are currently working on generating HTML documentation from the
+[RAML](http://raml.org/) source; see
+[here](https://anypoint.mulesoft.com/apiplatform/hmis-api/#/portals/apis/7105/versions/7150/pages/5740)
+for an example of what the HTML will look like.
 
 Although the API is still in development, there is an
 incomplete/unstable version of it (both server and demo client)
 [running here](http://108.59.80.159:8080/HMISClient/).
+
+For an example of the API in use, see the [Mobile Outreach App design
+specification](https://github.com/PCNI/outreach-app/blob/master/outreach-app-design.docx).
 
 Our long-term goal is for the API to reflect the full data schema from
 the 2014 data standards from the [U.S. Department of Housing and Urban

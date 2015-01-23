@@ -2,8 +2,8 @@
 #baseUri: http://examplehmis.com/{version}
 baseUri: http://mocksvc.mulesoft.com/mocks/ce8f5253-0423-4d20-9364-98b1c088bae7/{version}
 securedBy: [oauth_2_0]
-title: HMIS API
-version: 1
+title: OpenHMIS API
+version: 3
 protocols:
   -  HTTPS
 securitySchemes:
@@ -14,7 +14,7 @@ securitySchemes:
         scopes: [user, administrator]
         authorizationGrants: [ owner ] #resource owner password credential grant used, since the client doesn't own the data (https://tools.ietf.org/html/rfc6749)
       description: |
-        The HMIS API supports OAuth 2.0 for authenticating all API requests.
+        The OpenHMIS API supports OAuth 2.0 for authenticating all API requests.
       type: OAuth 2.0
       describedBy:
         headers:
