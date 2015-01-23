@@ -1,3 +1,10 @@
+/* Copyright (c) 2014 Pathways Community Network Institute
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 package org.openhmis.webservice.impl;
 
 import java.util.ArrayList;
@@ -11,6 +18,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 
+import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.dozer.Mapper;
 import org.openhmis.domain.CodeGender;
@@ -18,14 +26,12 @@ import org.openhmis.exception.gender.GenderNotFoundException;
 import org.openhmis.service.GenderManager;
 import org.openhmis.service.impl.GenderManagerImpl;
 import org.openhmis.vo.GenderVO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 @Path("/genders")
 public class GenderService 
 {
-	private static final Logger log = LoggerFactory.getLogger(GenderService.class);
+	private static final Logger log = Logger.getLogger(GenderService.class);
 	private GenderManager genderManager;
 	Mapper mapper = DozerBeanMapperSingletonWrapper.getInstance();
 	public GenderService()

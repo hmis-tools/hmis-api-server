@@ -1,10 +1,22 @@
+/* Copyright (c) 2014 Pathways Community Network Institute
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 package org.openhmis.domain;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -24,6 +36,7 @@ public class CodeEthnicity implements java.io.Serializable {
 	private Integer recActiveGct;
 	private Timestamp logDateTime;
 	private Long logUserKey;
+	private Set<Client> clients = new HashSet<Client>(0);
 
 	// Constructors
 
@@ -38,13 +51,15 @@ public class CodeEthnicity implements java.io.Serializable {
 
 	/** full constructor */
 	public CodeEthnicity(String description, String shortDesc, String notes,
-			Integer recActiveGct, Timestamp logDateTime, Long logUserKey) {
+			Integer recActiveGct, Timestamp logDateTime, Long logUserKey,
+			Set<Client> clients) {
 		this.description = description;
 		this.shortDesc = shortDesc;
 		this.notes = notes;
 		this.recActiveGct = recActiveGct;
 		this.logDateTime = logDateTime;
 		this.logUserKey = logUserKey;
+		this.clients = clients;
 	}
 
 	// Property accessors
@@ -112,6 +127,15 @@ public class CodeEthnicity implements java.io.Serializable {
 
 	public void setLogUserKey(Long logUserKey) {
 		this.logUserKey = logUserKey;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "codeEthnicity")
+	public Set<Client> getClients() {
+		return this.clients;
+	}
+
+	public void setClients(Set<Client> clients) {
+		this.clients = clients;
 	}
 
 }

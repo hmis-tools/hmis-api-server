@@ -1,8 +1,16 @@
+/* Copyright (c) 2014 Pathways Community Network Institute
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 package org.openhmis.webservice.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,51 +21,60 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 
+import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.dozer.Mapper;
 import org.openhmis.domain.Client;
-import org.openhmis.domain.Ethnicity;
 import org.openhmis.exception.client.ClientAlreadyExistException;
 import org.openhmis.exception.client.ClientNotFoundException;
 import org.openhmis.exception.client.InValidClientException;
 import org.openhmis.exception.client.UnableToAddClientException;
 import org.openhmis.exception.client.UnableToUpdateClientException;
+import org.openhmis.service.AuthenticateManager;
 import org.openhmis.service.ClientManager;
+import org.openhmis.service.impl.AuthenticateManagerImpl;
 import org.openhmis.service.impl.ClientManagerImpl;
 import org.openhmis.vo.ClientVO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 
 @Path("/clients")
 public class ClientService 
 {	
-	private static final Logger log = LoggerFactory.getLogger(ClientService.class);
+	private static final Logger log = Logger.getLogger(ClientService.class);
 	private ClientManager clientManager;
+	private AuthenticateManager authenticateManager;
 	Mapper mapper = DozerBeanMapperSingletonWrapper.getInstance();
 	public ClientService()
 	{
 		clientManager = new ClientManagerImpl();
+		authenticateManager = new AuthenticateManagerImpl();
+		
 	}
 
 	@GET
-	@Path("/client/{clientKey}")
+	@Path("/client/{clientKey}/{username}/{password}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public ClientVO getClient(@PathParam("clientKey") Long clientKey) throws ClientNotFoundException
+	@RolesAllowed({"ADMIN","CUSTOMER"})
+	public ClientVO getClient(@PathParam("clientKey") Long clientKey, @PathParam("username") String username, @PathParam("password") String password) throws ClientNotFoundException
 	{
 		log.debug("getClient");
 		ClientVO clientVO = new ClientVO();
 		try
 		{
-			Client client = clientManager.getClientById(clientKey);
-			if (client == null)
+			boolean isAuthenticate = authenticateManager.authenticateUser(username, password);
+			if (isAuthenticate)
 			{
-				throw new ClientNotFoundException(clientKey + " doesn't exist");
+				clientVO = clientManager.getClientById(clientKey);
+				if (clientVO == null)
+				{
+					throw new ClientNotFoundException(clientKey + " doesn't exist");
+				}
 			}
-			clientVO = mapper.map(client, ClientVO.class);
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error("Couldn't get the client " + e.getMessage());
 			throw new ClientNotFoundException(e.getMessage());
 		}
@@ -67,6 +84,7 @@ public class ClientService
 	@GET
 	@Path("lastName/{lastName}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	
 	public List<ClientVO> getClientByLastName(
 			@PathParam("lastName") String lastName) throws ClientNotFoundException 
 	{

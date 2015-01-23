@@ -1,4 +1,20 @@
+/* Copyright (c) 2014 Pathways Community Network Institute
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 package org.openhmis.util;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -18,23 +34,33 @@ public class HibernateSessionFactory {
      * The default classpath location of the hibernate config file is 
      * in the default package. Use #setConfigFile() to update 
      * the location of the configuration file for the current session.   
-     */
-    private static String CONFIG_FILE_LOCATION = "/hibernate.cfg.xml";
-	private static final ThreadLocal<Session> threadLocal = new ThreadLocal<Session>();
-    private  static Configuration configuration = new Configuration();    
-    private static org.hibernate.SessionFactory sessionFactory;
-    private static String configFile = CONFIG_FILE_LOCATION;
+     */ 	
+ 	 private static String CONFIG_FILE_LOCATION = "/hibernate.cfg.xml";
+ 	 private static final ThreadLocal<Session> threadLocal = new ThreadLocal<Session>();
+     private  static Configuration configuration = new Configuration();    
+     private static org.hibernate.SessionFactory sessionFactory;
+     private static String configFile = CONFIG_FILE_LOCATION;
+     private static Properties properties = new Properties();
 
-	static {
-    	try {
-			configuration.configure(configFile);
-			sessionFactory = configuration.buildSessionFactory();
-		} catch (Exception e) {
-			System.err
-					.println("%%%% Error Creating SessionFactory %%%%");
-			e.printStackTrace();
-		}
-    }
+ 	static {
+     	try {
+     		InitialContext context = new InitialContext();
+     		String propertyFileLocation = (String) context.lookup("java:comp/env/config");
+     		if (propertyFileLocation!= null)
+     		{
+     			File propertyFile = new File(propertyFileLocation  +"//hibernate.properties");
+   			    InputStream is = new FileInputStream(propertyFile);
+  		        properties.load(is);
+  		        configuration.setProperties(properties);
+     		}
+ 			configuration.configure();
+ 			sessionFactory = configuration.buildSessionFactory();
+ 		} catch (Exception e) {
+ 			System.err
+ 					.println("%%%% Error Creating SessionFactory %%%%");
+ 			e.printStackTrace();
+ 		}
+     }
     private HibernateSessionFactory() {
     }
 	

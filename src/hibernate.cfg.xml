@@ -60,6 +60,16 @@
 		<mapping class="org.openhmis.domain.FederalFundingSource" />
 		<mapping class="org.openhmis.domain.CodeHousingStatus" />
 		<mapping class="org.openhmis.domain.ClientStatus" />
+		<mapping class="org.openhmis.domain.CodeHealthStatus" />
+		<mapping class="org.openhmis.domain.ClientProgramTempAhar2" />
+		<mapping class="org.openhmis.domain.CodeHealthInsReason" />
+		<mapping class="org.openhmis.domain.CodeNonCashBenefit" />
+		<mapping class="org.openhmis.domain.ClientProgramTempAhar1" />
+		<mapping class="org.openhmis.domain.CodeState" />
+		<mapping class="org.openhmis.domain.CodeStateT" />
+		<mapping class="org.openhmis.domain.CodeIncome" />
+		<mapping class="org.openhmis.domain.CodeHealthInsurance" />
+		<mapping class="org.openhmis.domain.ClientOriginal" />
 </session-factory>
 
 </hibernate-configuration>

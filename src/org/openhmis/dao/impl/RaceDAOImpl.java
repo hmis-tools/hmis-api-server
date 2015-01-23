@@ -1,17 +1,23 @@
+/* Copyright (c) 2014 Pathways Community Network Institute
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 package org.openhmis.dao.impl;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.openhmis.dao.RaceDAO;
 import org.openhmis.domain.CodeRace;
-import org.openhmis.exception.race.RaceNotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 public class RaceDAOImpl extends BaseDAOImpl implements RaceDAO
 {
-	private static final Logger log = LoggerFactory.getLogger(RaceDAOImpl.class);
+	private static final Logger log = Logger.getLogger(RaceDAOImpl.class);
 	
 	// default constructor
 	public RaceDAOImpl()

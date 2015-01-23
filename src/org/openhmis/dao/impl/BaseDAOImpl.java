@@ -1,14 +1,21 @@
+/* Copyright (c) 2014 Pathways Community Network Institute
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 package org.openhmis.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.openhmis.dao.BaseDAO;
 import org.openhmis.util.HibernateSessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 public class BaseDAOImpl implements BaseDAO 
 {
-	private static final Logger log = LoggerFactory.getLogger(BaseDAOImpl.class);
+	private static final Logger log = Logger.getLogger(BaseDAOImpl.class);
 	@Override
 	public Boolean save(Object object) 
 	{

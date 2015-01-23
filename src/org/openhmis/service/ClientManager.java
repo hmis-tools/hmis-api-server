@@ -1,3 +1,10 @@
+/* Copyright (c) 2014 Pathways Community Network Institute
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 package org.openhmis.service;
 
 import java.util.List;
@@ -9,6 +16,7 @@ import org.openhmis.exception.client.DeleteClientException;
 import org.openhmis.exception.client.InValidClientException;
 import org.openhmis.exception.client.UnableToAddClientException;
 import org.openhmis.exception.client.UnableToUpdateClientException;
+import org.openhmis.vo.ClientVO;
 
 
 public interface ClientManager 
@@ -18,7 +26,7 @@ public interface ClientManager
 	public Boolean deleteClient(Client client)throws DeleteClientException;																										// delete an existing client
 	public Boolean validateClient(Client client) throws InValidClientException;																		// check that a client exist in the database and a valid client
 	public Client searchClient(Client client) throws ClientNotFoundException;																		// search that a client exist in the database
-	public Client getClientById(Long clientKey) throws ClientNotFoundException;																	// search a client by Id
+	public ClientVO getClientById(Long clientKey) throws ClientNotFoundException;																	// search a client by Id
 	public List<Client> getClientByName(String firstName, String lastName) throws ClientNotFoundException;											// search a client by first name and last name
 	public List<Client> getClientByLastName(String lastName) throws ClientNotFoundException;
 	public Client getClientBySSN(String ssn) throws ClientNotFoundException;																		// search a client by ssn

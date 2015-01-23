@@ -1,15 +1,22 @@
+/* Copyright (c) 2014 Pathways Community Network Institute
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 package org.openhmis.service.impl;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.openhmis.dao.RaceDAO;
 import org.openhmis.dao.impl.RaceDAOImpl;
 import org.openhmis.domain.CodeRace;
 import org.openhmis.exception.race.RaceAlreadyExistException;
 import org.openhmis.exception.race.RaceNotFoundException;
 import org.openhmis.service.RaceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 /**
  * 
@@ -21,7 +28,7 @@ import org.slf4j.LoggerFactory;
  */
 public class RaceManagerImpl implements RaceManager 
 {
-	private static final Logger log = LoggerFactory.getLogger(RaceManagerImpl.class);
+	private static final Logger log = Logger.getLogger(RaceManagerImpl.class);
 	private RaceDAO raceDAO = null;
 	
 	// default constructor

@@ -1,7 +1,16 @@
+/* Copyright (c) 2014 Pathways Community Network Institute
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 package org.openhmis.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.openhmis.dao.ClientDAO;
 import org.openhmis.dao.impl.ClientDAOImpl;
 import org.openhmis.domain.Client;
@@ -9,13 +18,13 @@ import org.openhmis.exception.client.ClientNotFoundException;
 import org.openhmis.exception.client.InValidClientException;
 import org.openhmis.service.ClientManager;
 import org.openhmis.util.HmisConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.openhmis.vo.ClientVO;
+
 
 public class ClientManagerImpl implements ClientManager 
 {
 	
-	private static final Logger log = LoggerFactory.getLogger(ClientManagerImpl.class);
+	private static final Logger log = Logger.getLogger(ClientManagerImpl.class);
 
 	private ClientDAO clientDAO;
 	
@@ -67,9 +76,29 @@ public class ClientManagerImpl implements ClientManager
 	}
 
 	@Override
-	public Client getClientById(Long clientKey) throws ClientNotFoundException
+	public ClientVO getClientById(Long clientKey) throws ClientNotFoundException
 	{
-		return clientDAO.findClientById(clientKey);
+		ClientVO clientVO = new ClientVO();
+		try
+		{
+			List<Object[]> clientObject = clientDAO.findClientById(clientKey);
+			Object[] clientArray = clientObject.get(0);
+			
+			clientVO.setClientKey((Long)clientArray[0]);
+			clientVO.setSocSecNumber((String)clientArray[1]);
+			clientVO.setNameFirst((String)clientArray[2]);
+			clientVO.setNameLast((String)clientArray[3]);
+			clientVO.setNameMiddle((String)clientArray[4]);
+			clientVO.setDateOfBirth(((Date)clientArray[5]).toString());
+			clientVO.setEthnicityDescription((String)clientArray[6]);
+			clientVO.setGenderDescription((String)clientArray[7]);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			throw new ClientNotFoundException(e.getMessage());
+		}
+		return clientVO;
 	}
 
 	@Override

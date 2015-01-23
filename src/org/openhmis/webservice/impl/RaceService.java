@@ -1,3 +1,10 @@
+/* Copyright (c) 2014 Pathways Community Network Institute
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 package org.openhmis.webservice.impl;
 
 import java.util.ArrayList;
@@ -5,10 +12,10 @@ import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.dozer.Mapper;
 import org.openhmis.domain.CodeRace;
@@ -16,13 +23,11 @@ import org.openhmis.exception.race.RaceNotFoundException;
 import org.openhmis.service.RaceManager;
 import org.openhmis.service.impl.RaceManagerImpl;
 import org.openhmis.vo.RaceVO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Path("/races")
 public class RaceService 
 {
-	private static final Logger log = LoggerFactory.getLogger(RaceService.class);
+	private static final Logger log = Logger.getLogger(RaceService.class);
 	private RaceManager raceManager;
 	Mapper mapper = DozerBeanMapperSingletonWrapper.getInstance();
 	public RaceService() 

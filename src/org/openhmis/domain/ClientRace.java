@@ -1,10 +1,20 @@
+/* Copyright (c) 2014 Pathways Community Network Institute
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 package org.openhmis.domain;
 
 import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -18,8 +28,8 @@ public class ClientRace implements java.io.Serializable {
 	// Fields
 
 	private Long id;
+	private CodeRace codeRace;
 	private Long clientKey;
-	private Integer raceCode;
 	private Integer recActiveGct;
 	private Timestamp entryDateTime;
 	private Long entryUserKey;
@@ -33,18 +43,18 @@ public class ClientRace implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public ClientRace(Long clientKey, Integer raceCode, Timestamp logDateTime) {
+	public ClientRace(CodeRace codeRace, Long clientKey, Timestamp logDateTime) {
+		this.codeRace = codeRace;
 		this.clientKey = clientKey;
-		this.raceCode = raceCode;
 		this.logDateTime = logDateTime;
 	}
 
 	/** full constructor */
-	public ClientRace(Long clientKey, Integer raceCode, Integer recActiveGct,
+	public ClientRace(CodeRace codeRace, Long clientKey, Integer recActiveGct,
 			Timestamp entryDateTime, Long entryUserKey, Timestamp logDateTime,
 			Long logUserKey) {
+		this.codeRace = codeRace;
 		this.clientKey = clientKey;
-		this.raceCode = raceCode;
 		this.recActiveGct = recActiveGct;
 		this.entryDateTime = entryDateTime;
 		this.entryUserKey = entryUserKey;
@@ -65,6 +75,16 @@ public class ClientRace implements java.io.Serializable {
 		this.id = id;
 	}
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "RACE_CODE", nullable = false)
+	public CodeRace getCodeRace() {
+		return this.codeRace;
+	}
+
+	public void setCodeRace(CodeRace codeRace) {
+		this.codeRace = codeRace;
+	}
+
 	@Column(name = "CLIENT_KEY", nullable = false)
 	public Long getClientKey() {
 		return this.clientKey;
@@ -72,15 +92,6 @@ public class ClientRace implements java.io.Serializable {
 
 	public void setClientKey(Long clientKey) {
 		this.clientKey = clientKey;
-	}
-
-	@Column(name = "RACE_CODE", nullable = false)
-	public Integer getRaceCode() {
-		return this.raceCode;
-	}
-
-	public void setRaceCode(Integer raceCode) {
-		this.raceCode = raceCode;
 	}
 
 	@Column(name = "REC_ACTIVE_GCT")
