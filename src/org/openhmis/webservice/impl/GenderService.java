@@ -10,7 +10,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBElement;
 
 import org.apache.log4j.Logger;
@@ -64,6 +66,10 @@ public class GenderService
 					genderVOList.add(genderVO);
 				}
 			}
+			else
+			{
+				throw new WebApplicationException(Response.Status.FORBIDDEN);
+			}
 		}
 		catch(Exception e)
 		{
@@ -90,6 +96,10 @@ public class GenderService
 				CodeGender newGender = mapper.map(genderVO, CodeGender.class);
 				genderManager.addGender(newGender);
 			}
+			else
+			{
+				throw new WebApplicationException(Response.Status.FORBIDDEN);
+			}
 		}
 		catch(Exception e)
 		{
@@ -114,6 +124,10 @@ public class GenderService
 				genderVO = gender.getValue();
 				CodeGender updateGender = mapper.map(genderVO, CodeGender.class);
 				genderManager.updateGender(updateGender);
+			}
+			else
+			{
+				throw new WebApplicationException(Response.Status.FORBIDDEN);
 			}
 		}
 		catch(Exception e)

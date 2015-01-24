@@ -9,7 +9,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBElement;
 
 import org.apache.log4j.Logger;
@@ -61,6 +63,10 @@ public class RaceService
 					raceVOList.add(raceVO);
 				}
 			}
+			else
+			{
+				throw new WebApplicationException(Response.Status.FORBIDDEN);
+			}
 		}
 		catch(Exception e)
 		{
@@ -87,7 +93,10 @@ public class RaceService
 				CodeRace updateRace = mapper.map(raceVO, CodeRace.class);
 				raceManager.updateRace(updateRace);
 			}
-			
+			else
+			{
+				throw new WebApplicationException(Response.Status.FORBIDDEN);
+			}
 		}
 		catch(Exception e)
 		{
@@ -95,42 +104,8 @@ public class RaceService
 			throw new UnableToUpdateRaceException(e.getMessage());
 		}
 		return raceVO;
-		
 	}
-	
-// will update it later as Client Relationship with Race is stored in separate table	
-	
-//	@Path("/clientRace/{clientKey}")
-//	@GET
-//	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-//	public List<RaceVO> getRacesByClientKey(@PathParam("clientKey") Long clientKey) throws RaceNotFoundException
-//	{
-//		log.debug("getRacesByClientKey");
-//		List<RaceVO> raceVOList = null;
-//		try
-//		{
-//			raceVOList = new ArrayList<RaceVO>();
-//			List<CodeRace> raceList = raceManager.getRacesByClientKey(clientKey);
-//			if ((raceList == null) || (raceList.isEmpty()))
-//			{
-//				throw new RaceNotFoundException("No Race Found.");
-//			}
-//			for(CodeRace r: raceList)
-//			{
-//				RaceVO raceVO = mapper.map(r, RaceVO.class);
-//				raceVOList.add(raceVO);
-//			}
-//		}
-//		catch(Exception e)
-//		{
-//			log.error("");
-//			throw new RaceNotFoundException(e.getMessage());
-//		}
-//		return raceVOList;
-//	}
-	
-	
-	
+		
 	public RaceManager getRaceManager() {
 		return raceManager;
 	}

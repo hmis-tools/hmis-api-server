@@ -11,8 +11,10 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
+import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapperSingletonWrapper;
@@ -29,6 +31,7 @@ import org.openhmis.service.impl.AuthenticateManagerImpl;
 import org.openhmis.service.impl.ClientManagerImpl;
 import org.openhmis.vo.ClientDetailVO;
 import org.openhmis.vo.ClientVO;
+
 
 
 
@@ -64,10 +67,13 @@ public class ClientService
 					throw new ClientNotFoundException(clientKey + " doesn't exist");
 				}
 			}
+			else
+			{
+				throw new WebApplicationException(Response.Status.FORBIDDEN);
+			}
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
 			log.error("Couldn't get the client " + e.getMessage());
 			throw new ClientNotFoundException(e.getMessage());
 		}
@@ -92,10 +98,13 @@ public class ClientService
 					throw new ClientNotFoundException(clientKey + " doesn't exist");
 				}
 			}
+			else
+			{
+				throw new WebApplicationException(Response.Status.FORBIDDEN);
+			}
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
 			log.error("Couldn't get the client " + e.getMessage());
 			throw new ClientNotFoundException(e.getMessage());
 		}
@@ -127,6 +136,10 @@ public class ClientService
 					ClientVO clientVO = mapper.map(c, ClientVO.class);
 					clientVOList.add(clientVO);
 				}
+			}
+			else
+			{
+				throw new WebApplicationException(Response.Status.FORBIDDEN);
 			}
 		}
 		catch(Exception e)
@@ -163,10 +176,13 @@ public class ClientService
 				}
 				clientManager.addClient(newClient);
 			}
+			else
+			{
+				throw new WebApplicationException(Response.Status.FORBIDDEN);
+			}
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
 			log.error("Couldn't add the client " + e.getMessage());
 			throw new UnableToAddClientException(e.getMessage());
 		}
@@ -190,10 +206,13 @@ public class ClientService
 				Client updatedClient = mapper.map(updatedClientVO, Client.class);
 				clientManager.updateClient(updatedClient);
 			}
+			else
+			{
+				throw new WebApplicationException(Response.Status.FORBIDDEN);
+			}
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
 			log.error("Couldn't update the client " + e.getMessage());
 			throw new UnableToUpdateClientException(e.getMessage());
 		}		

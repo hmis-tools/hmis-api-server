@@ -10,7 +10,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBElement;
 
 import org.apache.log4j.Logger;
@@ -65,6 +67,10 @@ public class EthnicityService
 					ehnicityVOList.add(ethnicityVO);
 				}
 			}
+			else
+			{
+				throw new WebApplicationException(Response.Status.FORBIDDEN);
+			}
 		}
 		catch(Exception e)
 		{
@@ -91,6 +97,10 @@ public class EthnicityService
 				CodeEthnicity newEthnicity = mapper.map(ethnicityVO, CodeEthnicity.class);
 				ethnicityManager.addEthnicity(newEthnicity);
 			}
+			else
+			{
+				throw new WebApplicationException(Response.Status.FORBIDDEN);
+			}
 		}
 		catch(Exception e)
 		{
@@ -116,6 +126,10 @@ public class EthnicityService
 				enthnicityVO = ethnicity.getValue();
 				CodeEthnicity updateEthnicity = mapper.map(enthnicityVO, CodeEthnicity.class);
 				ethnicityManager.updateEthnicity(updateEthnicity);
+			}
+			else
+			{
+				throw new WebApplicationException(Response.Status.FORBIDDEN);
 			}
 		}
 		catch(Exception e)
