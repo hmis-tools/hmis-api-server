@@ -50,7 +50,6 @@ private static final Logger log = Logger.getLogger(ClientDAOImpl.class);
 		}
 		catch (RuntimeException re)
 		{
-			re.printStackTrace();
 			log.error("find Client By Id failed", re);
 			throw re;
 		}
