@@ -20,6 +20,7 @@ import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.dozer.Mapper;
 import org.openhmis.domain.CodeGender;
 import org.openhmis.exception.gender.GenderNotFoundException;
+import org.openhmis.exception.gender.UnableToAddGenderException;
 import org.openhmis.exception.gender.UnableToUpdateGenderException;
 import org.openhmis.service.AuthenticateManager;
 import org.openhmis.service.GenderManager;
@@ -104,7 +105,7 @@ public class GenderService
 		catch(Exception e)
 		{
 			log.error("Couldn't add the gender " + e.getMessage());
-			e.printStackTrace();
+			throw new UnableToAddGenderException(e.getMessage());
 		}
 		return genderVO;
 	}

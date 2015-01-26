@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -19,6 +20,7 @@ import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.dozer.Mapper;
 import org.openhmis.domain.CodeRace;
 import org.openhmis.exception.race.RaceNotFoundException;
+import org.openhmis.exception.race.UnableToAddRaceException;
 import org.openhmis.exception.race.UnableToUpdateRaceException;
 import org.openhmis.service.AuthenticateManager;
 import org.openhmis.service.RaceManager;
@@ -105,7 +107,36 @@ public class RaceService
 		}
 		return raceVO;
 	}
-		
+	
+	@Path("/addRace/{username}/{password}")
+	@POST
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	public RaceVO addRace(JAXBElement<RaceVO> race, @PathParam("username") String username, @PathParam("password") String password)
+	{
+		log.debug("add Race");
+		RaceVO raceVO = null;
+		try
+		{
+			boolean isAuthenticate = authenticateManager.authenticateUser(username, password);
+			if (isAuthenticate)
+			{
+				raceVO = race.getValue();
+				CodeRace newRace = mapper.map(raceVO, CodeRace.class);
+				raceManager.addRace(newRace);
+			}
+			else
+			{
+				throw new WebApplicationException(Response.Status.FORBIDDEN);
+			}
+		}
+		catch(Exception e)
+		{
+			log.error("Couldn't add the race " + e.getMessage());
+			throw new UnableToAddRaceException(e.getMessage());
+		}
+		return raceVO;
+	}	
 	public RaceManager getRaceManager() {
 		return raceManager;
 	}
