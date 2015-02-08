@@ -115,7 +115,6 @@ public class ClientService
 	@GET
 	@Path("lastName/{lastName}/{username}/{password}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	
 	public List<ClientVO> getClientByLastName(@PathParam("lastName") String lastName, @PathParam("username") String username, @PathParam("password") String password) throws ClientNotFoundException 
 	{
 		log.debug("getClientByLastName");

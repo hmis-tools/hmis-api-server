@@ -57,17 +57,4 @@ public class RaceManagerImpl implements RaceManager
 		log.debug("updateRace");
 		return raceDAO.update(race);
 	}
-
-	
-	
-	
-//	@Override
-//	public List<CodeRace> getRacesByClientKey(Long clientKey)
-//			throws RaceNotFoundException
-//	{
-//		log.debug("getRacesByClientKey");
-//		return raceDAO.findRacesByClientKey(clientKey);
-//	}	
-//	
-	
 }
