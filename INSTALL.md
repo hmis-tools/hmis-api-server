@@ -9,7 +9,7 @@ Crucial Notes:
   comparison purposes)
 * The master branch (as of 2015-01-16) has proprietary dependencies,
   so the demo-client branch is the only one that can be reproduced.
-* Sample data will be located in: /sample-data/create_openhmis_tables.sql.
+* Sample data will be located in: /doc/2014StandardOpenHMIS_Schema.sql.
   It's in progress right now.
 
 Hibernate instructions:
