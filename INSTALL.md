@@ -9,6 +9,9 @@ Crucial Notes:
   comparison purposes)
 * The master branch (as of 2015-01-16) has proprietary dependencies,
   so the demo-client branch is the only one that can be reproduced.
+
+To create the schema:
+---------------------
 * Sample data will be located in: /doc/2014StandardOpenHMIS_Schema.sql.
   It's in progress right now.
 
@@ -80,21 +83,28 @@ I'm running Debian jessie (testing).
 * If you have problems, try checking the logs with:  
     `sudo less /var/log/tomcat7/catalina.out`
 * Create the database for tomcat to connect to:  
+    * Convert the 2014StandardsOpenHMIS_ERD.mwb file to a .sql file
+        * I used the mwb2sql tool available at
+          https://github.com/tomoemon/mwb2sql 
+        * It requires MySQL Workbench to run  
+          `$ sudo apt-get install mysql-workbench`  
+           `$ mwb2sql path/to/2014StandardOpenHMIS_ERD.mwb your_filename.sql`  
+    * Run the generated .sql file:  
     `// if you already have mysql set up  
     $ mysql -u root -p  
     (enter your password)  
-    $ mysql> source 'sample-data/create_openhmis_tables.sql'  
+    $ mysql> source 'doc/your_filename.sql'  
     // to create an openhmis-specific user:  
     $ mysql> CREATE USER 'new_user'@'localhost' IDENTIFIED BY
      'password';  
-    $ mysql> GRANT ALL PRIVILEGES ON openhmis.* TO
+    $ mysql> GRANT ALL PRIVILEGES ON <database>.* TO
      'new_user'@'localhost';  
     // you can now log in as new_user to make sure you can see the  
-    // openhmis database and tables, if desired`
+    // database and tables, if desired`
 
 * Edit the mysql connection information in
     WebRoot/META-INF/context.xml  
     `username="new_user"  
     password="password"  
-    (for your local machine, or whatever ip address is correct)  
+    // (for your local machine, or whatever ip address is correct)  
     url="jdbc:mysql://127.0.0.1:3306/openhmis?autoReconnect=true"`
