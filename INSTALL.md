@@ -28,3 +28,19 @@ eventually.
             type="java.lang.String" override="false"/>
 
   The value of the environment variable config is the location of the hibernate.property file.
+
+Testing to see if it's working.
+-------------------------------
+
+You can get access to the API using either a Google account or SalesForce account.
+
+To access using Google account you need your Google email ID and
+service account email ID.  The service account email is
+`50252473639-gsb3u5dvq6t1oj9hvhhi43f5125vtu2b@developer.gserviceaccount.com`.
+(The service account email will be same for all users.)
+
+A sample URL to get the client information using client key (e.g., 75864) is
+
+    http://localhost:8080/OpenHMIS/services/clients/client/75864/ashaar.riaz@pnci.org/50252473639-gsb3u5dvq6t1oj9hvhhi43f5125vtu2b@developer.gserviceaccount.com
+
+(TBD: need information about how to do this with a Salesforce account.)
