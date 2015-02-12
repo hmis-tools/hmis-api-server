@@ -11,10 +11,6 @@
     <!-- Define the class path                                               -->
     <!-- =================================================================== -->
     <path id="xdoclet.class.path">
-        <fileset dir="${jboss-client.dir}">
-            <include name="jboss-j2ee.jar"/>
-            <include name="javax.servlet.jar"/>
-        </fileset>
         <fileset dir="${xdoclet.lib.dir}">
             <include name="*.jar"/>
         </fileset>
@@ -136,7 +132,6 @@
             <entitycmp/>
             <entitybmp/>
 
-            <!--<session/>-->
 
             <dao>
                 <packageSubstitution packages="ejb" substituteWith="dao"/>
@@ -165,43 +160,7 @@
              
             <oc4j
             />
-            <!--<weblogic
-                version="6.1"
-                xmlencoding="UTF-8"
-                destdir="${meta-inf.dir}"
-                validatexml="true"
-                datasource="java:/samplesDataSource"
-                mergedir="${samples.merge.dir}"
-                persistence="weblogic"
-                />-->
-
-            <!--<jrun
-                version="4.0"
-                xmlencoding="UTF-8"
-                destdir="${meta-inf.dir}"
-                validatexml="true"
-                />-->
-
-            <!--<webSphere destdir="${meta-inf.dir}"/>-->
-
-            <!--<jonas
-                version="2.5"
-                xmlencoding="UTF-8"
-                destdir="${meta-inf.dir}"
-                validatexml="false"
-                mergedir="${samples.merge.dir}"
-                />-->
-
-            <!--<orion destdir="${meta-inf.dir}"/>-->
-
-            <!--<apachesoap destdir="${meta-inf.dir}"/>-->
-
-            <!--<strutsform/>-->
-
-            <!--<castormapping destdir="${meta-inf.dir}" validatexml="false"/>-->
-
         </ejbdoclet>
-
     </target>
 
     <!-- =================================================================== -->
@@ -237,59 +196,10 @@
                 servletspec="2.4"
                 destdir="${web-inf.dir}"
                 >
-
                 <configParam name="Displayname" value="${project.name}"/>
                 <configParam name="Description" value="${local.descriptor}"/>
                 <configParam name="Distributable" value="false"/>
-  <!--           <taglib
-                    uri="http://java.sun.com/jsp/jstl/core"
-                    location="/WEB-INF/tld/c.tld" />
-		     <taglib 
-					uri="http://com.flexetrials.dms.drugOrder/tag/Command"
-					location="/WEB-INF/tld/CommandHandler.tld" />
-			 <taglib
-					uri="http://com.flexetrials.dms.drugOrder/tag/DrugOrderDetailView"
-					location="/WEB-INF/tld/DrugOrderDetailView.tld" />
-		     <taglib
-					uri="http://com.flexetrials.dms.drugOrder/tag/DrugOrderDetailView2"
-					location="/WEB-INF/tld/DrugOrderDetailView2.tld" />
-			<taglib
-					uri="http://com.flexetrials.dms.drugOrder/tag/Site"
-					location="/WEB-INF/tld/SiteListHandler.tld" />
-			<taglib
-					uri="http://com.flexetrials.dms.drugOrder/tag/Date"
-					location="/WEB-INF/tld/DateHandler.tld" />
-			<taglib
-					uri="http://com.flexetrials.dms.drugOrder/tag/Order"
-					location="/WEB-INF/tld/OrderStatusHandler.tld" />
--->
             </deploymentdescriptor>
-
-
-            <!--<strutsconfigxml
-                destdir="${web-inf.dir}"
-                />-->
-
-            <!--<jsptaglib
-                jspversion="1.2"
-                destdir="${web-inf.dir}"
-                shortname="j2ee"
-                validateXml="false"
-                />-->
-
-            <jbosswebxml version="3.2" destdir="${web-inf.dir}"/>
-
-            <!--<jrunwebxml destdir="${web-inf.dir}" mergedir="${samples.merge.dir}"/>-->
-
-            <!--<weblogicwebxml
-                destdir="${web-inf.dir}"
-                contextRoot="/samples"
-                validateXml="true"
-                />-->
-
-            <!--<webWorkConfigProperties/>
-            <webWorkActionDocs javadocdir="api" mergedir="${samples.merge.dir}"/>-->
-
         </webdoclet>
     </target>
 
@@ -320,16 +230,8 @@
 			destinationFile="${project.name}-servlet.xml"
 			destDir="${web-inf.dir}"
 			/>
-
 		</springdoclet>
-
-
-
-
 	</target>
-
-
-
 
     <!-- =================================================================== -->
     <!-- Invoke XDoclet's jmxdoclet                                          -->
@@ -355,22 +257,8 @@
             <fileset dir="${src.dir}">
                 <include name="${jmx.dir}/*Loader.java"/>
             </fileset>
-
-            <!--<mbeaninterface/>-->
-
-            <!--
-                        <mx4jDescription />
-            -->
-
-            <!--<jbossxmbean/>-->
-
             <jbossservicexml version="3.2" destdir="${meta-inf.dir}"/>
-            <!--<jbossXmlServiceTemplate servicefile="jboss"/>
-            <jbossXmlServiceTemplate servicefile="jboss-simple"/>
-            <jbossXmlDoc/>-->
-
         </jmxdoclet>
-
     </target>
 
     <!-- =================================================================== -->
@@ -497,12 +385,9 @@
             deprecation="on"
             optimize="off"
             >
-
             <src path="${samples.java.dir}"/>
             <src path="${generated-src.lib.dir}"/>
-
         </javac>
-
     </target>
 
     <!-- =================================================================== -->

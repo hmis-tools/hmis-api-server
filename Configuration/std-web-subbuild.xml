@@ -34,11 +34,6 @@
     <copy todir="${build.dir}">
       <fileset dir="${web-inf.dir}"/>
     </copy>  
-    <!-- Move static content 
-    <copy todir="${build.dir}">
-      <fileset dir="${webroot.dir}/web"/>
-    </copy>  -->
- <!--   <ant antfile="${config.dir}/xdoclet.xml" target="webdoclet"/>  -->
   	<ant antfile="xdoclet.xml" target="webdoclet"/>
     <mkdir dir="${dist.dir}/lib"/>
   </target>
@@ -67,9 +62,6 @@
     <java classname="RetroGuard" dir="${basedir}" fork="true" output="${buildnotes.dir}/optimise.txt">
       <classpath>
         <pathelement location="${builders.dir}/retroguard.jar"/>
-        <fileset dir="${jboss-client.dir}">
-          <include name="**/*.jar"/>
-        </fileset>
       </classpath>
       <arg path="${dist.dir}/${ant.project.name}.war"/>
       <arg path="${dist.dir}/lib/${ant.project.name}.war"/>
@@ -78,7 +70,7 @@
     </java>
   </target>
 
-  <!-- Deploy the WAR to JBoss -->
+  <!-- Deploy the WAR to Tomcat -->
   <target name="deploy" depends="optimise">
     <copy file="${dist.dir}/${ant.project.name}.war" todir="${deploy.dir}"/>
   </target>
