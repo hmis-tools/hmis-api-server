@@ -59,6 +59,4 @@ public class GenderDAOImpl extends BaseDAOImpl implements GenderDAO
 			throw re;
 		}
 	}
-	
-
 }

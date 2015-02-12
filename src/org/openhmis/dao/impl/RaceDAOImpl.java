@@ -59,25 +59,5 @@ public class RaceDAOImpl extends BaseDAOImpl implements RaceDAO
 			log.error("find Races failed", re);
 			throw re;
 		}
-	}
-
-//	@Override
-//	public List<CodeRace> findRacesByClientKey(Long clientKey)
-//			throws RaceNotFoundException
-//	{
-//		log.debug("find Races By Client Key");
-//		try
-//		{
-//			String queryString = "from CodeRace cr where cr.";
-//		}
-//		catch (RuntimeException re)
-//		{
-//			log.error("find Races By Client Key failed", re);
-//			throw re;
-//		}
-//		return null;
-//	}
-	
-	
-	
+	}	
 }

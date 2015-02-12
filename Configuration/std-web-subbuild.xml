@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project basedir="." default="deploy">
+  <property file="build.properties"/>
+
+  <target name="init">
+    <tstamp/>
+    <mkdir dir="${build.dir}"/>
+    <mkdir dir="${dist.dir}"/>
+    <mkdir dir="${docs.dir}/${ant.project.name}"/>
+    <mkdir dir="${web-inf.dir}"/>
+	
+    <mkdir dir="${classes.dir}"/>
+    <mkdir dir="${buildnotes.dir}"/>
+  </target>
+
+  <target name="compile" depends="init">
+    <javac destdir="${classes.dir}" srcdir="${src.dir}" includeantruntime="true">
+      <classpath>
+        <pathelement path="${classpath}"/>
+        <fileset dir="${ext.dir}">
+          <include name="**/*.jar"/>
+        </fileset>
+        <fileset dir="${src.dir}/WEB-INF/lib">
+          <include name="**/*.jar"/>
+        </fileset>
+      </classpath>
+    </javac>
+  </target>
+
+  <!-- Create the deployment descriptors from the embedded xDoclet -->
+  <target name="webdoclet" depends="compile">
+    <!-- Copy libraries and other support classes -->
+    <copy todir="${build.dir}">
+      <fileset dir="${web-inf.dir}"/>
+    </copy>  
+  	<ant antfile="xdoclet.xml" target="webdoclet"/>
+    <mkdir dir="${dist.dir}/lib"/>
+  </target>
+
+  <!-- Standard distribution web application -->
+  <target name="dist.std" depends="webdoclet" unless="excluded.class">
+    <jar jarfile="${dist.dir}/${ant.project.name}.war">
+      <fileset dir="${build.dir}">
+        <exclude name="**/*.nbattrs"/>
+      </fileset>
+    </jar>
+  </target>
+
+  <!-- Special distribution web application with an extra helper -->
+  <target name="dist.spc" depends="webdoclet" if="excluded.class">
+    <jar jarfile="${dist.dir}/${ant.project.name}.war">
+      <fileset dir="${build.dir}">
+        <exclude name="**/*${excluded.class}*"/>
+        <exclude name="**/*.nbattrs"/>
+      </fileset>
+    </jar>
+  </target>
+
+  <!-- Optimise the build -->
+  <target name="optimise" depends="dist.std,dist.spc">
+    <java classname="RetroGuard" dir="${basedir}" fork="true" output="${buildnotes.dir}/optimise.txt">
+      <classpath>
+        <pathelement location="${builders.dir}/retroguard.jar"/>
+      </classpath>
+      <arg path="${dist.dir}/${ant.project.name}.war"/>
+      <arg path="${dist.dir}/lib/${ant.project.name}.war"/>
+      <arg path="retroguard.txt"/>
+      <arg path="${buildnotes.dir}/retroguard.txt"/>
+    </java>
+  </target>
+
+  <!-- Deploy the WAR to Tomcat -->
+  <target name="deploy" depends="optimise">
+    <copy file="${dist.dir}/${ant.project.name}.war" todir="${deploy.dir}"/>
+  </target>
+
+  <target name="docs" depends="dist.std,dist.spc">
+    <javadoc author="true" defaultexcludes="yes" destdir="${docs.dir}/${ant.project.name}" packagenames="com.amity.${ant.project.name}.*" public="true" sourcepath="${src.dir}" use="true" version="true" windowtitle="Event Logger">
+      <classpath>
+        <pathelement path="${classpath}"/>
+        <fileset dir="${ext.dir}">
+          <include name="**/*.jar"/>
+        </fileset>
+        <fileset dir="${jboss-client.dir}">
+          <include name="**/*.jar"/>
+          <include name="**/*.zip"/>
+        </fileset>
+      </classpath>
+    </javadoc>
+  </target>
+
+  <!-- Assess dependencies -->
+  <target name="depend" depends="dist.std,dist.spc">
+    <jdepend fork="yes" outputfile="${buildnotes.dir}/jdepend.txt">
+      <sourcespath>
+        <pathelement location="${src.dir}"/>
+        <pathelement location="${root.dir}/FlexCorp/corporatecore/src"/>
+        <pathelement location="${root.dir}/FlexCorp/ejbcore/src"/>
+        <pathelement location="${root.dir}/FlexCorp/enhancedejbcore/src"/>
+        <pathelement location="${root.dir}/FlexCorp/eventlogger/src"/>
+        <pathelement location="${root.dir}/FlexCorp/sqlmanager/src"/>
+      </sourcespath>
+      <classpath>
+        <pathelement location="${builders.dir}/jdepend.jar"/>
+      </classpath>
+    </jdepend>
+  </target>
+
+  <!-- Clean up all generated files and libraries -->
+  <target name="clean">
+    <delete dir="${build.dir}"/>
+    <delete dir="${dist.dir}"/>
+  </target>
+</project>

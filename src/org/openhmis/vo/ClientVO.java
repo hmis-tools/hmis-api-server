@@ -7,6 +7,7 @@
 
 package org.openhmis.vo;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,8 +22,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  */
 @XmlRootElement
-public class ClientVO 
+public class ClientVO implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long clientKey;
 	private String nameMiddle;
 	private String nameLast;
@@ -33,8 +38,8 @@ public class ClientVO
 	private String ethnicityDescription;
 	private String genderDescription;
 	
-	
-	public ClientVO() {
+	public ClientVO() 
+	{
 		super();
 	}
 	public ClientVO(Long clientKey) {
@@ -100,6 +105,7 @@ public class ClientVO
 	public void setGenderDescription(String genderDescription) {
 		this.genderDescription = genderDescription;
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

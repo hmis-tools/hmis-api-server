@@ -15,6 +15,7 @@ import org.openhmis.dao.impl.RaceDAOImpl;
 import org.openhmis.domain.CodeRace;
 import org.openhmis.exception.race.RaceAlreadyExistException;
 import org.openhmis.exception.race.RaceNotFoundException;
+import org.openhmis.exception.race.UnableToUpdateRaceException;
 import org.openhmis.service.RaceManager;
 
 
@@ -57,13 +58,10 @@ public class RaceManagerImpl implements RaceManager
 		return raceDAO.findRaces();
 	}
 
-//	@Override
-//	public List<CodeRace> getRacesByClientKey(Long clientKey)
-//			throws RaceNotFoundException
-//	{
-//		log.debug("getRacesByClientKey");
-//		return raceDAO.findRacesByClientKey(clientKey);
-//	}	
-//	
-	
+	@Override
+	public Boolean updateRace(CodeRace race) throws UnableToUpdateRaceException 
+	{
+		log.debug("updateRace");
+		return raceDAO.update(race);
+	}
 }

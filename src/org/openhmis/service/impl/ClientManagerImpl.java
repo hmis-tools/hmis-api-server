@@ -10,7 +10,12 @@ package org.openhmis.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
+
 import org.apache.log4j.Logger;
+import org.dozer.DozerBeanMapperSingletonWrapper;
+import org.dozer.Mapper;
 import org.openhmis.dao.ClientDAO;
 import org.openhmis.dao.impl.ClientDAOImpl;
 import org.openhmis.domain.Client;
@@ -18,6 +23,7 @@ import org.openhmis.exception.client.ClientNotFoundException;
 import org.openhmis.exception.client.InValidClientException;
 import org.openhmis.service.ClientManager;
 import org.openhmis.util.HmisConstants;
+import org.openhmis.vo.ClientDetailVO;
 import org.openhmis.vo.ClientVO;
 
 
@@ -25,7 +31,7 @@ public class ClientManagerImpl implements ClientManager
 {
 	
 	private static final Logger log = Logger.getLogger(ClientManagerImpl.class);
-
+	Mapper mapper = DozerBeanMapperSingletonWrapper.getInstance();
 	private ClientDAO clientDAO;
 	
 	public ClientManagerImpl()
@@ -82,23 +88,48 @@ public class ClientManagerImpl implements ClientManager
 		try
 		{
 			List<Object[]> clientObject = clientDAO.findClientById(clientKey);
-			Object[] clientArray = clientObject.get(0);
+			if ((clientObject != null) && ( clientObject.size()>0))
+			{
+				Object[] clientArray = clientObject.get(0);
+				
+				clientVO.setClientKey((Long)clientArray[0]);
+				clientVO.setSocSecNumber((String)clientArray[1]);
+				clientVO.setNameFirst((String)clientArray[2]);
+				clientVO.setNameLast((String)clientArray[3]);
+				clientVO.setNameMiddle((String)clientArray[4]);
+				clientVO.setDateOfBirth(((Date)clientArray[5]).toString());
+				clientVO.setEthnicityDescription((String)clientArray[6]);
+				clientVO.setGenderDescription((String)clientArray[7]);
+			}
+			else
+			{
+				throw new WebApplicationException(Response.Status.NOT_FOUND);
+			}
+		}
+		catch(Exception e)
+		{
+			throw new ClientNotFoundException(e.getMessage());
+		}
+		return clientVO;
+	}
+
+	@Override
+	public ClientDetailVO getClientDetailById(Long clientKey)
+			throws ClientNotFoundException 
+	{
+		ClientDetailVO clientDetailVO = new ClientDetailVO();
+		try
+		{
+			Client client = clientDAO.findClientDetailById(clientKey);
+			clientDetailVO = mapper.map(client,ClientDetailVO.class);
 			
-			clientVO.setClientKey((Long)clientArray[0]);
-			clientVO.setSocSecNumber((String)clientArray[1]);
-			clientVO.setNameFirst((String)clientArray[2]);
-			clientVO.setNameLast((String)clientArray[3]);
-			clientVO.setNameMiddle((String)clientArray[4]);
-			clientVO.setDateOfBirth(((Date)clientArray[5]).toString());
-			clientVO.setEthnicityDescription((String)clientArray[6]);
-			clientVO.setGenderDescription((String)clientArray[7]);
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 			throw new ClientNotFoundException(e.getMessage());
 		}
-		return clientVO;
+		return clientDetailVO;
 	}
 
 	@Override

@@ -14,6 +14,7 @@ import org.openhmis.dao.EthnicityDAO;
 import org.openhmis.dao.impl.EthnicityDAOImpl;
 import org.openhmis.domain.CodeEthnicity;
 import org.openhmis.exception.ethnicity.EthnicityAlreadyExistException;
+import org.openhmis.exception.ethnicity.UnableToUpdateEthnicityException;
 import org.openhmis.service.EthnicityManager;
 
 
@@ -61,4 +62,14 @@ public class EthnicityManagerImpl implements EthnicityManager
 		log.debug("addEthnicity");
 		return ethnicityDAO.save(ethnicity);
 	}
+
+	@Override
+	public Boolean updateEthnicity(CodeEthnicity ethnicity)
+			throws UnableToUpdateEthnicityException 
+	{
+		log.debug("updateEthnicity");
+		return ethnicityDAO.update(ethnicity);
+	}
+	
+	
 }
