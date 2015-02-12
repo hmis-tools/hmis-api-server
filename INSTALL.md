@@ -14,6 +14,24 @@ To create the schema:
 ---------------------
 * Sample data will be located in: Database/Sampledb.  It's in progress
   right now. 
+* For now, use the 2014StandsOpenHMIS\_ERD.mwb file in /doc.  It will
+  create an empty schema.
+    * Convert the 2014StandardsOpenHMIS\_ERD.mwb file to a .sql file
+        * I used the mwb2sql tool available at
+          https://github.com/tomoemon/mwb2sql 
+        * It requires MySQL Workbench to run  
+          `$ sudo apt-get install mysql-workbench`  
+          `$ mwb2sql path/to/2014StandardOpenHMIS_ERD.mwb your_filename.sql`  
+    * Run the generated .sql file:  
+    `$ mysql -u root -p`  
+    (enter your password)  
+    mysql> source 'doc/your\_filename.sql'  
+    // to create an openhmis-specific user:  
+    mysql> CREATE USER 'new\_user'@'localhost' IDENTIFIED BY
+     'password';  
+    mysql> GRANT ALL PRIVILEGES ON <database>.* TO
+     'new\_user'@'localhost';  
+
 
 Hibernate instructions:
 -----------------------------
@@ -67,8 +85,8 @@ A sample URL to get the client information using client key (e.g., 75864) is
 
 More detailed information for Debian users:
 --------------------------------------------------------------------
-Here are some helpful steps for getting tomcat7 started with a webapp.
-I'm running Debian jessie (testing). 
+Here are some helpful steps for getting tomcat7 started with a webapp
+while running Debian jessie (testing). 
 
 * Run `apt-get install tomcat7`
 * The server.xml file is now located in `/etc/tomcat7`
@@ -76,49 +94,18 @@ I'm running Debian jessie (testing).
 * The logs are located in: `/var/log/tomcat7/catalina.out`
 * As of 2015-01-14 or so, the Debian tomcat7 installation didn't
   create these links, so you should make them:  
-       `cd /usr/share/tomcat7  
+       cd /usr/share/tomcat7  
        sudo ln -s /var/lib/tomcat7/common/ common  
        sudo ln -s /var/lib/tomcat7/server/ server  
        sudo ln -s /var/lib/tomcat7/shared/ shared  
        sudo ln -s /var/lib/tomcat7/conf/ conf  
        sudo ln -s /var/lib/tomcat7/logs/ logs  
-       sudo mkdir /usr/share/tomcat7/temp`  
-* Look at localhost:8080 in your browser.  You should see the default Tomcat start
-  page!  
+       sudo mkdir /usr/share/tomcat7/temp  
 * Edit `/etc/tomcat7/server.xml` to point to the directory of the
  OpenHMIS tree by changing the default `appBase="webapps"` to the
   directory where you've checked out this repository.  
    ` <Host name="localhost"  appBase="webapps"
     unpackWARs="true" autoDeploy="true">`
-* To change the server.xml file:  
-    `cp /etc/tomcat7/server.xml ~/new/dir/server.xml  
-    # keep the original file in case you want it back  
-    sudo mv /etc/tomcat7/server.xml /etc/tomcat7/old-server.xml  
-    # edit new/dir/server.xml as in the previous bullet  
-    sudo cp new/dir/server.xml /etc/tomcat7/server.xml  
-    sudo /etc/init.d/tomcat7 restart`
-* If you have problems, try checking the logs with:  
-    `sudo less /var/log/tomcat7/catalina.out`
-* Create the database for tomcat to connect to:  
-    * Convert the 2014StandardsOpenHMIS_ERD.mwb file to a .sql file
-        * I used the mwb2sql tool available at
-          https://github.com/tomoemon/mwb2sql 
-        * It requires MySQL Workbench to run  
-          `$ sudo apt-get install mysql-workbench`  
-           `$ mwb2sql path/to/2014StandardOpenHMIS_ERD.mwb your_filename.sql`  
-    * Run the generated .sql file:  
-    `// if you already have mysql set up  
-    $ mysql -u root -p  
-    (enter your password)  
-    $ mysql> source 'doc/your_filename.sql'  
-    // to create an openhmis-specific user:  
-    $ mysql> CREATE USER 'new_user'@'localhost' IDENTIFIED BY
-     'password';  
-    $ mysql> GRANT ALL PRIVILEGES ON <database>.* TO
-     'new_user'@'localhost';  
-    // you can now log in as new_user to make sure you can see the  
-    // database and tables, if desired`
-
 * Edit the mysql connection information in
     WebRoot/META-INF/context.xml  
     `username="new_user"  
