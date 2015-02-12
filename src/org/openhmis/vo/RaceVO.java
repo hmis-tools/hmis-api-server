@@ -26,13 +26,13 @@ public class RaceVO implements Serializable
 	private String shortDesc;
 	private String notes;
 	private Integer recActiveGct;
-	private Timestamp logDateTime;
+	private String logDateTime;
 	private Long logUserKey;
 	public RaceVO() {
 		super();
 	}
 	public RaceVO(Integer codeKey, String description, String shortDesc,
-			String notes, Integer recActiveGct, Timestamp logDateTime,
+			String notes, Integer recActiveGct, String logDateTime,
 			Long logUserKey) {
 		super();
 		this.codeKey = codeKey;
@@ -73,10 +73,10 @@ public class RaceVO implements Serializable
 	public void setRecActiveGct(Integer recActiveGct) {
 		this.recActiveGct = recActiveGct;
 	}
-	public Timestamp getLogDateTime() {
+	public String getLogDateTime() {
 		return logDateTime;
 	}
-	public void setLogDateTime(Timestamp logDateTime) {
+	public void setLogDateTime(String logDateTime) {
 		this.logDateTime = logDateTime;
 	}
 	public Long getLogUserKey() {
@@ -149,4 +149,12 @@ public class RaceVO implements Serializable
 			return false;
 		return true;
 	}
+	@Override
+	public String toString() {
+		return "RaceVO [codeKey=" + codeKey + ", description=" + description
+				+ ", shortDesc=" + shortDesc + ", notes=" + notes
+				+ ", recActiveGct=" + recActiveGct + ", logDateTime="
+				+ logDateTime + ", logUserKey=" + logUserKey + "]";
+	}
+	
 }

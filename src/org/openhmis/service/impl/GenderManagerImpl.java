@@ -14,6 +14,7 @@ import org.openhmis.dao.GenderDAO;
 import org.openhmis.dao.impl.GenderDAOImpl;
 import org.openhmis.domain.CodeGender;
 import org.openhmis.exception.gender.GenderAlreadyExistException;
+import org.openhmis.exception.gender.UnableToUpdateGenderException;
 import org.openhmis.service.GenderManager;
 
 
@@ -46,6 +47,15 @@ public class GenderManagerImpl implements GenderManager
 		log.debug("getGenderCodes");
 		return this.genderDAO.findGenderCodes();
 	}
+	
+	@Override
+	public Boolean updateGender(CodeGender gender)
+			throws UnableToUpdateGenderException 
+	{
+		log.debug("updateGender");
+		return this.genderDAO.update(gender);
+	}
+
 	@Override
 	public List<CodeGender> getGenders() 
 	{

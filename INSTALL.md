@@ -11,8 +11,8 @@ eventually.
             hibernate.dialect=org.hibernate.dialect.MySQLDialect
             hibernate.connection.driver_class=com.mysql.jdbc.Driver
             hibernate.connection.url=jdbc:mysql://173.194.107.15:3306/OPENHMIS2
-            hibernate.connection.username=root
-            hibernate.connection.password=welcome123
+            hibernate.connection.username=<Database user name>
+            hibernate.connection.password=<Database password>
             hibernate.connection.pool_size=1
             hibernate.show_sql=true
             hibernate.connection.autocommit=true
@@ -20,7 +20,7 @@ eventually.
 
 2. Save the property file in some directory location, for example `D:\Temp`.
 
-3. Locate your Tomcat folder and find the conf directory.
+3. Locate your Tomcat folder, find the conf directory and locate context.xml
 
 4. Add the following line in the `<Context></Context>`
 
