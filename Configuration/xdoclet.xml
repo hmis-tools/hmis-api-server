@@ -174,7 +174,8 @@
         <echo>|                                                   |</echo>
         <echo>+---------------------------------------------------+</echo>
 
-        <mkdir dir="${web-inf.dir}"/>
+      <!--  <mkdir dir="${web-inf.dir}"/>  -->
+    	<mkdir dir="${build.web-inf.dir}"/>
         <webdoclet
             destdir="${generated-src.lib.dir}"
             mergedir="${merge.dir}"
@@ -185,11 +186,11 @@
             >
 
             <fileset dir="${src.dir}">
-                <include name="${web.dir}/*Servlet.java"/>
-                <include name="${web.dir}/*Filter.java"/>
-                <include name="${web.dir}/*Tag.java"/>
-                <include name="${web.dir}/*Action.java"/>
-				<include name="${web.dir}/*Controller.java"/>
+                <include name="${web.dir}/*DAO*.java"/>
+                <include name="${web.dir}/*Manager*.java"/>
+                <include name="${web.dir}/*Service*.java"/>
+                <include name="${web.dir}/*Exception*.java"/>
+				<include name="${web.dir}/*VO.java"/>
             </fileset>
 
             <deploymentdescriptor
