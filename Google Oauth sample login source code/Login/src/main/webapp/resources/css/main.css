@@ -1,0 +1,99 @@
+.chart-container {
+	position: relative;
+	display: inline-block;
+	height: 100%;
+	width:100% !important;
+	padding-top: 15px;
+	padding-bottom: 25px;
+}
+.chart {
+	float: left;
+	z-index:1;
+	display: inline-block;
+	position: relative;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	border-left: thin solid #cccccc;
+	border-bottom: thin solid #cccccc;
+	/*width:90% !important;*/
+}
+.chart-row {
+	height: 25px;
+}
+.bar {
+	position: relative;
+	background-color: #b0d16a;
+	height: 19px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+	border-radius: 0 2px 2px 0;
+}
+.bar:hover {
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
+	border-right: 2px solid black;
+}
+.legend-left {
+	clear: both;
+	display: inline-block;
+	position: relative;
+	margin-top: 17px;
+	float: left;
+}
+.heading {
+	font-size: 8pt;
+	font-weight: bold;
+	color: #aaaaaa;
+	height: 19px;
+}
+.heading-left {
+	text-align: right;
+	line-height: 5px;
+	position: relative;
+	max-width: 200px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+	margin-right: 7px;
+}
+.data-point {
+	height: 25px;
+	width: 25px;
+	position: relative;
+	float: left;
+	margin-left: -13px;
+}
+.legend-bottom {
+	position: absolute;
+	bottom: -10px;
+}
+.chart-label {
+	font-size: 7pt;
+	font-weight: bold;
+	color: #aaaaaa;
+	position: absolute;
+	bottom: -10px;
+	z-index:0;
+	float: left;
+}
+.chart-label-hr {
+	position: absolute;
+	bottom: 0;
+	z-index:-1;
+	background-color: #cccccc;
+	width: 1px;
+	height: 4px;
+}
+.chart-title {
+	text-align: center;
+	font-size: 10pt;
+	font-weight: bold;
+}
+.chart-x-label {
+  display: block;
+  text-align: center;
+  top: 30px;
+	position: relative;
+	font-size: 10pt;
+	font-weight: bold;
+	color: #aaaaaa;
+}
