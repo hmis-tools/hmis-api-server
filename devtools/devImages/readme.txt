@@ -2,7 +2,7 @@ VirtualBox_Pathway V1.0
 
 System INFO:
 
-Centos 6.6(user:root password:)
+Centos 6.6(user:root password:pathway)
 
 JDK1.7
 
