@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="build" name="Open-HMIS-UI">
+	<property environment="env" />
+	<property name="debuglevel" value="source,lines,vars" />
+	<property name="target" value="1.8" />
+	<property name="source" value="1.8" />
+	<path id="Apache Tomcat v7.0 [Apache Tomcat v7.0].libraryclasspath">
+		<pathelement location="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.57_old/lib/annotations-api.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.57_old/lib/catalina-ant.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.57_old/lib/catalina-ha.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.57_old/lib/catalina-tribes.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.57_old/lib/catalina.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.57_old/lib/ecj-4.4.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.57_old/lib/el-api.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.57_old/lib/jasper-el.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.57_old/lib/jasper.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.57_old/lib/jsp-api.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.57_old/lib/servlet-api.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.57_old/lib/tomcat-api.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.57_old/lib/tomcat-coyote.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.57_old/lib/tomcat-dbcp.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.57_old/lib/tomcat-i18n-es.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.57_old/lib/tomcat-i18n-fr.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.57_old/lib/tomcat-i18n-ja.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.57_old/lib/tomcat-jdbc.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.57_old/lib/tomcat-util.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.57_old/lib/tomcat7-websocket.jar" />
+		<pathelement location="C:/Program Files/Apache Software Foundation/apache-tomcat-7.0.57_old/lib/websocket-api.jar" />
+	</path>
+	<path id="Web App Libraries.libraryclasspath">
+		<pathelement location="WebContent/WEB-INF/lib/antlr-2.7.7.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/aopalliance-1.0.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/aspectjrt-1.7.4.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/commons-dbcp-1.4.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/commons-logging-1.1.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/commons-pool-1.5.4.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/dom4j-1.6.1.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/guava-11.0.2.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/hibernate-commons-annotations-4.0.4.Final.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/hibernate-core-4.3.5.Final.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/hibernate-entitymanager-4.3.5.Final.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/hibernate-jpa-2.1-api-1.0.0.Final.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/jackson-core-asl-1.7.1.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/jackson-mapper-asl-1.7.1.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/jandex-1.1.0.Final.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/javassist-3.12.1.GA.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/javassist-3.18.1-GA.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/javax.inject-1.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/jboss-logging-3.1.3.GA.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/jboss-logging-annotations-1.2.0.Beta1.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/jboss-transaction-api_1.2_spec-1.0.0.Final.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/jcl-over-slf4j-1.7.5.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/jsr305-1.3.9.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/jstl-1.2.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/log4j-1.2.15.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/mysql-connector-java-5.1.34.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/reflections-0.9.8.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/slf4j-api-1.7.5.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/slf4j-log4j12-1.7.5.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/spring-aop-4.0.3.RELEASE.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/spring-beans-4.0.3.RELEASE.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/spring-context-4.0.3.RELEASE.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/spring-core-4.0.3.RELEASE.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/spring-expression-4.0.3.RELEASE.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/spring-jdbc-4.0.3.RELEASE.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/spring-orm-4.0.3.RELEASE.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/spring-oxm-1.0-rc2.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/spring-tx-4.0.3.RELEASE.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/spring-web-4.0.3.RELEASE.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/spring-webmvc-4.0.3.RELEASE.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/spring-xml-1.0-rc2.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/stax-api-1.0.1.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/xml-apis-1.3.04.jar" />
+		<pathelement location="WebContent/WEB-INF/classes" />
+	</path>
+	<path id="EAR Libraries.libraryclasspath" />
+	<path id="Open-HMIS-UI.classpath">
+		<pathelement location="build/classes" />
+		<path refid="Apache Tomcat v7.0 [Apache Tomcat v7.0].libraryclasspath" />
+		<path refid="Web App Libraries.libraryclasspath" />
+		<path refid="EAR Libraries.libraryclasspath" />
+	</path>
+	<target name="init">
+		<mkdir dir="build/classes" />
+		<copy includeemptydirs="false" todir="build/classes">
+			<fileset dir="src">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+	<target name="clean">
+		<delete dir="build/classes" />
+	</target>
+	<target depends="clean" name="cleanall" />
+	<target depends="build-subprojects,build-project" name="build" />
+	<target name="build-subprojects" />
+	<target depends="init" name="build-project">
+		<echo message="${ant.project.name}: ${ant.file}" />
+		<javac debug="true" debuglevel="${debuglevel}" destdir="build/classes" includeantruntime="false" source="${source}" target="${target}">
+			<src path="src" />
+			<classpath refid="Open-HMIS-UI.classpath" />
+		</javac>
+	</target>
+	<target name="war" description="OpenHMIS-UI the application as a WAR file" depends="clean,build">
+		<delete file="./target/warfile/OpenHMIS-UI.war"></delete>
+		<mkdir dir="WebContent/WEB-INF/classes" />
+		<mkdir dir="target/warfile"/>
+		<copy includeemptydirs="false" todir="WebContent/WEB-INF/classes">
+			<fileset dir="build/classes">
+				<include name="**/*.class" />
+			</fileset>
+		</copy>
+		<war destfile="./target/warfile/OpenHMIS-UI.war" basedir="WebContent"  needxmlfile="false">
+		</war>
+	</target>
+	<target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects" />
+</project>
