@@ -1,0 +1,4 @@
+There are two ways to set up sample database locally,
+1. Import the dumped files to your MySQL database
+or
+2. Run the DB scripts setup or upgrade your sample database
