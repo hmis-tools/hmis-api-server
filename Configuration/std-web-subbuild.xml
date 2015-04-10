@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project basedir="." default="deploy">
-  <property file="build.properties"/>
+  <property file="config.properties"/>
 
   <target name="init">
     <tstamp/>
@@ -31,9 +31,9 @@
   <!-- Create the deployment descriptors from the embedded xDoclet -->
   <target name="webdoclet" depends="compile">
     <!-- Copy libraries and other support classes -->
-    <copy todir="${build.dir}">
+    <copy todir="${build.web-inf.dir}">
       <fileset dir="${web-inf.dir}"/>
-    </copy>  
+    </copy>
   	<ant antfile="xdoclet.xml" target="webdoclet"/>
     <mkdir dir="${dist.dir}/lib"/>
   </target>
