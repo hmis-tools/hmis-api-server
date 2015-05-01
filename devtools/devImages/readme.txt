@@ -2,11 +2,11 @@ VirtualBox_Pathway V1.0
 
 System INFO:
 
-Centos 6.6(user:root password:pathway)
+Centos 6.6
 
 JDK1.7
 
-Mysql-server(user:root password:) Auto Start.
+Mysql-server(Auto Start).
 
 Mysql-workbench(Connected to Golden DB, Start in Terminal)
 
@@ -14,8 +14,22 @@ Eclipse( Java EE developer, Start in Terminal)
 
 Tomcat 7 (localhost:8080)
 
+VM Download link:https://drive.google.com/folderview?id=0B4u_ywt7L5jucW5BUnhZT3hoV2M&usp=sharing
+(Download all ZIP files then use 7-zip to extract)
+
+
 Application INFO:
 
 Intakedemo (http://localhost:8080/Intakedemo/login)
 
-User and password can be found in Mysql-workbench in table USER_INFO
+
+Access INFO:
+
+These are usernames and passwords used to access applications within the VM.
+	OS Access
+		username: root	password: pathway
+	MySQL (open MySQL Workbench)
+		username: root	password:  
+	IntakeDemo (http://localhost:8080/Intakedemo/login)
+		username: len		password: 12oclockhi
+	(verify using MySQL Workbench, checking the USER_INFO table)
