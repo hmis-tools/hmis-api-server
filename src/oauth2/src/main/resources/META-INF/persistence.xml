@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="domain-jpa"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>
+			org.apache.openjpa.persistence.PersistenceProviderImpl
+		</provider>
+		<class>org.openhims.oauth2.domain.VendorIdentityProvider</class>
+		<class>org.openhims.oauth2.domain.UsersHistory</class>
+		<class>org.openhims.oauth2.domain.Authorities</class>
+		<class>org.openhims.oauth2.domain.OauthClientDetails</class>
+		<class>org.openhims.oauth2.domain.Users</class>
+		<class>org.openhims.oauth2.domain.Groups</class>
+		<class>org.openhims.oauth2.domain.VendorZone</class>
+		<class>
+			org.openhims.oauth2.domain.UsersHasOauthClientDetails
+		</class>
+		<class>
+			org.openhims.oauth2.domain.UsersHasOauthClientDetailsId
+		</class>
+		<class>
+			org.openhims.oauth2.domain.VendorIdentityProviderId
+		</class>
+		<properties>
+			<property name="openjpa.ConnectionDriverName"
+				value="com.mysql.jdbc.Driver" />
+			<property name="openjpa.ConnectionURL"
+				value="jdbc:mysql://localhost:3306/mydb" />
+			<property name="openjpa.ConnectionUserName" value="root" />
+			<property name="openjpa.ConnectionPassword"
+				value="changeme" />
+		</properties>
+	</persistence-unit>
+</persistence>
