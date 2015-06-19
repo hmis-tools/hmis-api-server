@@ -1,0 +1,113 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.openhmis</groupId>
+  <artifactId>api</artifactId>
+  <version>0.0.1</version>
+  <packaging>war</packaging>
+
+  <name>openhmis</name>
+  <url>http://openhmis.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+		<groupId>com.google.api-client</groupId>
+		<artifactId>google-api-client</artifactId>
+	</dependency>
+	
+    <dependency>
+	    <groupId>javax.persistence</groupId>
+	    <artifactId>persistence-api</artifactId>
+    </dependency>
+    
+    <dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-core</artifactId>
+	</dependency>
+
+	<dependency>
+		<groupId>javax.ws.rs</groupId>
+		<artifactId>javax.ws.rs-api</artifactId>
+	</dependency>	
+	
+	<dependency>
+		<groupId>javax.annotation</groupId>
+		<artifactId>javax.annotation-api</artifactId>
+	</dependency>
+	
+	<dependency>
+		<groupId>net.sf.dozer</groupId>
+		<artifactId>dozer</artifactId>
+	</dependency>
+	
+	<dependency>
+		<groupId>com.googlecode.json-simple</groupId>
+		<artifactId>json-simple</artifactId>
+	</dependency>
+	
+	<dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+	</dependency>
+	
+  </dependencies>
+  <dependencyManagement>
+  	<dependencies>
+  		<dependency>
+  			<groupId>com.google.api-client</groupId>
+  			<artifactId>google-api-client</artifactId>
+  			<version>1.20.0</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>javax.persistence</groupId>
+  			<artifactId>persistence-api</artifactId>
+  			<version>1.0.2</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>org.hibernate</groupId>
+  			<artifactId>hibernate-core</artifactId>
+  			<version>4.3.10.Final</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>javax.ws.rs</groupId>
+  			<artifactId>javax.ws.rs-api</artifactId>
+  			<version>2.0.1</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>javax.annotation</groupId>
+  			<artifactId>javax.annotation-api</artifactId>
+  			<version>1.2</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>net.sf.dozer</groupId>
+  			<artifactId>dozer</artifactId>
+  			<version>5.5.1</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>com.googlecode.json-simple</groupId>
+  			<artifactId>json-simple</artifactId>
+  			<version>1.1.1</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>log4j</groupId>
+  			<artifactId>log4j</artifactId>
+  			<version>1.2.17</version>
+  		</dependency>
+  		<dependency>
+			<groupId>xml-apis</groupId>
+			<artifactId>xml-apis</artifactId>
+			<version>1.4.01</version>
+		</dependency>
+  		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5</version>
+		</dependency>
+  	</dependencies>
+  </dependencyManagement>
+</project>
