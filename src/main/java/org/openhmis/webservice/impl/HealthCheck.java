@@ -6,10 +6,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
- * Root resource (exposed at "myresource" path)
+ * Root resource (exposed at "healthcheck" path)
  */
-@Path("helloworld")
-public class HelloWorld {
+@Path("healthcheck")
+public class HealthCheck {
 
     /**
      * Method handling HTTP GET requests. The returned object will be sent
@@ -19,7 +19,7 @@ public class HelloWorld {
      */
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Hello, World!";
+    public String healthcheck() {
+        return "Your service is working.";
     }
 }
