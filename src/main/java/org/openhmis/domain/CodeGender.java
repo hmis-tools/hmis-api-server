@@ -24,7 +24,7 @@ import org.hibernate.annotations.GenericGenerator;
  * CodeGender entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "CODE_GENDER", catalog = "OPENHMIS2")
+@Table(name = "CODE_GENDER")
 public class CodeGender implements java.io.Serializable {
 
 	// Fields

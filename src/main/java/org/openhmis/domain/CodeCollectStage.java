@@ -19,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
  * CodeCollectStage entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "CODE_COLLECT_STAGE", catalog = "OPENHMIS2")
+@Table(name = "CODE_COLLECT_STAGE")
 public class CodeCollectStage implements java.io.Serializable {
 
 	// Fields

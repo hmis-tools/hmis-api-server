@@ -22,7 +22,7 @@ import org.hibernate.annotations.GenericGenerator;
  * ClientNoncashBenefits entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "CLIENT_NONCASH_BENEFITS", catalog = "OPENHMIS2")
+@Table(name = "CLIENT_NONCASH_BENEFITS")
 public class ClientNoncashBenefits implements java.io.Serializable {
 
 	// Fields

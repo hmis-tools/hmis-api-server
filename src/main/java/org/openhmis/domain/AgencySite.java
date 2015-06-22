@@ -19,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
  * AgencySite entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "AGENCY_SITE", catalog = "OPENHMIS2")
+@Table(name = "AGENCY_SITE")
 public class AgencySite implements java.io.Serializable {
 
 	// Fields

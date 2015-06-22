@@ -22,7 +22,7 @@ import org.hibernate.annotations.GenericGenerator;
  * BedUnit entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "BED_UNIT", catalog = "OPENHMIS2")
+@Table(name = "BED_UNIT")
 public class BedUnit implements java.io.Serializable {
 
 	// Fields

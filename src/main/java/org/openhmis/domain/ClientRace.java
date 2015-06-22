@@ -22,7 +22,7 @@ import org.hibernate.annotations.GenericGenerator;
  * ClientRace entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "CLIENT_RACE", catalog = "OPENHMIS2")
+@Table(name = "CLIENT_RACE")
 public class ClientRace implements java.io.Serializable {
 
 	// Fields

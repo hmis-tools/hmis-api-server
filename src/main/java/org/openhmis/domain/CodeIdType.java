@@ -19,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
  * CodeIdType entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "CODE_ID_TYPE", catalog = "OPENHMIS2")
+@Table(name = "CODE_ID_TYPE")
 public class CodeIdType implements java.io.Serializable {
 
 	// Fields

@@ -19,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
  * CodeProjectType entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "CODE_PROJECT_TYPE", catalog = "OPENHMIS2")
+@Table(name = "CODE_PROJECT_TYPE")
 public class CodeProjectType implements java.io.Serializable {
 
 	// Fields

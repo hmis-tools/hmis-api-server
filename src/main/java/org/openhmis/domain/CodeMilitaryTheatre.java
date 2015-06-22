@@ -19,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
  * CodeMilitaryTheatre entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "CODE_MILITARY_THEATRE", catalog = "OPENHMIS2")
+@Table(name = "CODE_MILITARY_THEATRE")
 public class CodeMilitaryTheatre implements java.io.Serializable {
 
 	// Fields

@@ -25,7 +25,7 @@ import org.hibernate.annotations.GenericGenerator;
  * Race entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "race", catalog = "openhmis2")
+@Table(name = "race")
 public class Race implements java.io.Serializable {
 
 	// Fields
@@ -80,7 +80,7 @@ public class Race implements java.io.Serializable {
 	}
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "client_has_race", catalog = "openhmis2", joinColumns = { @JoinColumn(name = "race_key", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "client_key", nullable = false, updatable = false) })
+	@JoinTable(name = "client_has_race", catalog = "openhmis", joinColumns = { @JoinColumn(name = "race_key", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "client_key", nullable = false, updatable = false) })
 	public Set<Client> getClients() {
 		return this.clients;
 	}

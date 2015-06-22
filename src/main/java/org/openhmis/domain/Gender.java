@@ -23,7 +23,7 @@ import org.hibernate.annotations.GenericGenerator;
  * Gender entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "gender", catalog = "openhmis2")
+@Table(name = "gender")
 public class Gender implements java.io.Serializable {
 
 	// Fields

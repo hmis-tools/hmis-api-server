@@ -19,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
  * CodeTaxonomy entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "CODE_TAXONOMY", catalog = "OPENHMIS2")
+@Table(name = "CODE_TAXONOMY")
 public class CodeTaxonomy implements java.io.Serializable {
 
 	// Fields

@@ -19,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
  * ClientHousehold entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "CLIENT_HOUSEHOLD", catalog = "OPENHMIS2")
+@Table(name = "CLIENT_HOUSEHOLD")
 public class ClientHousehold implements java.io.Serializable {
 
 	// Fields

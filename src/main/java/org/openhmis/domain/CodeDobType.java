@@ -19,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
  * CodeDobType entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "CODE_DOB_TYPE", catalog = "OPENHMIS2")
+@Table(name = "CODE_DOB_TYPE")
 public class CodeDobType implements java.io.Serializable {
 
 	// Fields

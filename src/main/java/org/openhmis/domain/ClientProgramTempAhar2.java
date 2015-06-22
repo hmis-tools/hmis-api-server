@@ -19,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
  * ClientProgramTempAhar2 entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "CLIENT_PROGRAM_TEMP_AHAR_2", catalog = "OPENHMIS2")
+@Table(name = "CLIENT_PROGRAM_TEMP_AHAR_2")
 public class ClientProgramTempAhar2 implements java.io.Serializable {
 
 	// Fields

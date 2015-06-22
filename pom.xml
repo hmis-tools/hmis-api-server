@@ -59,6 +59,11 @@
       <artifactId>mysql-connector-java</artifactId>
       <version>5.1.35</version>
     </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.containers</groupId>
+      <artifactId>jersey-container-servlet-core</artifactId>
+      <version>2.18</version>
+    </dependency>
   </dependencies>
   
   <dependencyManagement>
@@ -113,11 +118,7 @@
 			<artifactId>httpclient</artifactId>
 			<version>4.5</version>
 		</dependency>
-		<dependency>
-		    <groupId>com.sun.jersey</groupId>
-		    <artifactId>jersey-server</artifactId>
-		    <version>1.11</version>
-		</dependency>
+    
   	</dependencies>
   </dependencyManagement>
   

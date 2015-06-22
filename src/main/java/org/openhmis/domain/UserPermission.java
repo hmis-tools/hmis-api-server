@@ -19,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
  * UserPermission entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "USER_PERMISSION", catalog = "OPENHMIS2")
+@Table(name = "USER_PERMISSION")
 public class UserPermission implements java.io.Serializable {
 
 	// Fields

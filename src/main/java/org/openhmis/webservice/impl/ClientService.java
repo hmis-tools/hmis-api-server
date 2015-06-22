@@ -84,6 +84,7 @@ public class ClientService
 			log.error("Couldn't get the client " + e.getMessage());
 			throw new ClientNotFoundException(e.getMessage());
 		}
+		
 		return clientVO;
 	}
 	

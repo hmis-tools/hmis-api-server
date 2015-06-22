@@ -24,7 +24,7 @@ import org.hibernate.annotations.GenericGenerator;
  * CodeRace entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "CODE_RACE", catalog = "OPENHMIS2")
+@Table(name = "CODE_RACE")
 public class CodeRace implements java.io.Serializable {
 
 	// Fields

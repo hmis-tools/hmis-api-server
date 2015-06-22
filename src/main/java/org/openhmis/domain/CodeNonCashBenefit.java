@@ -19,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
  * CodeNonCashBenefit entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "CODE_NON_CASH_BENEFIT", catalog = "OPENHMIS2")
+@Table(name = "CODE_NON_CASH_BENEFIT")
 public class CodeNonCashBenefit implements java.io.Serializable {
 
 	// Fields

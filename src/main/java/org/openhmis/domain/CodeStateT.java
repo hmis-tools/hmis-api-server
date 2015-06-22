@@ -18,7 +18,7 @@ import javax.persistence.Table;
  * CodeStateT entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "code_state_t", catalog = "OPENHMIS2")
+@Table(name = "code_state_t")
 public class CodeStateT implements java.io.Serializable {
 
 	// Fields

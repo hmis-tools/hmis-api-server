@@ -22,7 +22,7 @@ import org.hibernate.annotations.GenericGenerator;
  * ServiceEvent entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "SERVICE_EVENT", catalog = "OPENHMIS2")
+@Table(name = "SERVICE_EVENT")
 public class ServiceEvent implements java.io.Serializable {
 
 	// Fields

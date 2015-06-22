@@ -18,7 +18,7 @@ import javax.persistence.Table;
  * ClientProgramTempAhar1 entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "CLIENT_PROGRAM_TEMP_AHAR1", catalog = "OPENHMIS2")
+@Table(name = "CLIENT_PROGRAM_TEMP_AHAR1")
 public class ClientProgramTempAhar1 implements java.io.Serializable {
 
 	// Fields

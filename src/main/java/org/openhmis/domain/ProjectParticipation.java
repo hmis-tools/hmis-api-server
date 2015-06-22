@@ -22,7 +22,7 @@ import org.hibernate.annotations.GenericGenerator;
  * ProjectParticipation entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "PROJECT_PARTICIPATION", catalog = "OPENHMIS2")
+@Table(name = "PROJECT_PARTICIPATION")
 public class ProjectParticipation implements java.io.Serializable {
 
 	// Fields

@@ -19,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
  * FederalFundingSource entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "FEDERAL_FUNDING_SOURCE", catalog = "OPENHMIS2")
+@Table(name = "FEDERAL_FUNDING_SOURCE")
 public class FederalFundingSource implements java.io.Serializable {
 
 	// Fields

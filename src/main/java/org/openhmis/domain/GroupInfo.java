@@ -19,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
  * GroupInfo entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "GROUP_INFO", catalog = "OPENHMIS2")
+@Table(name = "GROUP_INFO")
 public class GroupInfo implements java.io.Serializable {
 
 	// Fields

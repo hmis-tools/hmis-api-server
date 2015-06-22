@@ -19,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
  * CodeGeneral entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "CODE_GENERAL", catalog = "OPENHMIS2")
+@Table(name = "CODE_GENERAL")
 public class CodeGeneral implements java.io.Serializable {
 
 	// Fields

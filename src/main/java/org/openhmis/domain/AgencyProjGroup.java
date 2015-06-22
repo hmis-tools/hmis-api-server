@@ -19,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
  * AgencyProjGroup entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "AGENCY_PROJ_GROUP", catalog = "OPENHMIS2")
+@Table(name = "AGENCY_PROJ_GROUP")
 public class AgencyProjGroup implements java.io.Serializable {
 
 	// Fields

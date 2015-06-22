@@ -18,6 +18,7 @@ target/*
 # Configuration
 config/*
 !config/*.example
+src/main/resources/hibernate.cfg.xml
 
 # Eclipse
 *.pydevproject

@@ -19,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
  * CodeHealthInsurance entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "CODE_HEALTH_INSURANCE", catalog = "OPENHMIS2")
+@Table(name = "CODE_HEALTH_INSURANCE")
 public class CodeHealthInsurance implements java.io.Serializable {
 
 	// Fields
