@@ -46,6 +46,31 @@ _In order for those endpoints to function correctly, you must also create a loca
 ```
 
 
+To create the schema:
+---------------------
+Database migrations are performed using [Flyway](http://flywaydb.org/).
+
+1. Create a local `config/flyway.properties` file with your database connection information
+
+```shell
+  $> cp config/flyway.properties.example config/flyway.properties
+  $> vi config/flyway.properties
+```
+
+
+2. To initialize and update the schema, run the following command in the `pom.xml` directory
+
+```shell
+  $> mvn clean compile flyway:migrate
+```
+
+3. Configure the code base to work with your schema by creating and populating the `src/main/resources/hibernate.cfg.xml` file.
+
+```shell
+  $> cp src/main/resources/hibernate.cfg.xml.example src/main/resources/hibernate.cfg.xml
+  $> vi src/main/resources/hibernate.cfg.xml
+```
+
 To run the web service:
 ---------------------
 
@@ -73,39 +98,12 @@ If successful, the output will end with a message similar to the example below:
 	[INFO] ------------------------------------------------------------------------
 ```
 
-4. Navigate to http://localhost:8080/openhmis/services/healthcheck which should display "Your service is working." 
+4. If your web service is properly configured, [http://localhost:8080/openhmis/services/healthcheck](http://localhost:8080/openhmis/services/healthcheck) should display "Your service is working." 
 
-5. As you make changes, to redeploy updates to the service:
+5. If the schema is properly set up, [http://localhost:8080/openhmis/services/clients/client/75864/user/password](http://localhost:8080/openhmis/services/clients/client/75864/user/password) should yield a valid XML object.
+
+6. As you make changes, to redeploy updates to the service:
 
 ```shell
 	$> mvn tomcat7:redeploy
 ```
-
-
-To create the schema:
----------------------
-Database migrations are performed using [Flyway](http://flywaydb.org/).
-
-1. Create a local `config/flyway.properties` file with your database connection information
-
-```shell
-  $> cp config/flyway.properties.example config/flyway.properties
-  $> vi config/flyway.properties
-```
-
-
-2. To initialize and update the schema, run the following command in the `pom.xml` directory
-
-```shell
-  $> mvn clean compile flyway:migrate
-```
-
-3. Configure the code base to work with your schema by creating and populating the `src/main/resources/hibernate.cfg.xml` file.
-
-```shell
-  $> cp src/main/resources/hibernate.cfg.xml.example src/main/resources/hibernate.cfg.xml
-  $> vi src/main/resources/hibernate.cfg.xml
-```
-
-4. If everything is properly set up, [http://localhost:8080/openhmis/services/clients/client/75864/user/password](http://localhost:8080/openhmis/services/clients/client/75864/user/password) should yield a valid XML object
-dfdd
