@@ -7,7 +7,7 @@ General Notes:
 * Although several core developers are using Eclipse, this is not a requirement to contribute.
 
 
-To create a local development environment for the web service:
+To create a local build:
 -------------------
 The instructions below explain how to set up a development environment capable of running the API endpoints.  This section assumes you have already used git to download a local copy of the code base.
 
@@ -36,19 +36,17 @@ _In order for those endpoints to function correctly, you must also create a loca
 ```XML
 	<settings ...>
 		<servers>
-	 
 			<server>
 				<id>TomcatServer</id>
 				<username>admin</username>
 				<password>password</password>
 			</server>
-	 
 		</servers>
 	</settings>
 ```
 
 
-Running the web service
+To run the web service:
 ---------------------
 
 1. Ensure that Tomcat is running (generally you can do this by going to http://localhost:8080)
