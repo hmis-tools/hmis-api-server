@@ -1,4 +1,4 @@
-_TBD: real installation documentation still needs to be written._
+Installing OpenHMIS
 =================================================================
  
 General Notes:
@@ -11,11 +11,11 @@ To create a local development environment for the web service:
 -------------------
 The instructions below explain how to set up a development environment capable of running the API endpoints.  This section assumes you have already used git to download a local copy of the code base.
 
-NOTE: As of this writing, in order for those endpoints to function correctly, you must also create a local copy of the schema.
+_In order for those endpoints to function correctly, you must also create a local copy of the schema._
 
-1. Install (Maven (3.x))[https://maven.apache.org/download.cgi].
+1. Install [Maven (3.x)](https://maven.apache.org/download.cgi).
 
-2. Install (Tomcat 7.x)[https://tomcat.apache.org/download-70.cgi]. Note that there may be a more recent version of Tomcat, but as of (6-22-2015) Maven plugins do not appear to exist beyond Tomcat 7.
+2. Install [Tomcat 7.x](https://tomcat.apache.org/download-70.cgi). Note that there may be a more recent version of Tomcat, but as of (6-22-2015) Maven plugins do not appear to exist beyond Tomcat 7.
 
 3. Create a Tomcat admin by editing `%TOMCAT7_PATH%/conf/tomcat-users.xml`.
 
@@ -28,7 +28,10 @@ NOTE: As of this writing, in order for those endpoints to function correctly, yo
 ```
 
 
-4. Update Maven's settings by editing `%MAVEN_PATH%/conf/settings.xml` so that Maven will be able to use the Tomcat user in step 3.  The `username` and `password` must match those set in step 3. The ID must be `TomcatServer`.
+4. Update Maven's settings by editing `%MAVEN_PATH%/conf/settings.xml` so that Maven will be able to use the Tomcat user in step 3.
+
+* The `username` and `password` must match those set in step 3.
+* The ID must be `TomcatServer`.
 
 ```XML
 	<settings ...>
@@ -48,7 +51,7 @@ NOTE: As of this writing, in order for those endpoints to function correctly, yo
 Running the web service
 ---------------------
 
-1. Ensure that Tomcat is running (generally you can do this by going to [http://localhost:8080])
+1. Ensure that Tomcat is running (generally you can do this by going to http://localhost:8080)
 
 2. Using a Command Line Interface, navigate to the root directory of this code base.  It should be the one containing `pom.xml`
 
@@ -58,7 +61,7 @@ Running the web service
 	$> mvn tomcat7:deploy
 ```
 
-This should yield a series of output, ending in a message similar to the example below
+If successful, the output will end with a message similar to the example below:
 
 ```shell
 	[INFO] tomcatManager status code:200, ReasonPhrase:OK
@@ -72,7 +75,7 @@ This should yield a series of output, ending in a message similar to the example
 	[INFO] ------------------------------------------------------------------------
 ```
 
-4. Navigate to [http://localhost:8080/openhmis/services/healthcheck] which should display "Your service is working." 
+4. Navigate to http://localhost:8080/openhmis/services/healthcheck which should display "Your service is working." 
 
 5. As you make changes, to redeploy updates to the service:
 
@@ -182,24 +185,3 @@ while running Debian jessie (testing).
     password="password"  
     // (for your local machine, or whatever ip address is correct)  
     url="jdbc:mysql://127.0.0.1:3306/openhmis?autoReconnect=true"`
-
-
-## Installation Instructions
-
-
-### Prerequisites
-- JRE 7.x
-- Git
-
-### Base Instructions
-- Install Maven (3.3.3) - NOTE: follow the README instructions in the Maven repository carefully
-- Install Tomcat 7.x - https://wolfpaulus.com/jounal/mac/tomcat8/ (instructions are identical except for the version number we are using)
-- Set up your local machine's Tomcat user and a Maven server  (1.1 and 1.2 from [http://www.mkyong.com/maven/how-to-deploy-maven-based-war-file-to-tomcat/])
-
-### Customizing Eclipse
-- Add Maven to Eclipse ([http://www.eclipse.org/m2e/])
-
-### Running
-from command line:
- - mvn tomcat7:deploy
- - mvn tomcat7:redeploy
