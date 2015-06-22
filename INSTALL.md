@@ -81,6 +81,7 @@ If successful, the output will end with a message similar to the example below:
 	$> mvn tomcat7:redeploy
 ```
 
+
 To create the schema:
 ---------------------
 Database migrations are performed using [Flyway](http://flywaydb.org/).
@@ -99,57 +100,12 @@ Database migrations are performed using [Flyway](http://flywaydb.org/).
   $> mvn clean compile flyway:migrate
 ```
 
+3. Configure the code base to work with your schema by creating and populating the `src/main/resources/hibernate.cfg.xml` file.
 
+```shell
+  $> cp src/main/resources/hibernate.cfg.xml.example src/main/resources/hibernate.cfg.xml
+  $> vi src/main/resources/hibernate.cfg.xml
+```
 
-
-
-
-
-Testing to see if it's working.
--------------------------------
-
-You can get access to the API using either a Google account or SalesForce account.
-
-To access using Google account you need your Google email ID and
-service account email ID.  The service account email is
-`50252473639-gsb3u5dvq6t1oj9hvhhi43f5125vtu2b@developer.gserviceaccount.com`.
-(The service account email will be same for all users.)
-
-A sample URL to get the client information using client key (e.g., 75864) is
-
-    http://localhost:8080/OpenHMIS/services/clients/client/75864/ashaar.riaz@pnci.org/50252473639-gsb3u5dvq6t1oj9hvhhi43f5125vtu2b@developer.gserviceaccount.com
-
-(TBD: need information about how to do this with a Salesforce account.)
-
-
-
-
-More detailed information for Debian users:
---------------------------------------------------------------------
-Here are some helpful steps for getting tomcat7 started with a webapp
-while running Debian jessie (testing). 
-
-* Run `apt-get install tomcat7`
-* The server.xml file is now located in `/etc/tomcat7`
-* The default webapps dir is located in `/var/lib/tomcat7`
-* The logs are located in: `/var/log/tomcat7/catalina.out`
-* As of 2015-01-14 or so, the Debian tomcat7 installation didn't
-  create these links, so you should make them:  
-       cd /usr/share/tomcat7  
-       sudo ln -s /var/lib/tomcat7/common/ common  
-       sudo ln -s /var/lib/tomcat7/server/ server  
-       sudo ln -s /var/lib/tomcat7/shared/ shared  
-       sudo ln -s /var/lib/tomcat7/conf/ conf  
-       sudo ln -s /var/lib/tomcat7/logs/ logs  
-       sudo mkdir /usr/share/tomcat7/temp  
-* Edit `/etc/tomcat7/server.xml` to point to the directory of the
- OpenHMIS tree by changing the default `appBase="webapps"` to the
-  directory where you've checked out this repository.  
-   ` <Host name="localhost"  appBase="webapps"
-    unpackWARs="true" autoDeploy="true">`
-* Edit the mysql connection information in
-    WebRoot/META-INF/context.xml  
-    `username="new_user"  
-    password="password"  
-    // (for your local machine, or whatever ip address is correct)  
-    url="jdbc:mysql://127.0.0.1:3306/openhmis?autoReconnect=true"`
+4. If everything is properly set up, [http://localhost:8080/openhmis/services/clients/client/75864/user/password](http://localhost:8080/openhmis/services/clients/client/75864/user/password) should yield a valid XML object
+dfdd
