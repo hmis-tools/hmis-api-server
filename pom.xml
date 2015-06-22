@@ -16,44 +16,49 @@
 
   <dependencies>
     <dependency>
-		<groupId>com.google.api-client</groupId>
-		<artifactId>google-api-client</artifactId>
-	</dependency>
-	
-    <dependency>
-	    <groupId>javax.persistence</groupId>
-	    <artifactId>persistence-api</artifactId>
-    </dependency>
-    
-    <dependency>
-		<groupId>org.hibernate</groupId>
-		<artifactId>hibernate-core</artifactId>
-	</dependency>
+  		<groupId>com.google.api-client</groupId>
+  		<artifactId>google-api-client</artifactId>
+  	</dependency>
+  	
+      <dependency>
+  	    <groupId>javax.persistence</groupId>
+  	    <artifactId>persistence-api</artifactId>
+      </dependency>
+      
+      <dependency>
+  		<groupId>org.hibernate</groupId>
+  		<artifactId>hibernate-core</artifactId>
+  	</dependency>
 
-	<dependency>
-		<groupId>javax.ws.rs</groupId>
-		<artifactId>javax.ws.rs-api</artifactId>
-	</dependency>	
-	
-	<dependency>
-		<groupId>javax.annotation</groupId>
-		<artifactId>javax.annotation-api</artifactId>
-	</dependency>
-	
-	<dependency>
-		<groupId>net.sf.dozer</groupId>
-		<artifactId>dozer</artifactId>
-	</dependency>
-	
-	<dependency>
-		<groupId>com.googlecode.json-simple</groupId>
-		<artifactId>json-simple</artifactId>
-	</dependency>
-	
-	<dependency>
-		<groupId>log4j</groupId>
-		<artifactId>log4j</artifactId>
-	</dependency>
+  	<dependency>
+  		<groupId>javax.ws.rs</groupId>
+  		<artifactId>javax.ws.rs-api</artifactId>
+  	</dependency>	
+  	
+  	<dependency>
+  		<groupId>javax.annotation</groupId>
+  		<artifactId>javax.annotation-api</artifactId>
+  	</dependency>
+  	
+  	<dependency>
+  		<groupId>net.sf.dozer</groupId>
+  		<artifactId>dozer</artifactId>
+  	</dependency>
+  	
+  	<dependency>
+  		<groupId>com.googlecode.json-simple</groupId>
+  		<artifactId>json-simple</artifactId>
+  	</dependency>
+  	
+  	<dependency>
+  		<groupId>log4j</groupId>
+  		<artifactId>log4j</artifactId>
+  	</dependency>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.35</version>
+    </dependency>
   </dependencies>
   
   <dependencyManagement>
@@ -128,6 +133,14 @@
 				<path>/openhmis</path>
 			</configuration>
 	    </plugin>
+      <plugin>
+        <groupId>org.flywaydb</groupId>
+        <artifactId>flyway-maven-plugin</artifactId>
+        <version>3.2.1</version>
+        <configuration>
+          <configFile>config/flyway.properties</configFile>
+        </configuration>
+      </plugin>
 	  </plugins>
   </build>
   

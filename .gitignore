@@ -15,6 +15,10 @@ hs_err_pid*
 target/*
 !*.gitkeep
 
+# Configuration
+config/*
+!config/*.example
+
 # Eclipse
 *.pydevproject
 .metadata

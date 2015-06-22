@@ -83,56 +83,26 @@ If successful, the output will end with a message similar to the example below:
 
 To create the schema:
 ---------------------
-* Sample data will be located in: Database/Sampledb.  It's in progress
-  right now. 
-* For now, use the 2014StandsOpenHMIS\_ERD.mwb file in /doc.  It will
-  create an empty schema.
-    * Convert the 2014StandardsOpenHMIS\_ERD.mwb file to a .sql file
-        * I used the mwb2sql tool available at
-          https://github.com/tomoemon/mwb2sql 
-        * It requires MySQL Workbench to run  
-          `$ sudo apt-get install mysql-workbench`  
-          `$ mwb2sql path/to/2014StandardOpenHMIS_ERD.mwb your_filename.sql`  
-    * Run the generated .sql file:  
-    `$ mysql -u root -p`  
-    (enter your password)  
-    mysql> source 'doc/your\_filename.sql'  
-    // to create an openhmis-specific user:  
-    mysql> CREATE USER 'new\_user'@'localhost' IDENTIFIED BY
-     'password';  
-    mysql> GRANT ALL PRIVILEGES ON <database>.* TO
-     'new\_user'@'localhost';  
+Database migrations are performed using [Flyway](http://flywaydb.org/).
+
+1. Create a local `config/flyway.properties` file with your database connection information
+
+```shell
+  $> cp config/flyway.properties.example config/flyway.properties
+  $> vi config/flyway.properties
+```
 
 
-Hibernate instructions:
------------------------------
-The instructions below are just for how to read the database
-credentials from the property file.  These instructions should be
-updated and subsumed into more complete installation documentation
-eventually.
+2. To initialize and update the schema, run the following command in the `pom.xml` directory
 
-1. First create a `hibernate.properties` file.  I have the following values in my property file.
+```shell
+  $> mvn clean compile flyway:migrate
+```
 
-            hibernate.dialect=org.hibernate.dialect.MySQLDialect
-            hibernate.connection.driver_class=com.mysql.jdbc.Driver
-            hibernate.connection.url=jdbc:mysql://173.194.107.15:3306/OPENHMIS2
-            hibernate.connection.username=<Database user name>
-            hibernate.connection.password=<Database password>
-            hibernate.connection.pool_size=1
-            hibernate.show_sql=true
-            hibernate.connection.autocommit=true
-            javax.persistence.validation.mode=none
 
-2. Save the property file in some directory location, for example `D:\Temp`.
 
-3. Locate your Tomcat folder, find the conf directory and locate context.xml
 
-4. Add the following line in the `<Context></Context>`
 
-            <Environment name="config" value="D:\Temp\"
-            type="java.lang.String" override="false"/>
-
-  The value of the environment variable config is the location of the hibernate.property file.
 
 
 Testing to see if it's working.
