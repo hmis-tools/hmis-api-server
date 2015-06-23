@@ -4,6 +4,7 @@ Installing OpenHMIS
 General Notes:
 -------------------
 * This code base is expected to be built using Maven, and deployed to Tomcat.
+* We are using MySQL as a data store.
 * Although several core developers are using Eclipse, this is not a requirement to contribute.
 
 
@@ -17,7 +18,9 @@ _In order for those endpoints to function correctly, you must also create a loca
 
 2. Install [Tomcat 7.x](https://tomcat.apache.org/download-70.cgi). Note that there may be a more recent version of Tomcat, but as of (6-22-2015) Maven plugins do not appear to exist beyond Tomcat 7.
 
-3. Create a Tomcat admin by editing `%TOMCAT7_PATH%/conf/tomcat-users.xml`.
+3. Install [MySQL 5.x](http://dev.mysql.com/downloads/mysql/).
+
+4. Create a Tomcat admin by editing `%TOMCAT7_PATH%/conf/tomcat-users.xml`.
 
 ```XML
 	<tomcat-users>
@@ -28,7 +31,7 @@ _In order for those endpoints to function correctly, you must also create a loca
 ```
 
 
-4. Update Maven's settings by editing `%MAVEN_PATH%/conf/settings.xml` so that Maven will be able to use the Tomcat user in step 3.
+5. Update Maven's settings by editing `%MAVEN_PATH%/conf/settings.xml` so that Maven will be able to use the Tomcat user in step 3.
 
 * The `username` and `password` must match those set in step 3.
 * The ID must be `TomcatServer`.
