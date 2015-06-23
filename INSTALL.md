@@ -56,8 +56,8 @@ Database migrations are performed using [Flyway](http://flywaydb.org/).
 1. Create a local `config/flyway.properties` file with your database connection information
 
 ```shell
-  $> cp config/flyway.properties.example config/flyway.properties
-  $> vi config/flyway.properties
+  $> cp src/config/flyway.properties.example src/config/flyway.properties
+  $> vi src/config/flyway.properties
 ```
 
 

@@ -139,7 +139,7 @@
         <artifactId>flyway-maven-plugin</artifactId>
         <version>3.2.1</version>
         <configuration>
-          <configFile>config/flyway.properties</configFile>
+          <configFile>src/config/flyway.properties</configFile>
         </configuration>
       </plugin>
 	  </plugins>
