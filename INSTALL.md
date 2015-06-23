@@ -33,20 +33,20 @@ _In order for those endpoints to function correctly, you must also create a loca
 
 5. Update Maven's settings by editing `%MAVEN_PATH%/conf/settings.xml` so that Maven will be able to use the Tomcat user in step 3.
 
-* The `username` and `password` must match those set in step 3.
-* The ID must be `TomcatServer`.
-
-	```XML
-		<settings ...>
-			<servers>
-				<server>
-					<id>TomcatServer</id>
-					<username>admin</username>
-					<password>password</password>
-				</server>
-			</servers>
-		</settings>
-	```
+	* The `username` and `password` must match those set in step 3.
+	* The ID must be `TomcatServer`.
+	
+		```XML
+			<settings ...>
+				<servers>
+					<server>
+						<id>TomcatServer</id>
+						<username>admin</username>
+						<password>password</password>
+					</server>
+				</servers>
+			</settings>
+		```
 
 
 To create the schema:
