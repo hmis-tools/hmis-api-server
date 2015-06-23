@@ -103,7 +103,7 @@ To run the web service:
 
 4. If your web service is properly configured, [http://localhost:8080/openhmis/services/healthcheck](http://localhost:8080/openhmis/services/healthcheck) should display "Your service is working." 
 
-5. If the schema is properly set up, [http://localhost:8080/openhmis/services/clients/client/75864/user/password](http://localhost:8080/openhmis/services/clients/client/30486/user/password) should yield a valid XML object.
+5. If the schema is properly set up, [http://localhost:8080/openhmis/services/clients/client/30486/user/password](http://localhost:8080/openhmis/services/clients/client/30486/user/password) should yield a valid XML object.
 
 6. As you make changes, to redeploy updates to the service:
 
