@@ -16,8 +16,8 @@ target/*
 !*.gitkeep
 
 # Configuration
-config/*
-!config/*.example
+src/config/*
+!src/config/*.example
 src/main/resources/hibernate.cfg.xml
 
 # Eclipse
