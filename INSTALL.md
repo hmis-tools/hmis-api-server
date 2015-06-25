@@ -51,7 +51,7 @@ _In order for those endpoints to function correctly, you must also create a loca
 
 To create the schema:
 ---------------------
-Database migrations are performed using [Flyway](http://flywaydb.org/).
+Database migrations are performed using [Flyway](http://flywaydb.org/).  Note: you do not need to install anything for this to work, it is automatically loaded and used by Maven.
 
 1. Create a local `config/flyway.properties` file with your database connection information
 
