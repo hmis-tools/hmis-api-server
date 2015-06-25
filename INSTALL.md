@@ -30,8 +30,15 @@ _In order for those endpoints to function correctly, you must also create a loca
 		</tomcat-users>
 	```
 
+5. Restart Tomcat
 
-5. Update Maven's settings by editing `%MAVEN_PATH%/conf/settings.xml` so that Maven will be able to use the Tomcat user in step 3.
+	```Shell
+		$> cd INSERT_PATH_TO_TOMCAT_HERE
+		$> bin/shutdown.sh
+		$> bin/startup.sh
+	```
+
+6. Update Maven's settings by editing `%MAVEN_PATH%/conf/settings.xml` so that Maven will be able to use the Tomcat user in step 3.
 
 	* The `username` and `password` must match those set in step 3.
 	* The ID must be `TomcatServer`.
@@ -51,9 +58,30 @@ _In order for those endpoints to function correctly, you must also create a loca
 
 To create the schema:
 ---------------------
-Database migrations are performed using [Flyway](http://flywaydb.org/).  Note: you do not need to install anything for this to work, it is automatically loaded and used by Maven.
+Database migrations are performed using [Flyway](http://flywaydb.org/).
+_Note: you do not need to install anything for this to work.  Flyway is automatically loaded and used by Maven._
 
-1. Create a local `config/flyway.properties` file with your database connection information
+1. Using your tool of choice, create an empty MySQL schema.
+
+	* The name of your schema is up to you.  In this example we use `openhmis`
+
+	```mysql
+	  mysql> create database openhmis;
+	 ```
+
+2. Using the tool of your choice, create a new user and grant access to the database you created in step 1.
+
+	* The username and password is up to you.  In this example we use `openhmis_user` and `openhmis_password`
+	* The database name must match the name created in step 1.
+
+	```mysql
+	  mysql> create user openhmis_user@localhost identified by "openhmis_password";
+	  mysql> grant ALL on openhmis.* to openhmis_user@localhost;
+	 ```
+
+3. Create a local `config/flyway.properties` file with your database connection information
+
+	* The schema name, username, and password entered in this file must match those created in steps 1 and 2
 
 	```shell
 	  $> cp src/config/flyway.properties.example src/config/flyway.properties
@@ -61,13 +89,16 @@ Database migrations are performed using [Flyway](http://flywaydb.org/).  Note: y
 	```
 
 
-2. To initialize and update the schema, run the following command in the `pom.xml` directory
+4. To initialize and update the schema, run the following command in the `pom.xml` directory
+
 
 	```shell
 	  $> mvn clean compile flyway:migrate
 	```
 
-3. Configure the code base to work with your schema by creating and populating the `src/main/resources/hibernate.cfg.xml` file.
+5. Configure the code base to work with your schema by creating and populating the `src/main/resources/hibernate.cfg.xml` file.
+
+	* The schema name, username, and password entered in this file must match those created in steps 1 and 2
 
 	```shell
 	  $> cp src/main/resources/hibernate.cfg.xml.example src/main/resources/hibernate.cfg.xml
