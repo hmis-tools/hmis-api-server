@@ -117,6 +117,10 @@ To run the web service:
 	```shell
 		$> mvn tomcat7:deploy
 	```
+	* If you have previously deployed this code with any tool, you will need to _redeploy_ using Maven.
+	```shell
+		$> mvn tomcat7:redeploy
+	```
 	
 	If successful, the output will end with a message similar to the example below:
 	
@@ -135,9 +139,3 @@ To run the web service:
 4. If your web service is properly configured, [http://localhost:8080/openhmis/services/healthcheck](http://localhost:8080/openhmis/services/healthcheck) should display "Your service is working." 
 
 5. If the schema is properly set up, [http://localhost:8080/openhmis/services/clients/client/30486/user/password](http://localhost:8080/openhmis/services/clients/client/30486/user/password) should yield a valid XML object.
-
-6. As you make changes, to redeploy updates to the service:
-
-	```shell
-		$> mvn tomcat7:redeploy
-	```
