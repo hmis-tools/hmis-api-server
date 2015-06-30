@@ -14,13 +14,15 @@ The instructions below explain how to set up a development environment capable o
 
 _In order for those endpoints to function correctly, you must also create a local copy of the schema._
 
-1. Install [Maven (3.x)](https://maven.apache.org/download.cgi).
+1. Install JDK 1.7.x
 
-2. Install [Tomcat 7.x](https://tomcat.apache.org/download-70.cgi). Note that there may be a more recent version of Tomcat, but as of (6-22-2015) Maven plugins do not appear to exist beyond Tomcat 7.
+2. Install [Maven (3.x)](https://maven.apache.org/download.cgi).
 
-3. Install [MySQL 5.x](http://dev.mysql.com/downloads/mysql/).
+3. Install [Tomcat 7.x](https://tomcat.apache.org/download-70.cgi). Note that there may be a more recent version of Tomcat, but as of (6-22-2015) Maven plugins do not appear to exist beyond Tomcat 7.
 
-4. Create a Tomcat admin by editing `%TOMCAT7_PATH%/conf/tomcat-users.xml`.
+4. Install [MySQL 5.x](http://dev.mysql.com/downloads/mysql/).
+
+5. Create a Tomcat admin by editing `%TOMCAT7_PATH%/conf/tomcat-users.xml`.
 
 	```XML
 		<tomcat-users>
@@ -30,7 +32,7 @@ _In order for those endpoints to function correctly, you must also create a loca
 		</tomcat-users>
 	```
 
-5. Restart Tomcat
+6. Restart Tomcat
 
 	```Shell
 		$> cd INSERT_PATH_TO_TOMCAT_HERE
@@ -38,7 +40,7 @@ _In order for those endpoints to function correctly, you must also create a loca
 		$> bin/startup.sh
 	```
 
-6. Update Maven's settings by editing `%MAVEN_PATH%/conf/settings.xml` so that Maven will be able to use the Tomcat user in step 3.
+7. Update Maven's settings by editing `%MAVEN_PATH%/conf/settings.xml` so that Maven will be able to use the Tomcat user in step 3.
 
 	* The `username` and `password` must match those set in step 3.
 	* The ID must be `TomcatServer`.
