@@ -76,7 +76,7 @@ _Note: you do not need to install anything for this to work.  Flyway is automati
 
 	```mysql
 	  mysql> create user openhmis_user@localhost identified by "openhmis_password";
-	  mysql> grant ALL on openhmis.* to openhmis_user@localhost;
+	  mysql> grant ALL on openhmis.* to openhmis_user@localhost identified by "openhmis_password";
 	 ```
 
 3. Create a local `config/flyway.properties` file with your database connection information
