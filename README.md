@@ -19,3 +19,15 @@ implementing that API.
 For more about the API, please see [API.md](API.md).
 
 For more about the server code, please see [INSTALL.md](INSTALL.md).
+
+
+Directory Structure
+-------------------
+This repository generally uses the [Standard Directory Layout](https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html).  Additional files and directories are described here:
+
+* [docs](docs) which contains custom documentation and less structured notes.
+
+
+Instructions for Contributing
+-------------------
+If you are interested in contributing to this repository, please review our [Contributors Guide](CONTRIBUTING.md) which explains policies, guidelines, and general advice.

@@ -1,114 +1,143 @@
-_TBD: real installation documentation still needs to be written._
+Installing OpenHMIS
 =================================================================
  
-Crucial Notes:
+General Notes:
 -------------------
+* This code base is expected to be built using Maven, and deployed to Tomcat.
+* We are using MySQL as a data store.
+* Although several core developers are using Eclipse, this is not a requirement to contribute.
 
-* The demo-client branch (as of 2015-01-16) is the one running on the
-  test server at http://108.59.80.159:8080/HMISClient/ (check that for
-  comparison purposes)
-* The master branch (as of 2015-01-16) has proprietary dependencies,
-  so the demo-client branch is the only one that can be reproduced.
+
+To create a local build:
+-------------------
+The instructions below explain how to set up a development environment capable of running the API endpoints.  This section assumes you have already used git to download a local copy of the code base.
+
+_In order for those endpoints to function correctly, you must also create a local copy of the schema._
+
+1. Install JDK 1.7.x
+
+2. Install [Maven (3.x)](https://maven.apache.org/download.cgi).
+
+3. Install [Tomcat 7.x](https://tomcat.apache.org/download-70.cgi). Note that there may be a more recent version of Tomcat, but as of (6-22-2015) Maven plugins do not appear to exist beyond Tomcat 7.
+
+4. Install [MySQL 5.x](http://dev.mysql.com/downloads/mysql/).
+
+5. Create a Tomcat admin by editing `%TOMCAT7_PATH%/conf/tomcat-users.xml`.
+
+	```XML
+		<tomcat-users>
+			<role rolename="manager-gui"/>
+			<role rolename="manager-script"/>
+			<user username="admin" password="password" roles="manager-gui,manager-script" />
+		</tomcat-users>
+	```
+
+6. Restart Tomcat
+
+	```Shell
+		$> cd INSERT_PATH_TO_TOMCAT_HERE
+		$> bin/shutdown.sh
+		$> bin/startup.sh
+	```
+
+7. Update Maven's settings by editing `%MAVEN_PATH%/conf/settings.xml` so that Maven will be able to use the Tomcat user in step 3.
+
+	* The `username` and `password` must match those set in step 3.
+	* The ID must be `TomcatServer`.
+	
+		```XML
+			<settings ...>
+				<servers>
+					<server>
+						<id>TomcatServer</id>
+						<username>admin</username>
+						<password>password</password>
+					</server>
+				</servers>
+			</settings>
+		```
+
 
 To create the schema:
 ---------------------
-* Sample data will be located in: Database/Sampledb.  It's in progress
-  right now. 
-* For now, use the 2014StandsOpenHMIS\_ERD.mwb file in /doc.  It will
-  create an empty schema.
-    * Convert the 2014StandardsOpenHMIS\_ERD.mwb file to a .sql file
-        * I used the mwb2sql tool available at
-          https://github.com/tomoemon/mwb2sql 
-        * It requires MySQL Workbench to run  
-          `$ sudo apt-get install mysql-workbench`  
-          `$ mwb2sql path/to/2014StandardOpenHMIS_ERD.mwb your_filename.sql`  
-    * Run the generated .sql file:  
-    `$ mysql -u root -p`  
-    (enter your password)  
-    mysql> source 'doc/your\_filename.sql'  
-    // to create an openhmis-specific user:  
-    mysql> CREATE USER 'new\_user'@'localhost' IDENTIFIED BY
-     'password';  
-    mysql> GRANT ALL PRIVILEGES ON <database>.* TO
-     'new\_user'@'localhost';  
+Database migrations are performed using [Flyway](http://flywaydb.org/).
+_Note: you do not need to install anything for this to work.  Flyway is automatically loaded and used by Maven._
+
+1. Using your tool of choice, create an empty MySQL schema.
+
+	* The name of your schema is up to you.  In this example we use `openhmis`
+
+	```mysql
+	  mysql> create database openhmis;
+	 ```
+
+2. Using the tool of your choice, create a new user and grant access to the database you created in step 1.
+
+	* The username and password is up to you.  In this example we use `openhmis_user` and `openhmis_password`
+	* The database name must match the name created in step 1.
+
+	```mysql
+	  mysql> create user openhmis_user@localhost identified by "openhmis_password";
+	  mysql> grant ALL on openhmis.* to openhmis_user@localhost identified by "openhmis_password";
+	 ```
+
+3. Create a local `config/flyway.properties` file with your database connection information
+
+	* The schema name, username, and password entered in this file must match those created in steps 1 and 2
+
+	```shell
+	  $> cp src/config/flyway.properties.example src/config/flyway.properties
+	  $> vi src/config/flyway.properties
+	```
 
 
-Hibernate instructions:
------------------------------
-The instructions below are just for how to read the database
-credentials from the property file.  These instructions should be
-updated and subsumed into more complete installation documentation
-eventually.
-
-1. First create a `hibernate.properties` file.  I have the following values in my property file.
-
-            hibernate.dialect=org.hibernate.dialect.MySQLDialect
-            hibernate.connection.driver_class=com.mysql.jdbc.Driver
-            hibernate.connection.url=jdbc:mysql://173.194.107.15:3306/OPENHMIS2
-            hibernate.connection.username=<Database user name>
-            hibernate.connection.password=<Database password>
-            hibernate.connection.pool_size=1
-            hibernate.show_sql=true
-            hibernate.connection.autocommit=true
-            javax.persistence.validation.mode=none
-
-2. Save the property file in some directory location, for example `D:\Temp`.
-
-3. Locate your Tomcat folder, find the conf directory and locate context.xml
-
-4. Add the following line in the `<Context></Context>`
-
-            <Environment name="config" value="D:\Temp\"
-            type="java.lang.String" override="false"/>
-
-  The value of the environment variable config is the location of the hibernate.property file.
+4. To initialize and update the schema, run the following command in the `pom.xml` directory
 
 
-Testing to see if it's working.
--------------------------------
+	```shell
+	  $> mvn clean compile flyway:migrate
+	```
 
-You can get access to the API using either a Google account or SalesForce account.
+5. Configure the code base to work with your schema by creating and populating the `src/main/resources/hibernate.cfg.xml` file.
 
-To access using Google account you need your Google email ID and
-service account email ID.  The service account email is
-`50252473639-gsb3u5dvq6t1oj9hvhhi43f5125vtu2b@developer.gserviceaccount.com`.
-(The service account email will be same for all users.)
+	* The schema name, username, and password entered in this file must match those created in steps 1 and 2
 
-A sample URL to get the client information using client key (e.g., 75864) is
+	```shell
+	  $> cp src/main/resources/hibernate.cfg.xml.example src/main/resources/hibernate.cfg.xml
+	  $> vi src/main/resources/hibernate.cfg.xml
+	```
 
-    http://localhost:8080/OpenHMIS/services/clients/client/75864/ashaar.riaz@pnci.org/50252473639-gsb3u5dvq6t1oj9hvhhi43f5125vtu2b@developer.gserviceaccount.com
+To run the web service:
+---------------------
 
-(TBD: need information about how to do this with a Salesforce account.)
+1. Ensure that Tomcat is running (generally you can do this by going to http://localhost:8080)
 
+2. Using a Command Line Interface, navigate to the root directory of this code base.  It should be the one containing `pom.xml`
 
+3. Deploy using Maven:
 
+	```shell
+		$> mvn tomcat7:deploy
+	```
+	* If you have previously deployed this code with any tool, you will need to _redeploy_ using Maven.
+	```shell
+		$> mvn tomcat7:redeploy
+	```
+	
+	If successful, the output will end with a message similar to the example below:
+	
+	```shell
+		[INFO] tomcatManager status code:200, ReasonPhrase:OK
+		[INFO] OK - Deployed application at context path /openhmis
+		[INFO] ------------------------------------------------------------------------
+		[INFO] BUILD SUCCESS
+		[INFO] ------------------------------------------------------------------------
+		[INFO] Total time: 4.488 s
+		[INFO] Finished at: 2015-06-22T14:43:19-04:00
+		[INFO] Final Memory: 20M/165M
+		[INFO] ------------------------------------------------------------------------
+	```
 
-More detailed information for Debian users:
---------------------------------------------------------------------
-Here are some helpful steps for getting tomcat7 started with a webapp
-while running Debian jessie (testing). 
+4. If your web service is properly configured, [http://localhost:8080/openhmis/services/healthcheck](http://localhost:8080/openhmis/services/healthcheck) should display "Your service is working." 
 
-* Run `apt-get install tomcat7`
-* The server.xml file is now located in `/etc/tomcat7`
-* The default webapps dir is located in `/var/lib/tomcat7`
-* The logs are located in: `/var/log/tomcat7/catalina.out`
-* As of 2015-01-14 or so, the Debian tomcat7 installation didn't
-  create these links, so you should make them:  
-       cd /usr/share/tomcat7  
-       sudo ln -s /var/lib/tomcat7/common/ common  
-       sudo ln -s /var/lib/tomcat7/server/ server  
-       sudo ln -s /var/lib/tomcat7/shared/ shared  
-       sudo ln -s /var/lib/tomcat7/conf/ conf  
-       sudo ln -s /var/lib/tomcat7/logs/ logs  
-       sudo mkdir /usr/share/tomcat7/temp  
-* Edit `/etc/tomcat7/server.xml` to point to the directory of the
- OpenHMIS tree by changing the default `appBase="webapps"` to the
-  directory where you've checked out this repository.  
-   ` <Host name="localhost"  appBase="webapps"
-    unpackWARs="true" autoDeploy="true">`
-* Edit the mysql connection information in
-    WebRoot/META-INF/context.xml  
-    `username="new_user"  
-    password="password"  
-    // (for your local machine, or whatever ip address is correct)  
-    url="jdbc:mysql://127.0.0.1:3306/openhmis?autoReconnect=true"`
+5. If the schema is properly set up, [http://localhost:8080/openhmis/services/clients/client/30486/user/password](http://localhost:8080/openhmis/services/clients/client/30486/user/password) should yield a valid XML object.

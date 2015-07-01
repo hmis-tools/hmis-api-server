@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+          "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+          "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+
+	<session-factory>
+		<!-- BEGINNING OF CONFIG SETTINGS -->
+		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="connection.url">jdbc:mysql://localhost/myDatabasename</property>
+		<property name="connection.username">myUsername</property>
+		<property name="connection.password">myPassword</property>
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="javax.persistence.validation.mode">none</property>
+		<!-- ENDING OF CONFIG SETTINGS -->
+
+		<mapping class="org.openhmis.domain.ProjectParticipation" />
+			<mapping class="org.openhmis.domain.ClientVeteranInfo" />
+			<mapping class="org.openhmis.domain.CodeMilitaryTheatre" />
+			<mapping class="org.openhmis.domain.CodeCollectStage" />
+			<mapping class="org.openhmis.domain.CodeTableTemplate" />
+			<mapping class="org.openhmis.domain.CodeRace" />
+			<mapping class="org.openhmis.domain.AgencySite" />
+			<mapping class="org.openhmis.domain.Permission" />
+			<mapping class="org.openhmis.domain.ReportToParms" />
+			<mapping class="org.openhmis.domain.CodeDobType" />
+			<mapping class="org.openhmis.domain.CodeGender" />
+			<mapping class="org.openhmis.domain.Client" />
+			<mapping class="org.openhmis.domain.Project" />
+			<mapping class="org.openhmis.domain.ReportParameter" />
+			<mapping class="org.openhmis.domain.CodeTaxonomy" />
+			<mapping class="org.openhmis.domain.ClientRace" />
+			<mapping class="org.openhmis.domain.ServiceEvent" />
+			<mapping class="org.openhmis.domain.CodeIdType" />
+			<mapping class="org.openhmis.domain.CodeGeneral" />
+			<mapping class="org.openhmis.domain.ClientNoncashBenefits" />
+			<mapping class="org.openhmis.domain.CodeResidence" />
+			<mapping class="org.openhmis.domain.UserPermission" />
+			<mapping class="org.openhmis.domain.GroupInfo" />
+			<mapping class="org.openhmis.domain.ClientTheatre" />
+			<mapping class="org.openhmis.domain.BedUnit" />
+			<mapping class="org.openhmis.domain.CodeEthnicity" />
+			<mapping class="org.openhmis.domain.ClientCashIncome" />
+			<mapping class="org.openhmis.domain.CodeProjectType" />
+			<mapping class="org.openhmis.domain.AgencyProjGroup" />
+			<mapping class="org.openhmis.domain.UserInfo" />
+			<mapping class="org.openhmis.domain.Report" />
+			<mapping class="org.openhmis.domain.Agency" />
+			<mapping class="org.openhmis.domain.ClientHousehold" />
+			<mapping class="org.openhmis.domain.ClientDisabilities" />
+			<mapping class="org.openhmis.domain.Test" />
+			<mapping class="org.openhmis.domain.FederalFundingSource" />
+			<mapping class="org.openhmis.domain.CodeHousingStatus" />
+			<mapping class="org.openhmis.domain.ClientStatus" />
+			<mapping class="org.openhmis.domain.CodeHealthStatus" />
+			<mapping class="org.openhmis.domain.ClientProgramTempAhar2" />
+			<mapping class="org.openhmis.domain.CodeHealthInsReason" />
+			<mapping class="org.openhmis.domain.CodeNonCashBenefit" />
+			<mapping class="org.openhmis.domain.ClientProgramTempAhar1" />
+			<mapping class="org.openhmis.domain.CodeState" />
+			<mapping class="org.openhmis.domain.CodeStateT" />
+			<mapping class="org.openhmis.domain.CodeIncome" />
+			<mapping class="org.openhmis.domain.CodeHealthInsurance" />
+			<mapping class="org.openhmis.domain.ClientOriginal" />
+	</session-factory>
+
+</hibernate-configuration>
