@@ -34,7 +34,9 @@ Some other recommendations:
 
 Step 3: Understand our Branching / Contribution Policies
 -------------------
-Generally our branching structure can be understood by reading (A Successful Git Branching Model)[http://nvie.com/posts/a-successful-git-branching-model/].  Here is a quick summary of the important points:
+Generally our branching structure can be understood by reading [A Successful Git Branching Model](http://nvie.com/posts/a-successful-git-branching-model/).
+
+Here is a quick summary of the important points:
 
 * We use tags (e.g. 0.2.0) to represent release builds.
 * We use release branches (e.g. 0.2.1) to make progress on new builds.
