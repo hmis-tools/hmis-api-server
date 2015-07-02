@@ -40,18 +40,18 @@ Generally our branching structure can be understood by reading [A Successful Git
 
 **The important points:**
 
-* We use tags (e.g. 0.2.0) to represent release builds.
-* We use release branches (e.g. 0.2.1) to make progress on new builds.
+* We use tags (e.g. `0.2.0`) to represent release builds.
+* We use release branches (e.g. `0.2.1`) to make progress on new builds.
 
 	Tag and release branch names use [Semantic Versioning](http://semver.org/)
 
-* We use feature branches (e.g. feature-oauth) to develop new functionality or behaviors for the API which will go into a release.
+* We use feature branches (e.g. `feature-oauth`) to develop new functionality or behaviors for the API which will go into a release.
 
-	Feature branches are of the form "feature-FEATURE_NAME"
+	Feature branches are of the form `feature-FEATURE_NAME`
 
-* We use hotfix branches (e.g. hotfix-migration) for urgent changes which need to be made outside of a standard release cycle.
+* We use hotfix branches (e.g. `hotfix-migration`) for urgent changes which need to be made outside of a standard release cycle.
 
-	Hotfix branches are of the form "hotfix-HOTFIX_NAME"
+	Hotfix branches are of the form `hotfix-HOTFIX_NAME`
 
 
 To make a feature contribution, fork repository and create a new feature branch from the latest release branch.  Once you feel the code is ready for integration, issue a [pull request](https://help.github.com/articles/using-pull-requests/) in which you describe the changes along with [references to any issues you resolved](https://github.com/blog/1506-closing-issues-via-pull-requests).
@@ -59,7 +59,7 @@ To make a feature contribution, fork repository and create a new feature branch 
 **Best practices:**
 
 * Commit early and often.  Having one giant commit makes it difficult to understand the evolution of a patch.
-* Describe your commits with good comments.  Comments like "changed index.html" aren't helpful.  Comments like "updated the page title" are.
+* Describe your commits with good comments.  Comments like `changed index.html` aren't helpful.  Comments like `updated the page title` are.
 * Don't be upset if your Pull Request requires an iteration.  The point of a pull request is to get feedback.
 * Changes to the schema should be done by creating new migrations, not editing existing migrations.
 
