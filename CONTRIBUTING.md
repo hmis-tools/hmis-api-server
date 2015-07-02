@@ -51,7 +51,7 @@ Generally our branching structure can be understood by reading [A Successful Git
 
 * We use hotfix branches (e.g. hotfix-migration) for urgent changes which need to be made outside of a standard release cycle.
 
-	Hotfix branches are of the form "hotfix_HOTFIX_NAME"
+	Hotfix branches are of the form "hotfix-HOTFIX_NAME"
 
 
 To make a feature contribution, fork repository and create a new feature branch from the latest release branch.  Once you feel the code is ready for integration, issue a [pull request](https://help.github.com/articles/using-pull-requests/) in which you describe the changes along with [references to any issues you resolved](https://github.com/blog/1506-closing-issues-via-pull-requests).
