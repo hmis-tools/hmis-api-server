@@ -60,8 +60,7 @@ To make a feature contribution, fork repository and create a new feature branch 
 
 * Commit early and often.  Having one giant commit makes it difficult to understand the evolution of a patch.
 * Describe your commits with good comments.  Comments like "changed index.html" aren't helpful.  Comments like "updated the page title" are.
-* Don't be upset if your Pull Request requires an iteration.
-* (Eventually...) Write tests for your feature (currently we aren't set up for unit tests, but this will change.)
+* Don't be upset if your Pull Request requires an iteration.  The point of a pull request is to get feedback.
 
 
 Step 4: Understand the Code Base
