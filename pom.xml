@@ -151,6 +151,11 @@
           <configFile>src/config/flyway.properties</configFile>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>com.heroku.sdk</groupId>
+        <artifactId>heroku-maven-plugin</artifactId>
+        <version>0.4.4</version>
+      </plugin>
 	  </plugins>
   </build>
   

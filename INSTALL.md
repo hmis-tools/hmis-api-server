@@ -107,6 +107,7 @@ _Note: you do not need to install anything for this to work.  Flyway is automati
 	  $> vi src/main/resources/hibernate.cfg.xml
 	```
 
+
 To run the web service:
 ---------------------
 
@@ -141,3 +142,26 @@ To run the web service:
 4. If your web service is properly configured, [http://localhost:8080/openhmis/services/healthcheck](http://localhost:8080/openhmis/services/healthcheck) should display "Your service is working." 
 
 5. If the schema is properly set up, [http://localhost:8080/openhmis/services/clients/client/30486/user/password](http://localhost:8080/openhmis/services/clients/client/30486/user/password) should yield a valid XML object.
+
+
+To deploy the web service to heroku:
+---------------------
+[Heroku](http://heroku.com) makes it simple to deploy code online to show your progress, get feedback, and even deploy OpenHMIS if desired.  If you generally want to learn more about Heroku and Java, check out the [getting started guide](https://devcenter.heroku.com/articles/getting-started-with-java#introduction).
+
+To deploy OpenHMIS to Heroku:
+
+1. [Create an account](https://signup.heroku.com/www-header).
+
+2. [Install the Heroku Toolbelt](https://toolbelt.heroku.com/).
+
+3. [Create a Heroku application](https://dashboard.heroku.com/new).
+
+4. Run the mvn deploy script
+
+	```shell
+		$> mvn clean heroku:deploy-war
+	```
+
+5. View your application: `http://YOUR-APP-NAME.herokuapp.com`
+
+	* YOUR-APP-NAME should be whatever app name you created in step 3
