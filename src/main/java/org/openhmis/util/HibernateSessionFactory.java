@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.util.Properties;
 
 import javax.naming.InitialContext;
@@ -53,6 +54,28 @@ public class HibernateSessionFactory {
   		        properties.load(is);
   		        configuration.setProperties(properties);
      		}
+
+            // If an environment variable is set for DB URL, override the config.xml
+            if(System.getenv("DATABASE_URL") != null) {
+                URI envDbUri = new URI(System.getenv("DATABASE_URL"));
+                String username = envDbUri.getUserInfo().split(":")[0];
+                String password = envDbUri.getUserInfo().split(":")[1];
+                String dbUrl = "jdbc:" + envDbUri.getScheme() + "://" + envDbUri.getHost() + ':' + envDbUri.getPort() + envDbUri.getPath();
+
+                switch(envDbUri.getScheme()) {
+                    case "postgres":
+                        configuration.setProperty("dialect", "org.hibernate.dialect.PostgreSQLDialect");
+                        break;
+                    case "mysql":
+                        configuration.setProperty("dialect", "org.hibernate.dialect.MySQLDialect");
+                        break;
+                }
+
+                configuration.setProperty("connection.url", dbUrl);
+                configuration.setProperty("connection.username", username);
+                configuration.setProperty("connection.password", password);
+            }
+
  			configuration.configure();
  			sessionFactory = configuration.buildSessionFactory();
  		} catch (Exception e) {
