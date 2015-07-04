@@ -6,7 +6,6 @@ import javax.ws.rs.ext.ExceptionMapper;
 
 public class UnableToUpdateGenderException extends InternalServerErrorException implements ExceptionMapper<UnableToUpdateGenderException>
 {
-
 	/**
 	 * 
 	 */
@@ -26,5 +25,4 @@ public class UnableToUpdateGenderException extends InternalServerErrorException 
 	{
 		return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 	}
-
 }

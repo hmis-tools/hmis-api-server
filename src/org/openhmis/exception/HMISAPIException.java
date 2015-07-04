@@ -7,39 +7,41 @@
 
 package org.openhmis.exception;
 
-public class HMISAPIException extends Exception
-{
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
+
+public  class HMISAPIException extends WebApplicationException
+{
+	private int status;
+	private String errorMessage;
+	private String developerMessage;
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4383743184249577734L;
 	
-	private String message = null;
-
-    public HMISAPIException() 
-    {
-        super();
-    }
-
-    public HMISAPIException(String message) {
-        super(message);
-        this.message = message;
-    }
-
-    public HMISAPIException(Throwable cause) {
-        super(cause);
-    }
-
-    @Override
-    public String toString() 
-    {
-        return message;
-    }
-
-    @Override
-    public String getMessage() {
-        return message;
-    }
-
+	public HMISAPIException(int status, String errorMessage, String developerMessage)
+	{
+		this.status = status;
+		this.errorMessage = errorMessage;
+		this.developerMessage = developerMessage;
+	}
+	
+	@Override
+	public Response getResponse() 
+	{
+		return Response.status(status).type(MediaType.APPLICATION_JSON_TYPE).entity(getErrorResponse()).build();
+	}
+	
+	public ErrorResponse getErrorResponse()
+	{
+		ErrorResponse response = new ErrorResponse();
+		response.setErrorCode(status+"");
+        response.setApplicationMessage(developerMessage);
+        response.setConsumerMessage(errorMessage);
+        return response;
+	}
 }

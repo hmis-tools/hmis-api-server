@@ -9,12 +9,15 @@ package org.openhmis.service.impl;
 
 import java.util.Properties;
 
+import javax.ws.rs.core.Response;
+
 import org.apache.log4j.Logger;
 import org.openhmis.exception.oauth2.UnableToAuthorizeException;
 import org.openhmis.oauth2.google.OAuth2ServiceAccount;
 import org.openhmis.oauth2.salesforce.OAuth2Details;
 import org.openhmis.oauth2.salesforce.OAuth2Utils;
 import org.openhmis.service.AuthenticateManager;
+import org.openhmis.util.ClientErrorEnum;
 import org.openhmis.util.OAuthConstants;
 
 /**
@@ -37,7 +40,7 @@ public class AuthenticateManagerImpl implements AuthenticateManager
 	{
 		log.debug("authenticateUser");
 		if( (username == null) || (password == null) || (username.length() ==0) || (password.length() ==0))
-			throw new UnableToAuthorizeException("Unable to authorize, invalid username or password");
+			throw new UnableToAuthorizeException(Response.Status.UNAUTHORIZED.getStatusCode(),ClientErrorEnum.AUTHENTICATION_ERROR.getValue(),"Unable to authorize, invalid username or password");
 		boolean isUserAuthenticate = false;
 		try
 		{
@@ -52,7 +55,7 @@ public class AuthenticateManagerImpl implements AuthenticateManager
 		}
 		catch(Exception e)
 		{
-			throw new UnableToAuthorizeException("Unable to authorize user " + e.getMessage());
+			throw new UnableToAuthorizeException(Response.Status.UNAUTHORIZED.getStatusCode(),ClientErrorEnum.AUTHENTICATION_ERROR.getValue(),"Unable to authorize user ");
 		}
 		return isUserAuthenticate;
 	}
@@ -76,7 +79,7 @@ public class AuthenticateManagerImpl implements AuthenticateManager
 		}
 		catch(Exception e)
 		{
-			throw new UnableToAuthorizeException("Unable to authorize user " + username + " "  + e.getMessage());
+			throw new UnableToAuthorizeException(Response.Status.UNAUTHORIZED.getStatusCode(),ClientErrorEnum.AUTHENTICATION_ERROR.getValue(),"Unable to authorize user " + username );
 		}
 		return isUserAuthenticate;
 	}
@@ -95,7 +98,7 @@ public class AuthenticateManagerImpl implements AuthenticateManager
 		}
 		catch(Exception e)
 		{
-			throw new UnableToAuthorizeException("Unable to authorize user " + username + " " + e.getMessage());
+			throw new UnableToAuthorizeException(Response.Status.UNAUTHORIZED.getStatusCode(),ClientErrorEnum.AUTHENTICATION_ERROR.getValue(),"Unable to authorize user " + username );
 		}
 		return isUserAuthenticate;
 	}

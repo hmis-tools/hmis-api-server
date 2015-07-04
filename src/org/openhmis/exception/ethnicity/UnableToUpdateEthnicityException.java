@@ -6,8 +6,6 @@ import javax.ws.rs.ext.ExceptionMapper;
 
 public class UnableToUpdateEthnicityException extends InternalServerErrorException implements ExceptionMapper<UnableToUpdateEthnicityException>
 {
-
-	
 	/**
 	 * 
 	 */
@@ -28,5 +26,4 @@ public class UnableToUpdateEthnicityException extends InternalServerErrorExcepti
 	{
 		return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 	}
-	
 }

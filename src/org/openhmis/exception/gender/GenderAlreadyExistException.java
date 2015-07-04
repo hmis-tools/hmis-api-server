@@ -16,13 +16,8 @@ public class GenderAlreadyExistException extends HMISAPIException {
 	 */
 	private static final long serialVersionUID = -8508920773057853271L;
 	
-	public GenderAlreadyExistException()
+	public GenderAlreadyExistException(int status,String errorMessage, String developerMessage)
 	{
-		super();
+		super(status,errorMessage, developerMessage);
 	}
-	public GenderAlreadyExistException(String message)
-	{
-		super(message);
-	}
-
 }

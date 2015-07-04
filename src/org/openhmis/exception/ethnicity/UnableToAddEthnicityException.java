@@ -30,5 +30,4 @@ public class UnableToAddEthnicityException extends InternalServerErrorException 
 	{
 		return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 	}
-	
 }

@@ -23,7 +23,6 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
@@ -125,7 +124,7 @@ public class OAuth2Utils
 					oauthDetails.setAccessToken(accessToken);
 					get.removeHeaders(OAuthConstants.AUTHORIZATION);
 					get.addHeader(OAuthConstants.AUTHORIZATION,getAuthorizationHeaderForAccessToken(oauthDetails.getAccessToken()));
-					get.releaseConnection();
+	//				get.releaseConnection();
 					response = client.execute(get);
 					code = response.getStatusLine().getStatusCode();
 					if (code >= 400) 
@@ -208,7 +207,7 @@ public class OAuth2Utils
 			{
 				log.debug("Authorization server expects Basic authentication");
 				post.addHeader(OAuthConstants.AUTHORIZATION,getBasicAuthorizationHeader(oauthDetails.getUsername(),oauthDetails.getPassword()));
-				post.releaseConnection();
+//				post.releaseConnection();
 				response = httpClient.execute(post);
 				code = response.getStatusLine().getStatusCode();
 				if ( code >=400)
@@ -216,7 +215,7 @@ public class OAuth2Utils
 					log.debug("Retry with client credentials");
 					post.removeHeaders(OAuthConstants.AUTHORIZATION);
 					post.addHeader(OAuthConstants.AUTHORIZATION,getBasicAuthorizationHeader(oauthDetails.getClientId(),oauthDetails.getClientSecret()));
-					post.releaseConnection();
+	//				post.releaseConnection();
 					response = httpClient.execute(post);
 					if (code >= 400)
 					{
@@ -319,19 +318,25 @@ public class OAuth2Utils
 		}
 
 		try {
-			List<NameValuePair> list = URLEncodedUtils.parse(
-					EntityUtils.toString(entity), Charset.forName(HTTP.UTF_8));
+		/*	List<NameValuePair> list = URLEncodedUtils.parse(
+					EntityUtils.toString(entity), Charset.forName(HTTP.UTF_8));*/
+			List<NameValuePair> list = new ArrayList();
 			for (NameValuePair pair : list) {
 				System.out.println(String.format("  %s = %s", pair.getName(),
 						pair.getValue()));
 				oauthResponse.put(pair.getName(), pair.getValue());
 			}
 
-		} catch (IOException e) {
+		}
+		catch(Exception e)
+		{
+			
+		}
+		/*catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new RuntimeException("Could not parse URLEncoded Response");
-		}
+		}*/
 
 		return oauthResponse;
 	}

@@ -16,13 +16,8 @@ public class RaceAlreadyExistException extends HMISAPIException {
 	 */
 	private static final long serialVersionUID = 6295165531199520558L;
 	
-	public RaceAlreadyExistException()
+	public RaceAlreadyExistException(int status,String errorMessage, String developerMessage)
 	{
-		super();
+		super(status,errorMessage, developerMessage);
 	}
-	public RaceAlreadyExistException(String message)
-	{
-		super(message);
-	}
-
 }

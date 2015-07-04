@@ -10,9 +10,6 @@ package org.openhmis.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
-
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.dozer.Mapper;
@@ -103,12 +100,12 @@ public class ClientManagerImpl implements ClientManager
 			}
 			else
 			{
-				throw new WebApplicationException(Response.Status.NOT_FOUND);
+				throw new ClientNotFoundException(401,"Authentication Error","Client not found");
 			}
 		}
 		catch(Exception e)
 		{
-			throw new ClientNotFoundException(e.getMessage());
+			throw new ClientNotFoundException(401,"Authentication Error","Client not found");
 		}
 		return clientVO;
 	}
@@ -126,8 +123,7 @@ public class ClientManagerImpl implements ClientManager
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
-			throw new ClientNotFoundException(e.getMessage());
+			throw new ClientNotFoundException(401,"Authentication Error","Client not found");
 		}
 		return clientDetailVO;
 	}
@@ -138,6 +134,7 @@ public class ClientManagerImpl implements ClientManager
 		return clientDAO.findClientByName(firstName, lastName);
 	}
 
+	@Override
 	public List<Client> getClientByLastName(String lastName) throws ClientNotFoundException
 	{
 		return clientDAO.findClientByLastName(lastName);
@@ -156,6 +153,4 @@ public class ClientManagerImpl implements ClientManager
 	public void setClientDAO(ClientDAO clientDAO) {
 		this.clientDAO = clientDAO;
 	}
-	
-	
 }

@@ -17,13 +17,8 @@ public class DeleteClientException extends HMISAPIException
 	 */
 	private static final long serialVersionUID = 947672400880821547L;
 	
-	public DeleteClientException()
+	public DeleteClientException(int status,String errorMessage, String developerMessage)
 	{
-		super();
+		super(status,errorMessage, developerMessage);
 	}
-	public DeleteClientException(String message)
-	{
-		super(message);
-	}
-
 }

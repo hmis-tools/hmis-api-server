@@ -17,13 +17,8 @@ public class ClientAlreadyExistException extends HMISAPIException
 	 */
 	private static final long serialVersionUID = 624522595891222311L;
 	
-	public ClientAlreadyExistException()
+	public ClientAlreadyExistException(int status,String errorMessage, String developerMessage)
 	{
-		super();
+		super(status,errorMessage, developerMessage);
 	}
-	public ClientAlreadyExistException(String message)
-	{
-		super(message);
-	}
-
 }

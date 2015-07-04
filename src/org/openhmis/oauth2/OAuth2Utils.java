@@ -71,13 +71,13 @@ public class OAuth2Utils
 		OAuth2Details oauthDetails = new OAuth2Details();
 		oauthDetails.setUsername(username);													// user will supply this value
 		oauthDetails.setPassword(password);													// user will supply this value
-		oauthDetails.setAccessToken((String)config.getProperty(OAuthConstants.ACCESS_TOKEN));
-		oauthDetails.setGrantType((String)config.getProperty(OAuthConstants.GRANT_TYPE));
+		oauthDetails.setAccessToken(config.getProperty(OAuthConstants.ACCESS_TOKEN));
+		oauthDetails.setGrantType(config.getProperty(OAuthConstants.GRANT_TYPE));
 		oauthDetails.setAuthenticationServerUrl(config.getProperty(OAuthConstants.AUTHENTICATION_SERVER_URL));
-		oauthDetails.setClientId((String)config.getProperty(OAuthConstants.CLIENT_ID));
-		oauthDetails.setClientSecret((String)config.getProperty(OAuthConstants.CLIENT_SECRET));
-		oauthDetails.setRefreshToken((String)config.getProperty(OAuthConstants.REFRESH_TOKEN));
-		oauthDetails.setScope((String)config.getProperty(OAuthConstants.SCOPE));
+		oauthDetails.setClientId(config.getProperty(OAuthConstants.CLIENT_ID));
+		oauthDetails.setClientSecret(config.getProperty(OAuthConstants.CLIENT_SECRET));
+		oauthDetails.setRefreshToken(config.getProperty(OAuthConstants.REFRESH_TOKEN));
+		oauthDetails.setScope(config.getProperty(OAuthConstants.SCOPE));
 		
 		return oauthDetails;
 	}

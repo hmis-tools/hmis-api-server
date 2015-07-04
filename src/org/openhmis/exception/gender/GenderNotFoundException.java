@@ -13,7 +13,6 @@ import javax.ws.rs.ext.ExceptionMapper;
 
 public class GenderNotFoundException extends NotFoundException implements ExceptionMapper<GenderNotFoundException>
 {
-
 	/**
 	 * 
 	 */

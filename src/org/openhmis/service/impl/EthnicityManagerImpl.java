@@ -70,6 +70,4 @@ public class EthnicityManagerImpl implements EthnicityManager
 		log.debug("updateEthnicity");
 		return ethnicityDAO.update(ethnicity);
 	}
-	
-	
 }

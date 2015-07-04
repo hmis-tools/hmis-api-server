@@ -5,16 +5,18 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Collections;
 
+import javax.ws.rs.core.Response;
+
 import org.apache.log4j.Logger;
 import org.openhmis.exception.oauth2.UnableToAuthorizeException;
 import org.openhmis.oauth2.salesforce.OAuth2Utils;
+import org.openhmis.util.ClientErrorEnum;
 import org.openhmis.util.OAuthConstants;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
-
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
@@ -46,7 +48,7 @@ public class OAuth2ServiceAccount
 	{
 		log.debug("authorizing the user");
 		if (path == null || username == null || emailAddress == null)
-			throw new UnableToAuthorizeException("Couldn't authorize with invalid values ");
+			throw new UnableToAuthorizeException(Response.Status.UNAUTHORIZED.getStatusCode(), ClientErrorEnum.AUTHENTICATION_ERROR.getValue(),"Couldn't authorize with invalid values ");
 		GoogleCredential credential = null;
 		try
 		{
@@ -64,7 +66,7 @@ public class OAuth2ServiceAccount
 		}
 		catch(Exception e)
 		{
-			throw new UnableToAuthorizeException(e.getMessage());
+			throw new UnableToAuthorizeException(Response.Status.UNAUTHORIZED.getStatusCode(), ClientErrorEnum.AUTHENTICATION_ERROR.getValue(),"Couldn't authorize ");
 		}
 		return credential;
 	}

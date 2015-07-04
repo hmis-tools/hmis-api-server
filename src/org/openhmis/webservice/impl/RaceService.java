@@ -49,9 +49,9 @@ public class RaceService
 	}
 	
 	@GET
-	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/race/{username}/{password}")
-	public List<RaceVO> getAllRaces(@PathParam("username") String username, @PathParam("password") String password) throws RaceNotFoundException
+	public Response getAllRaces(@PathParam("username") String username, @PathParam("password") String password) throws RaceNotFoundException
 	{
 		log.debug("getAllRaces");
 		List<RaceVO> raceVOList = null;
@@ -82,14 +82,14 @@ public class RaceService
 			log.error("Couldn't found the Race " + e.getMessage());
 			throw new RaceNotFoundException(e.getMessage());
 		}
-		return raceVOList;
+		return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(raceVOList).build();
 	}
 	
 	@Path("/updateRace/{username}/{password}")
 	@PUT
-	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public RaceVO updateRace(JAXBElement<RaceVO> race,@PathParam("username") String username , @PathParam("password") String password)
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
+	public Response updateRace(JAXBElement<RaceVO> race,@PathParam("username") String username , @PathParam("password") String password)
 	{
 		log.debug("update Race");
 		RaceVO raceVO = null;
@@ -112,14 +112,14 @@ public class RaceService
 			log.error("Couldn't update the ethnicity " + e.getMessage());
 			throw new UnableToUpdateRaceException(e.getMessage());
 		}
-		return raceVO;
+		return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(raceVO).build();
 	}
 	
 	@Path("/addRace/{username}/{password}")
 	@POST
-	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public RaceVO addRace(JAXBElement<RaceVO> race, @PathParam("username") String username, @PathParam("password") String password)
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
+	public Response addRace(JAXBElement<RaceVO> race, @PathParam("username") String username, @PathParam("password") String password)
 	{
 		log.debug("add Race");
 		RaceVO raceVO = null;
@@ -142,7 +142,7 @@ public class RaceService
 			log.error("Couldn't add the race " + e.getMessage());
 			throw new UnableToAddRaceException(e.getMessage());
 		}
-		return raceVO;
+		return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(raceVO).build();
 	}	
 	public RaceManager getRaceManager() {
 		return raceManager;

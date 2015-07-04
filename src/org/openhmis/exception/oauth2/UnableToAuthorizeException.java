@@ -9,13 +9,8 @@ public class UnableToAuthorizeException extends HMISAPIException
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public UnableToAuthorizeException()
+	public UnableToAuthorizeException(int status,String errorMessage, String developerMessage)
 	{
-		super();
-	}
-	
-	public UnableToAuthorizeException(String message)
-	{
-		super(message);
+		super(status,errorMessage, developerMessage);
 	}
 }

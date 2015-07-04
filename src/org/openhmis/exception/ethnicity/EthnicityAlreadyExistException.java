@@ -11,18 +11,13 @@ import org.openhmis.exception.HMISAPIException;
 
 public class EthnicityAlreadyExistException extends HMISAPIException 
 {
-
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2157647914095089402L;
 	
-	public EthnicityAlreadyExistException()
+	public EthnicityAlreadyExistException(int status,String errorMessage, String developerMessage)
 	{
-		super();
-	}
-	public EthnicityAlreadyExistException(String message)
-	{
-		super(message);
+		super(status,errorMessage, developerMessage);
 	}
 }
