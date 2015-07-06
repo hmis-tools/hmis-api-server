@@ -23,6 +23,7 @@ The labels with actionable tasks:
 * [Core](https://github.com/PCNI/OpenHMIS/labels/core) - issues that represent core functionality to OpenHMIS, these might involve multiple contributors and may be broken into smaller tasks.  Definitely reach out to the group before pursuing a core issue.
 * [Enhancement](https://github.com/PCNI/OpenHMIS/labels/enhancement) - these issues are more significant than easy pickings, but less vital than core.  Communicate with the group before taking on an enhancement to coordinate implementation details.
 * [Help Wanted](https://github.com/PCNI/OpenHMIS/labels/help%20wanted) - Someone started on an issue but realized they could use another set of hands or eyes.  Feel free to request that this tag get added to an issue you're working on if you want assistance!
+* [Icebox](https://github.com/PCNI/OpenHMIS/labels/icebox) - we are aware of a big, long-term need. These items will required further research, experimentation, and love before they can blossom into actionable (codeable) issues. 
 
 No matter the type of issue, if you have identified something you wish to make progress on, please be sure to comment on the issue and post to the google group.
 
