@@ -1,1 +1,1 @@
-migrate: java -cp target/classes:target/dependency/* Migrator
+migrate: java -cp target/classes:target/dependency/* org.openhmis.util.Migrator
