@@ -58,10 +58,10 @@ To make a feature contribution, fork repository and create a new feature branch 
 
 **Best practices:**
 
-* Commit early and often.  Having one giant commit makes it difficult to understand the evolution of a patch.
-* Describe your commits with good comments.  Comments like `changed index.html` aren't helpful.  Comments like `updated the page title` are.
-* Don't be upset if your Pull Request requires an iteration.  The point of a pull request is to get feedback.
-* Changes to the schema should be done by creating new migrations, not editing existing migrations.
+* Do work in small, discrete chunks as much as possible, committing early and often.  It's okay to break one logical change up into several related, smaller changes.  Having one giant commit makes it difficult for someone to wrap their mind around the change.
+* Describe your commits with [good commit messages](https://robots.thoughtbot.com/5-useful-tips-for-a-better-commit-message).  Messages like "`changed index.html`" aren't helpful; messages like "`updated the page title`" are.  If your commit is related to an issue, make sure to mention the issue number in the commit message, e.g., "`#8`".
+* Don't be upset if your Pull Request requires several iterations before being accepted.  That's a normal part of the open source process, even for experienced developers.  The pull request model is designed around that feedback process.
+* Changes to the schema should be done by creating new migrations, not by editing existing migrations.
 
 
 Step 4: Understand the Code Base
