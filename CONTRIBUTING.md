@@ -36,23 +36,24 @@ No matter the type of issue, if you have identified something you wish to make p
 
 Step 3: Understand our Branching / Contribution Policies
 -------------------
-Generally our branching structure can be understood by reading [A Successful Git Branching Model](http://nvie.com/posts/a-successful-git-branching-model/).
+Our branching structure is based on [A Successful Git Branching Model](http://nvie.com/posts/a-successful-git-branching-model/), with a few tweaks, the main difference being that we don't keep a `develop` branch.  Instead, we have release branches and feature branches, both of which are periodically merged into `master`.  Whether you should commit a given change to a feature branch or to the latest release branch depends on the nature of the change, as described below.
 
 **The important points:**
 
-* We use tags (e.g. `0.2.0`) to represent release builds.
-* We use release branches (e.g. `0.2.1`) to make progress on new builds.
+* Use tags (e.g. `0.2.0`) to represent release builds.
+* Use release branches (e.g. `0.2.1`) to make progress on new builds.  If a change is not part of development on a particular feature, and is not a bugfix, then just commit it to the latest release branch.
 
 	Tag and release branch names use [Semantic Versioning](http://semver.org/)
 
-* We use feature branches (e.g. `feature-oauth`) to develop new functionality or behaviors for the API which will go into a release.
+* Use feature branches (e.g. `feature-oauth`) to develop new functionality or behaviors for the API which will go into a release.
 
-	Feature branches are of the form `feature-FEATURE_NAME`
+	Feature branches are of the form `feature-FEATURE_NAME`.  If you don't see the feature branch you need, create it -- branches are cheap!
 
-* We use hotfix branches (e.g. `hotfix-migration`) for urgent changes which need to be made outside of a standard release cycle.
+* Use bugfix branches (e.g. `bugfix-52-migration`) for bugfixes that that need to be made outside of the release cycle.
 
-	Hotfix branches are of the form `hotfix-HOTFIX_NAME`
+	Bugfix branches are of the form `bugfix-<TICKET_NUMBER>-<BUGFIX_NAME>`.  Usually there should be a ticket number associated with the bug; if there is not, just omit that portion of the branch name (but consider just filing a ticket instead, to keep a consistent process).
 
+* Use the `master` branch for documentation updates and similar global, non-code-related changes.  But, of course, if a documentation update is specifically related to the work being done on a feature branch, then the doc changes should go on that branch together with the code changes.
 
 To make a feature contribution, fork repository and create a new feature branch from the latest release branch.  Once you feel the code is ready for integration, issue a [pull request](https://help.github.com/articles/using-pull-requests/) in which you describe the changes along with [references to any issues you resolved](https://github.com/blog/1506-closing-issues-via-pull-requests).
 
