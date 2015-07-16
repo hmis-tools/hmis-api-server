@@ -51,7 +51,7 @@ Our branching structure is based on [A Successful Git Branching Model](http://nv
 
 * Use bugfix branches (e.g. `bugfix-52-migration`) for bugfixes that that need to be made outside of the release cycle.
 
-	Bugfix branches are of the form `bugfix-<TICKET_NUMBER>-<BUGFIX_NAME>`.  Usually there should be a ticket number associated with the bug; if there is not, just omit that portion of the branch name (but consider just filing a ticket instead, to keep a consistent process).
+	Bugfix branches are of the form `bugfix-<ISSUE_NUMBER>-<BUGFIX_NAME>`.  If there is not an issue associated with the bug create one. If you cannot, omit that portion of the branch name (but reconsider creating an issue, to keep a consistent process).
 
 * Use the `master` branch for documentation updates and similar global, non-code-related changes.  But, of course, if a documentation update is specifically related to the work being done on a feature branch, then the doc changes should go on that branch together with the code changes.
 
