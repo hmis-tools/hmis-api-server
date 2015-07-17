@@ -9,12 +9,10 @@ package org.openhmis.util;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 import javax.naming.InitialContext;
-import javax.naming.NamingException;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -48,13 +46,15 @@ public class HibernateSessionFactory {
      		String propertyFileLocation = (String) context.lookup("java:comp/env/config");
      		if (propertyFileLocation!= null)
      		{
-     			File propertyFile = new File(propertyFileLocation  +"//hibernate.properties");
-   			    InputStream is = new FileInputStream(propertyFile);
+     			/*File propertyFile = new File(propertyFileLocation  +"/hibernate.properties");*/
+   			    InputStream is = new FileInputStream(propertyFileLocation  +"/hibernate.properties");
   		        properties.load(is);
+     			
   		        configuration.setProperties(properties);
+  		        configuration.configure();
+  		      	sessionFactory = configuration.buildSessionFactory();
      		}
- 			configuration.configure();
- 			sessionFactory = configuration.buildSessionFactory();
+ 			
  		} catch (Exception e) {
  			System.err
  					.println("%%%% Error Creating SessionFactory %%%%");
@@ -92,7 +92,7 @@ public class HibernateSessionFactory {
      */
 	public static void rebuildSessionFactory() {
 		try {
-			configuration.configure(configFile);
+			configuration.configure();
 			sessionFactory = configuration.buildSessionFactory();
 		} catch (Exception e) {
 			System.err
