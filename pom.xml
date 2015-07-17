@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.openhmis</groupId>
-  <artifactId>api</artifactId>
+  <artifactId>OpenHMIS</artifactId>
   <version>0.0.1</version>
   <packaging>war</packaging>
 
