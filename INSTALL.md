@@ -141,3 +141,41 @@ To run the web service:
 4. If your web service is properly configured, [http://localhost:8080/openhmis/services/healthcheck](http://localhost:8080/openhmis/services/healthcheck) should display "Your service is working." 
 
 5. If the schema is properly set up, [http://localhost:8080/openhmis/services/clients/client/30486/user/password](http://localhost:8080/openhmis/services/clients/client/30486/user/password) should yield a valid XML object.
+
+
+To debug the application in Eclipse:
+-----------------------------------
+
+1. Using a Command Line Interface, navigate to the root directory of this code base.  It should be the one containing `pom.xml`
+
+```shell
+		$> mvn eclipse:eclipse
+	```
+2. Import it as Existing Maven projects in the workspace
+
+3. Configure the Tomcat to be used for deployment
+
+
+Configuring Hibernate.Properties file:
+-------------------------------------
+
+1. Create a hibernate.properties file at any location on your hard drive
+
+hibernate.dialect=org.hibernate.dialect.MySQLDialect
+hibernate.connection.driver_class=com.mysql.jdbc.Driver
+hibernate.connection.url=jdbc:mysql://servername:port/DB schema
+hibernate.connection.username=<Your DB user name>
+hibernate.connection.password=<Your DB password>
+hibernate.connection.pool_size=1
+hibernate.show_sql=true
+hibernate.connection.autocommit=true
+javax.persistence.validation.mode=none
+
+
+2.Open the file <TOMCAT_HOME>/conf/context.xml
+
+3.Add the following to the Context tag with the following value
+
+<Environment name="config" value="<YOUR hibernate.properties folder location>"
+            type="java.lang.String" />
+	
