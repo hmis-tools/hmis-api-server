@@ -25,16 +25,15 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "CLIENT_RACE")
 public class ClientRace implements java.io.Serializable {
 
-	// Fields
+	// Universal Fields
+	private Integer clientKey;
+	private Integer raceKey;
 
-	private Long id;
-	private CodeRace codeRace;
-	private Long clientKey;
-	private Integer recActiveGct;
-	private Timestamp entryDateTime;
-	private Long entryUserKey;
-	private Timestamp logDateTime;
-	private Long logUserKey;
+	// Compass Fields
+	private Integer primaryKey;
+	private Timestamp updateTimestamp;
+	private String migrationFlag;
+
 
 	// Constructors
 
@@ -42,101 +41,45 @@ public class ClientRace implements java.io.Serializable {
 	public ClientRace() {
 	}
 
-	/** minimal constructor */
-	public ClientRace(CodeRace codeRace, Long clientKey, Timestamp logDateTime) {
-		this.codeRace = codeRace;
-		this.clientKey = clientKey;
-		this.logDateTime = logDateTime;
-	}
-
-	/** full constructor */
-	public ClientRace(CodeRace codeRace, Long clientKey, Integer recActiveGct,
-			Timestamp entryDateTime, Long entryUserKey, Timestamp logDateTime,
-			Long logUserKey) {
-		this.codeRace = codeRace;
-		this.clientKey = clientKey;
-		this.recActiveGct = recActiveGct;
-		this.entryDateTime = entryDateTime;
-		this.entryUserKey = entryUserKey;
-		this.logDateTime = logDateTime;
-		this.logUserKey = logUserKey;
-	}
-
 	// Property accessors
-	@GenericGenerator(name = "generator", strategy = "increment")
-	@Id
-	@GeneratedValue(generator = "generator")
-	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
-		return this.id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "RACE_CODE", nullable = false)
-	public CodeRace getCodeRace() {
-		return this.codeRace;
-	}
-
-	public void setCodeRace(CodeRace codeRace) {
-		this.codeRace = codeRace;
-	}
-
-	@Column(name = "CLIENT_KEY", nullable = false)
-	public Long getClientKey() {
+	@Column(name = "CLIENT_KEY") // BIGINT(20)
+	public Integer getClientKey() {
 		return this.clientKey;
 	}
-
-	public void setClientKey(Long clientKey) {
+	public void setClientKey(Integer clientKey) {
 		this.clientKey = clientKey;
 	}
-
-	@Column(name = "REC_ACTIVE_GCT")
-	public Integer getRecActiveGct() {
-		return this.recActiveGct;
+	
+	@Column(name = "RACE_KEY") // BIGINT(20)
+	public Integer getRaceKey() {
+		return this.raceKey;
+	}
+	public void setRaceKey(Integer raceKey) {
+		this.raceKey = raceKey;
+	}
+	
+	@Column(name = "PRIMARY_KEY") // BIGINT(20)
+	public Integer getPrimaryKey() {
+		return this.primaryKey;
+	}
+	public void setPrimaryKey(Integer primaryKey) {
+		this.primaryKey = primaryKey;
+	}
+	
+	@Column(name = "UPDATE_TIMESTAMP") // TIMESTAMP
+	public Timestamp getUpdateTimestamp() {
+		return this.updateTimestamp;
+	}
+	public void setUpdateTimestamp(Timestamp updateTimestamp) {
+		this.updateTimestamp = updateTimestamp;
 	}
 
-	public void setRecActiveGct(Integer recActiveGct) {
-		this.recActiveGct = recActiveGct;
+	@Column(name = "MIGRATION_FLAG") // CHAR(2)
+	public String getMigrationFlag() {
+		return this.migrationFlag;
 	}
-
-	@Column(name = "ENTRY_DATE_TIME", length = 19)
-	public Timestamp getEntryDateTime() {
-		return this.entryDateTime;
-	}
-
-	public void setEntryDateTime(Timestamp entryDateTime) {
-		this.entryDateTime = entryDateTime;
-	}
-
-	@Column(name = "ENTRY_USER_KEY")
-	public Long getEntryUserKey() {
-		return this.entryUserKey;
-	}
-
-	public void setEntryUserKey(Long entryUserKey) {
-		this.entryUserKey = entryUserKey;
-	}
-
-	@Column(name = "LOG_DATE_TIME", nullable = false, length = 19)
-	public Timestamp getLogDateTime() {
-		return this.logDateTime;
-	}
-
-	public void setLogDateTime(Timestamp logDateTime) {
-		this.logDateTime = logDateTime;
-	}
-
-	@Column(name = "LOG_USER_KEY")
-	public Long getLogUserKey() {
-		return this.logUserKey;
-	}
-
-	public void setLogUserKey(Long logUserKey) {
-		this.logUserKey = logUserKey;
+	public void setMigrationFlag(String migrationFlag) {
+		this.migrationFlag = migrationFlag;
 	}
 
 }

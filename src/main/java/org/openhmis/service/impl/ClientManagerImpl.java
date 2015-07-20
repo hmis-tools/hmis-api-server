@@ -64,14 +64,14 @@ public class ClientManagerImpl implements ClientManager
 	public Boolean validateClient(Client client) throws InValidClientException
 	{
 		Boolean isValid = Boolean.FALSE;															// we assume we didn't find anything in the database
-		if ((client.getSocSecNumber() != null) && (client.getSocSecNumber().length()== HmisConstants.SSN_LENGTH))
-		{
-			Client existingClient = clientDAO.findClientBySSN(client.getSocSecNumber());	
-			if (existingClient != null)																// if we have the ssn in the database then it exist
-			{
-				isValid = Boolean.TRUE;
-			}
-		}
+//		if ((client.getSocSecNumber() != null) && (client.getSocSecNumber().length()== HmisConstants.SSN_LENGTH))
+//		{
+//			Client existingClient = clientDAO.findClientBySSN(client.getSocSecNumber());	
+//			if (existingClient != null)																// if we have the ssn in the database then it exist
+//			{
+//				isValid = Boolean.TRUE;
+//			}
+//		}
 		return isValid; 
 	}
 

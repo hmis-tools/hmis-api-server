@@ -173,14 +173,14 @@ public class ClientService
 				clientDetailVO = client.getValue();
 				Client newClient = mapper.map(clientDetailVO, Client.class);
 				// first check if this client already exist in the database
-				if (newClient.getSocSecNumber() == null){
-					throw new InValidClientException("Client doesn't have all the mandatory data.");
-				}
-				Client existingClient = clientManager.getClientBySSN(newClient.getSocSecNumber());
-				if (existingClient != null)
-				{
-					throw new ClientAlreadyExistException("Client already exist in the system.");
-				}
+//				if (newClient.getSocSecNumber() == null){
+//					throw new InValidClientException("Client doesn't have all the mandatory data.");
+//				}
+//				Client existingClient = clientManager.getClientBySSN(newClient.getSocSecNumber());
+//				if (existingClient != null)
+//				{
+//					throw new ClientAlreadyExistException("Client already exist in the system.");
+//				}
 				clientManager.addClient(newClient);
 			}
 			else
