@@ -50,9 +50,9 @@ public class GenderService
 	}
 	
 	@GET
-	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/gender/{username}/{password}")
-	public List<GenderVO> getAllGenders(@PathParam("username") String username, @PathParam("password") String password) throws GenderNotFoundException
+	public Response getAllGenders(@PathParam("username") String username, @PathParam("password") String password) throws GenderNotFoundException
 	{
 		log.debug("getAllGenders");
 		List<GenderVO> genderVOList = null;
@@ -84,14 +84,14 @@ public class GenderService
 			log.error("exception in get All Genders");
 			throw new GenderNotFoundException(e.getMessage());
 		}
-		return genderVOList;
+		return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(genderVOList).build();
 	}
 	
 	@Path("/addGender/{username}/{password}")
 	@POST
-	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public GenderVO addGender(JAXBElement<GenderVO> gender, @PathParam("username") String username, @PathParam("password") String password)
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
+	public Response addGender(JAXBElement<GenderVO> gender, @PathParam("username") String username, @PathParam("password") String password)
 	{
 		log.debug("addGender");
 		GenderVO genderVO = null;
@@ -114,13 +114,13 @@ public class GenderService
 			log.error("Couldn't add the gender " + e.getMessage());
 			throw new UnableToAddGenderException(e.getMessage());
 		}
-		return genderVO;
+		return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(genderVO).build();
 	}
 	@Path("/updateGender/{username}/{password}")
 	@PUT
-	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public GenderVO updateGender(JAXBElement<GenderVO> gender,@PathParam("username") String username , @PathParam("password") String password)
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
+	public Response updateGender(JAXBElement<GenderVO> gender,@PathParam("username") String username , @PathParam("password") String password)
 	{
 		log.debug("updateGender");
 		GenderVO genderVO = null;
@@ -143,7 +143,7 @@ public class GenderService
 			log.error("Couldn't update the ethnicity " + e.getMessage());
 			throw new UnableToUpdateGenderException(e.getMessage());
 		}
-		return genderVO;
+		return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(genderVO).build();
 		
 	}
 	public GenderManager getGenderManager() {

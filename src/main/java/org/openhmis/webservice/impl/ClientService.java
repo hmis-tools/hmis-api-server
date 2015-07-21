@@ -20,8 +20,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
-import javax.xml.bind.JAXBElement;
 import javax.ws.rs.core.Response;
+import javax.xml.bind.JAXBElement;
 
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapperSingletonWrapper;
@@ -57,9 +57,9 @@ public class ClientService
 
 	@GET
 	@Path("/client/{clientKey}/{username}/{password}")
-	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
 	@RolesAllowed({"ADMIN","CUSTOMER"})
-	public ClientVO getClient(@PathParam("clientKey") Long clientKey, @PathParam("username") String username, @PathParam("password") String password) throws ClientNotFoundException
+	public Response getClient(@PathParam("clientKey") Long clientKey, @PathParam("username") String username, @PathParam("password") String password) throws ClientNotFoundException
 	{
 		log.debug("getClient");
 		ClientVO clientVO = new ClientVO();
@@ -85,13 +85,13 @@ public class ClientService
 			throw new ClientNotFoundException(e.getMessage());
 		}
 		
-		return clientVO;
+		return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(clientVO).build();
 	}
 	
 	@GET
 	@Path("/clientdetail/{clientKey}/{username}/{password}")
-	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public ClientDetailVO getClientDetail(@PathParam("clientKey") Long clientKey, @PathParam("username") String username, @PathParam("password") String password)
+	@Produces({MediaType.APPLICATION_JSON})
+	public Response getClientDetail(@PathParam("clientKey") Long clientKey, @PathParam("username") String username, @PathParam("password") String password)
 	{
 		log.debug("get Client Detail");
 		ClientDetailVO clientDetailVO = new ClientDetailVO();
@@ -116,14 +116,14 @@ public class ClientService
 			log.error("Couldn't get the client " + e.getMessage());
 			throw new ClientNotFoundException(e.getMessage());
 		}
-		return clientDetailVO;
+		return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(clientDetailVO).build();				
 	}
 	
 	
 	@GET
 	@Path("lastName/{lastName}/{username}/{password}")
-	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public List<ClientVO> getClientByLastName(@PathParam("lastName") String lastName, @PathParam("username") String username, @PathParam("password") String password) throws ClientNotFoundException 
+	@Produces({MediaType.APPLICATION_JSON})
+	public Response getClientByLastName(@PathParam("lastName") String lastName, @PathParam("username") String username, @PathParam("password") String password) throws ClientNotFoundException 
 	{
 		log.debug("getClientByLastName");
 		List<ClientVO> clientVOList = null;
@@ -154,14 +154,14 @@ public class ClientService
 			log.error("Couldn't get the client By Last Name " + e.getMessage());
 			throw new ClientNotFoundException(e.getMessage());
 		}
-		return clientVOList;
+		return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(clientVOList).build();
 	}
 
 	@POST
 	@Path("/addClient/{username}/{password}")
-	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public ClientDetailVO addClient(JAXBElement<ClientDetailVO> client, @PathParam("username") String username, @PathParam("password") String password) throws ClientAlreadyExistException, InValidClientException, UnableToAddClientException
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public Response addClient(JAXBElement<ClientDetailVO> client, @PathParam("username") String username, @PathParam("password") String password) throws ClientAlreadyExistException, InValidClientException, UnableToAddClientException
 	{
 		log.debug("addClient");
 		ClientDetailVO clientDetailVO = null;
@@ -193,14 +193,14 @@ public class ClientService
 			log.error("Couldn't add the client " + e.getMessage());
 			throw new UnableToAddClientException(e.getMessage());
 		}
-		return clientDetailVO;
+		return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(clientDetailVO).build();
 	}
 
 	@PUT
 	@Path("/updateClient/{clientKey}/{username}/{password}")
-	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public ClientDetailVO updateClient(JAXBElement<ClientDetailVO> client,@PathParam("clientKey") Long clientKey, @PathParam("username") String username, @PathParam("password") String password) throws UnableToUpdateClientException
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public Response updateClient(JAXBElement<ClientDetailVO> client,@PathParam("clientKey") Long clientKey, @PathParam("username") String username, @PathParam("password") String password) throws UnableToUpdateClientException
 	{
 		log.debug("updateClient");
 		ClientDetailVO updatedClientVO = null;
@@ -223,7 +223,7 @@ public class ClientService
 			log.error("Couldn't update the client " + e.getMessage());
 			throw new UnableToUpdateClientException(e.getMessage());
 		}		
-		return updatedClientVO;
+		return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(updatedClientVO).build();
 	}
 	
 	public ClientManager getClientManager() {

@@ -51,9 +51,9 @@ public class EthnicityService
 	}
 	
 	@GET
-	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/ethnicity/{username}/{password}")
-	public List<EthnicityVO> getEthnicities(@PathParam("username") String username,@PathParam("password") String password) throws EthnicityNotFoundException
+	public Response getEthnicities(@PathParam("username") String username,@PathParam("password") String password) throws EthnicityNotFoundException
 	{
 		log.debug("getEthnicities");
 		List<EthnicityVO> ehnicityVOList = null;
@@ -84,14 +84,14 @@ public class EthnicityService
 			log.error("Couldn't get the ethnicity " + e.getMessage());
 			throw new EthnicityNotFoundException(e.getMessage());
 		}
-		return ehnicityVOList;
+		return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(ehnicityVOList).build();
 	}
 	
 	@POST
 	@Path("/addEthnicity/{username}/{password}")
-	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public EthnicityVO addEthnicity(JAXBElement<EthnicityVO> ethnicity, @PathParam("username") String username, @PathParam("password") String password) throws UnableToAddEthnicityException
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
+	public Response addEthnicity(JAXBElement<EthnicityVO> ethnicity, @PathParam("username") String username, @PathParam("password") String password) throws UnableToAddEthnicityException
 	{
 		log.debug("addEthnicity");
 		EthnicityVO ethnicityVO = null;
@@ -114,14 +114,14 @@ public class EthnicityService
 			log.error("Couldn't add the ethnicity " + e.getMessage());
 			throw new UnableToAddEthnicityException(e.getMessage());
 		}
-		return ethnicityVO;
+		return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(ethnicityVO).build();
 	}
 	
 	@PUT
 	@Path("/updateEthnicity/{username}/{password}")
-	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public EthnicityVO updateEthnicity(JAXBElement<EthnicityVO> ethnicity,@PathParam("username") String username, @PathParam("password") String password)
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
+	public Response updateEthnicity(JAXBElement<EthnicityVO> ethnicity,@PathParam("username") String username, @PathParam("password") String password)
 	{
 		log.debug("updateEthnicity");
 		EthnicityVO enthnicityVO = null;
@@ -144,7 +144,7 @@ public class EthnicityService
 			log.error("Couldn't update the ethnicity " + e.getMessage());
 			throw new UnableToUpdateEthnicityException(e.getMessage());
 		}
-		return enthnicityVO;
+		return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(enthnicityVO).build();
 	}
 
 	public EthnicityManager getEthnicityManager() {
