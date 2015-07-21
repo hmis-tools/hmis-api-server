@@ -16,160 +16,78 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
-
-/**
- * @author Ashaar Riaz
- *
- */
 @XmlRootElement
 public class ClientVO implements Serializable
 {
 	/**
-	 * 
+	 * The client object represents a client record
+	 * Fields returned with the client object represent fields marked as "At client record creation" in the HUD standards
 	 */
-	private static final long serialVersionUID = 1L;
-	private Long clientKey;
-	private String nameMiddle;
-	private String nameLast;
-	private String nameFirst;
-	private String socSecNumber;
+
+	// Universal Data Standard: Personal ID (2014, 3.13) 
+	private String personalId;
+
+	// Universal Data Standard: Name 
+	private String firstName;
+	private String middleName;
+	private String lastName;
+	private String suffix;
+	private Integer nameDataQualityCode;
+
+	// Universal Data Standard: SSN
+	private String socialSecurityNumber;
+	private Integer ssnDataQualityCode;
+	
+	// Universal Data Standard: Date of Birth
 	private String dateOfBirth;
+	private Integer dateOfBirthTypeCode;
+
+	// Universal Data Standard: Race
+	private Integer raceCode;
+
+	// Universal Data Standard: Ethnicity
+	private Integer ethnicityCode;
+
+	// Universal Data Standard: Gender
+	private Integer genderCode;
+	private String otherGender;
+
+	// Universal Data Standard: Veteren Status
+	private Integer veteranStatusCode;
+
+	// VA Specific Data Standards: Veteran's Information (2014, 4.41)
+	private Integer yearEnteredMilitaryService;
+	private Integer yearSeparatedFromMilitaryService;
+	private Integer theatreOfOperationsWw2Code;
+	private Integer theatreOfOperationsKoreanWarCode;
+	private Integer theatreOfOperationsVietnamWarCode;
+	private Integer theatreOfOperationsPersianGulfWarCode;
+	private Integer theatreOfOperationsAfghanistanWarCode;
+	private Integer theatreOfOperationsIraqiFreedomCode;
+	private Integer theatreOfOperationsIraqNewDawnCode;
+	private Integer theatreOfOperationsOtherPeacekeepingCode;
+	private Integer branchOfMilitaryCode;
+	private Integer dischargeStatusCode;
+
 	
-	private String ethnicityDescription;
-	private String genderDescription;
-	
-	public ClientVO() 
-	{
+	public ClientVO() {
 		super();
 	}
 	public ClientVO(Long clientKey) {
 		super();
 		this.clientKey = clientKey;
 	}
-	public ClientVO(Long clientKey, String nameMiddle, String nameLast,
-			String nameFirst, String socSecNumber, String dateOfBirth) {
-		super();
-		this.clientKey = clientKey;
-		this.nameMiddle = nameMiddle;
-		this.nameLast = nameLast;
-		this.nameFirst = nameFirst;
-		this.socSecNumber = socSecNumber;
-		this.dateOfBirth = dateOfBirth;
-	}
-	public Long getClientKey() {
-		return clientKey;
-	}
-	public void setClientKey(Long clientKey) {
-		this.clientKey = clientKey;
-	}
-	public String getNameMiddle() {
-		return nameMiddle;
-	}
-	public void setNameMiddle(String nameMiddle) {
-		this.nameMiddle = nameMiddle;
-	}
-	public String getNameLast() {
-		return nameLast;
-	}
-	public void setNameLast(String nameLast) {
-		this.nameLast = nameLast;
-	}
-	public String getNameFirst() {
-		return nameFirst;
-	}
-	public void setNameFirst(String nameFirst) {
-		this.nameFirst = nameFirst;
-	}
-	public String getSocSecNumber() {
-		return socSecNumber;
-	}
-	public void setSocSecNumber(String socSecNumber) {
-		this.socSecNumber = socSecNumber;
-	}
-	public String getDateOfBirth() {
-		return dateOfBirth;
-	}
-	public void setDateOfBirth(String dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-	
-	public String getEthnicityDescription() {
-		return ethnicityDescription;
-	}
-	public void setEthnicityDescription(String ethnicityDescription) {
-		this.ethnicityDescription = ethnicityDescription;
-	}
-	public String getGenderDescription() {
-		return genderDescription;
-	}
-	public void setGenderDescription(String genderDescription) {
-		this.genderDescription = genderDescription;
-	}
 	
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((clientKey == null) ? 0 : clientKey.hashCode());
-		result = prime * result
-				+ ((dateOfBirth == null) ? 0 : dateOfBirth.hashCode());
-		result = prime * result
-				+ ((nameFirst == null) ? 0 : nameFirst.hashCode());
-		result = prime * result
-				+ ((nameLast == null) ? 0 : nameLast.hashCode());
-		result = prime * result
-				+ ((nameMiddle == null) ? 0 : nameMiddle.hashCode());
-		result = prime * result
-				+ ((socSecNumber == null) ? 0 : socSecNumber.hashCode());
-		return result;
+		return 0;
 	}
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ClientVO other = (ClientVO) obj;
-		if (clientKey == null) {
-			if (other.clientKey != null)
-				return false;
-		} else if (!clientKey.equals(other.clientKey))
-			return false;
-		if (dateOfBirth == null) {
-			if (other.dateOfBirth != null)
-				return false;
-		} else if (!dateOfBirth.equals(other.dateOfBirth))
-			return false;
-		if (nameFirst == null) {
-			if (other.nameFirst != null)
-				return false;
-		} else if (!nameFirst.equals(other.nameFirst))
-			return false;
-		if (nameLast == null) {
-			if (other.nameLast != null)
-				return false;
-		} else if (!nameLast.equals(other.nameLast))
-			return false;
-		if (nameMiddle == null) {
-			if (other.nameMiddle != null)
-				return false;
-		} else if (!nameMiddle.equals(other.nameMiddle))
-			return false;
-		if (socSecNumber == null) {
-			if (other.socSecNumber != null)
-				return false;
-		} else if (!socSecNumber.equals(other.socSecNumber))
-			return false;
-		return true;
+		return false;
 	}
 	@Override
 	public String toString() {
-		return "ClientVO [clientKey=" + clientKey + ", nameMiddle="
-				+ nameMiddle + ", nameLast=" + nameLast + ", nameFirst="
-				+ nameFirst + ", socSecNumber=" + socSecNumber
-				+ ", dateOfBirth=" + dateOfBirth + "]";
+		return "";
 	}
 }
