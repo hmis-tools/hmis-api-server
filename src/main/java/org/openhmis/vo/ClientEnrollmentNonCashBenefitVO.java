@@ -34,10 +34,10 @@ public class ClientEnrollmentNonCashBenefitVO implements Serializable {
 	private Integer benefitsTemporaryRentalCode;
 	private String benefitsOtherSource;
 
-	public ClientEnrollmentIncomeSourceVO() {
+	public ClientEnrollmentNonCashBenefitVO() {
 		super();
 	}
-	public ClientEnrollmentIncomeSourceVO(Long enrollmentId) {
+	public ClientEnrollmentNonCashBenefitVO(Long enrollmentId) {
 		super();
 		this.enrollmentId = enrollmentId;
 	}

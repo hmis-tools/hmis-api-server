@@ -41,10 +41,10 @@ public class ClientEnrollmentHealthInsuranceVO implements Serializable {
 	private Integer healthInsuranceStateAdultsCode;
 	private Integer healthInsuranceNoStateAdultsReasonCode;
 
-	public ClientEnrollmentIncomeSourceVO() {
+	public ClientEnrollmentHealthInsuranceVO() {
 		super();
 	}
-	public ClientEnrollmentIncomeSourceVO(Long enrollmentId) {
+	public ClientEnrollmentHealthInsuranceVO(Long enrollmentId) {
 		super();
 		this.enrollmentId = enrollmentId;
 	}

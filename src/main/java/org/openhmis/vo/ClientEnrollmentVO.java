@@ -79,7 +79,7 @@ public class ClientEnrollmentVO implements Serializable
 	// IN ANOTHER OBJECT (ClientEnrollmentIncomeSourceVO.java)
 
 	// Program Specific Data Standards: Non-cash Benefits (2014, 4.3)
-	// Collection: Project Entry, Project Exit, Annual Assesment, Updates
+	// Collection: Project Entry, Project Exit, Annual Assessment, Updates
 	// IN ANOTHER OBJECT (ClientEnrollmentNonCashBenefitVO.java)
 
 	// Program Specific Data Standards: Health Insurance (2014, 4.4)
@@ -95,31 +95,31 @@ public class ClientEnrollmentVO implements Serializable
 	// IN ANOTHER OBJECT (ClientEnrollmentDevelopmentalDisabilityVO.java)
 
 	// Program Specific Data Standards: Chronic Health Condition (2014, 4.7)
-	// Colletion: Projet Entry, Project Exit, Update
+	// Collection: Project Entry, Project Exit, Update
 	// IN ANOTHER OBJECT (ClientEnrollmentChronicHealthConditionVO.java)
 
 	// Program Specific Data Standards: HIV/AIDS (2014, 4.8)
-	// Colletion: Projet Entry, Project Exit, Update
+	// Collection: Project Entry, Project Exit, Update
 	// IN ANOTHER OBJECT (ClientEnrollmentHivAidsVO.java)
 
 	// Program Specific Data Standards: Mental Health Problem (2014, 4.9)
-	// Colletion: Projet Entry, Project Exit, Update
+	// Collection: Project Entry, Project Exit, Update
 	// IN ANOTHER OBJECT (ClientEnrollmentMentalHealthProblemVO.java)
 
 	// Program Specific Data Standards: Substance Abuse (2014, 4.10)
-	// Colletion: Projet Entry, Project Exit, Update
+	// Collection: Project Entry, Project Exit, Update
 	// IN ANOTHER OBJECT (ClientEnrollmentSubstanceAbuseVO.java)
 
 	// Program Specific Data Standards: Domestic Abuse (2014, 4.11)
-	// Colletion: Projet Entry, Update
+	// Collection: Project Entry, Update
 	// IN ANOTHER OBJECT (ClientEnrollmentDomesticAbuseVO.java)
 
 	// Program Specific Data Standards: Contact (2014, 4.12)
-	// Colletion: Projet Entry, Exit, and Every Contact Point
+	// Collection: Project Entry, Exit, and Every Contact Point
 	// SEPARATE OBJECT (ClientEnrollmentContactVO.java)
 
 	// Program Specific Data Standards: Date of Engagement (2014, 4.13)
-	// Colletion: Once, whenever the client becomes engaged
+	// Collection: Once, whenever the client becomes engaged
 	private Date engagementDate;
 
 	// Program Specific Data Standards: Services Provided (2014, 4.14)
@@ -132,24 +132,24 @@ public class ClientEnrollmentVO implements Serializable
 	// SEPARATE OBJECT (ClientEnrollmentReferralVO.java)
 
 	// Program Specific Data Standards: Residential Move-in Date (2014, 4.17)
-	// Colletion: On Entry, keep up to date
+	// Collection: On Entry, keep up to date
 	private Date residentialMoveInDate;
 	private Integer permanentHousingCode;
 	private Date permanentHousingMoveDate;
 
 	// Program Specific Data Standards: Housing Assessment Disposition (2014, 4.18)
-	// Colletion: On Exit
+	// Collection: On Exit
 	private Integer housingAssessmentDispositionCode;
 	private String housingAssessmentDispositionOther;
 
 	// Program Specific Data Standards: Housing Assessment on Exit (2014, 4.19)
-	// Colletion: On Exit
+	// Collection: On Exit
 	private Integer housingAssessmentAtExitCode;
 	private Integer housingAssessmentAtExitMaintainedSubsidyCode;
 	private Integer housingAssessmentAtExitMovedSubsidyCode;
 	
 	// PATH Specific Data Standards: PATH Status (2014, 4.20)
-	// Colletion: Once, before exit.
+	// Collection: Once, before exit.
 	private Date pathStatusDate;
 	private Integer pathEnrollmentCode;
 	private Integer pathNoEnrollmentReasonCode;
@@ -310,9 +310,9 @@ public class ClientEnrollmentVO implements Serializable
 	public ClientEnrollmentVO() {
 		super();
 	}
-	public ClientEnrollmentVO(Long clientKey) {
+	public ClientEnrollmentVO(String clientId) {
 		super();
-		this.clientKey = clientKey;
+		this.clientId = clientId;
 	}
 	
 	@Override

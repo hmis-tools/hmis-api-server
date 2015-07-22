@@ -73,9 +73,9 @@ public class ClientVO implements Serializable
 	public ClientVO() {
 		super();
 	}
-	public ClientVO(Long clientKey) {
+	public ClientVO(String personalId) {
 		super();
-		this.clientKey = clientKey;
+		this.personalId = personalId;
 	}
 	
 	@Override

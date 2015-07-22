@@ -22,7 +22,7 @@ public class ClientEnrollmentHopwaMedicalAssistanceVO implements Serializable {
 	private Long enrollmentId;
 
 	// HOPWA Specific Data Standards: Medical Assistance (2014, 4.39)
-	private Date informationDate
+	private Date informationDate;
 	private Integer typeCode;
 	private Integer reasonCode;
 	private Integer receivingAdapCode;

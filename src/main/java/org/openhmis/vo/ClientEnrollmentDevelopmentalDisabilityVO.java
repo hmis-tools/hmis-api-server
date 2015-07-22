@@ -28,10 +28,10 @@ public class ClientEnrollmentDevelopmentalDisabilityVO implements Serializable {
 	private Integer documentedCode;
 	private Integer treatmentCode;
 
-	public ClientEnrollmentPhysicalDisabilityVO() {
+	public ClientEnrollmentDevelopmentalDisabilityVO() {
 		super();
 	}
-	public ClientEnrollmentPhysicalDisabilityVO(Long enrollmentId) {
+	public ClientEnrollmentDevelopmentalDisabilityVO(Long enrollmentId) {
 		super();
 		this.enrollmentId = enrollmentId;
 	}
