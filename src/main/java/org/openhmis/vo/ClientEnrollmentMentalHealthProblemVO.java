@@ -18,25 +18,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 @XmlRootElement
-public class ClientEnrollmentContactVO implements Serializable {
-	/**
-	 * The client object represents a client enrollment record
-	 * Fields returned with the client object represent fields marked as "At project entry" in the HUD standards
-	 */
+public class ClientEnrollmentMentalHealthProblemVO implements Serializable {
 	private Long enrollmentId;
 
-	// Program Specific Data Standards: Contact (2014, 4.12)
-	private Date contactDate;
-	private Integer contactLocationCode;
-	
-	public ClientEnrollmentContactVO() {
+	// Program Specific Data Standards: Mental Health Problem (2014, 4.9)
+	private Date informationDate;
+	private Integer typeCode;
+	private Integer independenceCode;
+	private Integer documentedCode;
+	private Integer treatmentCode;
+	private Integer confirmedCode;
+	private Integer smiCode;
+
+	public ClientEnrollmentMentalHealthProblemVO() {
 		super();
 	}
-	public ClientEnrollmentContactVO(Long enrollmentId) {
+	public ClientEnrollmentMentalHealthProblemVO(Long enrollmentId) {
 		super();
 		this.enrollmentId = enrollmentId;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return 0;
@@ -50,3 +51,4 @@ public class ClientEnrollmentContactVO implements Serializable {
 		return "";
 	}
 }
+

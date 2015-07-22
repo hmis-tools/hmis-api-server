@@ -18,8 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 @XmlRootElement
-public class ClientEnrollmentFinancialAssistanceVO implements Serializable
-{
+public class ClientEnrollmentFinancialAssistanceVO implements Serializable {
 	private Long enrollmentId;
 
 	// Program Specific Data Standards: Financial Assets Provided (2014, 4.15)

@@ -27,32 +27,32 @@ public class ClientVO implements Serializable
 	// Universal Data Standard: Personal ID (2014, 3.13) 
 	private String personalId;
 
-	// Universal Data Standard: Name 
+	// Universal Data Standard: Name (2014, 3.1)
 	private String firstName;
 	private String middleName;
 	private String lastName;
 	private String suffix;
 	private Integer nameDataQualityCode;
 
-	// Universal Data Standard: SSN
+	// Universal Data Standard: SSN (2014, 3.2)
 	private String socialSecurityNumber;
 	private Integer ssnDataQualityCode;
 	
-	// Universal Data Standard: Date of Birth
+	// Universal Data Standard: Date of Birth  (2014, 3.3)
 	private String dateOfBirth;
 	private Integer dateOfBirthTypeCode;
 
-	// Universal Data Standard: Race
+	// Universal Data Standard: Race (2014, 3.4)
 	private Integer raceCode;
 
-	// Universal Data Standard: Ethnicity
+	// Universal Data Standard: Ethnicity (2014, 3.5)
 	private Integer ethnicityCode;
 
-	// Universal Data Standard: Gender
+	// Universal Data Standard: Gender (2014, 3.6)
 	private Integer genderCode;
 	private String otherGender;
 
-	// Universal Data Standard: Veteren Status
+	// Universal Data Standard: Veteren Status (2014, 3.7)
 	private Integer veteranStatusCode;
 
 	// VA Specific Data Standards: Veteran's Information (2014, 4.41)

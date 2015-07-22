@@ -18,8 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 @XmlRootElement
-public class ClientEnrollmentReferralVO implements Serializable
-{
+public class ClientEnrollmentReferralVO implements Serializable {
 	private Long enrollmentId;
 
 	// Program Specific Data Standards: References Provided (2014, 4.16)
