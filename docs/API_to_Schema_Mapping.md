@@ -18,7 +18,7 @@ SSN             | string  | maxLength:9                   | IDENTIFICATION (if I
 SSNDataQuality  | integer |                               | ID_TYPE (if ID_TYPE in (1,2,8,9) else ??) | PATH_CODE_ID_TYPE
 DOB             | string  | format:date-time              | DATE_OF_BIRTH (if DOB_TYPE = 1)           |   
 DOBDataQuality  | integer |                               | DOB_TYPE                                  | PATH_CODE_DOB_TYPE
-Race            | integer |                               | RACE_KEY                                  | PATH_CODE_RACE
+Race            | integer |                               | (1:many)PATH_CLIENT_RACE.RACE_KEY         | PATH_CODE_RACE
 Ethnicity       | integer |                               | ETHNICITY_KEY                             | PATH_CODE_ETHNICITY
 Gender          | integer |                               | GENDER_KEY                                | PATH_CODE_GENDER
 OtherGender     | string  | maxLength:50                  |                                           |
