@@ -7,45 +7,38 @@
 
 package org.openhmis.webservice.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
-import javax.xml.bind.JAXBElement;
 import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
-import org.dozer.DozerBeanMapperSingletonWrapper;
-import org.dozer.Mapper;
+import org.openhmis.code.ClientNameDataQuality;
+import org.openhmis.vo.ClientVO;
 
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @Path("/clients")
 public class ClientService {	
 	private static final Logger log = Logger.getLogger(ClientService.class);
+	private static final ObjectMapper om = new ObjectMapper();
+
 //	private ClientManager clientManager;
 //	Mapper mapper = DozerBeanMapperSingletonWrapper.getInstance();
-//	public ClientService() {
-//	}
+	public ClientService() {
+	}
 //
 //
-//	@GET
-//	@Path("/clients")
-//	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-//	public ClientVO getClient() throws ClientNotFoundException {
-//		ClientVO clientVO = new ClientVO();
-//		return clientVO;
-//	}
+	@GET
+	@Path("/clientTest")
+	@Produces({MediaType.APPLICATION_JSON})
+	public String getClient() throws JsonProcessingException {
+		ClientVO clientVO = new ClientVO();
+		return om.writeValueAsString(clientVO);//Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(om.writeValueAsString(clientVO)).build();
+	}
 //
 //	@POST
 //	@Path("/clients")

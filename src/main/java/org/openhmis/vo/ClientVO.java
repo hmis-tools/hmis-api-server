@@ -7,18 +7,22 @@
 
 package org.openhmis.vo;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import org.openhmis.code.ClientEthnicity;
+import org.openhmis.code.ClientGender;
+import org.openhmis.code.ClientNameDataQuality;
+import org.openhmis.code.ClientSsnDataQuality;
+import org.openhmis.code.ClientDateOfBirthType;
+import org.openhmis.code.ClientRace;
+import org.openhmis.code.YesNo;
+import org.openhmis.code.serialization.CodeSerializer;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-@XmlRootElement
-public class ClientVO implements Serializable
-{
+public class ClientVO {
 	/**
 	 * The client object represents a client record
 	 * Fields returned with the client object represent fields marked as "At client record creation" in the HUD standards
@@ -32,28 +36,29 @@ public class ClientVO implements Serializable
 	private String middleName;
 	private String lastName;
 	private String suffix;
-	private Integer nameDataQualityCode;
+	private ClientNameDataQuality nameDataQuality;
 
 	// Universal Data Standard: SSN (2014, 3.2)
 	private String socialSecurityNumber;
-	private Integer ssnDataQualityCode;
+	private ClientSsnDataQuality ssnDataQuality;
 	
 	// Universal Data Standard: Date of Birth  (2014, 3.3)
-	private String dateOfBirth;
-	private Integer dateOfBirthTypeCode;
+	private Date dob;
+	private ClientDateOfBirthType dateOfBirthType;
 
 	// Universal Data Standard: Race (2014, 3.4)
-	private Integer raceCode;
+	// THIS WILL BE A SET
+	private Set<ClientRace> race;
 
 	// Universal Data Standard: Ethnicity (2014, 3.5)
-	private Integer ethnicityCode;
+	private ClientEthnicity ethnicity;
 
 	// Universal Data Standard: Gender (2014, 3.6)
-	private Integer genderCode;
+	private ClientGender gender;
 	private String otherGender;
 
 	// Universal Data Standard: Veteren Status (2014, 3.7)
-	private Integer veteranStatusCode;
+	private YesNo veteranStatusCode;
 
 	// VA Specific Data Standards: Veteran's Information (2014, 4.41)
 	private Integer yearEnteredMilitaryService;
@@ -69,25 +74,23 @@ public class ClientVO implements Serializable
 	private Integer branchOfMilitaryCode;
 	private Integer dischargeStatusCode;
 
+	public Set<ClientRace> getRaces() {
+		return this.race;
+	}
 	
+	@JsonProperty("nameDataQuality22")
+	@JsonSerialize(using = CodeSerializer.class)
+	public ClientNameDataQuality getNameDataQuality() {
+		return this.nameDataQuality;
+	}
+
 	public ClientVO() {
 		super();
+		//this.race = [ClientRace.HAWAIIAN];
+		this.nameDataQuality = ClientNameDataQuality.PARTIAL;
 	}
 	public ClientVO(String personalId) {
 		super();
 		this.personalId = personalId;
-	}
-	
-	@Override
-	public int hashCode() {
-		return 0;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		return false;
-	}
-	@Override
-	public String toString() {
-		return "";
 	}
 }
