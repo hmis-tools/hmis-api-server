@@ -21,8 +21,7 @@ import org.openhmis.code.serialization.CodeSerializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-@JsonProperty
-	public class ClientVO {
+public class ClientVO {
 	
 	/**
 	 * The client object represents a client record
@@ -87,7 +86,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 	private Date dateCreated;
 	private Date dateUpdated;
 
-	@JsonProperty
 	public ClientVO() {
 		super();
 		this.nameDataQuality = ClientNameDataQuality.PARTIAL;
