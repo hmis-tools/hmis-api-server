@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @Path("/clients")
-public class ClientService {	
+public class ClientService {
 	private static final Logger log = Logger.getLogger(ClientService.class);
 	private static final ObjectMapper om = new ObjectMapper();
 

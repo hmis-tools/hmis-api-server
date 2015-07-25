@@ -1,8 +1,10 @@
 package org.openhmis.code;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 // Codes for Universal Data Standard: Residence Prior to Project Entry (2014, 3.9)
 
-public enum ClientResidenceLengthOfStay {
+public enum ClientResidenceLengthOfStay implements BaseCode {
 	ONE_DAY (10, "One day or less"),
 	ONE_WEEK (11, "Two days to one week"),
 	ONE_MONTH (2, "More than one week, but less than one month"),
@@ -20,11 +22,12 @@ public enum ClientResidenceLengthOfStay {
 		this.description = description;
 	}
 
-	/** Enable Reverse Lookup. */
-	public static ClientResidenceLengthOfStay get(int code) { 
-		for(ClientResidenceLengthOfStay s : values()) {
-			if(s.code == code) return s;
-		}
-		return null;
-	}
+	@JsonValue
+    public Integer getCode() {
+        return code;
+    }
+	@JsonValue
+    public String getDescription() {
+        return description;
+    }
 }

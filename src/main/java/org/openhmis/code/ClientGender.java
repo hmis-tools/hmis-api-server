@@ -1,15 +1,19 @@
 package org.openhmis.code;
 
-// Codes for Universal Data Standard: Gender (2014, 3.6)
+import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum ClientGender {
+// Codes for Universal Data Standard: Gender (2014, 3.6.1)
+// http://www.hudhdx.info/Resources/Vendors/4_0/HMISCSVSpecifications4_0FINAL.pdf
+
+public enum ClientGender implements BaseCode {
+	FEMALE (0, "Female"),
 	MALE (1, "Male"),
-	FEMALE (2, "Female"),
-	TRANSGENDER_MALE_TO_FEMALE (3, "Transgender Male to Female"),
-	TRANSGENDER_FEMALE_TO_MALE (4, "Transgender Female to Male"),
-	OTHER (5, "Other"),
+	TRANSGENDER_MALE_TO_FEMALE (2, "Transgender Male to Female"),
+	TRANSGENDER_FEMALE_TO_MALE (3, "Transgender Female to Male"),
+	OTHER (4, "Other"),
 	UNKNOWN (8, "Client doesn't know"),
-	REFUSED (9, "Client Refused");
+	REFUSED (9, "Client Refused"),
+	NOT_COLLECTED (99, "Data not collected");
 	
 	private final Integer code;
 	private final String description;
@@ -19,11 +23,12 @@ public enum ClientGender {
 		this.description = description;
 	}
 
-	/** Enable Reverse Lookup. */
-	public static ClientGender get(int code) { 
-		for(ClientGender s : values()) {
-			if(s.code == code) return s;
-		}
-		return null;
-	}
+	@JsonValue
+    public Integer getCode() {
+        return code;
+    }
+	@JsonValue
+    public String getDescription() {
+        return description;
+    }
 }

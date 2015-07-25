@@ -1,9 +1,4 @@
-/* Copyright (c) 2014 Pathways Community Network Institute
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
+
 
 package org.openhmis.vo;
 
@@ -17,15 +12,21 @@ import org.openhmis.code.ClientSsnDataQuality;
 import org.openhmis.code.ClientDateOfBirthType;
 import org.openhmis.code.ClientRace;
 import org.openhmis.code.YesNo;
+import org.openhmis.code.YesNoReason;
 import org.openhmis.code.serialization.CodeSerializer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class ClientVO {
+	
 	/**
 	 * The client object represents a client record
 	 * Fields returned with the client object represent fields marked as "At client record creation" in the HUD standards
+	 *
+	 * References:
+	 * - Fields dictated by: https://www.hudexchange.info/resources/documents/HMIS-Data-Standards-Manual.pdf
+	 * - Field names dictated by: http://www.hudhdx.info/Resources/Vendors/4_0/HMISCSVSpecifications4_0FINAL.pdf
 	 */
 
 	// Universal Data Standard: Personal ID (2014, 3.13) 
@@ -35,20 +36,24 @@ public class ClientVO {
 	private String firstName;
 	private String middleName;
 	private String lastName;
-	private String suffix;
+	private String nameSuffix;
 	private ClientNameDataQuality nameDataQuality;
 
 	// Universal Data Standard: SSN (2014, 3.2)
-	private String socialSecurityNumber;
+	private String ssn;
 	private ClientSsnDataQuality ssnDataQuality;
 	
 	// Universal Data Standard: Date of Birth  (2014, 3.3)
 	private Date dob;
-	private ClientDateOfBirthType dateOfBirthType;
+	private ClientDobDataQuality dobDataQuality;
 
 	// Universal Data Standard: Race (2014, 3.4)
-	// THIS WILL BE A SET
-	private Set<ClientRace> race;
+	private YesNo amIndAKNative;
+	private YesNo asian;
+	private YesNo blackAfAmerican;
+	private YesNo nativeHIOtherPacific;
+	private YesNo white;
+	private None raceNone;
 
 	// Universal Data Standard: Ethnicity (2014, 3.5)
 	private ClientEthnicity ethnicity;
@@ -58,39 +63,46 @@ public class ClientVO {
 	private String otherGender;
 
 	// Universal Data Standard: Veteren Status (2014, 3.7)
-	private YesNo veteranStatusCode;
+	private YesNoReason veteranStatus;
 
 	// VA Specific Data Standards: Veteran's Information (2014, 4.41)
-	private Integer yearEnteredMilitaryService;
-	private Integer yearSeparatedFromMilitaryService;
-	private Integer theatreOfOperationsWw2Code;
-	private Integer theatreOfOperationsKoreanWarCode;
-	private Integer theatreOfOperationsVietnamWarCode;
-	private Integer theatreOfOperationsPersianGulfWarCode;
-	private Integer theatreOfOperationsAfghanistanWarCode;
-	private Integer theatreOfOperationsIraqiFreedomCode;
-	private Integer theatreOfOperationsIraqNewDawnCode;
-	private Integer theatreOfOperationsOtherPeacekeepingCode;
-	private Integer branchOfMilitaryCode;
-	private Integer dischargeStatusCode;
+	private Date yearEnteredService;
+	private Date yearSeparated;
+	private YesNoReason worldWarII;
+	private YesNoReason koreanWar;
+	private YesNoReason vietnamWar;
+	private YesNoReason desertStorm;
+	private YesNoReason afghanistanOEF;
+	private YesNoReason iraqOIF;
+	private YesNoReason iraqOND;
+	private YesNoReason otherTheater;
+	private ClientMilitaryBranch militaryBranch;
+	private ClientDischargeStaus dischargeStatus;
 
-	public Set<ClientRace> getRaces() {
-		return this.race;
-	}
-	
-	@JsonProperty("nameDataQuality22")
-	@JsonSerialize(using = CodeSerializer.class)
-	public ClientNameDataQuality getNameDataQuality() {
-		return this.nameDataQuality;
-	}
+	// Export Standard Fields
+	private Date dateCreated;
+	private Date dateUpdated
 
 	public ClientVO() {
 		super();
-		//this.race = [ClientRace.HAWAIIAN];
 		this.nameDataQuality = ClientNameDataQuality.PARTIAL;
 	}
-	public ClientVO(String personalId) {
-		super();
+
+	@JsonProperty("personalId")
+	public String getPersonalId() {
+		return this.personalId;
+	}
+	@JsonProperty("personalId")
+	public void setPersonalId(String personalId) {
 		this.personalId = personalId;
+	}
+	
+	@JsonProperty("nameDataQuality")
+	public ClientNameDataQuality getNameDataQuality() {
+		return this.nameDataQuality;
+	}
+	@JsonProperty("nameDataQuality")
+	public void setNameDataQuality(ClientNameDataQuality nameDataQuality) {
+		this.nameDataQuality = nameDataQuality;
 	}
 }

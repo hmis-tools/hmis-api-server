@@ -1,8 +1,10 @@
 package org.openhmis.code;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 // Codes for Universal Data Standard: Race (2014, 3.4)
 
-public enum ClientRace {
+public enum ClientRace implements BaseCode {
 	ASIAN (5, "Asian"),
 	BLACK (6, "Black or African American"),
 	INDIAN (7, "American Indian or Alaska Native"),
@@ -20,11 +22,12 @@ public enum ClientRace {
 		this.description = description;
 	}
 
-	/** Enable Reverse Lookup. */
-	public static ClientRace get(int code) { 
-		for(ClientRace s : values()) {
-			if(s.code == code) return s;
-		}
-		return null;
-	}
+	@JsonValue
+    public Integer getCode() {
+        return code;
+    }
+	@JsonValue
+    public String getDescription() {
+        return description;
+    }
 }

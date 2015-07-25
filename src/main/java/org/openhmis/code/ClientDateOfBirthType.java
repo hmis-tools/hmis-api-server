@@ -1,12 +1,16 @@
 package org.openhmis.code;
 
-// Codes for Universal Data Standard: Date of Birth (2014, 3.3)
+import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum ClientDateOfBirthType {
+// Codes for Universal Data Standard: Date of Birth (2014, 3.3.2)
+// http://www.hudhdx.info/Resources/Vendors/4_0/HMISCSVSpecifications4_0FINAL.pdf
+
+public enum ClientDateOfBirthType implements BaseCode {
 	FULL (1, "Full DOB reported"),
 	PARTIAL (2, "Approximate or Partial DOB reported"),
 	UNKNOWN (8, "Client doesn't know"),
-	REFUSED (9, "Client Refused");
+	REFUSED (9, "Client Refused"),
+	NOT_COLLECTED (99, "Data not collected");
 	
 	protected final Integer code;
 	protected final String description;
@@ -16,11 +20,12 @@ public enum ClientDateOfBirthType {
 		this.description = description;
 	}
 
-	/** Enable Reverse Lookup. */
-	public static ClientDateOfBirthType get(int code) { 
-		for(ClientDateOfBirthType s : values()) {
-			if(s.code == code) return s;
-		}
-		return null;
-	}
+	@JsonValue
+    public Integer getCode() {
+        return code;
+    }
+	@JsonValue
+    public String getDescription() {
+        return description;
+    }
 }
