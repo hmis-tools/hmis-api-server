@@ -5,12 +5,15 @@ package org.openhmis.vo;
 import java.util.Date;
 import java.util.Set;
 
+import org.openhmis.code.ClientDischargeStatus;
 import org.openhmis.code.ClientEthnicity;
 import org.openhmis.code.ClientGender;
+import org.openhmis.code.ClientMilitaryBranch;
 import org.openhmis.code.ClientNameDataQuality;
 import org.openhmis.code.ClientSsnDataQuality;
-import org.openhmis.code.ClientDateOfBirthType;
+import org.openhmis.code.ClientDobDataQuality;
 import org.openhmis.code.ClientRace;
+import org.openhmis.code.None;
 import org.openhmis.code.YesNo;
 import org.openhmis.code.YesNoReason;
 import org.openhmis.code.serialization.CodeSerializer;
@@ -18,7 +21,8 @@ import org.openhmis.code.serialization.CodeSerializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-public class ClientVO {
+@JsonProperty
+	public class ClientVO {
 	
 	/**
 	 * The client object represents a client record
@@ -77,32 +81,354 @@ public class ClientVO {
 	private YesNoReason iraqOND;
 	private YesNoReason otherTheater;
 	private ClientMilitaryBranch militaryBranch;
-	private ClientDischargeStaus dischargeStatus;
+	private ClientDischargeStatus dischargeStatus;
 
 	// Export Standard Fields
 	private Date dateCreated;
-	private Date dateUpdated
+	private Date dateUpdated;
 
+	@JsonProperty
 	public ClientVO() {
 		super();
 		this.nameDataQuality = ClientNameDataQuality.PARTIAL;
 	}
 
-	@JsonProperty("personalId")
+	// Getters / Setters
+	@JsonProperty
 	public String getPersonalId() {
 		return this.personalId;
 	}
-	@JsonProperty("personalId")
+	@JsonProperty
 	public void setPersonalId(String personalId) {
 		this.personalId = personalId;
 	}
 	
-	@JsonProperty("nameDataQuality")
+	@JsonProperty
+	public String getFirstName() {
+		return firstName;
+	}
+
+	@JsonProperty
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	@JsonProperty
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	@JsonProperty
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+
+	@JsonProperty
+	public String getLastName() {
+		return lastName;
+	}
+
+	@JsonProperty
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	@JsonProperty
+	public String getNameSuffix() {
+		return nameSuffix;
+	}
+
+	@JsonProperty
+	public void setNameSuffix(String nameSuffix) {
+		this.nameSuffix = nameSuffix;
+	}
+
+	@JsonProperty
 	public ClientNameDataQuality getNameDataQuality() {
 		return this.nameDataQuality;
 	}
-	@JsonProperty("nameDataQuality")
+	@JsonProperty
 	public void setNameDataQuality(ClientNameDataQuality nameDataQuality) {
 		this.nameDataQuality = nameDataQuality;
+	}
+	
+	@JsonProperty
+	public String getSsn() {
+		return ssn;
+	}
+
+	@JsonProperty
+	public void setSsn(String ssn) {
+		this.ssn = ssn;
+	}
+
+	@JsonProperty
+	public ClientSsnDataQuality getSsnDataQuality() {
+		return ssnDataQuality;
+	}
+
+	@JsonProperty
+	public void setSsnDataQuality(ClientSsnDataQuality ssnDataQuality) {
+		this.ssnDataQuality = ssnDataQuality;
+	}
+
+	@JsonProperty
+	public Date getDob() {
+		return dob;
+	}
+
+	@JsonProperty
+	public void setDob(Date dob) {
+		this.dob = dob;
+	}
+
+	@JsonProperty
+	public ClientDobDataQuality getDobDataQuality() {
+		return dobDataQuality;
+	}
+
+	@JsonProperty
+	public void setDobDataQuality(ClientDobDataQuality dobDataQuality) {
+		this.dobDataQuality = dobDataQuality;
+	}
+
+	@JsonProperty
+	public YesNo getAmIndAKNative() {
+		return amIndAKNative;
+	}
+
+	@JsonProperty
+	public void setAmIndAKNative(YesNo amIndAKNative) {
+		this.amIndAKNative = amIndAKNative;
+	}
+
+	@JsonProperty
+	public YesNo getAsian() {
+		return asian;
+	}
+
+	@JsonProperty
+	public void setAsian(YesNo asian) {
+		this.asian = asian;
+	}
+
+	@JsonProperty
+	public YesNo getBlackAfAmerican() {
+		return blackAfAmerican;
+	}
+
+	@JsonProperty
+	public void setBlackAfAmerican(YesNo blackAfAmerican) {
+		this.blackAfAmerican = blackAfAmerican;
+	}
+
+	@JsonProperty
+	public YesNo getNativeHIOtherPacific() {
+		return nativeHIOtherPacific;
+	}
+
+	@JsonProperty
+	public void setNativeHIOtherPacific(YesNo nativeHIOtherPacific) {
+		this.nativeHIOtherPacific = nativeHIOtherPacific;
+	}
+
+	@JsonProperty
+	public YesNo getWhite() {
+		return white;
+	}
+
+	@JsonProperty
+	public void setWhite(YesNo white) {
+		this.white = white;
+	}
+
+	@JsonProperty
+	public None getRaceNone() {
+		return raceNone;
+	}
+
+	@JsonProperty
+	public void setRaceNone(None raceNone) {
+		this.raceNone = raceNone;
+	}
+
+	@JsonProperty
+	public ClientEthnicity getEthnicity() {
+		return ethnicity;
+	}
+
+	@JsonProperty
+	public void setEthnicity(ClientEthnicity ethnicity) {
+		this.ethnicity = ethnicity;
+	}
+
+	@JsonProperty
+	public ClientGender getGender() {
+		return gender;
+	}
+
+	@JsonProperty
+	public void setGender(ClientGender gender) {
+		this.gender = gender;
+	}
+
+	@JsonProperty
+	public String getOtherGender() {
+		return otherGender;
+	}
+
+	@JsonProperty
+	public void setOtherGender(String otherGender) {
+		this.otherGender = otherGender;
+	}
+
+	@JsonProperty
+	public YesNoReason getVeteranStatus() {
+		return veteranStatus;
+	}
+
+	@JsonProperty
+	public void setVeteranStatus(YesNoReason veteranStatus) {
+		this.veteranStatus = veteranStatus;
+	}
+
+	@JsonProperty
+	public Date getYearEnteredService() {
+		return yearEnteredService;
+	}
+
+	@JsonProperty
+	public void setYearEnteredService(Date yearEnteredService) {
+		this.yearEnteredService = yearEnteredService;
+	}
+
+	@JsonProperty
+	public Date getYearSeparated() {
+		return yearSeparated;
+	}
+
+	@JsonProperty
+	public void setYearSeparated(Date yearSeparated) {
+		this.yearSeparated = yearSeparated;
+	}
+
+	@JsonProperty
+	public YesNoReason getWorldWarII() {
+		return worldWarII;
+	}
+
+	@JsonProperty
+	public void setWorldWarII(YesNoReason worldWarII) {
+		this.worldWarII = worldWarII;
+	}
+
+	@JsonProperty
+	public YesNoReason getKoreanWar() {
+		return koreanWar;
+	}
+
+	@JsonProperty
+	public void setKoreanWar(YesNoReason koreanWar) {
+		this.koreanWar = koreanWar;
+	}
+
+	@JsonProperty
+	public YesNoReason getVietnamWar() {
+		return vietnamWar;
+	}
+
+	@JsonProperty
+	public void setVietnamWar(YesNoReason vietnamWar) {
+		this.vietnamWar = vietnamWar;
+	}
+
+	@JsonProperty
+	public YesNoReason getDesertStorm() {
+		return desertStorm;
+	}
+
+	@JsonProperty
+	public void setDesertStorm(YesNoReason desertStorm) {
+		this.desertStorm = desertStorm;
+	}
+
+	@JsonProperty
+	public YesNoReason getAfghanistanOEF() {
+		return afghanistanOEF;
+	}
+
+	@JsonProperty
+	public void setAfghanistanOEF(YesNoReason afghanistanOEF) {
+		this.afghanistanOEF = afghanistanOEF;
+	}
+
+	@JsonProperty
+	public YesNoReason getIraqOIF() {
+		return iraqOIF;
+	}
+
+	@JsonProperty
+	public void setIraqOIF(YesNoReason iraqOIF) {
+		this.iraqOIF = iraqOIF;
+	}
+
+	@JsonProperty
+	public YesNoReason getIraqOND() {
+		return iraqOND;
+	}
+
+	@JsonProperty
+	public void setIraqOND(YesNoReason iraqOND) {
+		this.iraqOND = iraqOND;
+	}
+
+	@JsonProperty
+	public YesNoReason getOtherTheater() {
+		return otherTheater;
+	}
+
+	@JsonProperty
+	public void setOtherTheater(YesNoReason otherTheater) {
+		this.otherTheater = otherTheater;
+	}
+
+	@JsonProperty
+	public ClientMilitaryBranch getMilitaryBranch() {
+		return militaryBranch;
+	}
+
+	@JsonProperty
+	public void setMilitaryBranch(ClientMilitaryBranch militaryBranch) {
+		this.militaryBranch = militaryBranch;
+	}
+
+	@JsonProperty
+	public ClientDischargeStatus getDischargeStatus() {
+		return dischargeStatus;
+	}
+
+	@JsonProperty
+	public void setDischargeStatus(ClientDischargeStatus dischargeStatus) {
+		this.dischargeStatus = dischargeStatus;
+	}
+
+	@JsonProperty
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	@JsonProperty
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@JsonProperty
+	public Date getDateUpdated() {
+		return dateUpdated;
+	}
+
+	@JsonProperty
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
 	}
 }
