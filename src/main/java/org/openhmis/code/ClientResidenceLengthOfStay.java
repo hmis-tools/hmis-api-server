@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 // Codes for Universal Data Standard: Residence Prior to Project Entry (2014, 3.9)
 
+@JsonSerialize(using = CodeSerializer.class)
 public enum ClientResidenceLengthOfStay implements BaseCode {
 	ONE_DAY (10, "One day or less"),
 	ONE_WEEK (11, "Two days to one week"),
@@ -22,11 +23,11 @@ public enum ClientResidenceLengthOfStay implements BaseCode {
 		this.description = description;
 	}
 
-	@JsonValue
+	//@JsonValue
     public Integer getCode() {
         return code;
     }
-	@JsonValue
+	//@JsonValue
     public String getDescription() {
         return description;
     }

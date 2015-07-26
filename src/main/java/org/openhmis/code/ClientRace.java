@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 // Codes for Universal Data Standard: Race (2014, 3.4)
 
+@JsonSerialize(using = CodeSerializer.class)
 public enum ClientRace implements BaseCode {
 	ASIAN (5, "Asian"),
 	BLACK (6, "Black or African American"),
@@ -22,11 +23,11 @@ public enum ClientRace implements BaseCode {
 		this.description = description;
 	}
 
-	@JsonValue
+	//@JsonValue
     public Integer getCode() {
         return code;
     }
-	@JsonValue
+	//@JsonValue
     public String getDescription() {
         return description;
     }

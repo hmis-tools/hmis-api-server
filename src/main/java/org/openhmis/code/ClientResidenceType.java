@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 // Codes for Universal Data Standard: Residence Prior to Project Entry (2014, 3.9)
 
+@JsonSerialize(using = CodeSerializer.class)
 public enum ClientResidenceType implements BaseCode {
 	FULL (1, "Full DOB reported"),
 	PARTIAL (2, "Approximate or Partial DOB reported"),
@@ -18,11 +19,11 @@ public enum ClientResidenceType implements BaseCode {
 		this.description = description;
 	}
 
-	@JsonValue
+	//@JsonValue
     public Integer getCode() {
         return code;
     }
-	@JsonValue
+	//@JsonValue
     public String getDescription() {
         return description;
     }

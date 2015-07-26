@@ -1,20 +1,15 @@
-/* Copyright (c) 2014 Pathways Community Network Institute
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-package org.openhmis.webservice.impl;
+package org.openhmis.webservice;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 import org.openhmis.code.ClientNameDataQuality;
+import org.openhmis.manager.ClientManager;
 import org.openhmis.vo.ClientVO;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -25,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ClientService {
 	private static final Logger log = Logger.getLogger(ClientService.class);
 	private static final ObjectMapper om = new ObjectMapper();
+	private static final ClientManager clientManager = new ClientManager();
 
 //	private ClientManager clientManager;
 //	Mapper mapper = DozerBeanMapperSingletonWrapper.getInstance();
@@ -33,10 +29,10 @@ public class ClientService {
 //
 //
 	@GET
-	@Path("/clientTest")
+	@Path("/{personalId}")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String getClient() throws JsonProcessingException {
-		ClientVO clientVO = new ClientVO();
+	public String getClient(@PathParam("personalId") String personalId) throws JsonProcessingException {
+		ClientVO clientVO = clientManager.getClientByPersonalId(personalId);
 		return om.writeValueAsString(clientVO);//Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(om.writeValueAsString(clientVO)).build();
 	}
 //

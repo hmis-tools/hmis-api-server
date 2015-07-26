@@ -1,10 +1,13 @@
 package org.openhmis.code;
 
+import org.openhmis.code.serialization.CodeLookup;
+
 import com.fasterxml.jackson.annotation.JsonValue;
 
 // Codes for Universal Data Standard: Ethnicity (2014, 3.5.1)
 // http://www.hudhdx.info/Resources/Vendors/4_0/HMISCSVSpecifications4_0FINAL.pdf
 
+@JsonSerialize(using = CodeSerializer.class)
 public enum ClientEthnicity implements BaseCode {
 	NON_HISPANIC (104, "Non-Hispanic/Non-Latino"),
 	HISPANIC (105, "Hispanic/Latino"),
@@ -20,12 +23,18 @@ public enum ClientEthnicity implements BaseCode {
 		this.description = description;
 	}
 
-	@JsonValue
+	//@JsonValue
     public Integer getCode() {
         return code;
     }
-	@JsonValue
+	//@JsonValue
     public String getDescription() {
         return description;
     }
+	
+	// Enable lookups by code
+	private static final CodeLookup<ClientEthnicity> enhancer = new CodeLookup<ClientEthnicity>(values());	
+	public static ClientEthnicity valueByCode(Integer code) {
+		return enhancer.valueByCode(code);
+	}
 }

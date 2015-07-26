@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 //  - Veteran Status (2014, 3.7)
 //  - Disabling Condition (2014, 3.8)
 
+@JsonSerialize(using = CodeSerializer.class)
 public enum None implements BaseCode {
 	UNKNOWN (8, "Client doesn't know"),
 	REFUSED (9, "Client Refused"),
@@ -20,11 +21,11 @@ public enum None implements BaseCode {
 		this.description = description;
 	}
 
-	@JsonValue
+	//@JsonValue
     public Integer getCode() {
         return code;
     }
-	@JsonValue
+	//@JsonValue
     public String getDescription() {
         return description;
     }

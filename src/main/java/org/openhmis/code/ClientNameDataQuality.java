@@ -3,6 +3,7 @@ package org.openhmis.code;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import org.openhmis.code.serialization.CodeLookup;
 import org.openhmis.code.serialization.CodeSerializer;
 
 // Codes for Universal Data Standard: Name (2014, 3.1.5)
@@ -24,12 +25,18 @@ public enum ClientNameDataQuality implements BaseCode {
 		this.description = description;
 	}
 
-	@JsonValue
+	//@JsonValue
     public Integer getCode() {
         return code;
     }
-	@JsonValue
+	//@JsonValue
     public String getDescription() {
         return description;
     }
+	
+	// Enable lookups by code
+	private static final CodeLookup<ClientNameDataQuality> enhancer = new CodeLookup<ClientNameDataQuality>(values());	
+	public static ClientNameDataQuality valueByCode(Integer code) {
+		return enhancer.valueByCode(code);
+	}
 }

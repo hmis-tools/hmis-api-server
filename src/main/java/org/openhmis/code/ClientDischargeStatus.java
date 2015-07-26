@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 // Codes for Universal Data Standard: Discharge Status (2014, 4.41.12)
 // http://www.hudhdx.info/Resources/Vendors/4_0/HMISCSVSpecifications4_0FINAL.pdf
 
+@JsonSerialize(using = CodeSerializer.class)
 public enum ClientDischargeStatus implements BaseCode {
 	HONORABLE (1, "Honorable"),
 	GENERAL_HONORABLE (2, "General under honorable conditions"),
@@ -24,11 +25,11 @@ public enum ClientDischargeStatus implements BaseCode {
 		this.description = description;
 	}
 
-	@JsonValue
+	//@JsonValue
     public Integer getCode() {
         return code;
     }
-	@JsonValue
+	//@JsonValue
     public String getDescription() {
         return description;
     }

@@ -1,11 +1,14 @@
 package org.openhmis.code;
 
+import org.openhmis.code.serialization.CodeLookup;
+
 import com.fasterxml.jackson.annotation.JsonValue;
 
 // YesNo are used in several data standard fields:
 //  - Veteran Status (2014, 3.7)
 //  - Disabling Condition (2014, 3.8)
 
+@JsonSerialize(using = CodeSerializer.class)
 public enum YesNoReason implements BaseCode {
 	YES (1, "Full DOB reported"),
 	NO (2, "Approximate or Partial DOB reported"),
@@ -22,12 +25,18 @@ public enum YesNoReason implements BaseCode {
 		this.description = description;
 	}
 
-	@JsonValue
+	//@JsonValue
     public Integer getCode() {
         return code;
     }
-	@JsonValue
+	//@JsonValue
     public String getDescription() {
         return description;
     }
+	
+	// Enable lookups by code
+	private static final CodeLookup<YesNoReason> enhancer = new CodeLookup<YesNoReason>(values());	
+	public static YesNoReason valueByCode(Integer code) {
+		return enhancer.valueByCode(code);
+	}
 }

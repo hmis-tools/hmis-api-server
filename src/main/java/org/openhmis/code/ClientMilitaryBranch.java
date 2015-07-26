@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 // Codes for Universal Data Standard: Military Branch (2014, 4.41.11)
 // http://www.hudhdx.info/Resources/Vendors/4_0/HMISCSVSpecifications4_0FINAL.pdf
 
+@JsonSerialize(using = CodeSerializer.class)
 public enum ClientMilitaryBranch implements BaseCode {
 	ARMY (1, "Army"),
 	AIR_FORCE (2, "Air Force"),
@@ -23,11 +24,11 @@ public enum ClientMilitaryBranch implements BaseCode {
 		this.description = description;
 	}
 
-	@JsonValue
+	//@JsonValue
     public Integer getCode() {
         return code;
     }
-	@JsonValue
+	//@JsonValue
     public String getDescription() {
         return description;
     }

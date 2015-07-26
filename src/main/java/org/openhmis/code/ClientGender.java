@@ -1,10 +1,15 @@
 package org.openhmis.code;
 
+import org.openhmis.code.serialization.CodeLookup;
+import org.openhmis.code.serialization.CodeSerializer;
+
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 // Codes for Universal Data Standard: Gender (2014, 3.6.1)
 // http://www.hudhdx.info/Resources/Vendors/4_0/HMISCSVSpecifications4_0FINAL.pdf
 
+@JsonSerialize(using = CodeSerializer.class)
 public enum ClientGender implements BaseCode {
 	FEMALE (0, "Female"),
 	MALE (1, "Male"),
@@ -23,12 +28,18 @@ public enum ClientGender implements BaseCode {
 		this.description = description;
 	}
 
-	@JsonValue
+	//@JsonValue
     public Integer getCode() {
         return code;
     }
-	@JsonValue
+	//@JsonValue
     public String getDescription() {
         return description;
     }
+	
+	// Enable lookups by code
+	private static final CodeLookup<ClientGender> enhancer = new CodeLookup<ClientGender>(values());	
+	public static ClientGender valueByCode(Integer code) {
+		return enhancer.valueByCode(code);
+	}
 }

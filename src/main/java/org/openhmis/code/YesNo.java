@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 // YesNo are used in several data standard fields:
 //  - Race (2014, 3.4)
 
+@JsonSerialize(using = CodeSerializer.class)
 public enum YesNo implements BaseCode {
 	YES (1, "Full DOB reported"),
 	NO (2, "Approximate or Partial DOB reported"),
@@ -21,11 +22,11 @@ public enum YesNo implements BaseCode {
 		this.description = description;
 	}
 
-	@JsonValue
+	//@JsonValue
     public Integer getCode() {
         return code;
     }
-	@JsonValue
+	//@JsonValue
     public String getDescription() {
         return description;
     }
