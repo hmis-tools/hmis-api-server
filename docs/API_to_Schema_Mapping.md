@@ -4,109 +4,172 @@ Schema: COMPASS OpenHMIS Schema (subset of COMPASS ROSE schema required for API 
 
 ### /clients
 
-Client objects are a 1:1 map to PATH_CLIENT. There are no deleted client records.
+Client objects are a 1:1 map to PATH_CLIENT. There are no deleted client records. The values of the race characteristics derive from evaluating the presence of records in the PATH_CLIENT_RACE table for the client.
 
-API Field       | type    | format, etc.                  | Data source                               | Code Table
-----------------|---------|-------------------------------|-------------------------------------------|------------
-PersonalID      | string  | minLength:32, maxLength:32    |                                           |
-FirstName       | string  | maxLength:50                  | FIRST_NAME                                |
-MiddleName      | string  | maxLength:50                  | MIDDLE_NAME                               |
-LastName        | string  | maxLength:50                  | LAST_NAME                                 |
-NameSuffix      | string  | maxLength:50                  | SUFFIX                                    |
-NameDataQuality | integer |                               | NAME_TYPE                                 | PATH_CODE_NAME_TYPE
-SSN             | string  | maxLength:9                   | IDENTIFICATION (if ID_TYPE = 1)           | 
-SSNDataQuality  | integer |                               | ID_TYPE (if ID_TYPE in (1,2,8,9) else ??) | PATH_CODE_ID_TYPE
-DOB             | string  | format:date-time              | DATE_OF_BIRTH (if DOB_TYPE = 1)           |   
-DOBDataQuality  | integer |                               | DOB_TYPE                                  | PATH_CODE_DOB_TYPE
-Race            | integer |                               | (1:many)PATH_CLIENT_RACE.RACE_KEY         | PATH_CODE_RACE
-Ethnicity       | integer |                               | ETHNICITY_KEY                             | PATH_CODE_ETHNICITY
-Gender          | integer |                               | GENDER_KEY                                | PATH_CODE_GENDER
-OtherGender     | string  | maxLength:50                  |                                           |
-VeteranStatus   | integer |                               | VETERAN                                   | PATH_CODE_VETERAN
-DateCreated     | string  | format:date-time              | CREATE_DATE                               |
-DateUpdated     | string  | format:date-time              | UPDATE_TIMESTAMP                          |
-UserID          | string  | maxLength:32                  | CREATE_USER_KEY                           | PATH_USERS
-DateDeleted     | string  | date-time                     |                                           |
+API Field            | Data source                               | Code Table
+---------------------|-------------------------------------------|------------
+PersonalID           | (?) CLIENT_KEY                            |
+FirstName            | FIRST_NAME                                |
+MiddleName           | MIDDLE_NAME                               |
+LastName             | LAST_NAME                                 |
+NameSuffix           | SUFFIX                                    |
+NameDataQuality      | NAME_TYPE                                 | PATH_CODE_NAME_TYPE
+SSN                  | IDENTIFICATION (if ID_TYPE = 1)           | 
+SSNDataQuality       | ID_TYPE (if ID_TYPE in (1,2,8,9) else ??) | PATH_CODE_ID_TYPE
+DOB                  | DATE_OF_BIRTH (if DOB_TYPE = 1)           |   
+DOBDataQuality       | DOB_TYPE                                  | PATH_CODE_DOB_TYPE
+AmIndAKNative        | (if exists PATH_CLIENT_RACE.CODE_KEY = 7) | PATH_CODE_RACE
+Asian                | (if exists PATH_CLIENT_RACE.CODE_KEY = 5) | PATH_CODE_RACE
+BlackAfAmerican      | (if exists PATH_CLIENT_RACE.CODE_KEY = 6) | PATH_CODE_RACE
+NativeHIOtherPacific | (if exists PATH_CLIENT_RACE.CODE_KEY = 9) | PATH_CODE_RACE
+white                | (if exists PATH_CLIENT_RACE.CODE_KEY = 8) | PATH_CODE_RACE
+raceNone             | (if not exists PATH_CLIENT_RACE.CODE_KEY) | PATH_CODE_RACE
+Ethnicity            | ETHNICITY_KEY                             | PATH_CODE_ETHNICITY
+Gender               | GENDER_KEY                                | PATH_CODE_GENDER (!female lookup value does not match standard)
+OtherGender          | GENDER_DESC                               |
+VeteranStatus        | VETERAN                                   | PATH_CODE_VETERAN
+YearEnteredService   | PATH_CLIENT_VETERAN_INFO.YR_ENTER_MILITARY |
+YearSeparated        | PATH_CLIENT_VETERAN_INFO.YR_SEP_MILITARY  |
+WorldWarII           | PATH_CLIENT_VETERAN_INFO.WORLD_WAR_II     | PATH_CODE_YESNO
+KoreanWar            | PATH_CLIENT_VETERAN_INFO.KOREAN_WAR       | PATH_CODE_YESNO
+VietnamWar           | PATH_CLIENT_VETERAN_INFO.VIETNAM_WAR      | PATH_CODE_YESNO
+DesertStorm          | PATH_CLIENT_VETERAN_INFO.PERSIAN          | PATH_CODE_YESNO
+AfghanistanOEF       | PATH_CLIENT_VETERAN_INFO.AFGHANISTAN_WAR  | PATH_CODE_YESNO
+IraqOIF              | PATH_CLIENT_VETERAN_INFO.IRAQ_FREEDOM     | PATH_CODE_YESNO
+IraqOND              | PATH_CLIENT_VETERAN_INFO.IRAQ_DAWN        | PATH_CODE_YESNO
+OtherTheater         | PATH_CLIENT_VETERAN_INFO.OTHER            | PATH_CODE_YESNO
+MilitaryBranch       | PATH_CLIENT_VETERAN.MILITARY_BRANCH_KEY   | PATH_CODE_MILITARY_BRANCH
+DischargeStatus      | PATH_CLIENT_VETERAN.DISCHARGE_STATUS_KEY  | PATH_CODE_DISCHARGE_STATUS
+DateCreated          | CREATE_DATE                               |
+DateUpdated          | UPDATE_TIMESTAMP                          |
+UserID               | CREATE_USER_KEY                           | PATH_USERS
+DateDeleted          | (N/A)                                     |
 
 
 ### /enrollments
 
-Enrollments have a many:1 relationship with PATH_CLIENT_PROGRAM. (one per PATH_CLIENT attached to HOUSEHOLD_KEY at enrollment time)
+(?) Is there one enrolment per household? Or one enrolment per household-client? (??) are the verb enrollment and the noun enrolment _really_ spelled differentl?
+Enrollments have a many:1 relationship with PATH_CLIENT_PROGRAM. (one PATH_CLIENT_PROGRAM row must be joined with PATH_HOUSEHOLD_CLIENT to create on row per client in the household at the time)
 
-API Field                       | type    | format, etc.                       | Data source                               | Code Table
---------------------------------|---------|------------------------------------|-------------------------------------------|------------
-ProjectEntryID                  | string  | minLength:32, maxLength:32         | PROGRAM_KEY                               |
-PersonalID                      | string  | minLength:32, maxLength:32         | PATH_CLIENT.CLIENT_KEY                    |
-ProjectID                       | string  | minLength:32, maxLength:32         | PROGRAM_KEY                               |
-EntryDate                       | string  | format:date-time                   | ENTRY_DATE                                |
-HouseholdID                     | string  | minLength:32, maxLength:32         | HOUSEHOLD_KEY                             | PATH_HOUSEHOLD
-RelationshipToHoH               | integer |                                    | PATH_CLIENT.RELATIONSHIP                  | PATH_CODE_RELATIONSHIP
-ResidencePrior                  | integer |                                    |                                           |
-OtherResidencePrior             | string  | maxLength:50                       |                                           |
-ResidencePriorLengthOfStay      | integer |                                    |                                           |
-DisablingCondition              | integer |                                    |                                           |
-ContinuouslyHomelessOneYear     | integer |                                    |                                           |
-TimesHomelessPastThreeYears     | integer |                                    |                                           |
-MonthsHomelessPastThreeYears    | integer |                                    |                                           |
-MonthsHomelessThisTime          | string  | pattern:^[0-9]{1,3}$               |                                           |
-StatusDocumented                | integer |                                    |                                           |
-HousingStatus                   | integer |                                    |                                           |
-DateOfEngagement                | string  | format:date-time                   |                                           |
-InPermanentHousing              | integer |                                    |                                           |
-ResidentialMoveInDate           | string  | format:date-time                   |                                           |
-DateOfPATHStatus                | string  | format:date-time                   |                                           |
-ClientEnrolledInPATH            | integer |                                    |                                           |
-ReasonNotEnrolled               | integer |                                    |                                           |
-WorstHousingSituation           | integer |                                    |                                           |
-PercentAMI                      | integer |                                    |                                           |
-LastPermanentStreet             | string  | maxLength:100                      |                                           |
-LastPermanentCity               | string  | maxLength:50                       |                                           |
-LastPermanentState              | string  | maxLength:2, pattern:^[a-zA-Z]{2}$ |                                           |
-LastPermanentZIP                | string  | maxLength:5, pattern:^[0-9]{5}$    |                                           |
-AddressDataQuality              | integer |                                    |                                           |
-DateOfBCPStatus                 | string  | format:date-time                   |                                           |
-FYSBYouth                       | integer |                                    |                                           |
-ReasonNoServices                | integer |                                    |                                           |
-SexualOrientation               | integer |                                    |                                           |
-FormerWardChildWelfare          | integer |                                    |                                           |
-ChildWelfareYears               | integer |                                    |                                           |
-ChildWelfareMonths              | integer |                                    |                                           |
-FormerWardJuvenileJustice       | integer |                                    |                                           |
-JuvenileJusticeYears            | integer |                                    |                                           |
-JuvenileJusticeMonths           | integer |                                    |                                           |
-HouseholdDynamics               | integer |                                    |                                           |
-SexualOrientationGenderIDYouth  | integer |                                    |                                           |
-SexualOrientationGenderIDFam    | integer |                                    |                                           |
-HousingIssuesYouth              | integer |                                    |                                           |
-HousingIssuesFam                | integer |                                    |                                           |
-SchoolEducationalIssuesYouth    | integer |                                    |                                           |
-SchoolEducationalIssuesFam      | integer |                                    |                                           |
-UnemploymentYouth               | integer |                                    |                                           |
-UnemploymentFam                 | integer |                                    |                                           |
-MentalHealthIssuesYouth         | integer |                                    |                                           |
-MentalHealthIssuesFam           | integer |                                    |                                           |
-HealthIssuesYouth               | integer |                                    |                                           |
-HealthIssuesFam                 | integer |                                    |                                           |
-PhysicalDisabilityYouth         | integer |                                    |                                           |
-PhysicalDisabilityFam           | integer |                                    |                                           |
-MentalDisabilityYouth           | integer |                                    |                                           |
-MentalDisabilityFam             | integer |                                    |                                           |
-AbuseAndNeglectYouth            | integer |                                    |                                           |
-AbuseAndNeglectFam              | integer |                                    |                                           |
-AlcoholDrugAbuseYouth           | integer |                                    |                                           |
-AlcoholDrugAbuseFam             | integer |                                    |                                           |
-InsufficientIncome              | integer |                                    |                                           |
-ActiveMilitaryParent            | integer |                                    |                                           |
-IncarceratedParent              | integer |                                    |                                           |
-IncarceratedParentStatus        | integer |                                    |                                           |
-ReferralSource                  | integer |                                    |                                           |
-CountOutreachReferralApproaches | integer |                                    |                                           |
-ExchangeForSexPastThreeMonths   | integer |                                    |                                           |
-CountOfExchangeForSex           | integer |                                    |                                           |
-AskedOrForcedToExchangeForSex   | integer |                                    |                                           |
-DateCreated                     | string  | format:date-time                   | CREATE_DATE                               |
-DateUpdated                     | string  | format:date-time                   | UPDATE_DATE                               |
-UserID                          | string  | minLength:32, maxLength:32         | CREATE_USER_KEY (if UPDATE_DATE is NULL) else UPDATE_USER_KEY  |
-DateDeleted                     | string  | format:date-time                   |                                           |
+API Field                                                 | Data source                              | Code Table
+----------------------------------------------------------|------------------------------------------|------------
+(?) ClientEnrollmentID                                    | PROGRAM_KEY                              |
+ClientId                                                  | PATH_HOUSEHOLD_CLIENT.CLIENT_KEY         |
+(?) ProjectID                                             | PROGRAM_NAME_KEY                         |
+DisablingConditionCode                                    |                                          |
+TypeOfResidenceCode                                       |                                          |
+otherResidence                                            |                                          |
+lengthOfStayInPreviousPlaceCode                           |                                          |
+projectEntryDate                                          | ENTRY_DATE                               |
+projectExitDate                                           | EXIT_DATE                                |
+destinationTypeCode                                       | DESTINATION_KEY                          | PATH_CODE_DESTINATION (where STATUS=A)
+otherDestination                                          | DESTINATION_OTHERS                       |
+householdId                                               | PATH_HOUSEHOLD_CLIENT.HOUSEHOLD_KEY (at program_entry) |
+relationshipToHeadOfHouseholdCode                         | PATH_HOUSEHOLD_CLIENT.RELATIONSHIP       |
+clientLocationInformationDate                             |                                          |
+clientLocationCoCCode                                     |                                          |
+continuouslyHomelessForOneYearCode                        |                                          |
+numberOfTimesHomelessInPastThreeYearsCode                 |                                          |
+numberOfMonthsHomelessInPastThreeYearsCode                |                                          |
+numberOfMonthsContinuouslyHomelessImmediatelyPriorToEntry |                                          |
+statusDocumentedCode                                      |                                          |
+homelessnessStatusCode                                    |                                          |
+engagementDate                                            |                                          |
+residentialMoveInDate                                     |                                          |
+permanentHousingCode                                      |                                          |
+permanentHousingMoveDate                                  |                                          |
+housingAssessmentDispositionCode                          |                                          |
+housingAssessmentDispositionOther                         |                                          |
+housingAssessmentAtExitCode                               |                                          |
+housingAssessmentAtExitMaintainedSubsidyCode              |                                          |
+housingAssessmentAtExitMovedSubsidyCode                   |                                          |
+pathStatusDate                                            |                                          |
+pathEnrollmentCode                                        |                                          |
+pathNoEnrollmentReasonCode                                |                                          |
+connectionWithSoarCode                                    |                                          |
+rhyBcpStatusDate                                          |                                          |
+fysbYouthEnrollmentCode                                   |                                          |
+fysbYouthNoEnrollmentReasonCode                           |                                          |
+sexualOrientationCode                                     |                                          |
+lastGradeCompletedCode                                    |                                          |
+schoolStatusCode                                          |                                          |
+employmentEntryInformationDate                            |                                          |
+employmentEntryStatusCode                                 |                                          |
+employmentEntryTypeCode                                   |                                          |
+employmentEntryUnemployedReasonCode                       |                                          |
+employmentExitInformationDate                             |                                          |
+employmentExitStatusCode                                  |                                          |
+employmentExitTypeCode                                    |                                          |
+employmentExitUnemployedReasonCode                        |                                          |
+generalHealthEntryStatusCode                              |                                          |
+generalHealthExitStatusCode                               |                                          |
+dentalHealthEntryStatusCode                               |                                          |
+dentalHealthExitStatusCode                                |                                          |
+mentalHealthEntryStatusCode                               |                                          |
+mentalHealthExitStatusCode                                |                                          |
+pregnancyStatusCode                                       |                                          |
+pregnancyDueDate                                          |                                          |
+formerlyChildWelfareCode                                  |                                          |
+formerlyChildWelfareYearDurationCode                      |                                          |
+formerlyChildWelfareMonthDurationCode                     |                                          |
+formerlyJuvenileJusticeCode                               |                                          |
+formerlyJuvenileJusticeYearDurationCode                   |                                          |
+formerlyJuvenileJusticeMonthDurationCode                  |                                          |
+householdDynamicsCode                                     |                                          |
+sexualOrientationYouthCode                                |                                          |
+sexualOrientationFamilyCode                               |                                          |
+housingIssuesYouthCode                                    |                                          |
+housingIssuesFamilyCode                                   |                                          |
+schoolIssuesYouthCode                                     |                                          |
+schoolIssuesFamilyCode                                    |                                          |
+unemploymentYouthCode                                     |                                          |
+unemploymentFamilyCode                                    |                                          |
+mentalHealthYouthCode                                     |                                          |
+mentalHealthFamilyCode                                    |                                          |
+healthYouthCode                                           |                                          |
+healthFamilyCode                                          |                                          |
+physicalDisabilityYouthCode                               |                                          |
+physicalDisabilityFamilycode                              |                                          |
+mentalDisabilityYouthCode                                 |                                          |
+mentalDisabilityFamilyCode                                |                                          |
+abuseNeglectYouthCode                                     |                                          |
+abuseNeglectFamilyCode                                    |                                          |
+alcoholAbuseYouthCode                                     |                                          |
+alcoholAbuseFamilyCode                                    |                                          |
+insufficientIncomeFamilyCode                              |                                          |
+activeMilitaryFamilyCode                                  |                                          |
+incarceratedParentOfYouthCode                             |                                          |
+incarceratedParentOfYouthDetailCode                       |                                          |
+referralSourceCode                                        |                                          |
+referralOutreachCount                                     |                                          |
+sexualExploitationInPastThreeMonthsCode                   |                                          |
+sexualExploitationInPastThreeMonthsAmountCode             |                                          |
+sexualExplotationRequestCode                              |                                          |
+afterCarePlanAgreementCode                                |                                          |
+afterCareAdviceCode                                       |                                          |
+afterCarePlacementCode                                    |                                          |
+afterCareShelterCode                                      |                                          |
+afterCareFollowupServicesCode                             |                                          |
+afterCareFollowupMeetingCode                              |                                          |
+afterCareInformationPackageCode                           |                                          |
+afterCareOtherCode                                        |                                          |
+rhyCompletionStatusCode                                   |                                          |
+rhyEarlyExitReasonCode                                    |                                          |
+rhyExpulsionReasonCode                                    |                                          |
+familyReunificationCode                                   |                                          |
+worstHousingSituationCode                                 |                                          |
+householdIncomeAsPercentageOfAmiCode                      |                                          |
+lastStreetAddress                                         |                                          |
+lastCity                                                  |                                          |
+lastState                                                 |                                          |
+lastZip                                                   |                                          |
+lastAddressQualityCode                                    |                                          |
+(?) DateCreated                                           | CREATE_DATE                              |
+(?) DateUpdated                                           | UPDATE_DATE                              |
+(?) UserID                                                | CREATE_USER_KEY (if UPDATE_DATE is NULL) else UPDATE_USER_KEY  |
+(?) DateDeleted                                           |                                          |
+
+
+
 
 
