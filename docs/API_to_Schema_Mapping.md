@@ -25,25 +25,25 @@ NativeHIOtherPacific | (if exists PATH_CLIENT_RACE.CODE_KEY = 9) | PATH_CODE_RAC
 white                | (if exists PATH_CLIENT_RACE.CODE_KEY = 8) | PATH_CODE_RACE
 raceNone             | (if not exists PATH_CLIENT_RACE.CODE_KEY) | PATH_CODE_RACE
 Ethnicity            | ETHNICITY_KEY                             | PATH_CODE_ETHNICITY
-Gender               | GENDER_KEY                                | PATH_CODE_GENDER
-OtherGender          |                                           |
+Gender               | GENDER_KEY                                | PATH_CODE_GENDER (!female lookup value does not match standard)
+OtherGender          | GENDER_DESC                               |
 VeteranStatus        | VETERAN                                   | PATH_CODE_VETERAN
-YearEnteredService   |                                           |
-YearSeparated        |                                           |
-WorldWarII           |                                           |
-KoreanWar            |                                           |
-VietnamWar           |                                           |
-DesertStorm          |                                           |
-AfghanistanOEF       |                                           |
-IraqOIF              |                                           |
-IraqOND              |                                           |
-OtherTheater         |                                           |
-MilitaryBranch       |                                           |
-DischargeStatus      |                                           |
+YearEnteredService   | PATH_CLIENT_VETERAN_INFO.YR_ENTER_MILITARY |
+YearSeparated        | PATH_CLIENT_VETERAN_INFO.YR_SEP_MILITARY  |
+WorldWarII           | PATH_CLIENT_VETERAN_INFO.WORLD_WAR_II     | PATH_CODE_YESNO
+KoreanWar            | PATH_CLIENT_VETERAN_INFO.KOREAN_WAR       | PATH_CODE_YESNO
+VietnamWar           | PATH_CLIENT_VETERAN_INFO.VIETNAM_WAR      | PATH_CODE_YESNO
+DesertStorm          | PATH_CLIENT_VETERAN_INFO.PERSIAN          | PATH_CODE_YESNO
+AfghanistanOEF       | PATH_CLIENT_VETERAN_INFO.AFGHANISTAN_WAR  | PATH_CODE_YESNO
+IraqOIF              | PATH_CLIENT_VETERAN_INFO.IRAQ_FREEDOM     | PATH_CODE_YESNO
+IraqOND              | PATH_CLIENT_VETERAN_INFO.IRAQ_DAWN        | PATH_CODE_YESNO
+OtherTheater         | PATH_CLIENT_VETERAN_INFO.OTHER            | PATH_CODE_YESNO
+MilitaryBranch       | PATH_CLIENT_VETERAN.MILITARY_BRANCH_KEY   | PATH_CODE_MILITARY_BRANCH
+DischargeStatus      | PATH_CLIENT_VETERAN.DISCHARGE_STATUS_KEY  | PATH_CODE_DISCHARGE_STATUS
 DateCreated          | CREATE_DATE                               |
 DateUpdated          | UPDATE_TIMESTAMP                          |
 UserID               | CREATE_USER_KEY                           | PATH_USERS
-DateDeleted          |                                           |
+DateDeleted          | (N/A)                                     |
 
 
 ### /enrollments
