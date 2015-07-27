@@ -1,8 +1,33 @@
-This directory contains unzipped PCR_Test_SchemaAndData_v1.2.zip from
-https://drive.google.com/file/d/0B6jU7mYT7ztJWkJCTktyemVHUU0/view, as
-posted by Steve Conners on 20 July 2015.  That entire message is
-reproduced below, because it contains some information about the
-differences between this v1.2 and previous versions of the schema.
+This directory contains unzipped PCR_Test_SchemaAndData_v1.3.zip from
+https://drive.google.com/file/d/0B6jU7mYT7ztJVTNCZ1NEaXBMcXM/view, as
+sent by Steve Conners on 23 July 2015.  His mail is quoted below
+because it contains some information about the difference between
+versions 1.2 and 1.3 of the schema, and following that is his earlier
+post to OpenHMIS Discuss on 20 July announcing the v1.2 schema:
+
+    From: Steve Conners
+    Subject: Re: [HMIS] 7/21/2015 Update
+    To: Karl Fogel
+    Cc: Dave Totten, Dan Schultz, Cecilia Donnelly
+    Date: Thu, 23 Jul 2015 00:17:24 -0500
+    Message-ID: \
+      <CAJaH7nWUubDSNX62tOzF6ewtdoUbG+5QzkiTc6MEcEUO9-s_Bg@mail.gmail.com>
+    
+    I have updated the SQL export to include PATH_USERS (user table) and
+    1 row of test data. I do not have time at the moment to update the
+    other test data insert scripts to use the test user's key for all of
+    the data.
+
+    COMPASS OpenHMIS Schema and test data v1.3 [links to
+    https://drive.google.com/file/d/0B6jU7mYT7ztJVTNCZ1NEaXBMcXM/view]
+    
+    I also updated the COMPASS schema mapping to reflect the
+    PATH_CLIENT_RACE table which it turns out I already gave
+    you. Ashaar merged the commit, so I committed it directly. If
+    anyone has thoughts on whether this document is a useful method of
+    tracking this data, I'd appreciate any input.
+
+The v1.2 schema post:
 
     From: Steve Conners
     Subject: Re: [HMIS-Discuss] API and Schema Status
@@ -151,17 +176,20 @@ differences between this v1.2 and previous versions of the schema.
     v1.2 for PATH_CLIENT disability lookups.
 
 --------------------------------------------------------------------------
-
-The only changes are the renaming of _README.txt to README.txt (this
-file), the addition of this note, and an adjustment to the text below
-to say "data_codes" instead of "codes" to match the subdirectory name
+Below is the original _README.txt.  The only changes we made are the
+renaming of _README.txt to README.txt (this file), the addition of all
+the material up to this point, and an adjustment to the text below to
+say "data_codes" instead of "codes", to match the subdirectory name
 actually present in the original zip file.
-
---------------------------------------------------------------------------
-Original _README.txt follows:
 --------------------------------------------------------------------------
 
-PCR_Test_Schema_And_Archive.zip v1.2
+PCR_Test_Schema_And_Archive.zip v1.3
+
+2015-07-23 sjc - added user table and test data v1.3
+                 added the following data table with test data
+                    PATH_USERS **
+                        ** the data in other tables should be updated to use users in the test data **
+
 2015-07-20 sjc - added tables, test data, and added a veteran v1.2
                  added the following data tables
                     PATH_CLIENT_STATUS
