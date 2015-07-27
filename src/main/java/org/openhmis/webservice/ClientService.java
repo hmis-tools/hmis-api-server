@@ -1,5 +1,7 @@
 package org.openhmis.webservice;
 
+import java.util.List;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -29,11 +31,19 @@ public class ClientService {
 //
 //
 	@GET
+	@Path("/")
+	@Produces({MediaType.APPLICATION_JSON})
+	public String getClients() throws JsonProcessingException {
+		List<ClientVO> clientVOs = clientManager.getClients();
+		return om.writeValueAsString(clientVOs);
+	}
+	
+	@GET
 	@Path("/{personalId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getClient(@PathParam("personalId") String personalId) throws JsonProcessingException {
 		ClientVO clientVO = clientManager.getClientByPersonalId(personalId);
-		return om.writeValueAsString(clientVO);//Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(om.writeValueAsString(clientVO)).build();
+		return om.writeValueAsString(clientVO);
 	}
 //
 //	@POST
