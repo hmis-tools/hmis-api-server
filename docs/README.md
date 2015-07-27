@@ -1,9 +1,5 @@
 Please describe here any documents that are not self-explanatory.
 
-* `schema/`
-  The subset of the Pathways COMPASS/ROSE schema used with OpenHMIS.
-  See `schema/README.txt` for more.
-
 * `mirrorsync-compass-to-openhmis2-table-mappings.ods`
   These migration notes from Brian Vogler document the mappings that
   MirrorSync uses between Pathways COMPASS/ROSE tables, implemented in
@@ -21,3 +17,10 @@ Please describe here any documents that are not self-explanatory.
   I found most of the Universal Data Elements and could probably find
   the remaining data elements with enough time if that is useful but
   I'm assuming this has already been done.
+
+* `legacy-schema/`
+  The subset of the Pathways COMPASS/ROSE schema originally provided
+  to use with OpenHMIS.  *Note this is not the schema we're using.*
+  The real schema is reflected in migration files in this repository.
+  The legacy schema provided here is for historical interest only.
+  For example, its codes are not the same codes the real API uses.
