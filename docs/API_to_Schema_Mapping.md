@@ -58,118 +58,114 @@ ClientId                                                  | PATH_HOUSEHOLD_CLIEN
 (?) ProjectID                                             | PROGRAM_NAME_KEY                         |
 DisablingConditionCode                                    |                                          |
 TypeOfResidenceCode                                       |                                          |
-otherResidence                                            |                                          |
-lengthOfStayInPreviousPlaceCode                           |                                          |
-projectEntryDate                                          | ENTRY_DATE                               |
-projectExitDate                                           | EXIT_DATE                                |
-destinationTypeCode                                       | DESTINATION_KEY                          | PATH_CODE_DESTINATION (where STATUS=A)
-otherDestination                                          | DESTINATION_OTHERS                       |
-householdId                                               | PATH_HOUSEHOLD_CLIENT.HOUSEHOLD_KEY (at program_entry) |
-relationshipToHeadOfHouseholdCode                         | PATH_HOUSEHOLD_CLIENT.RELATIONSHIP       |
-clientLocationInformationDate                             |                                          |
-clientLocationCoCCode                                     |                                          |
-continuouslyHomelessForOneYearCode                        |                                          |
-numberOfTimesHomelessInPastThreeYearsCode                 |                                          |
-numberOfMonthsHomelessInPastThreeYearsCode                |                                          |
-numberOfMonthsContinuouslyHomelessImmediatelyPriorToEntry |                                          |
-statusDocumentedCode                                      |                                          |
-homelessnessStatusCode                                    |                                          |
-engagementDate                                            |                                          |
-residentialMoveInDate                                     |                                          |
-permanentHousingCode                                      |                                          |
-permanentHousingMoveDate                                  |                                          |
-housingAssessmentDispositionCode                          |                                          |
-housingAssessmentDispositionOther                         |                                          |
-housingAssessmentAtExitCode                               |                                          |
-housingAssessmentAtExitMaintainedSubsidyCode              |                                          |
-housingAssessmentAtExitMovedSubsidyCode                   |                                          |
-pathStatusDate                                            |                                          |
-pathEnrollmentCode                                        |                                          |
-pathNoEnrollmentReasonCode                                |                                          |
-connectionWithSoarCode                                    |                                          |
-rhyBcpStatusDate                                          |                                          |
-fysbYouthEnrollmentCode                                   |                                          |
-fysbYouthNoEnrollmentReasonCode                           |                                          |
-sexualOrientationCode                                     |                                          |
-lastGradeCompletedCode                                    |                                          |
-schoolStatusCode                                          |                                          |
-employmentEntryInformationDate                            |                                          |
-employmentEntryStatusCode                                 |                                          |
-employmentEntryTypeCode                                   |                                          |
-employmentEntryUnemployedReasonCode                       |                                          |
-employmentExitInformationDate                             |                                          |
-employmentExitStatusCode                                  |                                          |
-employmentExitTypeCode                                    |                                          |
-employmentExitUnemployedReasonCode                        |                                          |
-generalHealthEntryStatusCode                              |                                          |
-generalHealthExitStatusCode                               |                                          |
-dentalHealthEntryStatusCode                               |                                          |
-dentalHealthExitStatusCode                                |                                          |
-mentalHealthEntryStatusCode                               |                                          |
-mentalHealthExitStatusCode                                |                                          |
-pregnancyStatusCode                                       |                                          |
-pregnancyDueDate                                          |                                          |
-formerlyChildWelfareCode                                  |                                          |
-formerlyChildWelfareYearDurationCode                      |                                          |
-formerlyChildWelfareMonthDurationCode                     |                                          |
-formerlyJuvenileJusticeCode                               |                                          |
-formerlyJuvenileJusticeYearDurationCode                   |                                          |
-formerlyJuvenileJusticeMonthDurationCode                  |                                          |
-householdDynamicsCode                                     |                                          |
-sexualOrientationYouthCode                                |                                          |
-sexualOrientationFamilyCode                               |                                          |
-housingIssuesYouthCode                                    |                                          |
-housingIssuesFamilyCode                                   |                                          |
-schoolIssuesYouthCode                                     |                                          |
-schoolIssuesFamilyCode                                    |                                          |
-unemploymentYouthCode                                     |                                          |
-unemploymentFamilyCode                                    |                                          |
-mentalHealthYouthCode                                     |                                          |
-mentalHealthFamilyCode                                    |                                          |
-healthYouthCode                                           |                                          |
-healthFamilyCode                                          |                                          |
-physicalDisabilityYouthCode                               |                                          |
-physicalDisabilityFamilycode                              |                                          |
-mentalDisabilityYouthCode                                 |                                          |
-mentalDisabilityFamilyCode                                |                                          |
-abuseNeglectYouthCode                                     |                                          |
-abuseNeglectFamilyCode                                    |                                          |
-alcoholAbuseYouthCode                                     |                                          |
-alcoholAbuseFamilyCode                                    |                                          |
-insufficientIncomeFamilyCode                              |                                          |
-activeMilitaryFamilyCode                                  |                                          |
-incarceratedParentOfYouthCode                             |                                          |
-incarceratedParentOfYouthDetailCode                       |                                          |
-referralSourceCode                                        |                                          |
-referralOutreachCount                                     |                                          |
-sexualExploitationInPastThreeMonthsCode                   |                                          |
-sexualExploitationInPastThreeMonthsAmountCode             |                                          |
-sexualExplotationRequestCode                              |                                          |
-afterCarePlanAgreementCode                                |                                          |
-afterCareAdviceCode                                       |                                          |
-afterCarePlacementCode                                    |                                          |
-afterCareShelterCode                                      |                                          |
-afterCareFollowupServicesCode                             |                                          |
-afterCareFollowupMeetingCode                              |                                          |
-afterCareInformationPackageCode                           |                                          |
-afterCareOtherCode                                        |                                          |
-rhyCompletionStatusCode                                   |                                          |
-rhyEarlyExitReasonCode                                    |                                          |
-rhyExpulsionReasonCode                                    |                                          |
-familyReunificationCode                                   |                                          |
-worstHousingSituationCode                                 |                                          |
-householdIncomeAsPercentageOfAmiCode                      |                                          |
-lastStreetAddress                                         |                                          |
-lastCity                                                  |                                          |
-lastState                                                 |                                          |
-lastZip                                                   |                                          |
-lastAddressQualityCode                                    |                                          |
+OtherResidence                                            |                                          |
+LengthOfStayInPreviousPlaceCode                           |                                          |
+ProjectEntryDate                                          | ENTRY_DATE                               |
+ProjectExitDate                                           | EXIT_DATE                                |
+DestinationTypeCode                                       | DESTINATION_KEY                          | PATH_CODE_DESTINATION (where STATUS=A)
+OtherDestination                                          | DESTINATION_OTHERS                       |
+HouseholdId                                               | PATH_HOUSEHOLD_CLIENT.HOUSEHOLD_KEY (at program_entry) |
+RelationshipToHeadOfHouseholdCode                         | PATH_HOUSEHOLD_CLIENT.RELATIONSHIP       |
+ClientLocationInformationDate                             |                                          |
+ClientLocationCoCCode                                     |                                          |
+ContinuouslyHomelessForOneYearCode                        |                                          |
+NumberOfTimesHomelessInPastThreeYearsCode                 |                                          |
+NumberOfMonthsHomelessInPastThreeYearsCode                |                                          |
+NumberOfMonthsContinuouslyHomelessImmediatelyPriorToEntry |                                          |
+StatusDocumentedCode                                      |                                          |
+HomelessnessStatusCode                                    |                                          |
+EngagementDate                                            |                                          |
+ResidentialMoveInDate                                     |                                          |
+PermanentHousingCode                                      |                                          |
+PermanentHousingMoveDate                                  |                                          |
+HousingAssessmentDispositionCode                          |                                          |
+HousingAssessmentDispositionOther                         |                                          |
+HousingAssessmentAtExitCode                               |                                          |
+HousingAssessmentAtExitMaintainedSubsidyCode              |                                          |
+HousingAssessmentAtExitMovedSubsidyCode                   |                                          |
+PathStatusDate                                            |                                          |
+PathEnrollmentCode                                        |                                          |
+PathNoEnrollmentReasonCode                                |                                          |
+ConnectionWithSoarCode                                    |                                          |
+RhyBcpStatusDate                                          |                                          |
+FysbYouthEnrollmentCode                                   |                                          |
+FysbYouthNoEnrollmentReasonCode                           |                                          |
+SexualOrientationCode                                     |                                          |
+LastGradeCompletedCode                                    |                                          |
+SchoolStatusCode                                          |                                          |
+EmploymentEntryInformationDate                            |                                          |
+EmploymentEntryStatusCode                                 |                                          |
+EmploymentEntryTypeCode                                   |                                          |
+EmploymentEntryUnemployedReasonCode                       |                                          |
+EmploymentExitInformationDate                             |                                          |
+EmploymentExitStatusCode                                  |                                          |
+EmploymentExitTypeCode                                    |                                          |
+EmploymentExitUnemployedReasonCode                        |                                          |
+GeneralHealthEntryStatusCode                              |                                          |
+GeneralHealthExitStatusCode                               |                                          |
+DentalHealthEntryStatusCode                               |                                          |
+DentalHealthExitStatusCode                                |                                          |
+MentalHealthEntryStatusCode                               |                                          |
+MentalHealthExitStatusCode                                |                                          |
+PregnancyStatusCode                                       |                                          |
+PregnancyDueDate                                          |                                          |
+FormerlyChildWelfareCode                                  |                                          |
+FormerlyChildWelfareYearDurationCode                      |                                          |
+FormerlyChildWelfareMonthDurationCode                     |                                          |
+FormerlyJuvenileJusticeCode                               |                                          |
+FormerlyJuvenileJusticeYearDurationCode                   |                                          |
+FormerlyJuvenileJusticeMonthDurationCode                  |                                          |
+HouseholdDynamicsCode                                     |                                          |
+SexualOrientationYouthCode                                |                                          |
+SexualOrientationFamilyCode                               |                                          |
+HousingIssuesYouthCode                                    |                                          |
+HousingIssuesFamilyCode                                   |                                          |
+SchoolIssuesYouthCode                                     |                                          |
+SchoolIssuesFamilyCode                                    |                                          |
+UnemploymentYouthCode                                     |                                          |
+UnemploymentFamilyCode                                    |                                          |
+MentalHealthYouthCode                                     |                                          |
+MentalHealthFamilyCode                                    |                                          |
+HealthYouthCode                                           |                                          |
+HealthFamilyCode                                          |                                          |
+PhysicalDisabilityYouthCode                               |                                          |
+PhysicalDisabilityFamilycode                              |                                          |
+MentalDisabilityYouthCode                                 |                                          |
+MentalDisabilityFamilyCode                                |                                          |
+AbuseNeglectYouthCode                                     |                                          |
+AbuseNeglectFamilyCode                                    |                                          |
+AlcoholAbuseYouthCode                                     |                                          |
+AlcoholAbuseFamilyCode                                    |                                          |
+InsufficientIncomeFamilyCode                              |                                          |
+ActiveMilitaryFamilyCode                                  |                                          |
+IncarceratedParentOfYouthCode                             |                                          |
+IncarceratedParentOfYouthDetailCode                       |                                          |
+ReferralSourceCode                                        |                                          |
+ReferralOutreachCount                                     |                                          |
+SexualExploitationInPastThreeMonthsCode                   |                                          |
+SexualExploitationInPastThreeMonthsAmountCode             |                                          |
+SexualExplotationRequestCode                              |                                          |
+AfterCarePlanAgreementCode                                |                                          |
+AfterCareAdviceCode                                       |                                          |
+AfterCarePlacementCode                                    |                                          |
+AfterCareShelterCode                                      |                                          |
+AfterCareFollowupServicesCode                             |                                          |
+AfterCareFollowupMeetingCode                              |                                          |
+AfterCareInformationPackageCode                           |                                          |
+AfterCareOtherCode                                        |                                          |
+RhyCompletionStatusCode                                   |                                          |
+RhyEarlyExitReasonCode                                    |                                          |
+RhyExpulsionReasonCode                                    |                                          |
+FamilyReunificationCode                                   |                                          |
+WorstHousingSituationCode                                 |                                          |
+HouseholdIncomeAsPercentageOfAmiCode                      |                                          |
+LastStreetAddress                                         |                                          |
+LastCity                                                  |                                          |
+LastState                                                 |                                          |
+LastZip                                                   |                                          |
+LastAddressQualityCode                                    |                                          |
 (?) DateCreated                                           | CREATE_DATE                              |
 (?) DateUpdated                                           | UPDATE_DATE                              |
 (?) UserID                                                | CREATE_USER_KEY (if UPDATE_DATE is NULL) else UPDATE_USER_KEY  |
 (?) DateDeleted                                           |                                          |
-
-
-
-
 
