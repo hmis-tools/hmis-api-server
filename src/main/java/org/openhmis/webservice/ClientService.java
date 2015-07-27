@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -50,7 +51,6 @@ public class ClientService {
 		ClientVO outputVO = clientManager.addClient(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
-
 	
 	@GET
 	@Path("/{personalId}")
@@ -70,45 +70,12 @@ public class ClientService {
 		ClientVO outputVO = clientManager.updateClient(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
-//
-//	@DELETE
-//	@Path("/clients")
-//	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-//	public ClientVO getClient() throws ClientNotFoundException {
-//		ClientVO clientVO = new ClientVO();
-//		return clientVO;
-//	}
-//
-//
-//	@GET
-//	@Path("/clients/{clientId}")
-//	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-//	public ClientVO getClient(@PathParam("clientId") Long clientKey) throws ClientNotFoundException {
-//		ClientVO clientVO = new ClientVO();
-//		return clientVO;
-//	}
-//
-//	@POST
-//	@Path("/clients/{clientId}")
-//	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-//	public ClientVO getClient(@PathParam("clientId") Long clientKey) throws ClientNotFoundException {
-//		ClientVO clientVO = new ClientVO();
-//		return clientVO;
-//	}
-//	
-//	@PUT
-//	@Path("/clients/{clientId}")
-//	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-//	public ClientVO getClient(@PathParam("clientId") Long clientKey) throws ClientNotFoundException {
-//		ClientVO clientVO = new ClientVO();
-//		return clientVO;
-//	}
-//	
-//	@DELETE
-//	@Path("/clients/{clientId}")
-//	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-//	public ClientVO getClient(@PathParam("clientId") Long clientKey) throws ClientNotFoundException {
-//		ClientVO clientVO = new ClientVO();
-//		return clientVO;
-//	}
+	
+	@DELETE
+	@Path("/{personalId}")
+	@Produces({MediaType.APPLICATION_JSON})
+	public String updateClient(@PathParam("personalId") String personalId) throws JsonParseException, JsonMappingException, IOException {
+		clientManager.deleteClient(personalId);
+		return "true";
+	}
 }

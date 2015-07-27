@@ -1,48 +1,40 @@
 package org.openhmis.dao;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.openhmis.util.HibernateSessionFactory;
 
 
 public class BaseDAO {
 	
 	public Boolean save(Object object) {
-		try {
-			Session session = getSession();
-			session.save(object);
-			session.flush();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
+		Session session = getSession();
+		Transaction tx = session.beginTransaction();
+		session.save(object);
+		tx.commit();
+		session.close();
 		return Boolean.TRUE;
 	}
 
 	public Boolean update(Object object) {
-		try {
-			Session session = getSession();
-			session.saveOrUpdate(object);
-			session.flush();
-		}
-		catch (RuntimeException re) 
-		{
-			throw re;
-		}
-		return Boolean.FALSE;
+		Session session = getSession();
+		Transaction tx = session.beginTransaction();
+		session.merge(object);
+		tx.commit();
+		session.close();
+		return Boolean.TRUE;
 	}
 
 	public Boolean delete(Object object) {
-		try {
-			getSession().delete(object);
-			return Boolean.TRUE;
-		}
-		catch(RuntimeException re) {
-			throw re;
-		}
+		Session session = getSession();
+		Transaction tx = session.beginTransaction();
+		session.delete(object);
+		tx.commit();
+		session.close();
+		return Boolean.TRUE;
 	}
 
-	public Session getSession() 
-	{
+	public Session getSession() {
 		return HibernateSessionFactory.getSession();
-	}	
+	}
 }

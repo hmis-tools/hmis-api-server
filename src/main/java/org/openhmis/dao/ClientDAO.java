@@ -3,6 +3,7 @@ package org.openhmis.dao;
 import java.util.List;
 
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.openhmis.domain.PathClient;
 import org.openhmis.domain.PathClientVeteranInfo;
 
@@ -16,13 +17,16 @@ public class ClientDAO extends BaseDAO {
 			"from PathClient as client " + 
 			"where client.clientKey =:clientKey";
 
-		Query queryObject = getSession().createQuery(queryString);
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
 		queryObject.setParameter("clientKey", clientKey);
 		queryObject.setMaxResults(1);
 		
 		List<PathClient> results = queryObject.list();
+		session.close();
+		
 		if(results.size() > 0)
-			return (PathClient)queryObject.list().get(0);
+			return (PathClient)results.get(0);
 		else
 			return null;
 	}
@@ -32,7 +36,10 @@ public class ClientDAO extends BaseDAO {
 		String queryString = "select client " + 
 				"from PathClient as client";
 
-		Query queryObject = getSession().createQuery(queryString);
-		return (List<PathClient>)queryObject.list();
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<PathClient> results = queryObject.list();
+		session.close();
+		return results;
 	}
 }

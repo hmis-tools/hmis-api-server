@@ -37,7 +37,7 @@ public class HibernateSessionFactory {
      */ 	
  	 private static String CONFIG_FILE_LOCATION = "/hibernate.cfg.xml";
  	 private static final ThreadLocal<Session> threadLocal = new ThreadLocal<Session>();
-     private  static Configuration configuration = new Configuration();    
+     private static Configuration configuration = new Configuration();    
      private static org.hibernate.SessionFactory sessionFactory;
      private static String configFile = CONFIG_FILE_LOCATION;
      private static Properties properties = new Properties();

@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.hibernate.Transaction;
 import org.openhmis.code.ClientDischargeStatus;
 import org.openhmis.code.ClientDobDataQuality;
 import org.openhmis.code.ClientEthnicity;
@@ -102,6 +103,7 @@ public class ClientManager {
 
 		// Save Veteran Info
 		PathClientVeteranInfo veteranInfo = ClientManager.generatePathVeteranInfo(inputVO);
+		veteranInfo.setClientKey(client.getClientKey());
 		veteranInfo.setUpdateTimestamp(new Date());
 		clientVeteranInfoDAO.save(veteranInfo);
 		
@@ -110,6 +112,7 @@ public class ClientManager {
 	}
 	
 	public ClientVO updateClient(ClientVO inputVO) {
+		
 		// Generate a PathClient from the input
 		PathClient client = ClientManager.generatePathClient(inputVO);
 		client.setClientKey(Integer.parseInt(inputVO.getPersonalId()));
@@ -118,7 +121,7 @@ public class ClientManager {
 		
 		// Update the client
 		clientDAO.update(client);
-		
+
 		// Delete old races
 		List<PathClientRace> oldRaces = clientRaceDAO.getRacesByClientKey(client.getClientKey());
 		for (Iterator<PathClientRace> iterator = oldRaces.iterator(); iterator.hasNext();) {
@@ -133,15 +136,20 @@ public class ClientManager {
 			newRace.setUpdateTimestamp(new Date());
 			clientRaceDAO.save(newRace);
 		}
-
+		
 		// Update Veteran Info
 		// NOTE: client key is the primary key, so we don't need to look up any stored values
 		PathClientVeteranInfo veteranInfo = ClientManager.generatePathVeteranInfo(inputVO);
 		veteranInfo.setUpdateTimestamp(new Date());
 		clientVeteranInfoDAO.update(veteranInfo);
-		
+
 		// Return the resulting VO
 		return ClientManager.generateClientVO(client, newRaces, veteranInfo);
+	}
+	
+	public boolean deleteClient(String personalId) {
+		PathClient client = clientDAO.getClientByClientKey(Integer.parseInt(personalId));
+		return clientDAO.delete(client);
 	}
 	
 	public static ClientVO generateClientVO(PathClient client, List<PathClientRace> races, PathClientVeteranInfo veteranInfo) {
@@ -251,6 +259,7 @@ public class ClientManager {
 
 		return clientVO;
 	}
+	
 
 	public static PathClient generatePathClient(ClientVO clientVO) {
 		PathClient client = new PathClient();
@@ -282,6 +291,7 @@ public class ClientManager {
 
 		return client;
 	}
+	
 
 	public static List<PathClientRace> generatePathClientRaces(ClientVO clientVO) {
 
@@ -315,10 +325,12 @@ public class ClientManager {
 		return races;
 	}
 	
+	
 	public static PathClientVeteranInfo generatePathVeteranInfo(ClientVO clientVO) {
 
 		// VA Specific Data Standards: Veteran's Information (2014, 4.41)
 		PathClientVeteranInfo veteranInfo = new PathClientVeteranInfo();
+		veteranInfo.setClientKey(Integer.parseInt(clientVO.getPersonalId()));
 		veteranInfo.setYrEnterMilitary(clientVO.getYearEnteredService());
 		veteranInfo.setYrSepMilitary(clientVO.getYearSeparated());
 		veteranInfo.setWorldWarIi(clientVO.getWorldWarII().getCode());
