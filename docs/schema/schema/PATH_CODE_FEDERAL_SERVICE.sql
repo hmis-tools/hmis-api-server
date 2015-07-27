@@ -1,0 +1,18 @@
+--------------------------------------------------------
+--  DDL for Table PATH_CODE_FEDERAL_SERVICE
+--------------------------------------------------------
+
+  CREATE TABLE "PATH_CODE_FEDERAL_SERVICE" 
+   (	"CODE_KEY" NUMBER, 
+	"FEDERAL_CODE" VARCHAR2(20), 
+	"FEDERAL_DESCRIPTION" VARCHAR2(200), 
+	"FEDERAL_RECORDTYPE" NUMBER(*,0), 
+	"FEDERAL_TYPEPROVIDED" NUMBER(*,0), 
+	"FEDERAL_SUBTYPE" NUMBER(*,0), 
+	"STATUS" CHAR(1), 
+	"PROTECTED" CHAR(1), 
+	"TEXT_FIELD" CHAR(1), 
+	"CREATE_USER_KEY" NUMBER, 
+	"UPDATE_USER_KEY" NUMBER, 
+	"UPDATE_TIMESTAMP" TIMESTAMP (6)
+   ) ;
