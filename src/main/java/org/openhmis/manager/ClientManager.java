@@ -50,7 +50,7 @@ public class ClientManager {
 		List<PathClientRace> races = clientRaceDAO.getRacesByClientKey(clientKey);
 		PathClientVeteranInfo veteranInfo = clientVeteranInfoDAO.getVeteranInfoByClientKey(clientKey);
 		
-		ClientVO clientVO = ClientManager.mapClient(client, races, veteranInfo);
+		ClientVO clientVO = ClientManager.generateClientVO(client, races, veteranInfo);
 
 		return clientVO;
 	}
@@ -69,104 +69,82 @@ public class ClientManager {
 			List<PathClientRace> races = clientRaceDAO.getRacesByClientKey(clientKey);
 			PathClientVeteranInfo veteranInfo = clientVeteranInfoDAO.getVeteranInfoByClientKey(clientKey);
 
-			ClientVO clientVO = ClientManager.mapClient(client, races, veteranInfo);
+			ClientVO clientVO = ClientManager.generateClientVO(client, races, veteranInfo);
 			clientVOs.add(clientVO);
 		}
 		
 		return clientVOs;
 	}
 	
-	public ClientVO createClient(ClientVO inputVO) {
-		PathClient client = new PathClient();
-
-		// Universal Data Standard: Name (2014, 3.1)
-		client.setFirstName(inputVO.getFirstName());
-		client.setMiddleName(inputVO.getMiddleName());
-		client.setLastName(inputVO.getLastName());
-		client.setSuffix(inputVO.getNameSuffix());
-		client.setNameType(inputVO.getNameDataQuality().getCode());
+	public ClientVO addClient(ClientVO inputVO) {
 		
-		// Universal Data Standard: SSN (2014, 3.2)
-		client.setIdentification(inputVO.getSsn());
-		client.setIdType(inputVO.getSsnDataQuality().getCode());
+		// Generate a PathClient from the input
+		PathClient client = ClientManager.generatePathClient(inputVO);
 		
-		// Universal Data Standard: Date of Birth  (2014, 3.3)
-		client.setDateOfBirth(inputVO.getDob());
-		client.setDobType(inputVO.getDobDataQuality().getCode());
-		
-		// Universal Data Standard: Ethnicity (2014, 3.5)
-		client.setEthnicityKey(inputVO.getEthnicity().getCode());
-
-		// Universal Data Standard: Gender (2014, 3.6)
-		client.setGenderKey(inputVO.getGender().getCode());
-		client.setGenderDesc(inputVO.getOtherGender());
-
-		// Universal Data Standard: Veteran Status (2014, 3.7)
-		client.setVeteran(inputVO.getVeteranStatus().getCode());
-
-		// Export fields
+		// Set Export fields
 		client.setUpdateDate(new Date());
 		client.setCreateDate(new Date());
 		
-		// Compass Required Fields
+		// Set Compass Required Fields
 		client.setUpdateTimestamp(new Date());
 		
-		// At this point, all the Compass Rose client fields are now set.
+		// Save the client to allow secondary object generation
 		clientDAO.save(client);
+		inputVO.setPersonalId(client.getClientKey().toString());
 		
-		
-		// Universal Data Standard: Race (2014, 3.4)
-		// Convert HUD race storage to Compass Rose race codes
-		// (Compass rose race codes currently have no canonical reference)
-		List<PathClientRace> races = new ArrayList<PathClientRace>();
-		List<Integer> raceCodes = new ArrayList<Integer>();
-		
-		if(inputVO.getAsian() == YesNo.YES)
-			raceCodes.add(5);
-		if(inputVO.getBlackAfAmerican() == YesNo.YES)
-			raceCodes.add(6);
-		if(inputVO.getNativeHIOtherPacific() == YesNo.YES)
-			raceCodes.add(9);
-		if(inputVO.getAmIndAKNative() == YesNo.YES)
-			raceCodes.add(7);
-		if(inputVO.getWhite() == YesNo.YES)
-			raceCodes.add(8);
-		if(inputVO.getRaceNone() != null)
-			raceCodes.add(inputVO.getRaceNone().getCode());
-
-		// Create race objects for each code
-		for (Iterator<Integer> iterator = raceCodes.iterator(); iterator.hasNext();) {
-			Integer raceCode = iterator.next();
-			PathClientRace race = new PathClientRace();
-			race.setClientKey(client.getClientKey());
-			race.setRaceKey(raceCode);
+		// Save the races
+		List<PathClientRace> races = ClientManager.generatePathClientRaces(inputVO);
+		for (Iterator<PathClientRace> iterator = races.iterator(); iterator.hasNext();) {
+			PathClientRace race = iterator.next();
 			race.setUpdateTimestamp(new Date());
 			clientRaceDAO.save(race);
-			races.add(race);
 		}
 
-		
-		// VA Specific Data Standards: Veteran's Information (2014, 4.41)
-		PathClientVeteranInfo veteranInfo = new PathClientVeteranInfo();
-		veteranInfo.setYrEnterMilitary(inputVO.getYearEnteredService());
-		veteranInfo.setYrSepMilitary(inputVO.getYearSeparated());
-		veteranInfo.setWorldWarIi(inputVO.getWorldWarII().getCode());
-		veteranInfo.setKoreanWar(inputVO.getKoreanWar().getCode());
-		veteranInfo.setVietnamWar(inputVO.getVietnamWar().getCode());
-		veteranInfo.setPersianWar(inputVO.getDesertStorm().getCode());
-		veteranInfo.setAfghanistanWar(inputVO.getAfghanistanOEF().getCode());
-		veteranInfo.setIraqFreedom(inputVO.getIraqOIF().getCode());
-		veteranInfo.setIraqDawn(inputVO.getIraqOND().getCode());
-		veteranInfo.setOther(inputVO.getOtherTheater().getCode());
-		veteranInfo.setMilitaryBranch(inputVO.getMilitaryBranch().getCode());
-		veteranInfo.setDischargeStatus(inputVO.getDischargeStatus().getCode());
+		// Save Veteran Info
+		PathClientVeteranInfo veteranInfo = ClientManager.generatePathVeteranInfo(inputVO);
 		veteranInfo.setUpdateTimestamp(new Date());
 		clientVeteranInfoDAO.save(veteranInfo);
 		
-		return ClientManager.mapClient(client, races, veteranInfo);
+		// Return the resulting VO
+		return ClientManager.generateClientVO(client, races, veteranInfo);
 	}
 	
-	public static ClientVO mapClient(PathClient client, List<PathClientRace> races, PathClientVeteranInfo veteranInfo) {
+	public ClientVO updateClient(ClientVO inputVO) {
+		// Generate a PathClient from the input
+		PathClient client = ClientManager.generatePathClient(inputVO);
+		client.setClientKey(Integer.parseInt(inputVO.getPersonalId()));
+		client.setUpdateDate(new Date());
+		client.setUpdateTimestamp(new Date());
+		
+		// Update the client
+		clientDAO.update(client);
+		
+		// Delete old races
+		List<PathClientRace> oldRaces = clientRaceDAO.getRacesByClientKey(client.getClientKey());
+		for (Iterator<PathClientRace> iterator = oldRaces.iterator(); iterator.hasNext();) {
+			PathClientRace oldRace = iterator.next();
+			clientRaceDAO.delete(oldRace);
+		}
+		
+		// Save new races
+		List<PathClientRace> newRaces = ClientManager.generatePathClientRaces(inputVO);
+		for (Iterator<PathClientRace> iterator = newRaces.iterator(); iterator.hasNext();) {
+			PathClientRace newRace = iterator.next();
+			newRace.setUpdateTimestamp(new Date());
+			clientRaceDAO.save(newRace);
+		}
+
+		// Update Veteran Info
+		// NOTE: client key is the primary key, so we don't need to look up any stored values
+		PathClientVeteranInfo veteranInfo = ClientManager.generatePathVeteranInfo(inputVO);
+		veteranInfo.setUpdateTimestamp(new Date());
+		clientVeteranInfoDAO.update(veteranInfo);
+		
+		// Return the resulting VO
+		return ClientManager.generateClientVO(client, newRaces, veteranInfo);
+	}
+	
+	public static ClientVO generateClientVO(PathClient client, List<PathClientRace> races, PathClientVeteranInfo veteranInfo) {
 		ClientVO clientVO = new ClientVO();
 		// Universal Data Standard: Personal ID (2014, 3.13) 
 		clientVO.setPersonalId(client.getClientKey().toString());
@@ -274,4 +252,86 @@ public class ClientManager {
 		return clientVO;
 	}
 
+	public static PathClient generatePathClient(ClientVO clientVO) {
+		PathClient client = new PathClient();
+
+		// Universal Data Standard: Name (2014, 3.1)
+		client.setFirstName(clientVO.getFirstName());
+		client.setMiddleName(clientVO.getMiddleName());
+		client.setLastName(clientVO.getLastName());
+		client.setSuffix(clientVO.getNameSuffix());
+		client.setNameType(clientVO.getNameDataQuality().getCode());
+		
+		// Universal Data Standard: SSN (2014, 3.2)
+		client.setIdentification(clientVO.getSsn());
+		client.setIdType(clientVO.getSsnDataQuality().getCode());
+		
+		// Universal Data Standard: Date of Birth  (2014, 3.3)
+		client.setDateOfBirth(clientVO.getDob());
+		client.setDobType(clientVO.getDobDataQuality().getCode());
+		
+		// Universal Data Standard: Ethnicity (2014, 3.5)
+		client.setEthnicityKey(clientVO.getEthnicity().getCode());
+
+		// Universal Data Standard: Gender (2014, 3.6)
+		client.setGenderKey(clientVO.getGender().getCode());
+		client.setGenderDesc(clientVO.getOtherGender());
+
+		// Universal Data Standard: Veteran Status (2014, 3.7)
+		client.setVeteran(clientVO.getVeteranStatus().getCode());
+
+		return client;
+	}
+
+	public static List<PathClientRace> generatePathClientRaces(ClientVO clientVO) {
+
+		// Universal Data Standard: Race (2014, 3.4)
+		// Convert HUD race storage to Compass Rose race codes
+		// (Compass rose race codes currently have no canonical reference)
+		List<PathClientRace> races = new ArrayList<PathClientRace>();
+		List<Integer> raceCodes = new ArrayList<Integer>();
+		
+		if(clientVO.getAsian() == YesNo.YES)
+			raceCodes.add(5);
+		if(clientVO.getBlackAfAmerican() == YesNo.YES)
+			raceCodes.add(6);
+		if(clientVO.getNativeHIOtherPacific() == YesNo.YES)
+			raceCodes.add(9);
+		if(clientVO.getAmIndAKNative() == YesNo.YES)
+			raceCodes.add(7);
+		if(clientVO.getWhite() == YesNo.YES)
+			raceCodes.add(8);
+		if(clientVO.getRaceNone() != null)
+			raceCodes.add(clientVO.getRaceNone().getCode());
+
+		// Create race objects for each code
+		for (Iterator<Integer> iterator = raceCodes.iterator(); iterator.hasNext();) {
+			Integer raceCode = iterator.next();
+			PathClientRace race = new PathClientRace();
+			race.setClientKey(Integer.parseInt(clientVO.getPersonalId()));
+			race.setRaceKey(raceCode);
+			races.add(race);
+		}
+		return races;
+	}
+	
+	public static PathClientVeteranInfo generatePathVeteranInfo(ClientVO clientVO) {
+
+		// VA Specific Data Standards: Veteran's Information (2014, 4.41)
+		PathClientVeteranInfo veteranInfo = new PathClientVeteranInfo();
+		veteranInfo.setYrEnterMilitary(clientVO.getYearEnteredService());
+		veteranInfo.setYrSepMilitary(clientVO.getYearSeparated());
+		veteranInfo.setWorldWarIi(clientVO.getWorldWarII().getCode());
+		veteranInfo.setKoreanWar(clientVO.getKoreanWar().getCode());
+		veteranInfo.setVietnamWar(clientVO.getVietnamWar().getCode());
+		veteranInfo.setPersianWar(clientVO.getDesertStorm().getCode());
+		veteranInfo.setAfghanistanWar(clientVO.getAfghanistanOEF().getCode());
+		veteranInfo.setIraqFreedom(clientVO.getIraqOIF().getCode());
+		veteranInfo.setIraqDawn(clientVO.getIraqOND().getCode());
+		veteranInfo.setOther(clientVO.getOtherTheater().getCode());
+		veteranInfo.setMilitaryBranch(clientVO.getMilitaryBranch().getCode());
+		veteranInfo.setDischargeStatus(clientVO.getDischargeStatus().getCode());
+		return veteranInfo;
+	}
+	
 }

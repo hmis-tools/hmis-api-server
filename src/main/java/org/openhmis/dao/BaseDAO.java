@@ -20,11 +20,9 @@ public class BaseDAO {
 
 	public Boolean update(Object object) {
 		try {
-			Object updatedObject = getSession().merge(object);
-			getSession().flush();
-			if (updatedObject != null) {
-				return Boolean.TRUE;
-			}
+			Session session = getSession();
+			session.saveOrUpdate(object);
+			session.flush();
 		}
 		catch (RuntimeException re) 
 		{

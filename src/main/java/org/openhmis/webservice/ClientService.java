@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -29,12 +30,8 @@ public class ClientService {
 	private static final ObjectMapper om = new ObjectMapper();
 	private static final ClientManager clientManager = new ClientManager();
 
-//	private ClientManager clientManager;
-//	Mapper mapper = DozerBeanMapperSingletonWrapper.getInstance();
-	public ClientService() {
-	}
-//
-//
+	public ClientService() {}
+	
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON})
@@ -42,6 +39,18 @@ public class ClientService {
 		List<ClientVO> clientVOs = clientManager.getClients();
 		return om.writeValueAsString(clientVOs);
 	}
+
+	@POST
+	@Path("/")
+	@Produces({MediaType.APPLICATION_JSON})
+	public String createClient(String data) throws JsonParseException, JsonMappingException, IOException {
+		// This endpoint takes in a raw json STRING as input.
+		// TODO: support the serialization of individual POST parameters
+		ClientVO inputVO = om.readValue(data, ClientVO.class);
+		ClientVO outputVO = clientManager.addClient(inputVO);
+		return om.writeValueAsString(outputVO);
+	}
+
 	
 	@GET
 	@Path("/{personalId}")
@@ -50,26 +59,17 @@ public class ClientService {
 		ClientVO clientVO = clientManager.getClientByPersonalId(personalId);
 		return om.writeValueAsString(clientVO);
 	}
-
-	@POST
-	@Path("/")
+	
+	@PUT
+	@Path("/{personalId}")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String createClient(String data) throws JsonParseException, IOException {
-
-		// This endpoint takes in a raw json STRING as input.
-		// TODO: support the serialization of individual POST parameters
+	public String updateClient(@PathParam("personalId") String personalId, String data) throws JsonParseException, JsonMappingException, IOException {
 		ClientVO inputVO = om.readValue(data, ClientVO.class);
-		ClientVO outputVO = clientManager.createClient(inputVO);
+		inputVO.setPersonalId(personalId);
+		
+		ClientVO outputVO = clientManager.updateClient(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
-//
-//	@PUT
-//	@Path("/clients")
-//	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-//	public ClientVO getClient() throws ClientNotFoundException {
-//		ClientVO clientVO = new ClientVO();
-//		return clientVO;
-//	}
 //
 //	@DELETE
 //	@Path("/clients")
