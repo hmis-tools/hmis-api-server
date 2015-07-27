@@ -69,8 +69,8 @@ public class ClientVO {
 	private YesNoReason veteranStatus;
 
 	// VA Specific Data Standards: Veteran's Information (2014, 4.41)
-	private Date yearEnteredService;
-	private Date yearSeparated;
+	private String yearEnteredService;
+	private String yearSeparated;
 	private YesNoReason worldWarII;
 	private YesNoReason koreanWar;
 	private YesNoReason vietnamWar;
@@ -291,22 +291,22 @@ public class ClientVO {
 	}
 
 	@JsonProperty
-	public Date getYearEnteredService() {
+	public String getYearEnteredService() {
 		return yearEnteredService;
 	}
 
 	@JsonProperty
-	public void setYearEnteredService(Date yearEnteredService) {
+	public void setYearEnteredService(String yearEnteredService) {
 		this.yearEnteredService = yearEnteredService;
 	}
 
 	@JsonProperty
-	public Date getYearSeparated() {
+	public String getYearSeparated() {
 		return yearSeparated;
 	}
 
 	@JsonProperty
-	public void setYearSeparated(Date yearSeparated) {
+	public void setYearSeparated(String yearSeparated) {
 		this.yearSeparated = yearSeparated;
 	}
 

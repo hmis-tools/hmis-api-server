@@ -1,8 +1,8 @@
 package org.openhmis.code;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.openhmis.code.serialization.CodeSerializer;
 import org.openhmis.code.serialization.CodeLookup;
-
-import com.fasterxml.jackson.annotation.JsonValue;
 
 // Codes for Universal Data Standard: Date of Birth (2014, 3.3.2)
 // http://www.hudhdx.info/Resources/Vendors/4_0/HMISCSVSpecifications4_0FINAL.pdf
@@ -23,11 +23,9 @@ public enum ClientDobDataQuality implements BaseCode {
 		this.description = description;
 	}
 
-	//@JsonValue
     public Integer getCode() {
         return code;
     }
-	//@JsonValue
     public String getDescription() {
         return description;
     }

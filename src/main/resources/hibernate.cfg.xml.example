@@ -16,6 +16,7 @@
 
         <mapping class="org.openhmis.domain.PathClient" />
         <mapping class="org.openhmis.domain.PathClientRace" />
+        <mapping class="org.openhmis.domain.PathClientVeteranInfo" />
 	</session-factory>
 
 </hibernate-configuration>

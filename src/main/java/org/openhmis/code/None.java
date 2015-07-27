@@ -1,6 +1,9 @@
 package org.openhmis.code;
 
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import org.openhmis.code.serialization.CodeSerializer;
+import org.openhmis.code.serialization.CodeLookup;
 
 // YesNo are used in several data standard fields:
 //  - Veteran Status (2014, 3.7)
@@ -29,4 +32,10 @@ public enum None implements BaseCode {
     public String getDescription() {
         return description;
     }
+	
+	// Enable lookups by code
+	private static final CodeLookup<None> enhancer = new CodeLookup<None>(values());	
+	public static None valueByCode(Integer code) {
+		return enhancer.valueByCode(code);
+	}
 }

@@ -1,10 +1,8 @@
 package org.openhmis.code;
 
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-import org.openhmis.code.serialization.CodeLookup;
 import org.openhmis.code.serialization.CodeSerializer;
+import org.openhmis.code.serialization.CodeLookup;
 
 // Codes for Universal Data Standard: Name (2014, 3.1.5)
 // http://www.hudhdx.info/Resources/Vendors/4_0/HMISCSVSpecifications4_0FINAL.pdf

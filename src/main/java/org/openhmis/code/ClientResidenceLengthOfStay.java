@@ -1,6 +1,8 @@
 package org.openhmis.code;
 
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.openhmis.code.serialization.CodeSerializer;
+import org.openhmis.code.serialization.CodeLookup;
 
 // Codes for Universal Data Standard: Residence Prior to Project Entry (2014, 3.9)
 

@@ -1,6 +1,9 @@
 package org.openhmis.code;
 
-import com.fasterxml.jackson.annotation.JsonValue;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.openhmis.code.serialization.CodeSerializer;
+import org.openhmis.code.serialization.CodeLookup;
 
 // Codes for Universal Data Standard: Race (2014, 3.4)
 
@@ -10,10 +13,7 @@ public enum ClientRace implements BaseCode {
 	BLACK (6, "Black or African American"),
 	INDIAN (7, "American Indian or Alaska Native"),
 	WHITE (8, "White"),
-	HAWAIIAN (9, "Native Hawaiian or Other Pacific Islander"),
-	OTHER (14, "Other"),
-	UNKNOWN (15, "Client doesn't know"),
-	REFUSED (16, "Client Refused");
+	HAWAIIAN (9, "Native Hawaiian or Other Pacific Islander");
 
 	private final Integer code;
 	private final String description;
@@ -23,12 +23,16 @@ public enum ClientRace implements BaseCode {
 		this.description = description;
 	}
 
-	//@JsonValue
-    public Integer getCode() {
+	public Integer getCode() {
         return code;
     }
-	//@JsonValue
     public String getDescription() {
         return description;
     }
+	
+	// Enable lookups by code
+	private static final CodeLookup<ClientRace> enhancer = new CodeLookup<ClientRace>(values());	
+	public static ClientRace valueByCode(Integer code) {
+		return enhancer.valueByCode(code);
+	}
 }

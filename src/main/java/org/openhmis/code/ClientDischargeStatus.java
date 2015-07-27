@@ -1,6 +1,9 @@
 package org.openhmis.code;
 
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import org.openhmis.code.serialization.CodeSerializer;
+import org.openhmis.code.serialization.CodeLookup;
 
 // Codes for Universal Data Standard: Discharge Status (2014, 4.41.12)
 // http://www.hudhdx.info/Resources/Vendors/4_0/HMISCSVSpecifications4_0FINAL.pdf
@@ -25,12 +28,16 @@ public enum ClientDischargeStatus implements BaseCode {
 		this.description = description;
 	}
 
-	//@JsonValue
     public Integer getCode() {
         return code;
     }
-	//@JsonValue
     public String getDescription() {
         return description;
     }
+	
+	// Enable lookups by code
+	private static final CodeLookup<ClientDischargeStatus> enhancer = new CodeLookup<ClientDischargeStatus>(values());	
+	public static ClientDischargeStatus valueByCode(Integer code) {
+		return enhancer.valueByCode(code);
+	}
 }
