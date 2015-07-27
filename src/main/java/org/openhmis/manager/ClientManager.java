@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.openhmis.code.ClientDischargeStatus;
 import org.openhmis.code.ClientDobDataQuality;
@@ -88,9 +89,12 @@ public class ClientManager {
 		
 		// Set Compass Required Fields
 		client.setUpdateTimestamp(new Date());
+
+		Session session = clientDAO.getSession();
+		Transaction tx = session.beginTransaction();
 		
 		// Save the client to allow secondary object generation
-		clientDAO.save(client);
+		session.save(client);
 		inputVO.setPersonalId(client.getClientKey().toString());
 		
 		// Save the races
@@ -98,14 +102,18 @@ public class ClientManager {
 		for (Iterator<PathClientRace> iterator = races.iterator(); iterator.hasNext();) {
 			PathClientRace race = iterator.next();
 			race.setUpdateTimestamp(new Date());
-			clientRaceDAO.save(race);
+			session.save(race);
 		}
 
 		// Save Veteran Info
 		PathClientVeteranInfo veteranInfo = ClientManager.generatePathVeteranInfo(inputVO);
-		veteranInfo.setClientKey(client.getClientKey());
 		veteranInfo.setUpdateTimestamp(new Date());
-		clientVeteranInfoDAO.save(veteranInfo);
+		veteranInfo.setClientKey(client.getClientKey());
+		veteranInfo.setYrEnterMilitary(client.getClientKey().toString());
+		veteranInfo.setYrSepMilitary("TEST");
+		session.save(veteranInfo);
+		tx.commit();
+		session.close();
 		
 		// Return the resulting VO
 		return ClientManager.generateClientVO(client, races, veteranInfo);
