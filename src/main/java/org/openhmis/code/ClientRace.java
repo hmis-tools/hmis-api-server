@@ -1,7 +1,9 @@
 package org.openhmis.code;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import org.openhmis.code.serialization.CodeSerializer;
 import org.openhmis.code.serialization.CodeLookup;
 
@@ -13,7 +15,8 @@ public enum ClientRace implements BaseCode {
 	BLACK (6, "Black or African American"),
 	INDIAN (7, "American Indian or Alaska Native"),
 	WHITE (8, "White"),
-	HAWAIIAN (9, "Native Hawaiian or Other Pacific Islander");
+	HAWAIIAN (9, "Native Hawaiian or Other Pacific Islander"),
+	UNKNOWN_RACE (999, "ERR");
 
 	private final Integer code;
 	private final String description;
@@ -32,7 +35,10 @@ public enum ClientRace implements BaseCode {
 	
 	// Enable lookups by code
 	private static final CodeLookup<ClientRace> enhancer = new CodeLookup<ClientRace>(values());	
+
+	@JsonCreator
 	public static ClientRace valueByCode(Integer code) {
-		return enhancer.valueByCode(code);
+		ClientRace value = enhancer.valueByCode(code); 
+		return (value == null)?ClientRace.UNKNOWN_RACE:value;
 	}
 }

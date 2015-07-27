@@ -1,5 +1,7 @@
 package org.openhmis.code;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import org.openhmis.code.serialization.CodeSerializer;
@@ -24,18 +26,20 @@ public enum None implements BaseCode {
 		this.description = description;
 	}
 
-	//@JsonValue
     public Integer getCode() {
         return code;
     }
-	//@JsonValue
+	
     public String getDescription() {
         return description;
     }
 	
 	// Enable lookups by code
-	private static final CodeLookup<None> enhancer = new CodeLookup<None>(values());	
+	private static final CodeLookup<None> enhancer = new CodeLookup<None>(values());
+
+	@JsonCreator
 	public static None valueByCode(Integer code) {
-		return enhancer.valueByCode(code);
+		None value = enhancer.valueByCode(code); 
+		return (value == null)?None.NOT_COLLECTED:value;
 	}
 }

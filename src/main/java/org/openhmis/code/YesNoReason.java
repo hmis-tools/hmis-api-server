@@ -1,6 +1,8 @@
 package org.openhmis.code;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import org.openhmis.code.serialization.CodeSerializer;
 import org.openhmis.code.serialization.CodeLookup;
 
@@ -33,7 +35,10 @@ public enum YesNoReason implements BaseCode {
 	
 	// Enable lookups by code
 	private static final CodeLookup<YesNoReason> enhancer = new CodeLookup<YesNoReason>(values());	
+
+	@JsonCreator
 	public static YesNoReason valueByCode(Integer code) {
-		return enhancer.valueByCode(code);
+		YesNoReason value = enhancer.valueByCode(code); 
+		return (value == null)?YesNoReason.NOT_COLLECTED:value;
 	}
 }

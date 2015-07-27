@@ -143,7 +143,9 @@ public class ClientVO {
 
 	@JsonProperty
 	public ClientNameDataQuality getNameDataQuality() {
-		return this.nameDataQuality;
+		if(nameDataQuality == null)
+			return ClientNameDataQuality.NOT_COLLECTED;
+		return nameDataQuality;
 	}
 	@JsonProperty
 	public void setNameDataQuality(ClientNameDataQuality nameDataQuality) {
@@ -162,6 +164,8 @@ public class ClientVO {
 
 	@JsonProperty
 	public ClientSsnDataQuality getSsnDataQuality() {
+		if(ssnDataQuality == null)
+			return ClientSsnDataQuality.NOT_COLLECTED;
 		return ssnDataQuality;
 	}
 
@@ -182,6 +186,8 @@ public class ClientVO {
 
 	@JsonProperty
 	public ClientDobDataQuality getDobDataQuality() {
+		if(dobDataQuality == null)
+			return ClientDobDataQuality.NOT_COLLECTED;
 		return dobDataQuality;
 	}
 
@@ -192,6 +198,8 @@ public class ClientVO {
 
 	@JsonProperty
 	public YesNo getAmIndAKNative() {
+		if(amIndAKNative == null)
+			return YesNo.NOT_COLLECTED;
 		return amIndAKNative;
 	}
 
@@ -202,6 +210,8 @@ public class ClientVO {
 
 	@JsonProperty
 	public YesNo getAsian() {
+		if(asian == null)
+			return YesNo.NOT_COLLECTED;
 		return asian;
 	}
 
@@ -212,6 +222,8 @@ public class ClientVO {
 
 	@JsonProperty
 	public YesNo getBlackAfAmerican() {
+		if(blackAfAmerican == null)
+			return YesNo.NOT_COLLECTED;
 		return blackAfAmerican;
 	}
 
@@ -222,6 +234,8 @@ public class ClientVO {
 
 	@JsonProperty
 	public YesNo getNativeHIOtherPacific() {
+		if(nativeHIOtherPacific == null)
+			return YesNo.NOT_COLLECTED;
 		return nativeHIOtherPacific;
 	}
 
@@ -232,6 +246,8 @@ public class ClientVO {
 
 	@JsonProperty
 	public YesNo getWhite() {
+		if(white == null)
+			return YesNo.NOT_COLLECTED;
 		return white;
 	}
 
@@ -252,6 +268,8 @@ public class ClientVO {
 
 	@JsonProperty
 	public ClientEthnicity getEthnicity() {
+		if(ethnicity == null)
+			return ClientEthnicity.NOT_COLLECTED;
 		return ethnicity;
 	}
 
@@ -262,6 +280,8 @@ public class ClientVO {
 
 	@JsonProperty
 	public ClientGender getGender() {
+		if(gender == null)
+			return ClientGender.NOT_COLLECTED;
 		return gender;
 	}
 
@@ -282,6 +302,8 @@ public class ClientVO {
 
 	@JsonProperty
 	public YesNoReason getVeteranStatus() {
+		if(veteranStatus == null)
+			return YesNoReason.NOT_COLLECTED;
 		return veteranStatus;
 	}
 
@@ -312,6 +334,8 @@ public class ClientVO {
 
 	@JsonProperty
 	public YesNoReason getWorldWarII() {
+		if(worldWarII == null)
+			return YesNoReason.NOT_COLLECTED;
 		return worldWarII;
 	}
 
@@ -322,6 +346,8 @@ public class ClientVO {
 
 	@JsonProperty
 	public YesNoReason getKoreanWar() {
+		if(koreanWar == null)
+			return YesNoReason.NOT_COLLECTED;
 		return koreanWar;
 	}
 
@@ -332,6 +358,8 @@ public class ClientVO {
 
 	@JsonProperty
 	public YesNoReason getVietnamWar() {
+		if(vietnamWar == null)
+			return YesNoReason.NOT_COLLECTED;
 		return vietnamWar;
 	}
 
@@ -342,6 +370,8 @@ public class ClientVO {
 
 	@JsonProperty
 	public YesNoReason getDesertStorm() {
+		if(desertStorm == null)
+			return YesNoReason.NOT_COLLECTED;
 		return desertStorm;
 	}
 
@@ -352,6 +382,8 @@ public class ClientVO {
 
 	@JsonProperty
 	public YesNoReason getAfghanistanOEF() {
+		if(afghanistanOEF == null)
+			return YesNoReason.NOT_COLLECTED;
 		return afghanistanOEF;
 	}
 
@@ -362,6 +394,8 @@ public class ClientVO {
 
 	@JsonProperty
 	public YesNoReason getIraqOIF() {
+		if(iraqOIF == null)
+			return YesNoReason.NOT_COLLECTED;
 		return iraqOIF;
 	}
 
@@ -372,6 +406,8 @@ public class ClientVO {
 
 	@JsonProperty
 	public YesNoReason getIraqOND() {
+		if(iraqOND == null)
+			return YesNoReason.NOT_COLLECTED;
 		return iraqOND;
 	}
 
@@ -382,6 +418,8 @@ public class ClientVO {
 
 	@JsonProperty
 	public YesNoReason getOtherTheater() {
+		if(otherTheater == null)
+			return YesNoReason.NOT_COLLECTED;
 		return otherTheater;
 	}
 
@@ -392,7 +430,10 @@ public class ClientVO {
 
 	@JsonProperty
 	public ClientMilitaryBranch getMilitaryBranch() {
-		return militaryBranch;
+		if(militaryBranch == null)
+			return ClientMilitaryBranch.NOT_COLLECTED;
+		else
+			return militaryBranch;
 	}
 
 	@JsonProperty
@@ -402,7 +443,10 @@ public class ClientVO {
 
 	@JsonProperty
 	public ClientDischargeStatus getDischargeStatus() {
-		return dischargeStatus;
+		if(dischargeStatus == null)
+			return ClientDischargeStatus.NOT_COLLECTED;
+		else
+			return dischargeStatus;
 	}
 
 	@JsonProperty

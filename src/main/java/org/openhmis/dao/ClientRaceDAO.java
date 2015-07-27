@@ -11,7 +11,7 @@ public class ClientRaceDAO extends BaseDAO {
 	public ClientRaceDAO() { }
 
 	@SuppressWarnings("unchecked")
-	public List<PathClientRace> findRacesByClientKey(Integer clientKey)  {
+	public List<PathClientRace> getRacesByClientKey(Integer clientKey)  {
 		try {
 			String queryString = "select clientRace " + 
 				"from PathClientRace as clientRace " + 

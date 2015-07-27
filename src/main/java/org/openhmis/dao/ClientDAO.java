@@ -11,7 +11,7 @@ public class ClientDAO extends BaseDAO {
 	// default constructor
 	public ClientDAO() { }
 
-	public PathClient findClientByClientKey(Integer clientKey)  {
+	public PathClient getClientByClientKey(Integer clientKey)  {
 		String queryString = "select client " + 
 			"from PathClient as client " + 
 			"where client.clientKey =:clientKey";

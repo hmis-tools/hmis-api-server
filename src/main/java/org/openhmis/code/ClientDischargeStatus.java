@@ -1,5 +1,6 @@
 package org.openhmis.code;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import org.openhmis.code.serialization.CodeSerializer;
@@ -37,7 +38,10 @@ public enum ClientDischargeStatus implements BaseCode {
 	
 	// Enable lookups by code
 	private static final CodeLookup<ClientDischargeStatus> enhancer = new CodeLookup<ClientDischargeStatus>(values());	
+
+	@JsonCreator
 	public static ClientDischargeStatus valueByCode(Integer code) {
-		return enhancer.valueByCode(code);
+		ClientDischargeStatus value = enhancer.valueByCode(code); 
+		return (value == null)?ClientDischargeStatus.NOT_COLLECTED:value;
 	}
 }

@@ -1,6 +1,8 @@
 package org.openhmis.code;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import org.openhmis.code.serialization.CodeSerializer;
 import org.openhmis.code.serialization.CodeLookup;
 
@@ -34,7 +36,10 @@ public enum ClientNameDataQuality implements BaseCode {
 	
 	// Enable lookups by code
 	private static final CodeLookup<ClientNameDataQuality> enhancer = new CodeLookup<ClientNameDataQuality>(values());	
+
+	@JsonCreator
 	public static ClientNameDataQuality valueByCode(Integer code) {
-		return enhancer.valueByCode(code);
+		ClientNameDataQuality value = enhancer.valueByCode(code); 
+		return (value == null)?ClientNameDataQuality.NOT_COLLECTED:value;
 	}
 }

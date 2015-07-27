@@ -1,6 +1,8 @@
 package org.openhmis.code;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import org.openhmis.code.serialization.CodeSerializer;
 import org.openhmis.code.serialization.CodeLookup;
 
@@ -35,7 +37,10 @@ public enum ClientMilitaryBranch implements BaseCode {
 	
 	// Enable lookups by code
 	private static final CodeLookup<ClientMilitaryBranch> enhancer = new CodeLookup<ClientMilitaryBranch>(values());	
+
+	@JsonCreator
 	public static ClientMilitaryBranch valueByCode(Integer code) {
-		return enhancer.valueByCode(code);
+		ClientMilitaryBranch value = enhancer.valueByCode(code); 
+		return (value == null)?ClientMilitaryBranch.NOT_COLLECTED:value;
 	}
 }

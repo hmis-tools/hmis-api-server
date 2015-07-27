@@ -10,7 +10,7 @@ public class ClientVeteranInfoDAO extends BaseDAO {
 	// default constructor
 	public ClientVeteranInfoDAO() { }
 
-	public PathClientVeteranInfo findVeteranInfoByClientKey(Integer clientKey)  {
+	public PathClientVeteranInfo getVeteranInfoByClientKey(Integer clientKey)  {
 		try {
 			String queryString = "select clientVeteranInfo " + 
 				"from PathClientVeteranInfo as clientVeteranInfo " + 

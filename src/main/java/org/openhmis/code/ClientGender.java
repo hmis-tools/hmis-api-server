@@ -1,6 +1,8 @@
 package org.openhmis.code;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import org.openhmis.code.serialization.CodeSerializer;
 import org.openhmis.code.serialization.CodeLookup;
 
@@ -35,7 +37,10 @@ public enum ClientGender implements BaseCode {
 	
 	// Enable lookups by code
 	private static final CodeLookup<ClientGender> enhancer = new CodeLookup<ClientGender>(values());	
+
+	@JsonCreator
 	public static ClientGender valueByCode(Integer code) {
-		return enhancer.valueByCode(code);
+		ClientGender value = enhancer.valueByCode(code); 
+		return (value == null)?ClientGender.NOT_COLLECTED:value;
 	}
 }

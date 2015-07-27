@@ -1,8 +1,11 @@
 package org.openhmis.webservice;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -14,7 +17,9 @@ import org.openhmis.code.ClientNameDataQuality;
 import org.openhmis.manager.ClientManager;
 import org.openhmis.vo.ClientVO;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -45,14 +50,18 @@ public class ClientService {
 		ClientVO clientVO = clientManager.getClientByPersonalId(personalId);
 		return om.writeValueAsString(clientVO);
 	}
-//
-//	@POST
-//	@Path("/clients")
-//	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-//	public ClientVO getClient() throws ClientNotFoundException {
-//		ClientVO clientVO = new ClientVO();
-//		return clientVO;
-//	}
+
+	@POST
+	@Path("/")
+	@Produces({MediaType.APPLICATION_JSON})
+	public String createClient(String data) throws JsonParseException, IOException {
+
+		// This endpoint takes in a raw json STRING as input.
+		// TODO: support the serialization of individual POST parameters
+		ClientVO inputVO = om.readValue(data, ClientVO.class);
+		ClientVO outputVO = clientManager.createClient(inputVO);
+		return om.writeValueAsString(outputVO);
+	}
 //
 //	@PUT
 //	@Path("/clients")
