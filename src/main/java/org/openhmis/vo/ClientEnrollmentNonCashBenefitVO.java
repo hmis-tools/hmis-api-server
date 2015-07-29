@@ -15,6 +15,9 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openhmis.code.YesNo;
+import org.openhmis.code.YesNoReason;
+
 
 
 @XmlRootElement
@@ -23,16 +26,16 @@ public class ClientEnrollmentNonCashBenefitVO implements Serializable {
 
 	// Program Specific Data Standards: Non-cash Benefits (2014, 4.3)
 	private Date informationDate;
-	private Integer benefitsFromAnySourceCode;
-	private Integer benefitsSnapCode;
-	private Integer benefitsWicCode;
-	private Integer benefitsTanfChildCareCode;
-	private Integer benefitsTanfTransportationCode;
-	private Integer benefitsTanfOtherCode;
-	private Integer benefitsSection8Code;
-	private Integer benefitsOtherSourceCode;
-	private Integer benefitsTemporaryRentalCode;
-	private String benefitsOtherSource;
+	private YesNoReason benefitsFromAnySource;
+	private YesNo snap;
+	private YesNo wic;
+	private YesNo tanfChildCare;
+	private YesNo tanfTransportation;
+	private YesNo otherTanf;
+	private YesNo rentalAssistanceOngoing;
+	private YesNo otherBenefitsSource;
+	private YesNo rentalAssistanceTemp;
+	private String otherBenefitsSourceIdentify;
 
 	public ClientEnrollmentNonCashBenefitVO() {
 		super();

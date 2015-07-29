@@ -15,7 +15,7 @@ public enum YesNoReason implements BaseCode {
 	NO (0, "No"),
 	YES (1, "Yes"),
 	UNKNOWN (8, "Client doesn't know"),
-	REFUSED (9, "Client Refused"),
+	REFUSED (9, "Client refused"),
 	NOT_COLLECTED (99, "Data not collected");
 	
 	private final Integer code;

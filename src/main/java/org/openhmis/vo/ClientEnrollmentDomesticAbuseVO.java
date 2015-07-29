@@ -15,6 +15,9 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openhmis.code.ClientWhenDvOccurred;
+import org.openhmis.code.YesNoReason;
+
 
 
 @XmlRootElement
@@ -23,8 +26,8 @@ public class ClientEnrollmentDomesticAbuseVO implements Serializable {
 
 	// Program Specific Data Standards: Domestic Abuse (2014, 4.11)
 	private Date informationDate;
-	private Integer typeCode;
-	private Integer timeframeCode;
+	private YesNoReason domesticViolenceVictim;
+	private ClientWhenDvOccurred whenOccurred;
 
 	public ClientEnrollmentDomesticAbuseVO() {
 		super();

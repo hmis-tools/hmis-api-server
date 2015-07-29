@@ -15,6 +15,14 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openhmis.code.ClientHopwaServices;
+import org.openhmis.code.ClientPathServices;
+import org.openhmis.code.ClientRhyServices;
+import org.openhmis.code.ClientSsvfServices;
+import org.openhmis.code.ClientSsvfSubType3;
+import org.openhmis.code.ClientSsvfSubType4;
+import org.openhmis.code.ClientSsvfSubType5;
+
 
 
 @XmlRootElement
@@ -22,22 +30,22 @@ public class ClientEnrollmentServiceVO implements Serializable {
 	private Long enrollmentId;
 
 	// Program Specific Data Standards: Services Provided (2014, 4.14)
-	private Date serviceDate;
+	private Date dateProvided;
 
 	// PATH (2014, 4.14A)
-	private Integer pathServiceTypeCode;
+	private ClientPathServices pathTypeProvided;
 
 	// RHY (2014, 4.14B)
-	private Integer rhyServiceTypeCode;
+	private ClientRhyServices rhyTypeProvided;
 	
 	// HOPWA (2014, 4.14C)
-	private Integer hopwaServiceTypeCode;
+	private ClientHopwaServices hopwaTypeProvided;
 
 	// SSVF (2014, 4.14D)
-	private Integer ssvfServiceTypeCode;
-	private Integer ssvfVaBenefitsTypeCode;
-	private Integer ssvfCoordinatingBenefitsTypeCode;
-	private Integer ssvfDirectProvisionBenefitsTypeCode;
+	private ClientSsvfServices ssvfTypeProvided;
+	private ClientSsvfSubType3 ssvfVaSubTypeProvided;
+	private ClientSsvfSubType4 ssvfCoordinatingSubTypeProvided;
+	private ClientSsvfSubType5 ssvfDirectSubTypeProvided;
 	private String ssvfOtherService;
 
 	public ClientEnrollmentServiceVO() {

@@ -1,10 +1,3 @@
-/* Copyright (c) 2014 Pathways Community Network Institute
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 package org.openhmis.vo;
 
 import java.io.Serializable;
@@ -15,11 +8,30 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openhmis.code.ClientAddressDataQuality;
+import org.openhmis.code.ClientCountExchangeForSex;
+import org.openhmis.code.ClientEmploymentType;
+import org.openhmis.code.ClientHealthStatus;
+import org.openhmis.code.ClientHousingStatus;
+import org.openhmis.code.ClientIncarceratedParentStatus;
+import org.openhmis.code.ClientLastGradeCompleted;
+import org.openhmis.code.ClientMonthsHomelessPastThreeYears;
+import org.openhmis.code.ClientNotEmployedReason;
+import org.openhmis.code.ClientPercentAmi;
+import org.openhmis.code.ClientReasonNoServices;
+import org.openhmis.code.ClientReasonNotEnrolled;
+import org.openhmis.code.ClientReferralSource;
+import org.openhmis.code.ClientRelationshipToHoH;
+import org.openhmis.code.ClientResidencePrior;
+import org.openhmis.code.ClientResidencePriorLengthOfStay;
+import org.openhmis.code.ClientRhyNumberOfYears;
+import org.openhmis.code.ClientSchoolStatus;
+import org.openhmis.code.ClientSexualOrientation;
+import org.openhmis.code.ClientTimesHomelessPastThreeYears;
+import org.openhmis.code.YesNo;
+import org.openhmis.code.YesNoReason;
 
-
-@XmlRootElement
-public class ClientEnrollmentVO implements Serializable
-{
+public class ClientEnrollmentVO implements Serializable {
 	/**
 	 * The client object represents a client enrollment record
 	 * Fields returned with the client object represent fields marked as "At project entry" in the HUD standards
@@ -53,13 +65,13 @@ public class ClientEnrollmentVO implements Serializable
 	// TODO: Export standards have this as separate, independently updated values.
 	// HUD standards say it is a single value that is kept up to date.
 	private Date clientLocationInformationDate;
-	private Integer clientLocationCoCCode;
+	private String cocCode;
 
 	// Universal Data Standard: Length of Time on Street, in an Emergency Shelter, or Safe Haven (2014, 3.17)
 	// Collection: Project Entry
 	private YesNoReason continuouslyHomelessOneYear;
-	private ClientTimesHomelessInPastThreeYears timesHomelessInPastThreeYears;
-	private ClientTimesHomelessInPastThreeYears monthsHomelessPastThreeYears;
+	private ClientTimesHomelessPastThreeYears timesHomelessInPastThreeYears;
+	private ClientMonthsHomelessPastThreeYears monthsHomelessPastThreeYears;
 	private Integer monthsHomelessThisTime;
 	private YesNo statusDocumentedCode;
 
@@ -155,7 +167,7 @@ public class ClientEnrollmentVO implements Serializable
 	// Collection: Once, when determining eligibility
 	private Date dateOfBcpStatus;
 	private YesNo fysbYouth;
-	private ReasonNoServices reasonNoServices;
+	private ClientReasonNoServices reasonNoServices;
 
 	// RHY Specific Data Standards: Sexual Orientation (2014, 4.23)
 	// Collection: Project Entry
@@ -171,37 +183,22 @@ public class ClientEnrollmentVO implements Serializable
 
 	// RHY Specific Data Standards: Employment Status (2014, 4.26)
 	// Collection: Project Entry
-	private Date employedInformationDateEntry;
-	private YesNoReason employedEntry;
-	private ClientEmploymentType employmentTypeEntry;
-	private ClientNotEmployedReason notEmployedReasonEntry;
-
-	// Collection: Project Exit
-	private Date employedInformationDateExit;
-	private YesNoReason employedExit;
-	private ClientEmploymentType employmentTypeExit;
-	private ClientNotEmployedReason notEmployedReasonExit;
+	private Date employedInformationDate;
+	private YesNoReason employed;
+	private ClientEmploymentType employmentType;
+	private ClientNotEmployedReason notEmployedReason;
 
 	// RHY Specific Data Standards: General Health Status (2014, 4.27)
 	// Collection: Project Entry
-	private ClientHealthStatus generalHealthStatusEntry;
-
-	// Collection: Project Exit
-	private ClientHealthStatus generalHealthStatusExit;
+	private ClientHealthStatus generalHealthStatus;
 
 	// RHY Specific Data Standards: Dental Health Status (2014, 4.28)
 	// Collection: Project Entry
-	private ClientHealthStatus dentalHealthStatusEntry;
-
-	// Collection: Project Exit
-	private ClientHealthStatus dentalHealthStatusExit;
+	private ClientHealthStatus dentalHealthStatus;
 
 	// RHY Specific Data Standards: Mental Health Status (2014, 4.29)
 	// Collection: Project Entry
-	private ClientHealthStatus mentalHealthStatusEntry;
-
-	// Collection: Project Exit
-	private ClientHealthStatus mentalHealthStatusExit;
+	private ClientHealthStatus mentalHealthStatus;
 
 	// RHY Specific Data Standards: Pregnancy Status (2014, 4.30)
 	// Collection: Project Entry (keep updated)
@@ -287,11 +284,7 @@ public class ClientEnrollmentVO implements Serializable
 	public ClientEnrollmentVO() {
 		super();
 	}
-	public ClientEnrollmentVO(String clientId) {
-		super();
-		this.clientId = clientId;
-	}
-	
+
 	@Override
 	public int hashCode() {
 		return 0;

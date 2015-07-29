@@ -12,7 +12,6 @@ import org.openhmis.code.ClientMilitaryBranch;
 import org.openhmis.code.ClientNameDataQuality;
 import org.openhmis.code.ClientSsnDataQuality;
 import org.openhmis.code.ClientDobDataQuality;
-import org.openhmis.code.ClientRace;
 import org.openhmis.code.None;
 import org.openhmis.code.YesNo;
 import org.openhmis.code.YesNoReason;

@@ -15,6 +15,8 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openhmis.code.ClientContactLocation;
+
 
 
 @XmlRootElement
@@ -26,8 +28,8 @@ public class ClientEnrollmentContactVO implements Serializable {
 	private Long enrollmentId;
 
 	// Program Specific Data Standards: Contact (2014, 4.12)
-	private Date contactDate;
-	private Integer contactLocationCode;
+	private Date dateProvided;
+	private ClientContactLocation typeProvided;
 	
 	public ClientEnrollmentContactVO() {
 		super();

@@ -28,12 +28,12 @@ public enum ClientMilitaryBranch implements BaseCode {
 		this.description = description;
 	}
 
-    public Integer getCode() {
-        return code;
-    }
-    public String getDescription() {
-        return description;
-    }
+	public Integer getCode() {
+		return code;
+	}
+	public String getDescription() {
+		return description;
+	}
 	
 	// Enable lookups by code
 	private static final CodeLookup<ClientMilitaryBranch> enhancer = new CodeLookup<ClientMilitaryBranch>(values());	

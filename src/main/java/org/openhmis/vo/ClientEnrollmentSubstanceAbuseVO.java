@@ -15,6 +15,11 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openhmis.code.ClientDisabilityResponse;
+import org.openhmis.code.ClientPathHowConfirmed;
+import org.openhmis.code.YesNo;
+import org.openhmis.code.YesNoReason;
+
 
 
 @XmlRootElement
@@ -23,11 +28,11 @@ public class ClientEnrollmentSubstanceAbuseVO implements Serializable {
 
 	// Program Specific Data Standards: Substance Abuse (2014, 4.10)
 	private Date informationDate;
-	private Integer typeCode;
-	private Integer independenceCode;
-	private Integer documentedCode;
-	private Integer treatmentCode;
-	private Integer confirmedCode;
+	private ClientDisabilityResponse response;
+	private YesNoReason indefiniteAndImpairs;
+	private YesNo documentationOnFile;
+	private YesNoReason receivingServices;
+	private ClientPathHowConfirmed pathHowConfirmed;
 
 	public ClientEnrollmentSubstanceAbuseVO() {
 		super();

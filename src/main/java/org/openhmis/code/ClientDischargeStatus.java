@@ -18,7 +18,7 @@ public enum ClientDischargeStatus implements BaseCode {
 	OTH (6, "Under other than honorable conditions (OTH)"),
 	UNCHARACTERIZED (7, "Uncharacterized"),
 	UNKNOWN (8, "Client doesn't know"),
-	REFUSED (9, "Client Refused"),
+	REFUSED (9, "Client refused"),
 	NOT_COLLECTED (99, "Data not collected");
 	
 	private final Integer code;
@@ -29,12 +29,12 @@ public enum ClientDischargeStatus implements BaseCode {
 		this.description = description;
 	}
 
-    public Integer getCode() {
-        return code;
-    }
-    public String getDescription() {
-        return description;
-    }
+	public Integer getCode() {
+		return code;
+	}
+	public String getDescription() {
+		return description;
+	}
 	
 	// Enable lookups by code
 	private static final CodeLookup<ClientDischargeStatus> enhancer = new CodeLookup<ClientDischargeStatus>(values());	

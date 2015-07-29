@@ -14,7 +14,7 @@ public enum ClientDobDataQuality implements BaseCode {
 	FULL (1, "Full DOB reported"),
 	PARTIAL (2, "Approximate or Partial DOB reported"),
 	UNKNOWN (8, "Client doesn't know"),
-	REFUSED (9, "Client Refused"),
+	REFUSED (9, "Client refused"),
 	NOT_COLLECTED (99, "Data not collected");
 	
 	protected final Integer code;
@@ -25,12 +25,12 @@ public enum ClientDobDataQuality implements BaseCode {
 		this.description = description;
 	}
 
-    public Integer getCode() {
-        return code;
-    }
-    public String getDescription() {
-        return description;
-    }
+	public Integer getCode() {
+		return code;
+	}
+	public String getDescription() {
+		return description;
+	}
 	
 	// Enable lookups by code
 	private static final CodeLookup<ClientDobDataQuality> enhancer = new CodeLookup<ClientDobDataQuality>(values());	

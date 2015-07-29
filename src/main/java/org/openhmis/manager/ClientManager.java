@@ -20,7 +20,6 @@ import org.openhmis.code.ClientEthnicity;
 import org.openhmis.code.ClientGender;
 import org.openhmis.code.ClientMilitaryBranch;
 import org.openhmis.code.ClientNameDataQuality;
-import org.openhmis.code.ClientRace;
 import org.openhmis.code.ClientSsnDataQuality;
 import org.openhmis.code.None;
 import org.openhmis.code.YesNo;
@@ -32,7 +31,6 @@ import org.openhmis.domain.PathClient;
 import org.openhmis.domain.PathClientRace;
 import org.openhmis.domain.PathClientVeteranInfo;
 import org.openhmis.exception.client.ClientNotFoundException;
-import org.openhmis.exception.client.InValidClientException;
 import org.openhmis.manager.ClientManager;
 import org.openhmis.vo.ClientVO;
 
@@ -196,30 +194,30 @@ public class ClientManager {
 		
 		for (Iterator<PathClientRace> iterator = races.iterator(); iterator.hasNext();) {
 			PathClientRace race = iterator.next();
-			ClientRace raceCode = ClientRace.valueByCode(race.getRaceKey());
-			if(raceCode != null) {
-				switch(raceCode) {
-					case ASIAN:
-						clientVO.setAsian(YesNo.YES);
-						break;
-					case BLACK:
-						clientVO.setBlackAfAmerican(YesNo.YES);
-						break;
-					case HAWAIIAN:
-						clientVO.setNativeHIOtherPacific(YesNo.YES);
-						break;
-					case INDIAN:
-						clientVO.setAmIndAKNative(YesNo.YES);
-						break;
-					case WHITE:
-						clientVO.setWhite(YesNo.YES);
-						break;
-					default:
-						break;
-				}
+			
+			// Compass stores races as specialized codes
+			// See: https://github.com/PCNI/OpenHMIS/blob/feature-compass_schema/docs/API_to_Schema_Mapping.md
+			switch(race.getRaceKey()) {
+				case 5:
+					clientVO.setAsian(YesNo.YES);
+					break;
+				case 6:
+					clientVO.setBlackAfAmerican(YesNo.YES);
+					break;
+				case 7:
+					clientVO.setAmIndAKNative(YesNo.YES);
+					break;
+				case 8:
+					clientVO.setWhite(YesNo.YES);
+					break;
+				case 9:
+					clientVO.setNativeHIOtherPacific(YesNo.YES);
+					break;
+				default:
+					break;
 			}
 
-			// Compass stores none and race in the same table
+			// Compass stores race none and race in the same table
 			None noneCode = None.valueByCode(race.getRaceKey());
 			if(noneCode != null) {
 				switch (noneCode) {

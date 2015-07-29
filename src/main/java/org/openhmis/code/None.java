@@ -14,7 +14,7 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 public enum None implements BaseCode {
 	UNKNOWN (8, "Client doesn't know"),
-	REFUSED (9, "Client Refused"),
+	REFUSED (9, "Client refused"),
 	NOT_COLLECTED (99, "Data not collected");
 	
 	

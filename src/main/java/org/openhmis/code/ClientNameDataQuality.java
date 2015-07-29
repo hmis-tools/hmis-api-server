@@ -26,13 +26,13 @@ public enum ClientNameDataQuality implements BaseCode {
 	}
 
 	//@JsonValue
-    public Integer getCode() {
-        return code;
-    }
+	public Integer getCode() {
+		return code;
+	}
 	//@JsonValue
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 	
 	// Enable lookups by code
 	private static final CodeLookup<ClientNameDataQuality> enhancer = new CodeLookup<ClientNameDataQuality>(values());	

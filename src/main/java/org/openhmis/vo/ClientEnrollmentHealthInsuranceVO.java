@@ -15,6 +15,10 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openhmis.code.ClientReasonNotInsured;
+import org.openhmis.code.YesNo;
+import org.openhmis.code.YesNoReason;
+
 
 
 @XmlRootElement
@@ -22,24 +26,24 @@ public class ClientEnrollmentHealthInsuranceVO implements Serializable {
 	private Long enrollmentId;
 
 	// Program Specific Data Standards: Health Insurance (2014, 4.4)
-	private Date healthInsuranceInformationDate;
-	private Integer coveredByHealthInsuranceCode;
-	private Integer healthInsuranceMedicaidCode;
-	private Integer healthInsuranceNoMedicaidReasonCode;
-	private Integer healthInsuranceMedicareCode;
-	private Integer healthInsuranceNoMedicareReasonCode;
-	private Integer healthInsuranceStateChildrensHealthInsuranceCode;
-	private Integer healthInsuranceNoStateChildrenReasonCode;
-	private Integer healthInsuranceVaMedicalServicesCode;
-	private Integer healthInsuranceNoVaMedicalServicesReasonCode;
-	private Integer healthInsuranceEmployerProvidedCode;
-	private Integer healthInsuranceNoEmployerProvidedReasonCode;
-	private Integer healthInsuranceCobraCode;
-	private Integer healthInsuranceNoCobraReasonCode;
-	private Integer healthInsurancePrivatePayCode;
-	private Integer healthInsuranceNoPrivatePayReasonCode;
-	private Integer healthInsuranceStateAdultsCode;
-	private Integer healthInsuranceNoStateAdultsReasonCode;
+	private Date informationDate;
+	private YesNoReason insuranceFromAnySource;
+	private YesNo medicaid;
+	private ClientReasonNotInsured noMedicaidReason;
+	private YesNo medicare;
+	private ClientReasonNotInsured noMedicareReason;
+	private YesNo schip;
+	private ClientReasonNotInsured noSchipReason;
+	private YesNo vaMedicalServices;
+	private ClientReasonNotInsured noVaMedReason;
+	private YesNo employerProvided;
+	private ClientReasonNotInsured noEmployerProvidedReason;
+	private YesNo cobra;
+	private ClientReasonNotInsured noCobraReason;
+	private YesNo privatePay;
+	private ClientReasonNotInsured noPrivatePayReason;
+	private YesNo stateHealthIns;
+	private ClientReasonNotInsured noStateHealthInsReason;
 
 	public ClientEnrollmentHealthInsuranceVO() {
 		super();

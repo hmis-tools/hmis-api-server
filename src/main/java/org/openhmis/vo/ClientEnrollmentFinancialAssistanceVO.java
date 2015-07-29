@@ -15,6 +15,9 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openhmis.code.ClientHopwaFinancialAssistance;
+import org.openhmis.code.ClientSsvfFinancialAssistance;
+
 
 
 @XmlRootElement
@@ -22,15 +25,15 @@ public class ClientEnrollmentFinancialAssistanceVO implements Serializable {
 	private Long enrollmentId;
 
 	// Program Specific Data Standards: Financial Assets Provided (2014, 4.15)
-	private Date assistanceDate;
+	private Date dateProvided;
 
 	// HOPWA (2014, 4.15A)
-	private Integer hopwaTypeCode;
-	private Long hopwaAmount;
+	private ClientHopwaFinancialAssistance hopwaTypeProvided;
+	private Long hopwaFaaAmount;
 
 	// SSVF (2014, 4.15B)
-	private Integer ssvfTypeCode;
-	private Long ssvfAmount;
+	private ClientSsvfFinancialAssistance ssvfTypeProvided;
+	private Long ssvfFaaAmount;
 
 	public ClientEnrollmentFinancialAssistanceVO() {
 		super();

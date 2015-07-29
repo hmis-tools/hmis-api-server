@@ -14,7 +14,7 @@ public enum ClientEthnicity implements BaseCode {
 	NON_HISPANIC (104, "Non-Hispanic/Non-Latino"),
 	HISPANIC (105, "Hispanic/Latino"),
 	UNKNOWN (8, "Client doesn't know"),
-	REFUSED (9, "Client Refused"),
+	REFUSED (9, "Client refused"),
 	NOT_COLLECTED (99, "Data not collected");
 	
 	private final Integer code;
@@ -25,15 +25,15 @@ public enum ClientEthnicity implements BaseCode {
 		this.description = description;
 	}
 
-    public Integer getCode() {
-        return code;
-    }
-    public String getDescription() {
-        return description;
-    }
+	public Integer getCode() {
+		return code;
+	}
+	public String getDescription() {
+		return description;
+	}
 	
 	// Enable lookups by code
-	private static final CodeLookup<ClientEthnicity> enhancer = new CodeLookup<ClientEthnicity>(values());	
+	private static final CodeLookup<ClientEthnicity> enhancer = new CodeLookup<ClientEthnicity>(values());  
 
 	@JsonCreator
 	public static ClientEthnicity valueByCode(Integer code) {

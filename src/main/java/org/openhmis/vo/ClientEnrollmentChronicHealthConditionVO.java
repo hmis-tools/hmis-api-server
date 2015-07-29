@@ -15,6 +15,9 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openhmis.code.YesNo;
+import org.openhmis.code.YesNoReason;
+
 
 
 @XmlRootElement
@@ -23,10 +26,10 @@ public class ClientEnrollmentChronicHealthConditionVO implements Serializable {
 
 	// Program Specific Data Standards: Chronic Health Condition (2014, 4.7)
 	private Date informationDate;
-	private Integer typeCode;
-	private Integer independenceCode;
-	private Integer documentedCode;
-	private Integer treatmentCode;
+	private YesNoReason response;
+	private YesNoReason indefiniteAndImpairs;
+	private YesNo documentationOnFile;
+	private YesNoReason receivingServices;
 
 	public ClientEnrollmentChronicHealthConditionVO() {
 		super();

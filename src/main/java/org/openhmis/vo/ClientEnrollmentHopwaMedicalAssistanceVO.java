@@ -15,6 +15,9 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openhmis.code.ClientNoAssistanceReason;
+import org.openhmis.code.YesNoReason;
+
 
 
 @XmlRootElement
@@ -23,10 +26,10 @@ public class ClientEnrollmentHopwaMedicalAssistanceVO implements Serializable {
 
 	// HOPWA Specific Data Standards: Medical Assistance (2014, 4.39)
 	private Date informationDate;
-	private Integer typeCode;
-	private Integer reasonCode;
-	private Integer receivingAdapCode;
-	private Integer notReceivingAdapCode;
+	private YesNoReason hivAidsAssistance;
+	private ClientNoAssistanceReason noHivAidsAssistanceReason;
+	private YesNoReason adap;
+	private ClientNoAssistanceReason noAdapReason;
 
 	public ClientEnrollmentHopwaMedicalAssistanceVO() {
 		super();
