@@ -1,6 +1,5 @@
 package org.openhmis.vo;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import org.openhmis.code.ClientDestination;
@@ -16,12 +15,8 @@ import org.openhmis.code.ClientProjectCompletionStatus;
 import org.openhmis.code.ClientSubsidyInformation;
 import org.openhmis.code.YesNoReason;
 
-public class ClientExitVO implements Serializable {
-	/**
-	 * The client object represents a client enrollment record
-	 * Fields returned with the client object represent fields marked as "At project entry" in the HUD standards
-	 */
-
+public class ClientExitVO {
+	
 	// Universal Data Standard: Project Entry Date (2014, 3.11)
 	// Collection: Project Exit
 	private Date projectExitDate;
@@ -87,4 +82,5 @@ public class ClientExitVO implements Serializable {
 	// Collection: Project Exit
 	private YesNoReason familyReunificationCode;
 
+	public ClientExitVO() {}
 }
