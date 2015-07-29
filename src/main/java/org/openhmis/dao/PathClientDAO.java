@@ -6,12 +6,12 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.openhmis.domain.PathClient;
 
-public class ClientDAO extends BaseDAO {
+public class PathClientDAO extends BaseDAO {
 
 	// default constructor
-	public ClientDAO() { }
+	public PathClientDAO() { }
 
-	public PathClient getClientByClientKey(Integer clientKey)  {
+	public PathClient getPathClientByClientKey(Integer clientKey)  {
 		String queryString = "select client " + 
 			"from PathClient as client " + 
 			"where client.clientKey =:clientKey";
@@ -31,7 +31,7 @@ public class ClientDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<PathClient> getClients() {
+	public List<PathClient> getPathClients() {
 		String queryString = "select client " + 
 				"from PathClient as client";
 

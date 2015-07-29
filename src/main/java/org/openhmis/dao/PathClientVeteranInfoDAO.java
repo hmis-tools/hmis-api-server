@@ -6,12 +6,12 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.openhmis.domain.PathClientVeteranInfo;
 
-public class ClientVeteranInfoDAO extends BaseDAO {
+public class PathClientVeteranInfoDAO extends BaseDAO {
 
 	// default constructor
-	public ClientVeteranInfoDAO() { }
+	public PathClientVeteranInfoDAO() { }
 
-	public PathClientVeteranInfo getVeteranInfoByClientKey(Integer clientKey)  {
+	public PathClientVeteranInfo getPathVeteranInfoByClientKey(Integer clientKey)  {
 		String queryString = "select clientVeteranInfo " + 
 			"from PathClientVeteranInfo as clientVeteranInfo " + 
 			"where clientVeteranInfo.clientKey =:clientKey";

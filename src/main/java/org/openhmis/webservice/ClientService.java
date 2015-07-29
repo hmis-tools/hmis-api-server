@@ -32,7 +32,7 @@ public class ClientService {
 	private static final ClientManager clientManager = new ClientManager();
 
 	public ClientService() {}
-	
+
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON})
@@ -40,7 +40,7 @@ public class ClientService {
 		List<ClientVO> clientVOs = clientManager.getClients();
 		return om.writeValueAsString(clientVOs);
 	}
-
+	
 	@POST
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON})

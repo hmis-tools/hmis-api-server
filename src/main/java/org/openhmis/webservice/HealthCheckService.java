@@ -1,4 +1,4 @@
-package org.openhmis.webservice.impl;
+package org.openhmis.webservice;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
  * Root resource (exposed at "healthcheck" path)
  */
 @Path("healthcheck")
-public class HealthCheck {
+public class HealthCheckService {
 
     /**
      * Method handling HTTP GET requests. The returned object will be sent

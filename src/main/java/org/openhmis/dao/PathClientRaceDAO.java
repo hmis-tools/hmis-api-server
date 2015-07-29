@@ -6,13 +6,13 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.openhmis.domain.PathClientRace;
 
-public class ClientRaceDAO extends BaseDAO {
+public class PathClientRaceDAO extends BaseDAO {
 
 	// default constructor
-	public ClientRaceDAO() { }
+	public PathClientRaceDAO() { }
 
 	@SuppressWarnings("unchecked")
-	public List<PathClientRace> getRacesByClientKey(Integer clientKey)  {
+	public List<PathClientRace> getPathRacesByClientKey(Integer clientKey)  {
 		String queryString = "select clientRace " + 
 			"from PathClientRace as clientRace " + 
 			"where clientRace.clientKey =:clientKey";

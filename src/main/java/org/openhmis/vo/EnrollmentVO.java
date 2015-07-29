@@ -28,7 +28,7 @@ import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ClientEnrollmentVO {
+public class EnrollmentVO {
 	/**
 	 * The client object represents a client enrollment record
 	 * Fields returned with the client object represent fields marked as "At project entry" in the HUD standards
@@ -282,9 +282,7 @@ public class ClientEnrollmentVO {
 	private Date dateCreated;
 	private Date dateUpdated;
 
-	public ClientEnrollmentVO() {
-		super();
-	}
+	public EnrollmentVO() {}
 
 	@JsonProperty
 	public String getEnrollmentId() {
