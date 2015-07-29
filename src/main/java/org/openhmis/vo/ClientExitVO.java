@@ -15,7 +15,12 @@ import org.openhmis.code.ClientProjectCompletionStatus;
 import org.openhmis.code.ClientSubsidyInformation;
 import org.openhmis.code.YesNoReason;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ClientExitVO {
+	
+	private Long exitId;
+	private Long enrollmentId;
 	
 	// Universal Data Standard: Project Entry Date (2014, 3.11)
 	// Collection: Project Exit
@@ -83,4 +88,311 @@ public class ClientExitVO {
 	private YesNoReason familyReunificationCode;
 
 	public ClientExitVO() {}
+
+	@JsonProperty
+	public Long getExitId() {
+		return exitId;
+	}
+
+	@JsonProperty
+	public void setExitId(Long exitId) {
+		this.exitId = exitId;
+	}
+
+	@JsonProperty
+	public Long getEnrollmentId() {
+		return enrollmentId;
+	}
+
+	@JsonProperty
+	public void setEnrollmentId(Long enrollmentId) {
+		this.enrollmentId = enrollmentId;
+	}
+
+	@JsonProperty
+	public Date getProjectExitDate() {
+		return projectExitDate;
+	}
+
+	@JsonProperty
+	public void setProjectExitDate(Date projectExitDate) {
+		this.projectExitDate = projectExitDate;
+	}
+
+	@JsonProperty
+	public ClientDestination getDestinationTypeCode() {
+		return destinationTypeCode;
+	}
+
+	@JsonProperty
+	public void setDestinationTypeCode(ClientDestination destinationTypeCode) {
+		this.destinationTypeCode = destinationTypeCode;
+	}
+
+	@JsonProperty
+	public String getOtherDestination() {
+		return otherDestination;
+	}
+
+	@JsonProperty
+	public void setOtherDestination(String otherDestination) {
+		this.otherDestination = otherDestination;
+	}
+
+	@JsonProperty
+	public ClientHousingAssessmentDisposition getAssessmentDisposition() {
+		return assessmentDisposition;
+	}
+
+	@JsonProperty
+	public void setAssessmentDisposition(
+			ClientHousingAssessmentDisposition assessmentDisposition) {
+		this.assessmentDisposition = assessmentDisposition;
+	}
+
+	@JsonProperty
+	public String getOtherDisposition() {
+		return otherDisposition;
+	}
+
+	@JsonProperty
+	public void setOtherDisposition(String otherDisposition) {
+		this.otherDisposition = otherDisposition;
+	}
+
+	@JsonProperty
+	public ClientHousingAssessmentAtExit getHousingAssessment() {
+		return housingAssessment;
+	}
+
+	@JsonProperty
+	public void setHousingAssessment(ClientHousingAssessmentAtExit housingAssessment) {
+		this.housingAssessment = housingAssessment;
+	}
+
+	@JsonProperty
+	public ClientSubsidyInformation getSubsidyInformation() {
+		return subsidyInformation;
+	}
+
+	@JsonProperty
+	public void setSubsidyInformation(ClientSubsidyInformation subsidyInformation) {
+		this.subsidyInformation = subsidyInformation;
+	}
+
+	@JsonProperty
+	public YesNoReason getConnectionWithSoar() {
+		return connectionWithSoar;
+	}
+
+	@JsonProperty
+	public void setConnectionWithSoar(YesNoReason connectionWithSoar) {
+		this.connectionWithSoar = connectionWithSoar;
+	}
+
+	@JsonProperty
+	public Date getEmployedInformationDate() {
+		return employedInformationDate;
+	}
+
+	@JsonProperty
+	public void setEmployedInformationDate(Date employedInformationDate) {
+		this.employedInformationDate = employedInformationDate;
+	}
+
+	@JsonProperty
+	public YesNoReason getEmployed() {
+		return employed;
+	}
+
+	@JsonProperty
+	public void setEmployed(YesNoReason employed) {
+		this.employed = employed;
+	}
+
+	@JsonProperty
+	public ClientEmploymentType getEmploymentType() {
+		return employmentType;
+	}
+
+	@JsonProperty
+	public void setEmploymentType(ClientEmploymentType employmentType) {
+		this.employmentType = employmentType;
+	}
+
+	@JsonProperty
+	public ClientNotEmployedReason getNotEmployedReason() {
+		return notEmployedReason;
+	}
+
+	@JsonProperty
+	public void setNotEmployedReason(ClientNotEmployedReason notEmployedReason) {
+		this.notEmployedReason = notEmployedReason;
+	}
+
+	@JsonProperty
+	public ClientHealthStatus getGeneralHealthStatus() {
+		return generalHealthStatus;
+	}
+
+	@JsonProperty
+	public void setGeneralHealthStatus(ClientHealthStatus generalHealthStatus) {
+		this.generalHealthStatus = generalHealthStatus;
+	}
+
+	@JsonProperty
+	public ClientHealthStatus getDentalHealthStatus() {
+		return dentalHealthStatus;
+	}
+
+	@JsonProperty
+	public void setDentalHealthStatus(ClientHealthStatus dentalHealthStatus) {
+		this.dentalHealthStatus = dentalHealthStatus;
+	}
+
+	@JsonProperty
+	public ClientHealthStatus getMentalHealthStatus() {
+		return mentalHealthStatus;
+	}
+
+	@JsonProperty
+	public void setMentalHealthStatus(ClientHealthStatus mentalHealthStatus) {
+		this.mentalHealthStatus = mentalHealthStatus;
+	}
+
+	@JsonProperty
+	public ClientExitAction getWrittenAftercarePlan() {
+		return writtenAftercarePlan;
+	}
+
+	@JsonProperty
+	public void setWrittenAftercarePlan(ClientExitAction writtenAftercarePlan) {
+		this.writtenAftercarePlan = writtenAftercarePlan;
+	}
+
+	@JsonProperty
+	public ClientExitAction getAssistanceMainstreamBenefits() {
+		return assistanceMainstreamBenefits;
+	}
+
+	@JsonProperty
+	public void setAssistanceMainstreamBenefits(
+			ClientExitAction assistanceMainstreamBenefits) {
+		this.assistanceMainstreamBenefits = assistanceMainstreamBenefits;
+	}
+
+	@JsonProperty
+	public ClientExitAction getPermanentHousingPlacement() {
+		return permanentHousingPlacement;
+	}
+
+	@JsonProperty
+	public void setPermanentHousingPlacement(
+			ClientExitAction permanentHousingPlacement) {
+		this.permanentHousingPlacement = permanentHousingPlacement;
+	}
+
+	@JsonProperty
+	public ClientExitAction getTemporaryShelterPlacement() {
+		return temporaryShelterPlacement;
+	}
+
+	@JsonProperty
+	public void setTemporaryShelterPlacement(
+			ClientExitAction temporaryShelterPlacement) {
+		this.temporaryShelterPlacement = temporaryShelterPlacement;
+	}
+
+	@JsonProperty
+	public ClientExitAction getExitCounciling() {
+		return exitCounciling;
+	}
+
+	@JsonProperty
+	public void setExitCounciling(ClientExitAction exitCounciling) {
+		this.exitCounciling = exitCounciling;
+	}
+
+	@JsonProperty
+	public ClientExitAction getFurtherFollowupServices() {
+		return furtherFollowupServices;
+	}
+
+	@JsonProperty
+	public void setFurtherFollowupServices(ClientExitAction furtherFollowupServices) {
+		this.furtherFollowupServices = furtherFollowupServices;
+	}
+
+	@JsonProperty
+	public ClientExitAction getScheduledFollowupContacts() {
+		return scheduledFollowupContacts;
+	}
+
+	@JsonProperty
+	public void setScheduledFollowupContacts(
+			ClientExitAction scheduledFollowupContacts) {
+		this.scheduledFollowupContacts = scheduledFollowupContacts;
+	}
+
+	@JsonProperty
+	public ClientExitAction getResourcePackage() {
+		return resourcePackage;
+	}
+
+	@JsonProperty
+	public void setResourcePackage(ClientExitAction resourcePackage) {
+		this.resourcePackage = resourcePackage;
+	}
+
+	@JsonProperty
+	public ClientExitAction getOtherAftercarePlanOrAction() {
+		return otherAftercarePlanOrAction;
+	}
+
+	@JsonProperty
+	public void setOtherAftercarePlanOrAction(
+			ClientExitAction otherAftercarePlanOrAction) {
+		this.otherAftercarePlanOrAction = otherAftercarePlanOrAction;
+	}
+
+	@JsonProperty
+	public ClientProjectCompletionStatus getProjectCompletionStatus() {
+		return projectCompletionStatus;
+	}
+
+	@JsonProperty
+	public void setProjectCompletionStatus(
+			ClientProjectCompletionStatus projectCompletionStatus) {
+		this.projectCompletionStatus = projectCompletionStatus;
+	}
+
+	@JsonProperty
+	public ClientEarlyExitReason getEarlyExitReason() {
+		return earlyExitReason;
+	}
+
+	@JsonProperty
+	public void setEarlyExitReason(ClientEarlyExitReason earlyExitReason) {
+		this.earlyExitReason = earlyExitReason;
+	}
+
+	@JsonProperty
+	public ClientExpelledReason getEarlyExpulsionReason() {
+		return earlyExpulsionReason;
+	}
+
+	@JsonProperty
+	public void setEarlyExpulsionReason(ClientExpelledReason earlyExpulsionReason) {
+		this.earlyExpulsionReason = earlyExpulsionReason;
+	}
+
+	@JsonProperty
+	public YesNoReason getFamilyReunificationCode() {
+		return familyReunificationCode;
+	}
+
+	@JsonProperty
+	public void setFamilyReunificationCode(YesNoReason familyReunificationCode) {
+		this.familyReunificationCode = familyReunificationCode;
+	}
 }
