@@ -33,8 +33,10 @@ public class EnrollmentVO {
 	 * The client object represents a client enrollment record
 	 * Fields returned with the client object represent fields marked as "At project entry" in the HUD standards
 	 */
-	private String personalId;
 	private String enrollmentId;
+	
+	// The client object associated with this enrollment
+	private String personalId;
 
 	// Project Exit Object
 	private ClientExitVO projectExit;
@@ -161,7 +163,7 @@ public class EnrollmentVO {
 	// PATH Specific Data Standards: PATH Status (2014, 4.20)
 	// Collection: Once, before exit.
 	private Date dateOfPathStatus;
-	private YesNo clentEnrolledInPath;
+	private YesNo clientEnrolledInPath;
 	private ClientReasonNotEnrolled reasonNotEnrolled;
 
 	// RHY Specific Data Standards: RHY-BCP Status (2014, 4.22)
@@ -668,13 +670,13 @@ public class EnrollmentVO {
 	}
 
 	@JsonProperty
-	public YesNo getClentEnrolledInPath() {
-		return clentEnrolledInPath;
+	public YesNo getClientEnrolledInPath() {
+		return clientEnrolledInPath;
 	}
 
 	@JsonProperty
-	public void setClentEnrolledInPath(YesNo clentEnrolledInPath) {
-		this.clentEnrolledInPath = clentEnrolledInPath;
+	public void setClientEnrolledInPath(YesNo clientEnrolledInPath) {
+		this.clientEnrolledInPath = clientEnrolledInPath;
 	}
 
 	@JsonProperty
