@@ -141,7 +141,20 @@ public class ClientManager {
 	
 	public boolean deleteClient(String personalId) {
 		PathClient pathClient = pathClientDAO.getPathClientByClientKey(Integer.parseInt(personalId));
-		return pathClientDAO.delete(pathClient);
+		pathClientDAO.delete(pathClient);
+
+		// Delete associated races
+		List<PathClientRace> pathRaces = pathClientRaceDAO.getPathRacesByClientKey(pathClient.getClientKey());
+		for (Iterator<PathClientRace> iterator = pathRaces.iterator(); iterator.hasNext();) {
+			PathClientRace pathRace = iterator.next();
+			pathClientRaceDAO.delete(pathRace);
+		}
+		
+		// Delete associated veteran info
+		PathClientVeteranInfo pathClientVeteranInfo = pathClientVeteranInfoDAO.getPathVeteranInfoByClientKey(pathClient.getClientKey());
+		pathClientVeteranInfoDAO.delete(pathClientVeteranInfo);
+		
+		return true;
 	}
 	
 	public static ClientVO generateClientVO(PathClient pathClient, List<PathClientRace> pathRaces, PathClientVeteranInfo pathVeteranInfo) {
