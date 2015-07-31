@@ -130,7 +130,7 @@ Import sample data (or real data, if you have some):
 
 ```shell
         $> for name in src/main/resources/db/data/*.sql; do 
-          mysql -u openhmisrw -p openhmis < ${name}; 
+          mysql -u openhmis_user -p openhmis < ${name}; 
         done
 ```
 
