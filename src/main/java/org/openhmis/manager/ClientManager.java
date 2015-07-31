@@ -81,11 +81,8 @@ public class ClientManager {
 		// Set Compass Required Fields
 		pathClient.setUpdateTimestamp(new Date());
 
-		Session session = pathClientDAO.getSession();
-		Transaction tx = session.beginTransaction();
-		
 		// Save the client to allow secondary object generation
-		session.save(pathClient);
+		pathClientDAO.save(pathClient);
 		inputVO.setPersonalId(pathClient.getClientKey().toString());
 		
 		// Save the races
@@ -93,18 +90,14 @@ public class ClientManager {
 		for (Iterator<PathClientRace> iterator = pathRaces.iterator(); iterator.hasNext();) {
 			PathClientRace pathRace = iterator.next();
 			pathRace.setUpdateTimestamp(new Date());
-			session.save(pathRace);
+			pathClientRaceDAO.save(pathRace);
 		}
 
 		// Save Veteran Info
 		PathClientVeteranInfo pathVeteranInfo = ClientManager.generatePathVeteranInfo(inputVO);
 		pathVeteranInfo.setUpdateTimestamp(new Date());
 		pathVeteranInfo.setClientKey(pathClient.getClientKey());
-		pathVeteranInfo.setYrEnterMilitary(pathClient.getClientKey().toString());
-		pathVeteranInfo.setYrSepMilitary("TEST");
-		session.save(pathVeteranInfo);
-		tx.commit();
-		session.close();
+		pathClientVeteranInfoDAO.save(pathVeteranInfo);
 		
 		// Return the resulting VO
 		return ClientManager.generateClientVO(pathClient, pathRaces, pathVeteranInfo);
