@@ -39,7 +39,7 @@ public class EnrollmentVO {
 	private String personalId;
 
 	// Project Exit Object
-	private ClientExitVO projectExit;
+	private ExitVO projectExit;
 
 	// Universal Data Standard: Disabling Condition (2014, 3.8)
 	// Collection: Project Entry
@@ -307,12 +307,12 @@ public class EnrollmentVO {
 	}
 
 	@JsonProperty
-	public ClientExitVO getProjectExit() {
+	public ExitVO getProjectExit() {
 		return projectExit;
 	}
 
 	@JsonProperty
-	public void setProjectExit(ClientExitVO projectExit) {
+	public void setProjectExit(ExitVO projectExit) {
 		this.projectExit = projectExit;
 	}
 

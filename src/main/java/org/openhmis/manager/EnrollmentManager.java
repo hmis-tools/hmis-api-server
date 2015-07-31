@@ -46,7 +46,7 @@ import org.openhmis.vo.ClientEnrollmentPhysicalDisabilityVO;
 import org.openhmis.vo.ClientEnrollmentReferralVO;
 import org.openhmis.vo.ClientEnrollmentServiceVO;
 import org.openhmis.vo.ClientEnrollmentSubstanceAbuseVO;
-import org.openhmis.vo.ClientExitVO;
+import org.openhmis.vo.ExitVO;
 import org.openhmis.vo.EnrollmentVO;
 
 public class EnrollmentManager {
@@ -121,7 +121,7 @@ public class EnrollmentManager {
 		enrollmentVO.setPersonalId(pathClientProgram.getClientKey().toString());
 
 		// Project Exit Object
-		enrollmentVO.setProjectExit(new ClientExitVO());
+		enrollmentVO.setProjectExit(new ExitVO());
 
 		// Universal Data Standard: Disabling Condition (2014, 3.8)
 		enrollmentVO.setDisablingCondition(YesNoReason.NOT_COLLECTED);

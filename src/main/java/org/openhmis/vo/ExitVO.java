@@ -17,10 +17,10 @@ import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ClientExitVO {
+public class ExitVO {
 	
-	private Long exitId;
-	private Long enrollmentId;
+	private String exitId;
+	private String enrollmentId;
 	
 	// Universal Data Standard: Project Entry Date (2014, 3.11)
 	// Collection: Project Exit
@@ -87,25 +87,25 @@ public class ClientExitVO {
 	// Collection: Project Exit
 	private YesNoReason familyReunificationCode;
 
-	public ClientExitVO() {}
+	public ExitVO() {}
 
 	@JsonProperty
-	public Long getExitId() {
+	public String getExitId() {
 		return exitId;
 	}
 
 	@JsonProperty
-	public void setExitId(Long exitId) {
+	public void setExitId(String exitId) {
 		this.exitId = exitId;
 	}
 
 	@JsonProperty
-	public Long getEnrollmentId() {
+	public String getEnrollmentId() {
 		return enrollmentId;
 	}
 
 	@JsonProperty
-	public void setEnrollmentId(Long enrollmentId) {
+	public void setEnrollmentId(String enrollmentId) {
 		this.enrollmentId = enrollmentId;
 	}
 
