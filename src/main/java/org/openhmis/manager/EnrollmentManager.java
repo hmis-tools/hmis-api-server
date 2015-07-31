@@ -87,6 +87,9 @@ public class EnrollmentManager {
 		
 		// Generate a PathClient from the input
 		PathClientProgram pathClientProgram = EnrollmentManager.generatePathClientProgram(inputVO);
+		pathClientProgram.setCreateDate(new Date());
+		pathClientProgram.setUpdateDate(new Date());
+		pathClientProgram.setUpdateTimestamp(new Date());
 		pathClientProgramDAO.save(pathClientProgram);
 		
 		// Return the resulting VO
@@ -94,7 +97,9 @@ public class EnrollmentManager {
 	}
 	
 	public EnrollmentVO updateEnrollment(EnrollmentVO inputVO) {
-		
+		PathClientProgram pathClientProgram = EnrollmentManager.generatePathClientProgram(inputVO);
+		pathClientProgram.setProgramKey(Integer.parseInt(inputVO.getEnrollmentId()));
+
 		// Return the resulting VO
 		return inputVO;
 		
@@ -309,12 +314,11 @@ public class EnrollmentManager {
 	
 	public static PathClientProgram generatePathClientProgram(EnrollmentVO enrollmentVO) {
 		PathClientProgram pathClientProgram = new PathClientProgram();
-		pathClientProgram.setProgramKey(Integer.parseInt(enrollmentVO.getEnrollmentId()));
 		pathClientProgram.setClientKey(Integer.parseInt(enrollmentVO.getPersonalId()));
 		pathClientProgram.setUpdateDate(new Date());
 		pathClientProgram.setUpdateTimestamp(new Date());
 		
-		return new PathClientProgram();
+		return pathClientProgram;
 	}	
 	
 }
