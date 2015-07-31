@@ -9,18 +9,12 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.openhmis.code.ClientAddressDataQuality;
 import org.openhmis.code.ClientCountExchangeForSex;
-import org.openhmis.code.ClientDischargeStatus;
-import org.openhmis.code.ClientDobDataQuality;
 import org.openhmis.code.ClientEmploymentType;
-import org.openhmis.code.ClientEthnicity;
-import org.openhmis.code.ClientGender;
 import org.openhmis.code.ClientHealthStatus;
 import org.openhmis.code.ClientHousingStatus;
 import org.openhmis.code.ClientIncarceratedParentStatus;
 import org.openhmis.code.ClientLastGradeCompleted;
-import org.openhmis.code.ClientMilitaryBranch;
 import org.openhmis.code.ClientMonthsHomelessPastThreeYears;
-import org.openhmis.code.ClientNameDataQuality;
 import org.openhmis.code.ClientNotEmployedReason;
 import org.openhmis.code.ClientPercentAmi;
 import org.openhmis.code.ClientReasonNoServices;
@@ -32,14 +26,11 @@ import org.openhmis.code.ClientResidencePriorLengthOfStay;
 import org.openhmis.code.ClientRhyNumberOfYears;
 import org.openhmis.code.ClientSchoolStatus;
 import org.openhmis.code.ClientSexualOrientation;
-import org.openhmis.code.ClientSsnDataQuality;
 import org.openhmis.code.ClientTimesHomelessPastThreeYears;
-import org.openhmis.code.None;
 import org.openhmis.code.YesNo;
 import org.openhmis.code.YesNoReason;
 import org.openhmis.dao.PathClientProgramDAO;
 import org.openhmis.domain.PathClientProgram;
-import org.openhmis.exception.client.ClientNotFoundException;
 import org.openhmis.vo.ClientEnrollmentChronicHealthConditionVO;
 import org.openhmis.vo.ClientEnrollmentContactVO;
 import org.openhmis.vo.ClientEnrollmentDevelopmentalDisabilityVO;
@@ -78,20 +69,16 @@ public class EnrollmentManager {
 	public List<EnrollmentVO> getEnrollments() {
 		List<EnrollmentVO> enrollmentVOs = new ArrayList<EnrollmentVO>();
 		
-		// Collect the clients
-		//List<PathClient> clients = clientDAO.getClients();
+		// Collect the enrollments
+		List<PathClientProgram> pathClientPrograms = pathClientProgramDAO.getPathClientPrograms();
 		
-		// For each client, collect and map the data
+		// For each enrollment, collect and map the data
 		// TODO: this should be done in a single query
-		// for (Iterator<PathClient> iterator = clients.iterator(); iterator.hasNext();) {
-		// 	PathClient client = iterator.next();
-		// 	Integer clientKey = client.getClientKey();
-		// 	List<PathClientRace> races = clientRaceDAO.getRacesByClientKey(clientKey);
-		// 	PathClientVeteranInfo veteranInfo = clientVeteranInfoDAO.getVeteranInfoByClientKey(clientKey);
-
-		// 	ClientVO clientVO = ClientManager.generateClientVO(client, races, veteranInfo);
-		// 	clientVOs.add(clientVO);
-		// }
+		for (Iterator<PathClientProgram> iterator = pathClientPrograms.iterator(); iterator.hasNext();) {
+		 	PathClientProgram pathClientProgram = iterator.next();
+		 	EnrollmentVO enrollmentVO = EnrollmentManager.generateEnrollmentVO(pathClientProgram);
+		 	enrollmentVOs.add(enrollmentVO);
+		 }
 		
 		return enrollmentVOs;
 	}
@@ -99,21 +86,25 @@ public class EnrollmentManager {
 	public EnrollmentVO addEnrollment(EnrollmentVO inputVO) {
 		
 		// Generate a PathClient from the input
-		//PathClient client = ClientManager.generatePathClient(inputVO);
+		PathClientProgram pathClientProgram = EnrollmentManager.generatePathClientProgram(inputVO);
+		pathClientProgramDAO.save(pathClientProgram);
 		
 		// Return the resulting VO
-		return new EnrollmentVO();
+		return EnrollmentManager.generateEnrollmentVO(pathClientProgram);
 	}
 	
 	public EnrollmentVO updateEnrollment(EnrollmentVO inputVO) {
 		
-		
 		// Return the resulting VO
-		return new EnrollmentVO();
+		return inputVO;
+		
 	}
 	
 	public boolean deleteEnrollment(String enrollmentId) {
-		return false;
+		PathClientProgram pathClientProgram = pathClientProgramDAO.getPathClientProgramByProgramKey(Integer.parseInt(enrollmentId));
+		pathClientProgramDAO.delete(pathClientProgram);
+		
+		return true;
 	}
 	
 	public static EnrollmentVO generateEnrollmentVO(PathClientProgram pathClientProgram) {
@@ -317,6 +308,12 @@ public class EnrollmentManager {
 	}
 	
 	public static PathClientProgram generatePathClientProgram(EnrollmentVO enrollmentVO) {
+		PathClientProgram pathClientProgram = new PathClientProgram();
+		pathClientProgram.setProgramKey(Integer.parseInt(enrollmentVO.getEnrollmentId()));
+		pathClientProgram.setClientKey(Integer.parseInt(enrollmentVO.getPersonalId()));
+		pathClientProgram.setUpdateDate(new Date());
+		pathClientProgram.setUpdateTimestamp(new Date());
+		
 		return new PathClientProgram();
 	}	
 	
