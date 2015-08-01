@@ -8,7 +8,7 @@ Client objects are a 1:1 map to PATH_CLIENT. There are no deleted client records
 
 API Field            | Data source                               | Code Table
 ---------------------|-------------------------------------------|------------
-PersonalID           | (?) CLIENT_KEY                            |
+PersonalID           | CLIENT_KEY                                |
 FirstName            | FIRST_NAME                                |
 MiddleName           | MIDDLE_NAME                               |
 LastName             | LAST_NAME                                 |
@@ -50,16 +50,17 @@ DateDeleted          | (N/A)                                     |
 
 (?) Is there one enrolment per household? Or one enrolment per household-client? (??) are the verb enrollment and the noun enrolment _really_ spelled differentl?
 Enrollments have a many:1 relationship with PATH_CLIENT_PROGRAM. (one PATH_CLIENT_PROGRAM row must be joined with PATH_HOUSEHOLD_CLIENT to create on row per client in the household at the time)
+Elements in the Data Source field are fields from PATH_CLIENT_PROGRAM, unless stated otherwise. Enrollments are attached to a single member of a household and extend to the rest of the household. The other clients can be found by extracting the full set of client keys from PATH_HOUSEHOLD_CLIENT based on the enrolling member's HOUSEHOLD_KEY. This mapping is denoted in the Data Source field by (PATH_HOUSEHOLD_CLIENT.CLIENT_KEY) -> table.field to indicate that the household member's client key should be used as the constraint to lookup the table.field value.
 
 API Field                                                 | Data source                              | Code Table
 ----------------------------------------------------------|------------------------------------------|------------
 (?) ClientEnrollmentID                                    | PROGRAM_KEY                              |
 ClientId                                                  | PATH_HOUSEHOLD_CLIENT.CLIENT_KEY         |
 (?) ProjectID                                             | PROGRAM_NAME_KEY                         |
-DisablingConditionCode                                    |                                          |
-TypeOfResidenceCode                                       |                                          |
-OtherResidence                                            |                                          |
-LengthOfStayInPreviousPlaceCode                           |                                          |
+DisablingConditionCode                                    | (PATH_HOUSEHOLD_CLIENT.CLIENT_KEY) -> PATH_CLIENT.DISABLING_CONDITION |
+TypeOfResidenceCode                                       | (PATH_HOUSEHOLD_CLIENT.CLIENT_KEY) -> PATH_CLIENT_CHRONIC_HOMELESS.max(ENTRY_DATE) -> PATH_CLIENT_CHRONIC_HOMELESS.PRIOR_NIGHTS_RESIDENCE | PATH_CODE_RESIDENCE_TYPE
+OtherResidence                                            | (PATH_HOUSEHOLD_CLIENT.CLIENT_KEY) -> PATH_CLIENT_CHRONIC_HOMELESS.max(ENTRY_DATE) -> PATH_CLIENT_CHRONIC_HOMELESS.PRIOR_RESIDENCE_OTHER | 
+LengthOfStayInPreviousPlaceCode                           | (PATH_HOUSEHOLD_CLIENT.CLIENT_KEY) -> PATH_CLIENT_CHRONIC_HOMELESS.max(ENTRY_DATE) -> PATH_CLIENT_CHRONIC_HOMELESS.PRIOR_NIGHTS_RESIDENCE | PATH_CODE_LENGTH_OF_STAY
 ProjectEntryDate                                          | ENTRY_DATE                               |
 ProjectExitDate                                           | EXIT_DATE                                |
 DestinationTypeCode                                       | DESTINATION_KEY                          | PATH_CODE_DESTINATION (where STATUS=A)
