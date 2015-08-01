@@ -8,36 +8,36 @@ import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ClientEnrollmentHivAidsVO {
-	private Long hivAidsId;
-	private Long enrollmentId;
+public class DevelopmentalDisabilityVO {
+	private String developmentalDisabilityId;
+	private String enrollmentId;
 
-	// Program Specific Data Standards: HIV/AIDS (2014, 4.8)
+	// Program Specific Data Standards: Physical Disability (2014, 4.5)
 	private Date informationDate;
 	private YesNoReason response;
 	private YesNoReason indefiniteAndImpairs;
 	private YesNo documentationOnFile;
 	private YesNoReason receivingServices;
 
-	public ClientEnrollmentHivAidsVO() {}
+	public DevelopmentalDisabilityVO() {}
 
 	@JsonProperty
-	public Long getHivAidsId() {
-		return hivAidsId;
+	public String getDevelopmentalDisabilityId() {
+		return developmentalDisabilityId;
 	}
 
 	@JsonProperty
-	public void setHivAidsId(Long hivAidsId) {
-		this.hivAidsId = hivAidsId;
+	public void setDevelopmentalDisabilityId(String developmentalDisabilityId) {
+		this.developmentalDisabilityId = developmentalDisabilityId;
 	}
 
 	@JsonProperty
-	public Long getEnrollmentId() {
+	public String getEnrollmentId() {
 		return enrollmentId;
 	}
 
 	@JsonProperty
-	public void setEnrollmentId(Long enrollmentId) {
+	public void setEnrollmentId(String enrollmentId) {
 		this.enrollmentId = enrollmentId;
 	}
 
@@ -93,4 +93,3 @@ public class ClientEnrollmentHivAidsVO {
 	
 	
 }
-

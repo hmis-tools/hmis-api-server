@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.openhmis.code.ClientDischargeStatus;
 import org.openhmis.code.ClientDobDataQuality;
 import org.openhmis.code.ClientEthnicity;
@@ -23,7 +21,6 @@ import org.openhmis.dao.PathClientVeteranInfoDAO;
 import org.openhmis.domain.PathClient;
 import org.openhmis.domain.PathClientRace;
 import org.openhmis.domain.PathClientVeteranInfo;
-import org.openhmis.exception.client.ClientNotFoundException;
 import org.openhmis.manager.ClientManager;
 import org.openhmis.vo.ClientVO;
 
@@ -35,7 +32,7 @@ public class ClientManager {
 	
 	public ClientManager() {}
 
-	public ClientVO getClientByPersonalId(String personalId) throws ClientNotFoundException {
+	public ClientVO getClientByPersonalId(String personalId) {
 		Integer clientKey = Integer.parseInt(personalId);
 		
 		// Collect the data for this client

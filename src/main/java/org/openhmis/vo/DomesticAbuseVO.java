@@ -9,34 +9,34 @@ import org.openhmis.code.YesNoReason;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class ClientEnrollmentDomesticAbuseVO {
-	private Long domesticAbuseId;
-	private Long enrollmentId;
+public class DomesticAbuseVO {
+	private String domesticAbuseId;
+	private String enrollmentId;
 
 	// Program Specific Data Standards: Domestic Abuse (2014, 4.11)
 	private Date informationDate;
 	private YesNoReason domesticViolenceVictim;
 	private ClientWhenDvOccurred whenOccurred;
 
-	public ClientEnrollmentDomesticAbuseVO() {}
+	public DomesticAbuseVO() {}
 
 	@JsonProperty
-	public Long getDomesticAbuseId() {
+	public String getDomesticAbuseId() {
 		return domesticAbuseId;
 	}
 
 	@JsonProperty
-	public void setDomesticAbuseId(Long domesticAbuseId) {
+	public void setDomesticAbuseId(String domesticAbuseId) {
 		this.domesticAbuseId = domesticAbuseId;
 	}
 
 	@JsonProperty
-	public Long getEnrollmentId() {
+	public String getEnrollmentId() {
 		return enrollmentId;
 	}
 
 	@JsonProperty
-	public void setEnrollmentId(Long enrollmentId) {
+	public void setEnrollmentId(String enrollmentId) {
 		this.enrollmentId = enrollmentId;
 	}
 

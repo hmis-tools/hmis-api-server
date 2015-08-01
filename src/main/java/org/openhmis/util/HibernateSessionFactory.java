@@ -9,12 +9,10 @@ package org.openhmis.util;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 import javax.naming.InitialContext;
-import javax.naming.NamingException;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;

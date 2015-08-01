@@ -9,9 +9,9 @@ import org.openhmis.code.YesNoReason;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class ClientEnrollmentHopwaMedicalAssistanceVO {
-	private Long hopwaMedicalAssistanceId;
-	private Long enrollmentId;
+public class MedicalAssistanceVO {
+	private String medicalAssistanceId;
+	private String enrollmentId;
 
 	// HOPWA Specific Data Standards: Medical Assistance (2014, 4.39)
 	private Date informationDate;
@@ -20,25 +20,25 @@ public class ClientEnrollmentHopwaMedicalAssistanceVO {
 	private YesNoReason adap;
 	private ClientNoAssistanceReason noAdapReason;
 
-	public ClientEnrollmentHopwaMedicalAssistanceVO() {}
+	public MedicalAssistanceVO() {}
 
 	@JsonProperty
-	public Long getHopwaMedicalAssistanceId() {
-		return hopwaMedicalAssistanceId;
+	public String getMedicalAssistanceId() {
+		return medicalAssistanceId;
 	}
 
 	@JsonProperty
-	public void setHopwaMedicalAssistanceId(Long hopwaMedicalAssistanceId) {
-		this.hopwaMedicalAssistanceId = hopwaMedicalAssistanceId;
+	public void setMedicalAssistanceId(String medicalAssistanceId) {
+		this.medicalAssistanceId = medicalAssistanceId;
 	}
 
 	@JsonProperty
-	public Long getEnrollmentId() {
+	public String getEnrollmentId() {
 		return enrollmentId;
 	}
 
 	@JsonProperty
-	public void setEnrollmentId(Long enrollmentId) {
+	public void setEnrollmentId(String enrollmentId) {
 		this.enrollmentId = enrollmentId;
 	}
 

@@ -1,7 +1,6 @@
 package org.openhmis.code;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import org.openhmis.code.serialization.CodeSerializer;

@@ -9,9 +9,9 @@ import org.openhmis.code.ClientSsvfFinancialAssistance;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ClientEnrollmentFinancialAssistanceVO {
-	private Long financialAssistanceId;
-	private Long enrollmentId;
+public class FinancialAssistanceVO {
+	private String financialAssistanceId;
+	private String enrollmentId;
 
 	// Program Specific Data Standards: Financial Assets Provided (2014, 4.15)
 	private Date dateProvided;
@@ -24,25 +24,25 @@ public class ClientEnrollmentFinancialAssistanceVO {
 	private ClientSsvfFinancialAssistance ssvfTypeProvided;
 	private Long ssvfFaaAmount;
 
-	public ClientEnrollmentFinancialAssistanceVO() {}
+	public FinancialAssistanceVO() {}
 
 	@JsonProperty
-	public Long getFinancialAssistanceId() {
+	public String getFinancialAssistanceId() {
 		return financialAssistanceId;
 	}
 
 	@JsonProperty
-	public void setFinancialAssistanceId(Long financialAssistanceId) {
+	public void setFinancialAssistanceId(String financialAssistanceId) {
 		this.financialAssistanceId = financialAssistanceId;
 	}
 
 	@JsonProperty
-	public Long getEnrollmentId() {
+	public String getEnrollmentId() {
 		return enrollmentId;
 	}
 
 	@JsonProperty
-	public void setEnrollmentId(Long enrollmentId) {
+	public void setEnrollmentId(String enrollmentId) {
 		this.enrollmentId = enrollmentId;
 	}
 

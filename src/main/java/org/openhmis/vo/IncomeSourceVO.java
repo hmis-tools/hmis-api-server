@@ -8,9 +8,9 @@ import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ClientEnrollmentIncomeSourceVO {
-	private Long incomeSourceId;
-	private Long enrollmentId;
+public class IncomeSourceVO {
+	private String incomeSourceId;
+	private String enrollmentId;
 
 	// Program Specific Data Standards: Income Sources (2014, 4.2)
 	private Date informationDate;
@@ -47,25 +47,25 @@ public class ClientEnrollmentIncomeSourceVO {
 	private YesNo otherIncomeSource;
 	private Double otherIncomeAmount;
 
-	public ClientEnrollmentIncomeSourceVO() {}
+	public IncomeSourceVO() {}
 
 	@JsonProperty
-	public Long getIncomeSourceId() {
+	public String getIncomeSourceId() {
 		return incomeSourceId;
 	}
 
 	@JsonProperty
-	public void setIncomeSourceId(Long incomeSourceId) {
+	public void setIncomeSourceId(String incomeSourceId) {
 		this.incomeSourceId = incomeSourceId;
 	}
 
 	@JsonProperty
-	public Long getEnrollmentId() {
+	public String getEnrollmentId() {
 		return enrollmentId;
 	}
 
 	@JsonProperty
-	public void setEnrollmentId(Long enrollmentId) {
+	public void setEnrollmentId(String enrollmentId) {
 		this.enrollmentId = enrollmentId;
 	}
 

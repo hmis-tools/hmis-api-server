@@ -12,9 +12,9 @@ import org.openhmis.code.ClientSsvfSubType5;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class ClientEnrollmentServiceVO {
-	private Long serviceId;
-	private Long enrollmentId;
+public class ServiceVO {
+	private String serviceId;
+	private String enrollmentId;
 
 	// Program Specific Data Standards: Services Provided (2014, 4.14)
 	private Date dateProvided;
@@ -35,25 +35,25 @@ public class ClientEnrollmentServiceVO {
 	private ClientSsvfSubType5 ssvfDirectSubTypeProvided;
 	private String ssvfOtherService;
 
-	public ClientEnrollmentServiceVO() {}
+	public ServiceVO() {}
 	
 	@JsonProperty
-	public Long getServiceId() {
+	public String getServiceId() {
 		return serviceId;
 	}
 
 	@JsonProperty
-	public void setServiceId(Long serviceId) {
+	public void setServiceId(String serviceId) {
 		this.serviceId = serviceId;
 	}
 
 	@JsonProperty
-	public Long getEnrollmentId() {
+	public String getEnrollmentId() {
 		return enrollmentId;
 	}
 
 	@JsonProperty
-	public void setEnrollmentId(Long enrollmentId) {
+	public void setEnrollmentId(String enrollmentId) {
 		this.enrollmentId = enrollmentId;
 	}
 

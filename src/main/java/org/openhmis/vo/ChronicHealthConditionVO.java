@@ -1,45 +1,43 @@
 package org.openhmis.vo;
 
 import java.util.Date;
+import java.util.List;
 
-import org.openhmis.code.ClientDisabilityResponse;
-import org.openhmis.code.ClientPathHowConfirmed;
 import org.openhmis.code.YesNo;
 import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ClientEnrollmentSubstanceAbuseVO {
-	private Long substanceAbuseId;
-	private Long enrollmentId;
+public class ChronicHealthConditionVO {
+	private String chronicHealthConditionId;
+	private String enrollmentId;
 
-	// Program Specific Data Standards: Substance Abuse (2014, 4.10)
+	// Program Specific Data Standards: Chronic Health Condition (2014, 4.7)
 	private Date informationDate;
-	private ClientDisabilityResponse response;
+	private YesNoReason response;
 	private YesNoReason indefiniteAndImpairs;
 	private YesNo documentationOnFile;
 	private YesNoReason receivingServices;
-	private ClientPathHowConfirmed pathHowConfirmed;
 
-	public ClientEnrollmentSubstanceAbuseVO() {}
+	public ChronicHealthConditionVO() {}
 
 	@JsonProperty
-	public Long getSubstanceAbuseId() {
-		return substanceAbuseId;
+	public String getChronicHealthConditionId() {
+		return chronicHealthConditionId;
 	}
 
 	@JsonProperty
-	public void setSubstanceAbuseId(Long substanceAbuseId) {
-		this.substanceAbuseId = substanceAbuseId;
+	public void setChronicHealthConditionId(String chronicHealthConditionId) {
+		this.chronicHealthConditionId = chronicHealthConditionId;
 	}
 
 	@JsonProperty
-	public Long getEnrollmentId() {
+	public String getEnrollmentId() {
 		return enrollmentId;
 	}
 
 	@JsonProperty
-	public void setEnrollmentId(Long enrollmentId) {
+	public void setEnrollmentId(String enrollmentId) {
 		this.enrollmentId = enrollmentId;
 	}
 
@@ -54,12 +52,12 @@ public class ClientEnrollmentSubstanceAbuseVO {
 	}
 
 	@JsonProperty
-	public ClientDisabilityResponse getResponse() {
+	public YesNoReason getResponse() {
 		return response;
 	}
 
 	@JsonProperty
-	public void setResponse(ClientDisabilityResponse response) {
+	public void setResponse(YesNoReason response) {
 		this.response = response;
 	}
 
@@ -93,14 +91,6 @@ public class ClientEnrollmentSubstanceAbuseVO {
 		this.receivingServices = receivingServices;
 	}
 
-	@JsonProperty
-	public ClientPathHowConfirmed getPathHowConfirmed() {
-		return pathHowConfirmed;
-	}
-
-	@JsonProperty
-	public void setPathHowConfirmed(ClientPathHowConfirmed pathHowConfirmed) {
-		this.pathHowConfirmed = pathHowConfirmed;
-	}
+	
 }
 

@@ -9,9 +9,9 @@ import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ClientEnrollmentHealthInsuranceVO {
-	private Long healthInsuranceId;
-	private Long enrollmentId;
+public class HealthInsuranceVO {
+	private String healthInsuranceId;
+	private String enrollmentId;
 
 	// Program Specific Data Standards: Health Insurance (2014, 4.4)
 	private Date informationDate;
@@ -33,25 +33,25 @@ public class ClientEnrollmentHealthInsuranceVO {
 	private YesNo stateHealthIns;
 	private ClientReasonNotInsured noStateHealthInsReason;
 
-	public ClientEnrollmentHealthInsuranceVO() {}
+	public HealthInsuranceVO() {}
 
 	@JsonProperty
-	public Long getHealthInsuranceId() {
+	public String getHealthInsuranceId() {
 		return healthInsuranceId;
 	}
 
 	@JsonProperty
-	public void setHealthInsuranceId(Long healthInsuranceId) {
+	public void setHealthInsuranceId(String healthInsuranceId) {
 		this.healthInsuranceId = healthInsuranceId;
 	}
 
 	@JsonProperty
-	public Long getEnrollmentId() {
+	public String getEnrollmentId() {
 		return enrollmentId;
 	}
 
 	@JsonProperty
-	public void setEnrollmentId(Long enrollmentId) {
+	public void setEnrollmentId(String enrollmentId) {
 		this.enrollmentId = enrollmentId;
 	}
 

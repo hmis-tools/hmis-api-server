@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.openhmis.code.ClientAddressDataQuality;
 import org.openhmis.code.ClientCountExchangeForSex;
 import org.openhmis.code.ClientEmploymentType;
@@ -31,21 +29,21 @@ import org.openhmis.code.YesNo;
 import org.openhmis.code.YesNoReason;
 import org.openhmis.dao.PathClientProgramDAO;
 import org.openhmis.domain.PathClientProgram;
-import org.openhmis.vo.ClientEnrollmentChronicHealthConditionVO;
-import org.openhmis.vo.ClientEnrollmentContactVO;
-import org.openhmis.vo.ClientEnrollmentDevelopmentalDisabilityVO;
-import org.openhmis.vo.ClientEnrollmentDomesticAbuseVO;
-import org.openhmis.vo.ClientEnrollmentFinancialAssistanceVO;
-import org.openhmis.vo.ClientEnrollmentHealthInsuranceVO;
-import org.openhmis.vo.ClientEnrollmentHivAidsVO;
-import org.openhmis.vo.ClientEnrollmentHopwaMedicalAssistanceVO;
-import org.openhmis.vo.ClientEnrollmentIncomeSourceVO;
-import org.openhmis.vo.ClientEnrollmentMentalHealthProblemVO;
-import org.openhmis.vo.ClientEnrollmentNonCashBenefitVO;
-import org.openhmis.vo.ClientEnrollmentPhysicalDisabilityVO;
-import org.openhmis.vo.ClientEnrollmentReferralVO;
-import org.openhmis.vo.ClientEnrollmentServiceVO;
-import org.openhmis.vo.ClientEnrollmentSubstanceAbuseVO;
+import org.openhmis.vo.ChronicHealthConditionVO;
+import org.openhmis.vo.ContactVO;
+import org.openhmis.vo.DevelopmentalDisabilityVO;
+import org.openhmis.vo.DomesticAbuseVO;
+import org.openhmis.vo.FinancialAssistanceVO;
+import org.openhmis.vo.HealthInsuranceVO;
+import org.openhmis.vo.HivAidsStatusVO;
+import org.openhmis.vo.MedicalAssistanceVO;
+import org.openhmis.vo.IncomeSourceVO;
+import org.openhmis.vo.MentalHealthProblemVO;
+import org.openhmis.vo.NonCashBenefitVO;
+import org.openhmis.vo.PhysicalDisabilityVO;
+import org.openhmis.vo.ReferralVO;
+import org.openhmis.vo.ServiceVO;
+import org.openhmis.vo.SubstanceAbuseVO;
 import org.openhmis.vo.ExitVO;
 import org.openhmis.vo.EnrollmentVO;
 
@@ -156,49 +154,49 @@ public class EnrollmentManager {
 		enrollmentVO.setHousingStatus(ClientHousingStatus.NOT_COLLECTED);
 
 		// Program Specific Data Standards: Income Sources (2014, 4.2)
-		enrollmentVO.setIncomeSources(new ArrayList<ClientEnrollmentIncomeSourceVO>());
+		enrollmentVO.setIncomeSources(new ArrayList<IncomeSourceVO>());
 
 		// Program Specific Data Standards: Non-cash Benefits (2014, 4.3)
-		enrollmentVO.setNonCashBenefits(new ArrayList<ClientEnrollmentNonCashBenefitVO>());
+		enrollmentVO.setNonCashBenefits(new ArrayList<NonCashBenefitVO>());
 
 		// Program Specific Data Standards: Health Insurance (2014, 4.4)
-		enrollmentVO.setHealthInsurances(new ArrayList<ClientEnrollmentHealthInsuranceVO>());
+		enrollmentVO.setHealthInsurances(new ArrayList<HealthInsuranceVO>());
 
 		// Program Specific Data Standards: Physical Disability (2014, 4.5)
-		enrollmentVO.setPhysicalDisabilities(new ArrayList<ClientEnrollmentPhysicalDisabilityVO>());
+		enrollmentVO.setPhysicalDisabilities(new ArrayList<PhysicalDisabilityVO>());
 
 		// Program Specific Data Standards: Developmental Disability (2014, 4.6)
-		enrollmentVO.setDevelopmentalDisabilities(new ArrayList<ClientEnrollmentDevelopmentalDisabilityVO>());
+		enrollmentVO.setDevelopmentalDisabilities(new ArrayList<DevelopmentalDisabilityVO>());
 		
 		// Program Specific Data Standards: Chronic Health Condition (2014, 4.7)
-		enrollmentVO.setChronicHealthConditions(new ArrayList<ClientEnrollmentChronicHealthConditionVO>());
+		enrollmentVO.setChronicHealthConditions(new ArrayList<ChronicHealthConditionVO>());
 
 		// Program Specific Data Standards: HIV/AIDS (2014, 4.8)
-		enrollmentVO.setHivAidsStatuses(new ArrayList<ClientEnrollmentHivAidsVO>());
+		enrollmentVO.setHivAidsStatuses(new ArrayList<HivAidsStatusVO>());
 
 		// Program Specific Data Standards: Mental Health Problem (2014, 4.9)
-		enrollmentVO.setMentalHealthProblems(new ArrayList<ClientEnrollmentMentalHealthProblemVO>());
+		enrollmentVO.setMentalHealthProblems(new ArrayList<MentalHealthProblemVO>());
 
 		// Program Specific Data Standards: Substance Abuse (2014, 4.10)
-		enrollmentVO.setSubstanceAbuses(new ArrayList<ClientEnrollmentSubstanceAbuseVO>());
+		enrollmentVO.setSubstanceAbuses(new ArrayList<SubstanceAbuseVO>());
 
 		// Program Specific Data Standards: Domestic Abuse (2014, 4.11)
-		enrollmentVO.setDomesticAbuses(new ArrayList<ClientEnrollmentDomesticAbuseVO>());
+		enrollmentVO.setDomesticAbuses(new ArrayList<DomesticAbuseVO>());
 
 		// Program Specific Data Standards: Contact (2014, 4.12)
-		enrollmentVO.setContacts(new ArrayList<ClientEnrollmentContactVO>());
+		enrollmentVO.setContacts(new ArrayList<ContactVO>());
 
 		// Program Specific Data Standards: Date of Engagement (2014, 4.13)
 		enrollmentVO.setDateOfEngagement(pathClientProgram.getEngagementDate());
 
 		// Program Specific Data Standards: Services Provided (2014, 4.14)
-		enrollmentVO.setServices(new ArrayList<ClientEnrollmentServiceVO>());
+		enrollmentVO.setServices(new ArrayList<ServiceVO>());
 
 		// Program Specific Data Standards: Financial Assets Provided (2014, 4.15)
-		enrollmentVO.setFinancialAssistances(new ArrayList<ClientEnrollmentFinancialAssistanceVO>());
+		enrollmentVO.setFinancialAssistances(new ArrayList<FinancialAssistanceVO>());
 
 		// Program Specific Data Standards: References Provided (2014, 4.16)
-		enrollmentVO.setReferrals(new ArrayList<ClientEnrollmentReferralVO>());
+		enrollmentVO.setReferrals(new ArrayList<ReferralVO>());
 
 		// Program Specific Data Standards: Residential Move-in Date (2014, 4.17)
 		enrollmentVO.setResidentialMoveInDate(new Date());
@@ -290,7 +288,7 @@ public class EnrollmentManager {
 		enrollmentVO.setAskedOrForcedToExchangeForSex(YesNoReason.NOT_COLLECTED);
 
 		// HOPWA Specific Data Standards: Medical Assistance (2014, 4.39)
-		enrollmentVO.setMedicalAssistances(new ArrayList<ClientEnrollmentHopwaMedicalAssistanceVO>());
+		enrollmentVO.setMedicalAssistances(new ArrayList<MedicalAssistanceVO>());
 
 		// RHSP Specific Data Standards: Worst Housing Situation (2014, 4.40)
 		enrollmentVO.setWorstHousingSituation(YesNoReason.NOT_COLLECTED);

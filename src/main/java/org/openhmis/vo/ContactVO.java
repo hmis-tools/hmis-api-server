@@ -7,33 +7,33 @@ import org.openhmis.code.ClientContactLocation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ClientEnrollmentContactVO {
-	private Long contactId;
-	private Long enrollmentId;
+public class ContactVO {
+	private String contactId;
+	private String enrollmentId;
 
 	// Program Specific Data Standards: Contact (2014, 4.12)
 	private Date dateProvided;
 	private ClientContactLocation typeProvided;
 	
-	public ClientEnrollmentContactVO() {}
+	public ContactVO() {}
 
 	@JsonProperty
-	public Long getContactId() {
+	public String getContactId() {
 		return contactId;
 	}
 
 	@JsonProperty
-	public void setContactId(Long contactId) {
+	public void setContactId(String contactId) {
 		this.contactId = contactId;
 	}
 
 	@JsonProperty
-	public Long getEnrollmentId() {
+	public String getEnrollmentId() {
 		return enrollmentId;
 	}
 
 	@JsonProperty
-	public void setEnrollmentId(Long enrollmentId) {
+	public void setEnrollmentId(String enrollmentId) {
 		this.enrollmentId = enrollmentId;
 	}
 

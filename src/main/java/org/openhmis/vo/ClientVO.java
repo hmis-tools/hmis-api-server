@@ -3,7 +3,6 @@
 package org.openhmis.vo;
 
 import java.util.Date;
-import java.util.Set;
 
 import org.openhmis.code.ClientDischargeStatus;
 import org.openhmis.code.ClientEthnicity;
@@ -15,10 +14,8 @@ import org.openhmis.code.ClientDobDataQuality;
 import org.openhmis.code.None;
 import org.openhmis.code.YesNo;
 import org.openhmis.code.YesNoReason;
-import org.openhmis.code.serialization.CodeSerializer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class ClientVO {
 	

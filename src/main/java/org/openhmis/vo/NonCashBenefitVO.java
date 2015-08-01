@@ -8,9 +8,9 @@ import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ClientEnrollmentNonCashBenefitVO {
-	private Long nonCashBenefitId;
-	private Long enrollmentId;
+public class NonCashBenefitVO {
+	private String nonCashBenefitId;
+	private String enrollmentId;
 
 	// Program Specific Data Standards: Non-cash Benefits (2014, 4.3)
 	private Date informationDate;
@@ -25,25 +25,25 @@ public class ClientEnrollmentNonCashBenefitVO {
 	private YesNo rentalAssistanceTemp;
 	private String otherBenefitsSourceIdentify;
 
-	public ClientEnrollmentNonCashBenefitVO() {}
+	public NonCashBenefitVO() {}
 
 	@JsonProperty
-	public Long getNonCashBenefitId() {
+	public String getNonCashBenefitId() {
 		return nonCashBenefitId;
 	}
 
 	@JsonProperty
-	public void setNonCashBenefitId(Long nonCashBenefitId) {
+	public void setNonCashBenefitId(String nonCashBenefitId) {
 		this.nonCashBenefitId = nonCashBenefitId;
 	}
 
 	@JsonProperty
-	public Long getEnrollmentId() {
+	public String getEnrollmentId() {
 		return enrollmentId;
 	}
 
 	@JsonProperty
-	public void setEnrollmentId(Long enrollmentId) {
+	public void setEnrollmentId(String enrollmentId) {
 		this.enrollmentId = enrollmentId;
 	}
 

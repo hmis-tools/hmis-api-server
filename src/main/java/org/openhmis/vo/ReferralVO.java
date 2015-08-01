@@ -11,9 +11,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 
-public class ClientEnrollmentReferralVO {
-	private Long referralId;
-	private Long enrollmentId;
+public class ReferralVO {
+	private String referralId;
+	private String enrollmentId;
 
 	// Program Specific Data Standards: References Provided (2014, 4.16)
 	private Date referralDate;
@@ -25,25 +25,25 @@ public class ClientEnrollmentReferralVO {
 	// RHY (2014, 4.16B)
 	private ClientRhyReferral rhyTypeProvided;
 
-	public ClientEnrollmentReferralVO() {}
+	public ReferralVO() {}
 	
 	@JsonProperty
-	public Long getReferralId() {
+	public String getReferralId() {
 		return referralId;
 	}
 
 	@JsonProperty
-	public void setReferralId(Long referralId) {
+	public void setReferralId(String referralId) {
 		this.referralId = referralId;
 	}
 
 	@JsonProperty
-	public Long getEnrollmentId() {
+	public String getEnrollmentId() {
 		return enrollmentId;
 	}
 
 	@JsonProperty
-	public void setEnrollmentId(Long enrollmentId) {
+	public void setEnrollmentId(String enrollmentId) {
 		this.enrollmentId = enrollmentId;
 	}
 
