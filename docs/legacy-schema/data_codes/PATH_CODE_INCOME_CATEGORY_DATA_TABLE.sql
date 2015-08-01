@@ -1,0 +1,27 @@
+REM INSERTING into PATH_CODE_INCOME_CATEGORY
+SET DEFINE OFF;
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (0,'A','Employment Income *');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (1,'A','Supplemental Security Income (SSI) *');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (2,'A','Veterans Benefits *');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (3,'A','Social Security *');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (5,'A','Food Stamps *');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (6,'A','Other *');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (109,'A','(none)');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (110,'A','Social Security Disability Income (SSDI) *');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (111,'A','General Public Assistance *');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (112,'A','Temporary Aid to Needy Families(TANF) *');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (113,'A','Child Support *');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (114,'A','Unemployment Benefits *');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (115,'A','Labor pool');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (116,'A','No Financial Resources *');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (117,'A','Medicare *');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (118,'A','Medicaid *');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (119,'A','WIC');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (120,'A','Pension');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (121,'A','Workers Compensation');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (4,'I','TANF');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (122,'A','Rental Income');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (123,'I','Private Disability Insurance');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (124,'I','Alimony or other spousal suppor');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (125,'I','State Children''s Health Insurance Program (or local name)');
+Insert into PATH_CODE_INCOME_CATEGORY (CODE_KEY,STATUS,DESCRIPTION) values (126,'I','Section 8, public housing, or other rental assistance');
