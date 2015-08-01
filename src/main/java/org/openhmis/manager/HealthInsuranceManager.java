@@ -3,27 +3,27 @@ package org.openhmis.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openhmis.vo.HealthInsuranceVO;
+import org.openhmis.dto.HealthInsuranceDTO;
 
 public class HealthInsuranceManager {
 
 	public HealthInsuranceManager() {}
 
-	public HealthInsuranceVO getHealthInsuranceById(String enrollmentId) {
-		HealthInsuranceVO healthInsuranceVO = new HealthInsuranceVO();
-		return healthInsuranceVO;
+	public HealthInsuranceDTO getHealthInsuranceById(String enrollmentId) {
+		HealthInsuranceDTO healthInsuranceDTO = new HealthInsuranceDTO();
+		return healthInsuranceDTO;
 	}
 
-	public List<HealthInsuranceVO> getHealthInsurancesByEnrollmentId(String enrollmentId) {
-		List<HealthInsuranceVO> healthInsuranceVOs = new ArrayList<HealthInsuranceVO>();
-		return healthInsuranceVOs;
+	public List<HealthInsuranceDTO> getHealthInsurancesByEnrollmentId(String enrollmentId) {
+		List<HealthInsuranceDTO> healthInsuranceDTOs = new ArrayList<HealthInsuranceDTO>();
+		return healthInsuranceDTOs;
 	}
 	
-	public HealthInsuranceVO addHealthInsurance(HealthInsuranceVO inputVO) {
+	public HealthInsuranceDTO addHealthInsurance(HealthInsuranceDTO inputVO) {
 		return inputVO;
 	}
 	
-	public HealthInsuranceVO updateHealthInsurance(HealthInsuranceVO inputVO) {
+	public HealthInsuranceDTO updateHealthInsurance(HealthInsuranceDTO inputVO) {
 		// Return the resulting VO
 		return inputVO;
 		
@@ -33,10 +33,10 @@ public class HealthInsuranceManager {
 		return false;
 	}
 	
-	public static HealthInsuranceVO generateHealthInsuranceVO() {
-		HealthInsuranceVO healthInsuranceVO = new HealthInsuranceVO();
+	public static HealthInsuranceDTO generateHealthInsuranceVO() {
+		HealthInsuranceDTO healthInsuranceDTO = new HealthInsuranceDTO();
 		
-		return healthInsuranceVO;
+		return healthInsuranceDTO;
 	}
 	
 }

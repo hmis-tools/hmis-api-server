@@ -1,4 +1,4 @@
-package org.openhmis.vo;
+package org.openhmis.dto;
 
 import java.util.Date;
 import java.util.List;
@@ -28,7 +28,7 @@ import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class EnrollmentVO {
+public class EnrollmentDTO {
 	/**
 	 * The client object represents a client enrollment record
 	 * Fields returned with the client object represent fields marked as "At project entry" in the HUD standards
@@ -39,7 +39,7 @@ public class EnrollmentVO {
 	private String personalId;
 
 	// Project Exit Object
-	private ExitVO projectExit;
+	private ExitDTO projectExit;
 
 	// Universal Data Standard: Disabling Condition (2014, 3.8)
 	// Collection: Project Entry
@@ -85,57 +85,57 @@ public class EnrollmentVO {
 	// Program Specific Data Standards: Income Sources (2014, 4.2)
 	// Collection: Project Entry, Project Exit, Annual Assessment, Updates
 	// IN ANOTHER OBJECT (IncomeSourceVO.java)
-	List<IncomeSourceVO> incomeSources;
+	List<IncomeSourceDTO> incomeSources;
 
 	// Program Specific Data Standards: Non-cash Benefits (2014, 4.3)
 	// Collection: Project Entry, Project Exit, Annual Assessment, Updates
 	// IN ANOTHER OBJECT (NonCashBenefitVO.java)
-	List<NonCashBenefitVO> nonCashBenefits;
+	List<NonCashBenefitDTO> nonCashBenefits;
 
 	// Program Specific Data Standards: Health Insurance (2014, 4.4)
 	// Collection: Project Entry, Project Exit, Annual Assessment, Updates
 	// IN ANOTHER OBJECT (HealthInsuranceVO.java)
-	List<HealthInsuranceVO> healthInsurances;
+	List<HealthInsuranceDTO> healthInsurances;
 
 	// Program Specific Data Standards: Physical Disability (2014, 4.5)
 	// Collection: Project Entry, Project Exit, Update
 	// IN ANOTHER OBJECT (PhysicalDisabilityVO.java)
-	List<PhysicalDisabilityVO> physicalDisabilities;
+	List<PhysicalDisabilityDTO> physicalDisabilities;
 
 	// Program Specific Data Standards: Developmental Disability (2014, 4.6)
 	// Collection: Project Entry, Project Exit, Update
 	// IN ANOTHER OBJECT (DevelopmentalDisabilityVO.java)
-	List<DevelopmentalDisabilityVO> developmentalDisabilities;
+	List<DevelopmentalDisabilityDTO> developmentalDisabilities;
 
 	// Program Specific Data Standards: Chronic Health Condition (2014, 4.7)
 	// Collection: Project Entry, Project Exit, Update
 	// IN ANOTHER OBJECT (ChronicHealthConditionVO.java)
-	List<ChronicHealthConditionVO> chronicHealthConditions;
+	List<ChronicHealthConditionDTO> chronicHealthConditions;
 
 	// Program Specific Data Standards: HIV/AIDS (2014, 4.8)
 	// Collection: Project Entry, Project Exit, Update
 	// IN ANOTHER OBJECT (HivAidsVO.java)
-	List<HivAidsStatusVO> hivAidsStatuses;
+	List<HivAidsStatusDTO> hivAidsStatuses;
 
 	// Program Specific Data Standards: Mental Health Problem (2014, 4.9)
 	// Collection: Project Entry, Project Exit, Update
 	// IN ANOTHER OBJECT (MentalHealthProblemVO.java)
-	List<MentalHealthProblemVO> mentalHealthProblems;
+	List<MentalHealthProblemDTO> mentalHealthProblems;
 
 	// Program Specific Data Standards: Substance Abuse (2014, 4.10)
 	// Collection: Project Entry, Project Exit, Update
 	// IN ANOTHER OBJECT (SubstanceAbuseVO.java)
-	List<SubstanceAbuseVO> substanceAbuses;
+	List<SubstanceAbuseDTO> substanceAbuses;
 
 	// Program Specific Data Standards: Domestic Abuse (2014, 4.11)
 	// Collection: Project Entry, Update
 	// IN ANOTHER OBJECT (DomesticAbuseVO.java)
-	List<DomesticAbuseVO> domesticAbuses;
+	List<DomesticAbuseDTO> domesticAbuses;
 
 	// Program Specific Data Standards: Contact (2014, 4.12)
 	// Collection: Project Entry, Exit, and Every Contact Point
 	// SEPARATE OBJECT (ContactVO.java)
-	List<ContactVO> contacts;
+	List<ContactDTO> contacts;
 
 	// Program Specific Data Standards: Date of Engagement (2014, 4.13)
 	// Collection: Once, whenever the client becomes engaged
@@ -143,15 +143,15 @@ public class EnrollmentVO {
 
 	// Program Specific Data Standards: Services Provided (2014, 4.14)
 	// SEPARATE OBJECT (ServiceVO.java)
-	List<ServiceVO> services;
+	List<ServiceDTO> services;
 
 	// Program Specific Data Standards: Financial Assets Provided (2014, 4.15)
 	// SEPARATE OBJECT (FinancialAssistanceVO.java)
-	List<FinancialAssistanceVO> financialAssistances;
+	List<FinancialAssistanceDTO> financialAssistances;
 
 	// Program Specific Data Standards: References Provided (2014, 4.16)
 	// SEPARATE OBJECT (ReferralVO.java)
-	List<ReferralVO> referrals;
+	List<ReferralDTO> referrals;
 
 	// Program Specific Data Standards: Residential Move-in Date (2014, 4.17)
 	// Collection: On Entry, keep up to date
@@ -262,7 +262,7 @@ public class EnrollmentVO {
 	// HOPWA Specific Data Standards: Medical Assistance (2014, 4.39)
 	// Collection: Project Entry, exit, update.
 	// OTHER OBJECT: HopwaMedicalAssistanceVO.java
-	private List<MedicalAssistanceVO> medicalAssistances;
+	private List<MedicalAssistanceDTO> medicalAssistances;
 
 	// RHSP Specific Data Standards: Worst Housing Situation (2014, 4.40)
 	// Collection: Project Entry
@@ -284,7 +284,7 @@ public class EnrollmentVO {
 	private Date dateCreated;
 	private Date dateUpdated;
 
-	public EnrollmentVO() {}
+	public EnrollmentDTO() {}
 
 	@JsonProperty
 	public String getEnrollmentId() {
@@ -307,12 +307,12 @@ public class EnrollmentVO {
 	}
 
 	@JsonProperty
-	public ExitVO getProjectExit() {
+	public ExitDTO getProjectExit() {
 		return projectExit;
 	}
 
 	@JsonProperty
-	public void setProjectExit(ExitVO projectExit) {
+	public void setProjectExit(ExitDTO projectExit) {
 		this.projectExit = projectExit;
 	}
 
@@ -471,120 +471,120 @@ public class EnrollmentVO {
 	}
 
 	@JsonProperty
-	public List<IncomeSourceVO> getIncomeSources() {
+	public List<IncomeSourceDTO> getIncomeSources() {
 		return incomeSources;
 	}
 
 	@JsonProperty
-	public void setIncomeSources(List<IncomeSourceVO> incomeSources) {
+	public void setIncomeSources(List<IncomeSourceDTO> incomeSources) {
 		this.incomeSources = incomeSources;
 	}
 
 	@JsonProperty
-	public List<NonCashBenefitVO> getNonCashBenefits() {
+	public List<NonCashBenefitDTO> getNonCashBenefits() {
 		return nonCashBenefits;
 	}
 
 	@JsonProperty
 	public void setNonCashBenefits(
-			List<NonCashBenefitVO> nonCashBenefits) {
+			List<NonCashBenefitDTO> nonCashBenefits) {
 		this.nonCashBenefits = nonCashBenefits;
 	}
 
 	@JsonProperty
-	public List<HealthInsuranceVO> getHealthInsurances() {
+	public List<HealthInsuranceDTO> getHealthInsurances() {
 		return healthInsurances;
 	}
 
 	@JsonProperty
 	public void setHealthInsurances(
-			List<HealthInsuranceVO> healthInsurances) {
+			List<HealthInsuranceDTO> healthInsurances) {
 		this.healthInsurances = healthInsurances;
 	}
 
 	@JsonProperty
-	public List<PhysicalDisabilityVO> getPhysicalDisabilities() {
+	public List<PhysicalDisabilityDTO> getPhysicalDisabilities() {
 		return physicalDisabilities;
 	}
 
 	@JsonProperty
 	public void setPhysicalDisabilities(
-			List<PhysicalDisabilityVO> physicalDisabilities) {
+			List<PhysicalDisabilityDTO> physicalDisabilities) {
 		this.physicalDisabilities = physicalDisabilities;
 	}
 
 	@JsonProperty
-	public List<DevelopmentalDisabilityVO> getDevelopmentalDisabilities() {
+	public List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilities() {
 		return developmentalDisabilities;
 	}
 
 	@JsonProperty
 	public void setDevelopmentalDisabilities(
-			List<DevelopmentalDisabilityVO> developmentalDisabilities) {
+			List<DevelopmentalDisabilityDTO> developmentalDisabilities) {
 		this.developmentalDisabilities = developmentalDisabilities;
 	}
 
 	@JsonProperty
-	public List<ChronicHealthConditionVO> getChronicHealthConditions() {
+	public List<ChronicHealthConditionDTO> getChronicHealthConditions() {
 		return chronicHealthConditions;
 	}
 
 	@JsonProperty
 	public void setChronicHealthConditions(
-			List<ChronicHealthConditionVO> chronicHealthConditions) {
+			List<ChronicHealthConditionDTO> chronicHealthConditions) {
 		this.chronicHealthConditions = chronicHealthConditions;
 	}
 
 	@JsonProperty
-	public List<HivAidsStatusVO> getHivAidsStatuses() {
+	public List<HivAidsStatusDTO> getHivAidsStatuses() {
 		return hivAidsStatuses;
 	}
 
 	@JsonProperty
-	public void setHivAidsStatuses(List<HivAidsStatusVO> hivAidsStatuses) {
+	public void setHivAidsStatuses(List<HivAidsStatusDTO> hivAidsStatuses) {
 		this.hivAidsStatuses = hivAidsStatuses;
 	}
 
 	@JsonProperty
-	public List<MentalHealthProblemVO> getMentalHealthProblems() {
+	public List<MentalHealthProblemDTO> getMentalHealthProblems() {
 		return mentalHealthProblems;
 	}
 
 	@JsonProperty
 	public void setMentalHealthProblems(
-			List<MentalHealthProblemVO> mentalHealthProblems) {
+			List<MentalHealthProblemDTO> mentalHealthProblems) {
 		this.mentalHealthProblems = mentalHealthProblems;
 	}
 
 	@JsonProperty
-	public List<SubstanceAbuseVO> getSubstanceAbuses() {
+	public List<SubstanceAbuseDTO> getSubstanceAbuses() {
 		return substanceAbuses;
 	}
 
 	@JsonProperty
 	public void setSubstanceAbuses(
-			List<SubstanceAbuseVO> substanceAbuses) {
+			List<SubstanceAbuseDTO> substanceAbuses) {
 		this.substanceAbuses = substanceAbuses;
 	}
 
 	@JsonProperty
-	public List<DomesticAbuseVO> getDomesticAbuses() {
+	public List<DomesticAbuseDTO> getDomesticAbuses() {
 		return domesticAbuses;
 	}
 
 	@JsonProperty
 	public void setDomesticAbuses(
-			List<DomesticAbuseVO> domesticAbuses) {
+			List<DomesticAbuseDTO> domesticAbuses) {
 		this.domesticAbuses = domesticAbuses;
 	}
 
 	@JsonProperty
-	public List<ContactVO> getContacts() {
+	public List<ContactDTO> getContacts() {
 		return contacts;
 	}
 
 	@JsonProperty
-	public void setContacts(List<ContactVO> contacts) {
+	public void setContacts(List<ContactDTO> contacts) {
 		this.contacts = contacts;
 	}
 
@@ -599,33 +599,33 @@ public class EnrollmentVO {
 	}
 
 	@JsonProperty
-	public List<ServiceVO> getServices() {
+	public List<ServiceDTO> getServices() {
 		return services;
 	}
 
 	@JsonProperty
-	public void setServices(List<ServiceVO> services) {
+	public void setServices(List<ServiceDTO> services) {
 		this.services = services;
 	}
 
 	@JsonProperty
-	public List<FinancialAssistanceVO> getFinancialAssistances() {
+	public List<FinancialAssistanceDTO> getFinancialAssistances() {
 		return financialAssistances;
 	}
 
 	@JsonProperty
 	public void setFinancialAssistances(
-			List<FinancialAssistanceVO> financialAssistances) {
+			List<FinancialAssistanceDTO> financialAssistances) {
 		this.financialAssistances = financialAssistances;
 	}
 
 	@JsonProperty
-	public List<ReferralVO> getReferrals() {
+	public List<ReferralDTO> getReferrals() {
 		return referrals;
 	}
 
 	@JsonProperty
-	public void setReferrals(List<ReferralVO> referrals) {
+	public void setReferrals(List<ReferralDTO> referrals) {
 		this.referrals = referrals;
 	}
 
@@ -1206,13 +1206,13 @@ public class EnrollmentVO {
 	}
 
 	@JsonProperty
-	public List<MedicalAssistanceVO> getMedicalAssistances() {
+	public List<MedicalAssistanceDTO> getMedicalAssistances() {
 		return medicalAssistances;
 	}
 
 	@JsonProperty
 	public void setMedicalAssistances(
-			List<MedicalAssistanceVO> medicalAssistances) {
+			List<MedicalAssistanceDTO> medicalAssistances) {
 		this.medicalAssistances = medicalAssistances;
 	}
 

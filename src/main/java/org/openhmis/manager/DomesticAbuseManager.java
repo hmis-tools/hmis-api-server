@@ -3,27 +3,27 @@ package org.openhmis.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openhmis.vo.DomesticAbuseVO;
+import org.openhmis.dto.DomesticAbuseDTO;
 
 public class DomesticAbuseManager {
 
 	public DomesticAbuseManager() {}
 
-	public DomesticAbuseVO getDomesticAbuseById(String enrollmentId) {
-		DomesticAbuseVO domesticAbuseVO = new DomesticAbuseVO();
-		return domesticAbuseVO;
+	public DomesticAbuseDTO getDomesticAbuseById(String enrollmentId) {
+		DomesticAbuseDTO domesticAbuseDTO = new DomesticAbuseDTO();
+		return domesticAbuseDTO;
 	}
 
-	public List<DomesticAbuseVO> getDomesticAbusesByEnrollmentId(String enrollmentId) {
-		List<DomesticAbuseVO> domesticAbuseVOs = new ArrayList<DomesticAbuseVO>();
-		return domesticAbuseVOs;
+	public List<DomesticAbuseDTO> getDomesticAbusesByEnrollmentId(String enrollmentId) {
+		List<DomesticAbuseDTO> domesticAbuseDTOs = new ArrayList<DomesticAbuseDTO>();
+		return domesticAbuseDTOs;
 	}
 	
-	public DomesticAbuseVO addDomesticAbuse(DomesticAbuseVO inputVO) {
+	public DomesticAbuseDTO addDomesticAbuse(DomesticAbuseDTO inputVO) {
 		return inputVO;
 	}
 	
-	public DomesticAbuseVO updateDomesticAbuse(DomesticAbuseVO inputVO) {
+	public DomesticAbuseDTO updateDomesticAbuse(DomesticAbuseDTO inputVO) {
 		// Return the resulting VO
 		return inputVO;
 		
@@ -33,10 +33,10 @@ public class DomesticAbuseManager {
 		return false;
 	}
 	
-	public static DomesticAbuseVO generateDomesticAbuseVO() {
-		DomesticAbuseVO domesticAbuseVO = new DomesticAbuseVO();
+	public static DomesticAbuseDTO generateDomesticAbuseVO() {
+		DomesticAbuseDTO domesticAbuseDTO = new DomesticAbuseDTO();
 		
-		return domesticAbuseVO;
+		return domesticAbuseDTO;
 	}
 	
 }

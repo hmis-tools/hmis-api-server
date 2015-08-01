@@ -1,4 +1,4 @@
-package org.openhmis.vo;
+package org.openhmis.dto;
 
 import java.util.Date;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class NonCashBenefitVO {
+public class NonCashBenefitDTO {
 	private String nonCashBenefitId;
 	private String enrollmentId;
 
@@ -25,7 +25,7 @@ public class NonCashBenefitVO {
 	private YesNo rentalAssistanceTemp;
 	private String otherBenefitsSourceIdentify;
 
-	public NonCashBenefitVO() {}
+	public NonCashBenefitDTO() {}
 
 	@JsonProperty
 	public String getNonCashBenefitId() {

@@ -1,4 +1,4 @@
-package org.openhmis.vo;
+package org.openhmis.dto;
 
 import java.util.Date;
 
@@ -17,7 +17,7 @@ import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ExitVO {
+public class ExitDTO {
 	
 	private String exitId;
 	private String enrollmentId;
@@ -87,7 +87,7 @@ public class ExitVO {
 	// Collection: Project Exit
 	private YesNoReason familyReunificationCode;
 
-	public ExitVO() {}
+	public ExitDTO() {}
 
 	@JsonProperty
 	public String getExitId() {

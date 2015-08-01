@@ -1,4 +1,4 @@
-package org.openhmis.vo;
+package org.openhmis.dto;
 
 import java.util.Date;
 import java.util.List;
@@ -7,7 +7,7 @@ import org.openhmis.code.ClientContactLocation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ContactVO {
+public class ContactDTO {
 	private String contactId;
 	private String enrollmentId;
 
@@ -15,7 +15,7 @@ public class ContactVO {
 	private Date dateProvided;
 	private ClientContactLocation typeProvided;
 	
-	public ContactVO() {}
+	public ContactDTO() {}
 
 	@JsonProperty
 	public String getContactId() {

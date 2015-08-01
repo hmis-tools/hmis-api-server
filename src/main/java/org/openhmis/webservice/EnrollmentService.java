@@ -16,6 +16,22 @@ import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 import org.openhmis.code.ClientNameDataQuality;
+import org.openhmis.dto.ChronicHealthConditionDTO;
+import org.openhmis.dto.ContactDTO;
+import org.openhmis.dto.DevelopmentalDisabilityDTO;
+import org.openhmis.dto.DomesticAbuseDTO;
+import org.openhmis.dto.EnrollmentDTO;
+import org.openhmis.dto.ExitDTO;
+import org.openhmis.dto.FinancialAssistanceDTO;
+import org.openhmis.dto.HealthInsuranceDTO;
+import org.openhmis.dto.HivAidsStatusDTO;
+import org.openhmis.dto.IncomeSourceDTO;
+import org.openhmis.dto.MedicalAssistanceDTO;
+import org.openhmis.dto.NonCashBenefitDTO;
+import org.openhmis.dto.PhysicalDisabilityDTO;
+import org.openhmis.dto.ReferralDTO;
+import org.openhmis.dto.ServiceDTO;
+import org.openhmis.dto.SubstanceAbuseDTO;
 import org.openhmis.manager.ChronicHealthConditionManager;
 import org.openhmis.manager.ClientManager;
 import org.openhmis.manager.ContactManager;
@@ -34,22 +50,6 @@ import org.openhmis.manager.PhysicalDisabilityManager;
 import org.openhmis.manager.ReferralManager;
 import org.openhmis.manager.ServiceManager;
 import org.openhmis.manager.SubstanceAbuseManager;
-import org.openhmis.vo.ChronicHealthConditionVO;
-import org.openhmis.vo.ContactVO;
-import org.openhmis.vo.DevelopmentalDisabilityVO;
-import org.openhmis.vo.DomesticAbuseVO;
-import org.openhmis.vo.EnrollmentVO;
-import org.openhmis.vo.ExitVO;
-import org.openhmis.vo.FinancialAssistanceVO;
-import org.openhmis.vo.HealthInsuranceVO;
-import org.openhmis.vo.HivAidsStatusVO;
-import org.openhmis.vo.IncomeSourceVO;
-import org.openhmis.vo.MedicalAssistanceVO;
-import org.openhmis.vo.NonCashBenefitVO;
-import org.openhmis.vo.PhysicalDisabilityVO;
-import org.openhmis.vo.ReferralVO;
-import org.openhmis.vo.ServiceVO;
-import org.openhmis.vo.SubstanceAbuseVO;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -88,16 +88,16 @@ public class EnrollmentService {
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getEnrollments() throws JsonProcessingException {
-		List<EnrollmentVO> enrollmentVOs = enrollmentManager.getEnrollments();
-		return om.writeValueAsString(enrollmentVOs);
+		List<EnrollmentDTO> enrollmentDTOs = enrollmentManager.getEnrollments();
+		return om.writeValueAsString(enrollmentDTOs);
 	}
 	
 	@GET
 	@Path("/{enrollmentId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getClient(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		EnrollmentVO enrollmentVO = enrollmentManager.getEnrollmentById(enrollmentId);
-		return om.writeValueAsString(enrollmentVO);
+		EnrollmentDTO enrollmentDTO = enrollmentManager.getEnrollmentById(enrollmentId);
+		return om.writeValueAsString(enrollmentDTO);
 	}
 
 	@POST
@@ -106,8 +106,8 @@ public class EnrollmentService {
 	public String createEnrollment(String data) throws JsonParseException, JsonMappingException, IOException {
 		// This endpoint takes in a raw json STRING as input.
 		// TODO: support the serialization of individual POST parameters
-		EnrollmentVO inputVO = om.readValue(data, EnrollmentVO.class);
-		EnrollmentVO outputVO = enrollmentManager.addEnrollment(inputVO);
+		EnrollmentDTO inputVO = om.readValue(data, EnrollmentDTO.class);
+		EnrollmentDTO outputVO = enrollmentManager.addEnrollment(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -115,10 +115,10 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String updateEnrollment(@PathParam("enrollmentId") String enrollmentId, String data) throws JsonParseException, JsonMappingException, IOException {
-		EnrollmentVO inputVO = om.readValue(data, EnrollmentVO.class);
+		EnrollmentDTO inputVO = om.readValue(data, EnrollmentDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		
-		EnrollmentVO outputVO = enrollmentManager.updateEnrollment(inputVO);
+		EnrollmentDTO outputVO = enrollmentManager.updateEnrollment(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -136,25 +136,25 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/exits")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getExits(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<ExitVO> exitVOs = exitManager.getExitsByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(exitVOs);
+		List<ExitDTO> exitDTOs = exitManager.getExitsByEnrollmentId(enrollmentId);
+		return om.writeValueAsString(exitDTOs);
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/exits/{exitId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getExit(@PathParam("enrollmentId") String enrollmentId, @PathParam("exitId") String exitId) throws JsonProcessingException {
-		ExitVO exitVO = exitManager.getExitById(exitId);
-		return om.writeValueAsString(exitVO);
+		ExitDTO exitDTO = exitManager.getExitById(exitId);
+		return om.writeValueAsString(exitDTO);
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/exits")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String createExit(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
-		ExitVO inputVO = om.readValue(data, ExitVO.class);
+		ExitDTO inputVO = om.readValue(data, ExitDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		ExitVO outputVO = exitManager.addExit(inputVO);
+		ExitDTO outputVO = exitManager.addExit(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -162,11 +162,11 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/exits/{exitId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String updateExit(@PathParam("enrollmentId") String enrollmentId, @PathParam("exitId") String exitId, String data) throws IOException {
-		ExitVO inputVO = om.readValue(data, ExitVO.class);
+		ExitDTO inputVO = om.readValue(data, ExitDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setExitId(exitId);
 
-		ExitVO outputVO = exitManager.updateExit(inputVO);
+		ExitDTO outputVO = exitManager.updateExit(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -184,25 +184,25 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/chronic-health-conditions")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getChronicHealthConditions(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<ChronicHealthConditionVO> chronicHealthConditionVOs = chronicHealthConditionManager.getChronicHealthConditionsByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(chronicHealthConditionVOs);
+		List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = chronicHealthConditionManager.getChronicHealthConditionsByEnrollmentId(enrollmentId);
+		return om.writeValueAsString(chronicHealthConditionDTOs);
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/chronic-health-conditions/{chronicHealthConditionId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getChronicHealthCondition(@PathParam("enrollmentId") String enrollmentId, @PathParam("chronicHealthConditionId") String chronicHealthConditionId) throws JsonProcessingException {
-		ChronicHealthConditionVO chronicHealthConditionVO = chronicHealthConditionManager.getChronicHealthConditionById(chronicHealthConditionId);
-		return om.writeValueAsString(chronicHealthConditionVO);
+		ChronicHealthConditionDTO chronicHealthConditionDTO = chronicHealthConditionManager.getChronicHealthConditionById(chronicHealthConditionId);
+		return om.writeValueAsString(chronicHealthConditionDTO);
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/chronic-health-conditions")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String createChronicHealthCondition(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
-		ChronicHealthConditionVO inputVO = om.readValue(data, ChronicHealthConditionVO.class);
+		ChronicHealthConditionDTO inputVO = om.readValue(data, ChronicHealthConditionDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		ChronicHealthConditionVO outputVO = chronicHealthConditionManager.addChronicHealthCondition(inputVO);
+		ChronicHealthConditionDTO outputVO = chronicHealthConditionManager.addChronicHealthCondition(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -210,11 +210,11 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/chronic-health-conditions/{chronicHealthConditionId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String updateChronicHealthCondition(@PathParam("enrollmentId") String enrollmentId, @PathParam("chronicHealthConditionId") String chronicHealthConditionId, String data) throws IOException {
-		ChronicHealthConditionVO inputVO = om.readValue(data, ChronicHealthConditionVO.class);
+		ChronicHealthConditionDTO inputVO = om.readValue(data, ChronicHealthConditionDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setChronicHealthConditionId(chronicHealthConditionId);
 
-		ChronicHealthConditionVO outputVO = chronicHealthConditionManager.updateChronicHealthCondition(inputVO);
+		ChronicHealthConditionDTO outputVO = chronicHealthConditionManager.updateChronicHealthCondition(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -232,25 +232,25 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/contacts")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getContacts(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<ContactVO> contactVOs = contactManager.getContactsByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(contactVOs);
+		List<ContactDTO> contactDTOs = contactManager.getContactsByEnrollmentId(enrollmentId);
+		return om.writeValueAsString(contactDTOs);
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/contacts/{contactId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getContact(@PathParam("enrollmentId") String enrollmentId, @PathParam("contactId") String contactId) throws JsonProcessingException {
-		ContactVO contactVO = contactManager.getContactById(contactId);
-		return om.writeValueAsString(contactVO);
+		ContactDTO contactDTO = contactManager.getContactById(contactId);
+		return om.writeValueAsString(contactDTO);
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/contacts")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String createContact(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
-		ContactVO inputVO = om.readValue(data, ContactVO.class);
+		ContactDTO inputVO = om.readValue(data, ContactDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		ContactVO outputVO = contactManager.addContact(inputVO);
+		ContactDTO outputVO = contactManager.addContact(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -258,11 +258,11 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/contacts/{contactId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String updateContact(@PathParam("enrollmentId") String enrollmentId, @PathParam("contactId") String contactId, String data) throws IOException {
-		ContactVO inputVO = om.readValue(data, ContactVO.class);
+		ContactDTO inputVO = om.readValue(data, ContactDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setContactId(contactId);
 
-		ContactVO outputVO = contactManager.updateContact(inputVO);
+		ContactDTO outputVO = contactManager.updateContact(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -280,25 +280,25 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/developmental-disabilitys")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getDevelopmentalDisabilitys(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<DevelopmentalDisabilityVO> developmentalDisabilityVOs = developmentalDisabilityManager.getDevelopmentalDisabilitysByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(developmentalDisabilityVOs);
+		List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = developmentalDisabilityManager.getDevelopmentalDisabilitysByEnrollmentId(enrollmentId);
+		return om.writeValueAsString(developmentalDisabilityDTOs);
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/developmental-disabilitys/{developmentalDisabilityId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getDevelopmentalDisability(@PathParam("enrollmentId") String enrollmentId, @PathParam("developmentalDisabilityId") String developmentalDisabilityId) throws JsonProcessingException {
-		DevelopmentalDisabilityVO developmentalDisabilityVO = developmentalDisabilityManager.getDevelopmentalDisabilityById(developmentalDisabilityId);
-		return om.writeValueAsString(developmentalDisabilityVO);
+		DevelopmentalDisabilityDTO developmentalDisabilityDTO = developmentalDisabilityManager.getDevelopmentalDisabilityById(developmentalDisabilityId);
+		return om.writeValueAsString(developmentalDisabilityDTO);
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/developmental-disabilitys")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String createDevelopmentalDisability(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
-		DevelopmentalDisabilityVO inputVO = om.readValue(data, DevelopmentalDisabilityVO.class);
+		DevelopmentalDisabilityDTO inputVO = om.readValue(data, DevelopmentalDisabilityDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		DevelopmentalDisabilityVO outputVO = developmentalDisabilityManager.addDevelopmentalDisability(inputVO);
+		DevelopmentalDisabilityDTO outputVO = developmentalDisabilityManager.addDevelopmentalDisability(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -306,11 +306,11 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/developmental-disabilitys/{developmentalDisabilityId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String updateDevelopmentalDisability(@PathParam("enrollmentId") String enrollmentId, @PathParam("developmentalDisabilityId") String developmentalDisabilityId, String data) throws IOException {
-		DevelopmentalDisabilityVO inputVO = om.readValue(data, DevelopmentalDisabilityVO.class);
+		DevelopmentalDisabilityDTO inputVO = om.readValue(data, DevelopmentalDisabilityDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setDevelopmentalDisabilityId(developmentalDisabilityId);
 
-		DevelopmentalDisabilityVO outputVO = developmentalDisabilityManager.updateDevelopmentalDisability(inputVO);
+		DevelopmentalDisabilityDTO outputVO = developmentalDisabilityManager.updateDevelopmentalDisability(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -328,25 +328,25 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/domestic-abuses")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getDomesticAbuses(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<DomesticAbuseVO> domesticAbuseVOs = domesticAbuseManager.getDomesticAbusesByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(domesticAbuseVOs);
+		List<DomesticAbuseDTO> domesticAbuseDTOs = domesticAbuseManager.getDomesticAbusesByEnrollmentId(enrollmentId);
+		return om.writeValueAsString(domesticAbuseDTOs);
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/domestic-abuses/{domesticAbuseId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getDomesticAbuse(@PathParam("enrollmentId") String enrollmentId, @PathParam("domesticAbuseId") String domesticAbuseId) throws JsonProcessingException {
-		DomesticAbuseVO domesticAbuseVO = domesticAbuseManager.getDomesticAbuseById(domesticAbuseId);
-		return om.writeValueAsString(domesticAbuseVO);
+		DomesticAbuseDTO domesticAbuseDTO = domesticAbuseManager.getDomesticAbuseById(domesticAbuseId);
+		return om.writeValueAsString(domesticAbuseDTO);
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/domestic-abuses")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String createDomesticAbuse(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
-		DomesticAbuseVO inputVO = om.readValue(data, DomesticAbuseVO.class);
+		DomesticAbuseDTO inputVO = om.readValue(data, DomesticAbuseDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		DomesticAbuseVO outputVO = domesticAbuseManager.addDomesticAbuse(inputVO);
+		DomesticAbuseDTO outputVO = domesticAbuseManager.addDomesticAbuse(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -354,11 +354,11 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/domestic-abuses/{domesticAbuseId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String updateDomesticAbuse(@PathParam("enrollmentId") String enrollmentId, @PathParam("domesticAbuseId") String domesticAbuseId, String data) throws IOException {
-		DomesticAbuseVO inputVO = om.readValue(data, DomesticAbuseVO.class);
+		DomesticAbuseDTO inputVO = om.readValue(data, DomesticAbuseDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setDomesticAbuseId(domesticAbuseId);
 
-		DomesticAbuseVO outputVO = domesticAbuseManager.updateDomesticAbuse(inputVO);
+		DomesticAbuseDTO outputVO = domesticAbuseManager.updateDomesticAbuse(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -376,25 +376,25 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/financial-assitances")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getFinancialAssistances(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<FinancialAssistanceVO> financialAssistanceVOs = financialAssistanceManager.getFinancialAssistancesByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(financialAssistanceVOs);
+		List<FinancialAssistanceDTO> financialAssistanceDTOs = financialAssistanceManager.getFinancialAssistancesByEnrollmentId(enrollmentId);
+		return om.writeValueAsString(financialAssistanceDTOs);
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/financial-assitances/{financialAssistanceId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getFinancialAssistance(@PathParam("enrollmentId") String enrollmentId, @PathParam("financialAssistanceId") String financialAssistanceId) throws JsonProcessingException {
-		FinancialAssistanceVO financialAssistanceVO = financialAssistanceManager.getFinancialAssistanceById(financialAssistanceId);
-		return om.writeValueAsString(financialAssistanceVO);
+		FinancialAssistanceDTO financialAssistanceDTO = financialAssistanceManager.getFinancialAssistanceById(financialAssistanceId);
+		return om.writeValueAsString(financialAssistanceDTO);
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/financial-assitances")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String createFinancialAssistance(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
-		FinancialAssistanceVO inputVO = om.readValue(data, FinancialAssistanceVO.class);
+		FinancialAssistanceDTO inputVO = om.readValue(data, FinancialAssistanceDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		FinancialAssistanceVO outputVO = financialAssistanceManager.addFinancialAssistance(inputVO);
+		FinancialAssistanceDTO outputVO = financialAssistanceManager.addFinancialAssistance(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -402,11 +402,11 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/financial-assitances/{financialAssistanceId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String updateFinancialAssistance(@PathParam("enrollmentId") String enrollmentId, @PathParam("financialAssistanceId") String financialAssistanceId, String data) throws IOException {
-		FinancialAssistanceVO inputVO = om.readValue(data, FinancialAssistanceVO.class);
+		FinancialAssistanceDTO inputVO = om.readValue(data, FinancialAssistanceDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setFinancialAssistanceId(financialAssistanceId);
 
-		FinancialAssistanceVO outputVO = financialAssistanceManager.updateFinancialAssistance(inputVO);
+		FinancialAssistanceDTO outputVO = financialAssistanceManager.updateFinancialAssistance(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -423,25 +423,25 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/health-insurances")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getHealthInsurances(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<HealthInsuranceVO> healthInsuranceVOs = healthInsuranceManager.getHealthInsurancesByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(healthInsuranceVOs);
+		List<HealthInsuranceDTO> healthInsuranceDTOs = healthInsuranceManager.getHealthInsurancesByEnrollmentId(enrollmentId);
+		return om.writeValueAsString(healthInsuranceDTOs);
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/health-insurances/{healthInsuranceId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getHealthInsurance(@PathParam("enrollmentId") String enrollmentId, @PathParam("healthInsuranceId") String healthInsuranceId) throws JsonProcessingException {
-		HealthInsuranceVO healthInsuranceVO = healthInsuranceManager.getHealthInsuranceById(healthInsuranceId);
-		return om.writeValueAsString(healthInsuranceVO);
+		HealthInsuranceDTO healthInsuranceDTO = healthInsuranceManager.getHealthInsuranceById(healthInsuranceId);
+		return om.writeValueAsString(healthInsuranceDTO);
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/health-insurances")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String createHealthInsurance(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
-		HealthInsuranceVO inputVO = om.readValue(data, HealthInsuranceVO.class);
+		HealthInsuranceDTO inputVO = om.readValue(data, HealthInsuranceDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		HealthInsuranceVO outputVO = healthInsuranceManager.addHealthInsurance(inputVO);
+		HealthInsuranceDTO outputVO = healthInsuranceManager.addHealthInsurance(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -449,11 +449,11 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/health-insurances/{healthInsuranceId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String updateHealthInsurance(@PathParam("enrollmentId") String enrollmentId, @PathParam("healthInsuranceId") String healthInsuranceId, String data) throws IOException {
-		HealthInsuranceVO inputVO = om.readValue(data, HealthInsuranceVO.class);
+		HealthInsuranceDTO inputVO = om.readValue(data, HealthInsuranceDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setHealthInsuranceId(healthInsuranceId);
 
-		HealthInsuranceVO outputVO = healthInsuranceManager.updateHealthInsurance(inputVO);
+		HealthInsuranceDTO outputVO = healthInsuranceManager.updateHealthInsurance(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -470,25 +470,25 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/hiv-aids-statuses")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getHivAidsStatuses(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<HivAidsStatusVO> hivAidsStatusVOs = hivAidsStatusManager.getHivAidsStatusesByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(hivAidsStatusVOs);
+		List<HivAidsStatusDTO> hivAidsStatusDTOs = hivAidsStatusManager.getHivAidsStatusesByEnrollmentId(enrollmentId);
+		return om.writeValueAsString(hivAidsStatusDTOs);
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/hiv-aids-statuses/{hivAidsStatusId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getHivAidsStatus(@PathParam("enrollmentId") String enrollmentId, @PathParam("hivAidsStatusId") String hivAidsStatusId) throws JsonProcessingException {
-		HivAidsStatusVO hivAidsStatusVO = hivAidsStatusManager.getHivAidsStatusById(hivAidsStatusId);
-		return om.writeValueAsString(hivAidsStatusVO);
+		HivAidsStatusDTO hivAidsStatusDTO = hivAidsStatusManager.getHivAidsStatusById(hivAidsStatusId);
+		return om.writeValueAsString(hivAidsStatusDTO);
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/hiv-aids-statuses")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String createHivAidsStatus(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
-		HivAidsStatusVO inputVO = om.readValue(data, HivAidsStatusVO.class);
+		HivAidsStatusDTO inputVO = om.readValue(data, HivAidsStatusDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		HivAidsStatusVO outputVO = hivAidsStatusManager.addHivAidsStatus(inputVO);
+		HivAidsStatusDTO outputVO = hivAidsStatusManager.addHivAidsStatus(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -496,11 +496,11 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/hiv-aids-statuses/{hivAidsStatusId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String updateHivAidsStatus(@PathParam("enrollmentId") String enrollmentId, @PathParam("hivAidsStatusId") String hivAidsStatusId, String data) throws IOException {
-		HivAidsStatusVO inputVO = om.readValue(data, HivAidsStatusVO.class);
+		HivAidsStatusDTO inputVO = om.readValue(data, HivAidsStatusDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setHivAidsStatusId(hivAidsStatusId);
 
-		HivAidsStatusVO outputVO = hivAidsStatusManager.updateHivAidsStatus(inputVO);
+		HivAidsStatusDTO outputVO = hivAidsStatusManager.updateHivAidsStatus(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -517,25 +517,25 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/medical-assistances")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getMedicalAssistances(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<MedicalAssistanceVO> medicalAssistanceVOs = medicalAssistanceManager.getMedicalAssistancesByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(medicalAssistanceVOs);
+		List<MedicalAssistanceDTO> medicalAssistanceDTOs = medicalAssistanceManager.getMedicalAssistancesByEnrollmentId(enrollmentId);
+		return om.writeValueAsString(medicalAssistanceDTOs);
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/medical-assistances/{medicalAssistanceId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getMedicalAssistance(@PathParam("enrollmentId") String enrollmentId, @PathParam("medicalAssistanceId") String medicalAssistanceId) throws JsonProcessingException {
-		MedicalAssistanceVO medicalAssistanceVO = medicalAssistanceManager.getMedicalAssistanceById(medicalAssistanceId);
-		return om.writeValueAsString(medicalAssistanceVO);
+		MedicalAssistanceDTO medicalAssistanceDTO = medicalAssistanceManager.getMedicalAssistanceById(medicalAssistanceId);
+		return om.writeValueAsString(medicalAssistanceDTO);
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/medical-assistances")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String createMedicalAssistance(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
-		MedicalAssistanceVO inputVO = om.readValue(data, MedicalAssistanceVO.class);
+		MedicalAssistanceDTO inputVO = om.readValue(data, MedicalAssistanceDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		MedicalAssistanceVO outputVO = medicalAssistanceManager.addMedicalAssistance(inputVO);
+		MedicalAssistanceDTO outputVO = medicalAssistanceManager.addMedicalAssistance(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -543,11 +543,11 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/medical-assistances/{medicalAssistanceId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String updateMedicalAssistance(@PathParam("enrollmentId") String enrollmentId, @PathParam("medicalAssistanceId") String medicalAssistanceId, String data) throws IOException {
-		MedicalAssistanceVO inputVO = om.readValue(data, MedicalAssistanceVO.class);
+		MedicalAssistanceDTO inputVO = om.readValue(data, MedicalAssistanceDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setMedicalAssistanceId(medicalAssistanceId);
 
-		MedicalAssistanceVO outputVO = medicalAssistanceManager.updateMedicalAssistance(inputVO);
+		MedicalAssistanceDTO outputVO = medicalAssistanceManager.updateMedicalAssistance(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -564,25 +564,25 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/income-sources")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getIncomeSources(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<IncomeSourceVO> incomeSourceVOs = incomeSourceManager.getIncomeSourcesByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(incomeSourceVOs);
+		List<IncomeSourceDTO> incomeSourceDTOs = incomeSourceManager.getIncomeSourcesByEnrollmentId(enrollmentId);
+		return om.writeValueAsString(incomeSourceDTOs);
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/income-sources/{incomeSourceId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getIncomeSource(@PathParam("enrollmentId") String enrollmentId, @PathParam("incomeSourceId") String incomeSourceId) throws JsonProcessingException {
-		IncomeSourceVO incomeSourceVO = incomeSourceManager.getIncomeSourceById(incomeSourceId);
-		return om.writeValueAsString(incomeSourceVO);
+		IncomeSourceDTO incomeSourceDTO = incomeSourceManager.getIncomeSourceById(incomeSourceId);
+		return om.writeValueAsString(incomeSourceDTO);
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/income-sources")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String createIncomeSource(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
-		IncomeSourceVO inputVO = om.readValue(data, IncomeSourceVO.class);
+		IncomeSourceDTO inputVO = om.readValue(data, IncomeSourceDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		IncomeSourceVO outputVO = incomeSourceManager.addIncomeSource(inputVO);
+		IncomeSourceDTO outputVO = incomeSourceManager.addIncomeSource(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -590,11 +590,11 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/income-sources/{incomeSourceId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String updateIncomeSource(@PathParam("enrollmentId") String enrollmentId, @PathParam("incomeSourceId") String incomeSourceId, String data) throws IOException {
-		IncomeSourceVO inputVO = om.readValue(data, IncomeSourceVO.class);
+		IncomeSourceDTO inputVO = om.readValue(data, IncomeSourceDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setIncomeSourceId(incomeSourceId);
 
-		IncomeSourceVO outputVO = incomeSourceManager.updateIncomeSource(inputVO);
+		IncomeSourceDTO outputVO = incomeSourceManager.updateIncomeSource(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -611,25 +611,25 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/noncash-benefits")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getNonCashBenefits(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<NonCashBenefitVO> nonCashBenefitVOs = nonCashBenefitManager.getNonCashBenefitsByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(nonCashBenefitVOs);
+		List<NonCashBenefitDTO> nonCashBenefitDTOs = nonCashBenefitManager.getNonCashBenefitsByEnrollmentId(enrollmentId);
+		return om.writeValueAsString(nonCashBenefitDTOs);
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/noncash-benefits/{nonCashBenefitId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getNonCashBenefit(@PathParam("enrollmentId") String enrollmentId, @PathParam("nonCashBenefitId") String nonCashBenefitId) throws JsonProcessingException {
-		NonCashBenefitVO nonCashBenefitVO = nonCashBenefitManager.getNonCashBenefitById(nonCashBenefitId);
-		return om.writeValueAsString(nonCashBenefitVO);
+		NonCashBenefitDTO nonCashBenefitDTO = nonCashBenefitManager.getNonCashBenefitById(nonCashBenefitId);
+		return om.writeValueAsString(nonCashBenefitDTO);
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/noncash-benefits")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String createNonCashBenefit(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
-		NonCashBenefitVO inputVO = om.readValue(data, NonCashBenefitVO.class);
+		NonCashBenefitDTO inputVO = om.readValue(data, NonCashBenefitDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		NonCashBenefitVO outputVO = nonCashBenefitManager.addNonCashBenefit(inputVO);
+		NonCashBenefitDTO outputVO = nonCashBenefitManager.addNonCashBenefit(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -637,11 +637,11 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/noncash-benefits/{nonCashBenefitId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String createNonCashBenefit(@PathParam("enrollmentId") String enrollmentId, @PathParam("nonCashBenefitId") String nonCashBenefitId, String data) throws IOException {
-		NonCashBenefitVO inputVO = om.readValue(data, NonCashBenefitVO.class);
+		NonCashBenefitDTO inputVO = om.readValue(data, NonCashBenefitDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setNonCashBenefitId(nonCashBenefitId);
 
-		NonCashBenefitVO outputVO = nonCashBenefitManager.updateNonCashBenefit(inputVO);
+		NonCashBenefitDTO outputVO = nonCashBenefitManager.updateNonCashBenefit(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -658,25 +658,25 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/physical-disabilities")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getPhysicalDisabilities(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<PhysicalDisabilityVO> physicalDisabilityVOs = physicalDisabilityManager.getPhysicalDisabilitiesByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(physicalDisabilityVOs);
+		List<PhysicalDisabilityDTO> physicalDisabilityDTOs = physicalDisabilityManager.getPhysicalDisabilitiesByEnrollmentId(enrollmentId);
+		return om.writeValueAsString(physicalDisabilityDTOs);
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/physical-disabilities/{physicalDisabilityId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getPhysicalDisability(@PathParam("enrollmentId") String enrollmentId, @PathParam("physicalDisabilityId") String physicalDisabilityId) throws JsonProcessingException {
-		PhysicalDisabilityVO physicalDisabilityVO = physicalDisabilityManager.getPhysicalDisabilityById(physicalDisabilityId);
-		return om.writeValueAsString(physicalDisabilityVO);
+		PhysicalDisabilityDTO physicalDisabilityDTO = physicalDisabilityManager.getPhysicalDisabilityById(physicalDisabilityId);
+		return om.writeValueAsString(physicalDisabilityDTO);
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/physical-disabilities")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String createPhysicalDisability(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
-		PhysicalDisabilityVO inputVO = om.readValue(data, PhysicalDisabilityVO.class);
+		PhysicalDisabilityDTO inputVO = om.readValue(data, PhysicalDisabilityDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		PhysicalDisabilityVO outputVO = physicalDisabilityManager.addPhysicalDisability(inputVO);
+		PhysicalDisabilityDTO outputVO = physicalDisabilityManager.addPhysicalDisability(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -684,11 +684,11 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/physical-disabilities/{physicalDisabilityId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String updatePhysicalDisability(@PathParam("enrollmentId") String enrollmentId, @PathParam("physicalDisabilityId") String physicalDisabilityId, String data) throws IOException {
-		PhysicalDisabilityVO inputVO = om.readValue(data, PhysicalDisabilityVO.class);
+		PhysicalDisabilityDTO inputVO = om.readValue(data, PhysicalDisabilityDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setPhysicalDisabilityId(physicalDisabilityId);
 
-		PhysicalDisabilityVO outputVO = physicalDisabilityManager.updatePhysicalDisability(inputVO);
+		PhysicalDisabilityDTO outputVO = physicalDisabilityManager.updatePhysicalDisability(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -705,25 +705,25 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/referrals")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getReferrals(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<ReferralVO> referralVOs = referralManager.getReferralsByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(referralVOs);
+		List<ReferralDTO> referralDTOs = referralManager.getReferralsByEnrollmentId(enrollmentId);
+		return om.writeValueAsString(referralDTOs);
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/referrals/{referralId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getReferral(@PathParam("enrollmentId") String enrollmentId, @PathParam("referralId") String referralId) throws JsonProcessingException {
-		ReferralVO referralVO = referralManager.getReferralById(referralId);
-		return om.writeValueAsString(referralVO);
+		ReferralDTO referralDTO = referralManager.getReferralById(referralId);
+		return om.writeValueAsString(referralDTO);
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/referrals")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String createReferral(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
-		ReferralVO inputVO = om.readValue(data, ReferralVO.class);
+		ReferralDTO inputVO = om.readValue(data, ReferralDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		ReferralVO outputVO = referralManager.addReferral(inputVO);
+		ReferralDTO outputVO = referralManager.addReferral(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -731,11 +731,11 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/referrals/{referralId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String updateReferral(@PathParam("enrollmentId") String enrollmentId, @PathParam("referralId") String referralId, String data) throws IOException {
-		ReferralVO inputVO = om.readValue(data, ReferralVO.class);
+		ReferralDTO inputVO = om.readValue(data, ReferralDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setReferralId(referralId);
 
-		ReferralVO outputVO = referralManager.updateReferral(inputVO);
+		ReferralDTO outputVO = referralManager.updateReferral(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -752,25 +752,25 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/services")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getServices(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<ServiceVO> serviceVOs = serviceManager.getServicesByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(serviceVOs);
+		List<ServiceDTO> serviceDTOs = serviceManager.getServicesByEnrollmentId(enrollmentId);
+		return om.writeValueAsString(serviceDTOs);
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/services/{serviceId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getService(@PathParam("enrollmentId") String enrollmentId, @PathParam("serviceId") String serviceId) throws JsonProcessingException {
-		ServiceVO serviceVO = serviceManager.getServiceById(serviceId);
-		return om.writeValueAsString(serviceVO);
+		ServiceDTO serviceDTO = serviceManager.getServiceById(serviceId);
+		return om.writeValueAsString(serviceDTO);
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/services")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String createService(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
-		ServiceVO inputVO = om.readValue(data, ServiceVO.class);
+		ServiceDTO inputVO = om.readValue(data, ServiceDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		ServiceVO outputVO = serviceManager.addService(inputVO);
+		ServiceDTO outputVO = serviceManager.addService(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -778,11 +778,11 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/services/{serviceId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String updateService(@PathParam("enrollmentId") String enrollmentId, @PathParam("serviceId") String serviceId, String data) throws IOException {
-		ServiceVO inputVO = om.readValue(data, ServiceVO.class);
+		ServiceDTO inputVO = om.readValue(data, ServiceDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setServiceId(serviceId);
 
-		ServiceVO outputVO = serviceManager.updateService(inputVO);
+		ServiceDTO outputVO = serviceManager.updateService(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -799,25 +799,25 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/substance-abuses")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getSubstanceAbuses(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<SubstanceAbuseVO> substanceAbuseVOs = substanceAbuseManager.getSubstanceAbusesByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(substanceAbuseVOs);
+		List<SubstanceAbuseDTO> substanceAbuseDTOs = substanceAbuseManager.getSubstanceAbusesByEnrollmentId(enrollmentId);
+		return om.writeValueAsString(substanceAbuseDTOs);
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/substance-abuses/{substanceAbuseId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getSubstanceAbuse(@PathParam("enrollmentId") String enrollmentId, @PathParam("substanceAbuseId") String substanceAbuseId) throws JsonProcessingException {
-		SubstanceAbuseVO substanceAbuseVO = substanceAbuseManager.getSubstanceAbuseById(substanceAbuseId);
-		return om.writeValueAsString(substanceAbuseVO);
+		SubstanceAbuseDTO substanceAbuseDTO = substanceAbuseManager.getSubstanceAbuseById(substanceAbuseId);
+		return om.writeValueAsString(substanceAbuseDTO);
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/substance-abuses")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String createSubstanceAbuse(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
-		SubstanceAbuseVO inputVO = om.readValue(data, SubstanceAbuseVO.class);
+		SubstanceAbuseDTO inputVO = om.readValue(data, SubstanceAbuseDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		SubstanceAbuseVO outputVO = substanceAbuseManager.addSubstanceAbuse(inputVO);
+		SubstanceAbuseDTO outputVO = substanceAbuseManager.addSubstanceAbuse(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -825,11 +825,11 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/substance-abuses/{substanceAbuseId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String updateSubstanceAbuse(@PathParam("enrollmentId") String enrollmentId, @PathParam("substanceAbuseId") String substanceAbuseId, String data) throws IOException {
-		SubstanceAbuseVO inputVO = om.readValue(data, SubstanceAbuseVO.class);
+		SubstanceAbuseDTO inputVO = om.readValue(data, SubstanceAbuseDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setSubstanceAbuseId(substanceAbuseId);
 
-		SubstanceAbuseVO outputVO = substanceAbuseManager.updateSubstanceAbuse(inputVO);
+		SubstanceAbuseDTO outputVO = substanceAbuseManager.updateSubstanceAbuse(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	

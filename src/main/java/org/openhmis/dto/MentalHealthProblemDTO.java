@@ -1,34 +1,38 @@
-package org.openhmis.vo;
+package org.openhmis.dto;
 
 import java.util.Date;
 import java.util.List;
 
+import org.openhmis.code.ClientPathHowConfirmed;
+import org.openhmis.code.ClientPathSmiInformation;
 import org.openhmis.code.YesNo;
 import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ChronicHealthConditionVO {
-	private String chronicHealthConditionId;
+public class MentalHealthProblemDTO {
+	private String mentalHealthProblemId;
 	private String enrollmentId;
 
-	// Program Specific Data Standards: Chronic Health Condition (2014, 4.7)
+	// Program Specific Data Standards: Mental Health Problem (2014, 4.9)
 	private Date informationDate;
 	private YesNoReason response;
 	private YesNoReason indefiniteAndImpairs;
 	private YesNo documentationOnFile;
 	private YesNoReason receivingServices;
+	private ClientPathHowConfirmed pathHowConfirmed;
+	private ClientPathSmiInformation pathSmiInformation;
 
-	public ChronicHealthConditionVO() {}
+	public MentalHealthProblemDTO() {}
 
 	@JsonProperty
-	public String getChronicHealthConditionId() {
-		return chronicHealthConditionId;
+	public String getMentalHealthProblemId() {
+		return mentalHealthProblemId;
 	}
 
 	@JsonProperty
-	public void setChronicHealthConditionId(String chronicHealthConditionId) {
-		this.chronicHealthConditionId = chronicHealthConditionId;
+	public void setMentalHealthProblemId(String mentalHealthProblemId) {
+		this.mentalHealthProblemId = mentalHealthProblemId;
 	}
 
 	@JsonProperty
@@ -91,6 +95,26 @@ public class ChronicHealthConditionVO {
 		this.receivingServices = receivingServices;
 	}
 
+	@JsonProperty
+	public ClientPathHowConfirmed getPathHowConfirmed() {
+		return pathHowConfirmed;
+	}
+
+	@JsonProperty
+	public void setPathHowConfirmed(ClientPathHowConfirmed pathHowConfirmed) {
+		this.pathHowConfirmed = pathHowConfirmed;
+	}
+
+	@JsonProperty
+	public ClientPathSmiInformation getPathSmiInformation() {
+		return pathSmiInformation;
+	}
+
+	@JsonProperty
+	public void setPathSmiInformation(ClientPathSmiInformation pathSmiInformation) {
+		this.pathSmiInformation = pathSmiInformation;
+	}
+	
 	
 }
 

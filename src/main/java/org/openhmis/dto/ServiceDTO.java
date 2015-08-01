@@ -1,4 +1,4 @@
-package org.openhmis.vo;
+package org.openhmis.dto;
 import java.util.Date;
 
 import org.openhmis.code.ClientHopwaServices;
@@ -12,7 +12,7 @@ import org.openhmis.code.ClientSsvfSubType5;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class ServiceVO {
+public class ServiceDTO {
 	private String serviceId;
 	private String enrollmentId;
 
@@ -35,7 +35,7 @@ public class ServiceVO {
 	private ClientSsvfSubType5 ssvfDirectSubTypeProvided;
 	private String ssvfOtherService;
 
-	public ServiceVO() {}
+	public ServiceDTO() {}
 	
 	@JsonProperty
 	public String getServiceId() {

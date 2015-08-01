@@ -3,27 +3,27 @@ package org.openhmis.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openhmis.vo.ReferralVO;
+import org.openhmis.dto.ReferralDTO;
 
 public class ReferralManager {
 
 	public ReferralManager() {}
 
-	public ReferralVO getReferralById(String enrollmentId) {
-		ReferralVO referralVO = new ReferralVO();
-		return referralVO;
+	public ReferralDTO getReferralById(String enrollmentId) {
+		ReferralDTO referralDTO = new ReferralDTO();
+		return referralDTO;
 	}
 
-	public List<ReferralVO> getReferralsByEnrollmentId(String enrollmentId) {
-		List<ReferralVO> referralVOs = new ArrayList<ReferralVO>();
-		return referralVOs;
+	public List<ReferralDTO> getReferralsByEnrollmentId(String enrollmentId) {
+		List<ReferralDTO> referralDTOs = new ArrayList<ReferralDTO>();
+		return referralDTOs;
 	}
 	
-	public ReferralVO addReferral(ReferralVO inputVO) {
+	public ReferralDTO addReferral(ReferralDTO inputVO) {
 		return inputVO;
 	}
 	
-	public ReferralVO updateReferral(ReferralVO inputVO) {
+	public ReferralDTO updateReferral(ReferralDTO inputVO) {
 		// Return the resulting VO
 		return inputVO;
 		
@@ -33,10 +33,10 @@ public class ReferralManager {
 		return false;
 	}
 	
-	public static ReferralVO generateReferralVO() {
-		ReferralVO referralVO = new ReferralVO();
+	public static ReferralDTO generateReferralVO() {
+		ReferralDTO referralDTO = new ReferralDTO();
 		
-		return referralVO;
+		return referralDTO;
 	}
 	
 }

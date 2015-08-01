@@ -21,8 +21,8 @@ import org.openhmis.dao.PathClientVeteranInfoDAO;
 import org.openhmis.domain.PathClient;
 import org.openhmis.domain.PathClientRace;
 import org.openhmis.domain.PathClientVeteranInfo;
+import org.openhmis.dto.ClientDTO;
 import org.openhmis.manager.ClientManager;
-import org.openhmis.vo.ClientVO;
 
 public class ClientManager {
 
@@ -32,7 +32,7 @@ public class ClientManager {
 	
 	public ClientManager() {}
 
-	public ClientVO getClientByPersonalId(String personalId) {
+	public ClientDTO getClientByPersonalId(String personalId) {
 		Integer clientKey = Integer.parseInt(personalId);
 		
 		// Collect the data for this client
@@ -40,13 +40,13 @@ public class ClientManager {
 		List<PathClientRace> pathRaces = pathClientRaceDAO.getPathRacesByClientKey(clientKey);
 		PathClientVeteranInfo pathVeteranInfo = pathClientVeteranInfoDAO.getPathVeteranInfoByClientKey(clientKey);
 		
-		ClientVO clientVO = ClientManager.generateClientVO(pathClient, pathRaces, pathVeteranInfo);
+		ClientDTO clientDTO = ClientManager.generateClientVO(pathClient, pathRaces, pathVeteranInfo);
 
-		return clientVO;
+		return clientDTO;
 	}
 
-	public List<ClientVO> getClients() {
-		List<ClientVO> clientVOs = new ArrayList<ClientVO>();
+	public List<ClientDTO> getClients() {
+		List<ClientDTO> clientDTOs = new ArrayList<ClientDTO>();
 		
 		// Collect the clients
 		List<PathClient> pathClients = pathClientDAO.getPathClients();
@@ -59,14 +59,14 @@ public class ClientManager {
 			List<PathClientRace> pathRaces = pathClientRaceDAO.getPathRacesByClientKey(clientKey);
 			PathClientVeteranInfo pathVeteranInfo = pathClientVeteranInfoDAO.getPathVeteranInfoByClientKey(clientKey);
 
-			ClientVO clientVO = ClientManager.generateClientVO(pathClient, pathRaces, pathVeteranInfo);
-			clientVOs.add(clientVO);
+			ClientDTO clientDTO = ClientManager.generateClientVO(pathClient, pathRaces, pathVeteranInfo);
+			clientDTOs.add(clientDTO);
 		}
 		
-		return clientVOs;
+		return clientDTOs;
 	}
 	
-	public ClientVO addClient(ClientVO inputVO) {
+	public ClientDTO addClient(ClientDTO inputVO) {
 		
 		// Generate a PathClient from the input
 		PathClient pathClient = ClientManager.generatePathClient(inputVO);
@@ -100,7 +100,7 @@ public class ClientManager {
 		return ClientManager.generateClientVO(pathClient, pathRaces, pathVeteranInfo);
 	}
 	
-	public ClientVO updateClient(ClientVO inputVO) {
+	public ClientDTO updateClient(ClientDTO inputVO) {
 		
 		// Generate a PathClient from the input
 		PathClient pathClient = ClientManager.generatePathClient(inputVO);
@@ -154,38 +154,38 @@ public class ClientManager {
 		return true;
 	}
 	
-	public static ClientVO generateClientVO(PathClient pathClient, List<PathClientRace> pathRaces, PathClientVeteranInfo pathVeteranInfo) {
-		ClientVO clientVO = new ClientVO();
+	public static ClientDTO generateClientVO(PathClient pathClient, List<PathClientRace> pathRaces, PathClientVeteranInfo pathVeteranInfo) {
+		ClientDTO clientDTO = new ClientDTO();
 		// Universal Data Standard: Personal ID (2014, 3.13) 
-		clientVO.setPersonalId(pathClient.getClientKey().toString());
+		clientDTO.setPersonalId(pathClient.getClientKey().toString());
 
 		// Universal Data Standard: Name (2014, 3.1)
-		clientVO.setFirstName(pathClient.getFirstName());
-		clientVO.setMiddleName(pathClient.getMiddleName());
-		clientVO.setLastName(pathClient.getLastName());
-		clientVO.setNameSuffix(pathClient.getSuffix());
-		clientVO.setNameDataQuality(ClientNameDataQuality.valueByCode(pathClient.getNameType()));
+		clientDTO.setFirstName(pathClient.getFirstName());
+		clientDTO.setMiddleName(pathClient.getMiddleName());
+		clientDTO.setLastName(pathClient.getLastName());
+		clientDTO.setNameSuffix(pathClient.getSuffix());
+		clientDTO.setNameDataQuality(ClientNameDataQuality.valueByCode(pathClient.getNameType()));
 
 		// Universal Data Standard: SSN (2014, 3.2)
-		clientVO.setSsn(pathClient.getIdentification());
-		clientVO.setSsnDataQuality(ClientSsnDataQuality.valueByCode(pathClient.getIdType()));
+		clientDTO.setSsn(pathClient.getIdentification());
+		clientDTO.setSsnDataQuality(ClientSsnDataQuality.valueByCode(pathClient.getIdType()));
 		
 		// Universal Data Standard: Date of Birth  (2014, 3.3)
-		clientVO.setDob(pathClient.getDateOfBirth());
-		clientVO.setDobDataQuality(ClientDobDataQuality.valueByCode(pathClient.getDobType()));
+		clientDTO.setDob(pathClient.getDateOfBirth());
+		clientDTO.setDobDataQuality(ClientDobDataQuality.valueByCode(pathClient.getDobType()));
 
 		// Universal Data Standard: Race (2014, 3.4)
 		// Pathways stores races as individual records
 		// if no records exist, that is "None", otherwise set the fields 
 		if(pathRaces.size() == 0) {
-			clientVO.setRaceNone(None.NOT_COLLECTED);
+			clientDTO.setRaceNone(None.NOT_COLLECTED);
 		}
 		else {
-			clientVO.setAsian(YesNo.NO);
-			clientVO.setBlackAfAmerican(YesNo.NO);
-			clientVO.setNativeHIOtherPacific(YesNo.NO);
-			clientVO.setAmIndAKNative(YesNo.NO);
-			clientVO.setWhite(YesNo.NO);
+			clientDTO.setAsian(YesNo.NO);
+			clientDTO.setBlackAfAmerican(YesNo.NO);
+			clientDTO.setNativeHIOtherPacific(YesNo.NO);
+			clientDTO.setAmIndAKNative(YesNo.NO);
+			clientDTO.setWhite(YesNo.NO);
 		}
 		
 		for (Iterator<PathClientRace> iterator = pathRaces.iterator(); iterator.hasNext();) {
@@ -195,19 +195,19 @@ public class ClientManager {
 			// See: https://github.com/PCNI/OpenHMIS/blob/feature-compass_schema/docs/API_to_Schema_Mapping.md
 			switch(race.getRaceKey()) {
 				case 5:
-					clientVO.setAsian(YesNo.YES);
+					clientDTO.setAsian(YesNo.YES);
 					break;
 				case 6:
-					clientVO.setBlackAfAmerican(YesNo.YES);
+					clientDTO.setBlackAfAmerican(YesNo.YES);
 					break;
 				case 7:
-					clientVO.setAmIndAKNative(YesNo.YES);
+					clientDTO.setAmIndAKNative(YesNo.YES);
 					break;
 				case 8:
-					clientVO.setWhite(YesNo.YES);
+					clientDTO.setWhite(YesNo.YES);
 					break;
 				case 9:
-					clientVO.setNativeHIOtherPacific(YesNo.YES);
+					clientDTO.setNativeHIOtherPacific(YesNo.YES);
 					break;
 				default:
 					break;
@@ -218,10 +218,10 @@ public class ClientManager {
 			if(noneCode != null) {
 				switch (noneCode) {
 					case REFUSED:
-						clientVO.setRaceNone(None.REFUSED);
+						clientDTO.setRaceNone(None.REFUSED);
 						break;
 					case UNKNOWN:
-						clientVO.setRaceNone(None.UNKNOWN);
+						clientDTO.setRaceNone(None.UNKNOWN);
 						break;
 					default:
 						break;
@@ -230,72 +230,72 @@ public class ClientManager {
 		}
 
 		// Universal Data Standard: Ethnicity (2014, 3.5)
-		clientVO.setEthnicity(ClientEthnicity.valueByCode(pathClient.getEthnicityKey()));
+		clientDTO.setEthnicity(ClientEthnicity.valueByCode(pathClient.getEthnicityKey()));
 
 		// Universal Data Standard: Gender (2014, 3.6)
-		clientVO.setGender(ClientGender.valueByCode(pathClient.getGenderKey()));
-		clientVO.setOtherGender(pathClient.getGenderDesc());
+		clientDTO.setGender(ClientGender.valueByCode(pathClient.getGenderKey()));
+		clientDTO.setOtherGender(pathClient.getGenderDesc());
 
 		// Universal Data Standard: Veteran Status (2014, 3.7)
-		clientVO.setVeteranStatus(YesNoReason.valueByCode(pathClient.getVeteran()));
+		clientDTO.setVeteranStatus(YesNoReason.valueByCode(pathClient.getVeteran()));
 
 		// VA Specific Data Standards: Veteran's Information (2014, 4.41)
 		if(pathVeteranInfo != null) {
-			clientVO.setYearEnteredService(pathVeteranInfo.getYrEnterMilitary());
-			clientVO.setYearSeparated(pathVeteranInfo.getYrSepMilitary());
-			clientVO.setWorldWarII(YesNoReason.valueByCode(pathVeteranInfo.getWorldWarIi()));
-			clientVO.setKoreanWar(YesNoReason.valueByCode(pathVeteranInfo.getKoreanWar()));
-			clientVO.setVietnamWar(YesNoReason.valueByCode(pathVeteranInfo.getVietnamWar()));
-			clientVO.setDesertStorm(YesNoReason.valueByCode(pathVeteranInfo.getPersianWar()));
-			clientVO.setAfghanistanOEF(YesNoReason.valueByCode(pathVeteranInfo.getAfghanistanWar()));
-			clientVO.setIraqOIF(YesNoReason.valueByCode(pathVeteranInfo.getIraqFreedom()));
-			clientVO.setIraqOND(YesNoReason.valueByCode(pathVeteranInfo.getIraqDawn()));
-			clientVO.setOtherTheater(YesNoReason.valueByCode(pathVeteranInfo.getOther()));
-			clientVO.setMilitaryBranch(ClientMilitaryBranch.valueByCode(pathVeteranInfo.getMilitaryBranch()));
-			clientVO.setDischargeStatus(ClientDischargeStatus.valueByCode(pathVeteranInfo.getDischargeStatus()));
+			clientDTO.setYearEnteredService(pathVeteranInfo.getYrEnterMilitary());
+			clientDTO.setYearSeparated(pathVeteranInfo.getYrSepMilitary());
+			clientDTO.setWorldWarII(YesNoReason.valueByCode(pathVeteranInfo.getWorldWarIi()));
+			clientDTO.setKoreanWar(YesNoReason.valueByCode(pathVeteranInfo.getKoreanWar()));
+			clientDTO.setVietnamWar(YesNoReason.valueByCode(pathVeteranInfo.getVietnamWar()));
+			clientDTO.setDesertStorm(YesNoReason.valueByCode(pathVeteranInfo.getPersianWar()));
+			clientDTO.setAfghanistanOEF(YesNoReason.valueByCode(pathVeteranInfo.getAfghanistanWar()));
+			clientDTO.setIraqOIF(YesNoReason.valueByCode(pathVeteranInfo.getIraqFreedom()));
+			clientDTO.setIraqOND(YesNoReason.valueByCode(pathVeteranInfo.getIraqDawn()));
+			clientDTO.setOtherTheater(YesNoReason.valueByCode(pathVeteranInfo.getOther()));
+			clientDTO.setMilitaryBranch(ClientMilitaryBranch.valueByCode(pathVeteranInfo.getMilitaryBranch()));
+			clientDTO.setDischargeStatus(ClientDischargeStatus.valueByCode(pathVeteranInfo.getDischargeStatus()));
 		}
 		
 		// Export Standard Fields
-		clientVO.setDateCreated(pathClient.getCreateDate());
-		clientVO.setDateUpdated(pathClient.getUpdateDate());
+		clientDTO.setDateCreated(pathClient.getCreateDate());
+		clientDTO.setDateUpdated(pathClient.getUpdateDate());
 
-		return clientVO;
+		return clientDTO;
 	}
 	
 
-	public static PathClient generatePathClient(ClientVO clientVO) {
+	public static PathClient generatePathClient(ClientDTO clientDTO) {
 		PathClient pathClient = new PathClient();
 
 		// Universal Data Standard: Name (2014, 3.1)
-		pathClient.setFirstName(clientVO.getFirstName());
-		pathClient.setMiddleName(clientVO.getMiddleName());
-		pathClient.setLastName(clientVO.getLastName());
-		pathClient.setSuffix(clientVO.getNameSuffix());
-		pathClient.setNameType(clientVO.getNameDataQuality().getCode());
+		pathClient.setFirstName(clientDTO.getFirstName());
+		pathClient.setMiddleName(clientDTO.getMiddleName());
+		pathClient.setLastName(clientDTO.getLastName());
+		pathClient.setSuffix(clientDTO.getNameSuffix());
+		pathClient.setNameType(clientDTO.getNameDataQuality().getCode());
 		
 		// Universal Data Standard: SSN (2014, 3.2)
-		pathClient.setIdentification(clientVO.getSsn());
-		pathClient.setIdType(clientVO.getSsnDataQuality().getCode());
+		pathClient.setIdentification(clientDTO.getSsn());
+		pathClient.setIdType(clientDTO.getSsnDataQuality().getCode());
 		
 		// Universal Data Standard: Date of Birth  (2014, 3.3)
-		pathClient.setDateOfBirth(clientVO.getDob());
-		pathClient.setDobType(clientVO.getDobDataQuality().getCode());
+		pathClient.setDateOfBirth(clientDTO.getDob());
+		pathClient.setDobType(clientDTO.getDobDataQuality().getCode());
 		
 		// Universal Data Standard: Ethnicity (2014, 3.5)
-		pathClient.setEthnicityKey(clientVO.getEthnicity().getCode());
+		pathClient.setEthnicityKey(clientDTO.getEthnicity().getCode());
 
 		// Universal Data Standard: Gender (2014, 3.6)
-		pathClient.setGenderKey(clientVO.getGender().getCode());
-		pathClient.setGenderDesc(clientVO.getOtherGender());
+		pathClient.setGenderKey(clientDTO.getGender().getCode());
+		pathClient.setGenderDesc(clientDTO.getOtherGender());
 
 		// Universal Data Standard: Veteran Status (2014, 3.7)
-		pathClient.setVeteran(clientVO.getVeteranStatus().getCode());
+		pathClient.setVeteran(clientDTO.getVeteranStatus().getCode());
 
 		return pathClient;
 	}
 	
 
-	public static List<PathClientRace> generatePathClientRaces(ClientVO clientVO) {
+	public static List<PathClientRace> generatePathClientRaces(ClientDTO clientDTO) {
 
 		// Universal Data Standard: Race (2014, 3.4)
 		// Convert HUD race storage to Compass Rose race codes
@@ -303,24 +303,24 @@ public class ClientManager {
 		List<PathClientRace> pathRaces = new ArrayList<PathClientRace>();
 		List<Integer> raceCodes = new ArrayList<Integer>();
 		
-		if(clientVO.getAsian() == YesNo.YES)
+		if(clientDTO.getAsian() == YesNo.YES)
 			raceCodes.add(5);
-		if(clientVO.getBlackAfAmerican() == YesNo.YES)
+		if(clientDTO.getBlackAfAmerican() == YesNo.YES)
 			raceCodes.add(6);
-		if(clientVO.getNativeHIOtherPacific() == YesNo.YES)
+		if(clientDTO.getNativeHIOtherPacific() == YesNo.YES)
 			raceCodes.add(9);
-		if(clientVO.getAmIndAKNative() == YesNo.YES)
+		if(clientDTO.getAmIndAKNative() == YesNo.YES)
 			raceCodes.add(7);
-		if(clientVO.getWhite() == YesNo.YES)
+		if(clientDTO.getWhite() == YesNo.YES)
 			raceCodes.add(8);
-		if(clientVO.getRaceNone() != null)
-			raceCodes.add(clientVO.getRaceNone().getCode());
+		if(clientDTO.getRaceNone() != null)
+			raceCodes.add(clientDTO.getRaceNone().getCode());
 
 		// Create race objects for each code
 		for (Iterator<Integer> iterator = raceCodes.iterator(); iterator.hasNext();) {
 			Integer raceCode = iterator.next();
 			PathClientRace race = new PathClientRace();
-			race.setClientKey(Integer.parseInt(clientVO.getPersonalId()));
+			race.setClientKey(Integer.parseInt(clientDTO.getPersonalId()));
 			race.setRaceKey(raceCode);
 			pathRaces.add(race);
 		}
@@ -328,23 +328,23 @@ public class ClientManager {
 	}
 	
 	
-	public static PathClientVeteranInfo generatePathVeteranInfo(ClientVO clientVO) {
+	public static PathClientVeteranInfo generatePathVeteranInfo(ClientDTO clientDTO) {
 
 		// VA Specific Data Standards: Veteran's Information (2014, 4.41)
 		PathClientVeteranInfo veteranInfo = new PathClientVeteranInfo();
-		veteranInfo.setClientKey(Integer.parseInt(clientVO.getPersonalId()));
-		veteranInfo.setYrEnterMilitary(clientVO.getYearEnteredService());
-		veteranInfo.setYrSepMilitary(clientVO.getYearSeparated());
-		veteranInfo.setWorldWarIi(clientVO.getWorldWarII().getCode());
-		veteranInfo.setKoreanWar(clientVO.getKoreanWar().getCode());
-		veteranInfo.setVietnamWar(clientVO.getVietnamWar().getCode());
-		veteranInfo.setPersianWar(clientVO.getDesertStorm().getCode());
-		veteranInfo.setAfghanistanWar(clientVO.getAfghanistanOEF().getCode());
-		veteranInfo.setIraqFreedom(clientVO.getIraqOIF().getCode());
-		veteranInfo.setIraqDawn(clientVO.getIraqOND().getCode());
-		veteranInfo.setOther(clientVO.getOtherTheater().getCode());
-		veteranInfo.setMilitaryBranch(clientVO.getMilitaryBranch().getCode());
-		veteranInfo.setDischargeStatus(clientVO.getDischargeStatus().getCode());
+		veteranInfo.setClientKey(Integer.parseInt(clientDTO.getPersonalId()));
+		veteranInfo.setYrEnterMilitary(clientDTO.getYearEnteredService());
+		veteranInfo.setYrSepMilitary(clientDTO.getYearSeparated());
+		veteranInfo.setWorldWarIi(clientDTO.getWorldWarII().getCode());
+		veteranInfo.setKoreanWar(clientDTO.getKoreanWar().getCode());
+		veteranInfo.setVietnamWar(clientDTO.getVietnamWar().getCode());
+		veteranInfo.setPersianWar(clientDTO.getDesertStorm().getCode());
+		veteranInfo.setAfghanistanWar(clientDTO.getAfghanistanOEF().getCode());
+		veteranInfo.setIraqFreedom(clientDTO.getIraqOIF().getCode());
+		veteranInfo.setIraqDawn(clientDTO.getIraqOND().getCode());
+		veteranInfo.setOther(clientDTO.getOtherTheater().getCode());
+		veteranInfo.setMilitaryBranch(clientDTO.getMilitaryBranch().getCode());
+		veteranInfo.setDischargeStatus(clientDTO.getDischargeStatus().getCode());
 		return veteranInfo;
 	}
 	

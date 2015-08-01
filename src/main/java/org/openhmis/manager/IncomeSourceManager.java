@@ -3,27 +3,27 @@ package org.openhmis.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openhmis.vo.IncomeSourceVO;
+import org.openhmis.dto.IncomeSourceDTO;
 
 public class IncomeSourceManager {
 
 	public IncomeSourceManager() {}
 
-	public IncomeSourceVO getIncomeSourceById(String enrollmentId) {
-		IncomeSourceVO incomeSourceVO = new IncomeSourceVO();
-		return incomeSourceVO;
+	public IncomeSourceDTO getIncomeSourceById(String enrollmentId) {
+		IncomeSourceDTO incomeSourceDTO = new IncomeSourceDTO();
+		return incomeSourceDTO;
 	}
 
-	public List<IncomeSourceVO> getIncomeSourcesByEnrollmentId(String enrollmentId) {
-		List<IncomeSourceVO> incomeSourceVOs = new ArrayList<IncomeSourceVO>();
-		return incomeSourceVOs;
+	public List<IncomeSourceDTO> getIncomeSourcesByEnrollmentId(String enrollmentId) {
+		List<IncomeSourceDTO> incomeSourceDTOs = new ArrayList<IncomeSourceDTO>();
+		return incomeSourceDTOs;
 	}
 	
-	public IncomeSourceVO addIncomeSource(IncomeSourceVO inputVO) {
+	public IncomeSourceDTO addIncomeSource(IncomeSourceDTO inputVO) {
 		return inputVO;
 	}
 	
-	public IncomeSourceVO updateIncomeSource(IncomeSourceVO inputVO) {
+	public IncomeSourceDTO updateIncomeSource(IncomeSourceDTO inputVO) {
 		// Return the resulting VO
 		return inputVO;
 		
@@ -33,10 +33,10 @@ public class IncomeSourceManager {
 		return false;
 	}
 	
-	public static IncomeSourceVO generateIncomeSourceVO() {
-		IncomeSourceVO incomeSourceVO = new IncomeSourceVO();
+	public static IncomeSourceDTO generateIncomeSourceVO() {
+		IncomeSourceDTO incomeSourceDTO = new IncomeSourceDTO();
 		
-		return incomeSourceVO;
+		return incomeSourceDTO;
 	}
 	
 }

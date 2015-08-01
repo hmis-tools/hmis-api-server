@@ -3,27 +3,27 @@ package org.openhmis.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openhmis.vo.ExitVO;
+import org.openhmis.dto.ExitDTO;
 
 public class ExitManager {
 
 	public ExitManager() {}
 
-	public ExitVO getExitById(String enrollmentId) {
-		ExitVO exitVO = new ExitVO();
-		return exitVO;
+	public ExitDTO getExitById(String enrollmentId) {
+		ExitDTO exitDTO = new ExitDTO();
+		return exitDTO;
 	}
 
-	public List<ExitVO> getExitsByEnrollmentId(String enrollmentId) {
-		List<ExitVO> exitVOs = new ArrayList<ExitVO>();
-		return exitVOs;
+	public List<ExitDTO> getExitsByEnrollmentId(String enrollmentId) {
+		List<ExitDTO> exitDTOs = new ArrayList<ExitDTO>();
+		return exitDTOs;
 	}
 	
-	public ExitVO addExit(ExitVO inputVO) {
+	public ExitDTO addExit(ExitDTO inputVO) {
 		return inputVO;
 	}
 	
-	public ExitVO updateExit(ExitVO inputVO) {
+	public ExitDTO updateExit(ExitDTO inputVO) {
 		// Return the resulting VO
 		return inputVO;
 		
@@ -33,10 +33,10 @@ public class ExitManager {
 		return false;
 	}
 	
-	public static ExitVO generateExitVO() {
-		ExitVO exitVO = new ExitVO();
+	public static ExitDTO generateExitVO() {
+		ExitDTO exitDTO = new ExitDTO();
 		
-		return exitVO;
+		return exitDTO;
 	}
 	
 }

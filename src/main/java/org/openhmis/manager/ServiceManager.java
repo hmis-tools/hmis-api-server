@@ -3,27 +3,27 @@ package org.openhmis.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openhmis.vo.ServiceVO;
+import org.openhmis.dto.ServiceDTO;
 
 public class ServiceManager {
 
 	public ServiceManager() {}
 
-	public ServiceVO getServiceById(String enrollmentId) {
-		ServiceVO serviceVO = new ServiceVO();
-		return serviceVO;
+	public ServiceDTO getServiceById(String enrollmentId) {
+		ServiceDTO serviceDTO = new ServiceDTO();
+		return serviceDTO;
 	}
 
-	public List<ServiceVO> getServicesByEnrollmentId(String enrollmentId) {
-		List<ServiceVO> serviceVOs = new ArrayList<ServiceVO>();
-		return serviceVOs;
+	public List<ServiceDTO> getServicesByEnrollmentId(String enrollmentId) {
+		List<ServiceDTO> serviceDTOs = new ArrayList<ServiceDTO>();
+		return serviceDTOs;
 	}
 	
-	public ServiceVO addService(ServiceVO inputVO) {
+	public ServiceDTO addService(ServiceDTO inputVO) {
 		return inputVO;
 	}
 	
-	public ServiceVO updateService(ServiceVO inputVO) {
+	public ServiceDTO updateService(ServiceDTO inputVO) {
 		// Return the resulting VO
 		return inputVO;
 		
@@ -33,10 +33,10 @@ public class ServiceManager {
 		return false;
 	}
 	
-	public static ServiceVO generateServiceVO() {
-		ServiceVO serviceVO = new ServiceVO();
+	public static ServiceDTO generateServiceVO() {
+		ServiceDTO serviceDTO = new ServiceDTO();
 		
-		return serviceVO;
+		return serviceDTO;
 	}
 	
 }

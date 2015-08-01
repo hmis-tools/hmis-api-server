@@ -3,27 +3,27 @@ package org.openhmis.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openhmis.vo.MedicalAssistanceVO;
+import org.openhmis.dto.MedicalAssistanceDTO;
 
 public class MedicalAssistanceManager {
 
 	public MedicalAssistanceManager() {}
 
-	public MedicalAssistanceVO getMedicalAssistanceById(String enrollmentId) {
-		MedicalAssistanceVO medicalAssistanceVO = new MedicalAssistanceVO();
-		return medicalAssistanceVO;
+	public MedicalAssistanceDTO getMedicalAssistanceById(String enrollmentId) {
+		MedicalAssistanceDTO medicalAssistanceDTO = new MedicalAssistanceDTO();
+		return medicalAssistanceDTO;
 	}
 
-	public List<MedicalAssistanceVO> getMedicalAssistancesByEnrollmentId(String enrollmentId) {
-		List<MedicalAssistanceVO> medicalAssistanceVOs = new ArrayList<MedicalAssistanceVO>();
-		return medicalAssistanceVOs;
+	public List<MedicalAssistanceDTO> getMedicalAssistancesByEnrollmentId(String enrollmentId) {
+		List<MedicalAssistanceDTO> medicalAssistanceDTOs = new ArrayList<MedicalAssistanceDTO>();
+		return medicalAssistanceDTOs;
 	}
 	
-	public MedicalAssistanceVO addMedicalAssistance(MedicalAssistanceVO inputVO) {
+	public MedicalAssistanceDTO addMedicalAssistance(MedicalAssistanceDTO inputVO) {
 		return inputVO;
 	}
 	
-	public MedicalAssistanceVO updateMedicalAssistance(MedicalAssistanceVO inputVO) {
+	public MedicalAssistanceDTO updateMedicalAssistance(MedicalAssistanceDTO inputVO) {
 		// Return the resulting VO
 		return inputVO;
 		
@@ -33,10 +33,10 @@ public class MedicalAssistanceManager {
 		return false;
 	}
 	
-	public static MedicalAssistanceVO generateMedicalAssistanceVO() {
-		MedicalAssistanceVO medicalAssistanceVO = new MedicalAssistanceVO();
+	public static MedicalAssistanceDTO generateMedicalAssistanceVO() {
+		MedicalAssistanceDTO medicalAssistanceDTO = new MedicalAssistanceDTO();
 		
-		return medicalAssistanceVO;
+		return medicalAssistanceDTO;
 	}
 	
 }

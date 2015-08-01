@@ -3,27 +3,27 @@ package org.openhmis.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openhmis.vo.NonCashBenefitVO;
+import org.openhmis.dto.NonCashBenefitDTO;
 
 public class NonCashBenefitManager {
 
 	public NonCashBenefitManager() {}
 
-	public NonCashBenefitVO getNonCashBenefitById(String enrollmentId) {
-		NonCashBenefitVO nonCashBenefitVO = new NonCashBenefitVO();
-		return nonCashBenefitVO;
+	public NonCashBenefitDTO getNonCashBenefitById(String enrollmentId) {
+		NonCashBenefitDTO nonCashBenefitDTO = new NonCashBenefitDTO();
+		return nonCashBenefitDTO;
 	}
 
-	public List<NonCashBenefitVO> getNonCashBenefitsByEnrollmentId(String enrollmentId) {
-		List<NonCashBenefitVO> nonCashBenefitVOs = new ArrayList<NonCashBenefitVO>();
-		return nonCashBenefitVOs;
+	public List<NonCashBenefitDTO> getNonCashBenefitsByEnrollmentId(String enrollmentId) {
+		List<NonCashBenefitDTO> nonCashBenefitDTOs = new ArrayList<NonCashBenefitDTO>();
+		return nonCashBenefitDTOs;
 	}
 	
-	public NonCashBenefitVO addNonCashBenefit(NonCashBenefitVO inputVO) {
+	public NonCashBenefitDTO addNonCashBenefit(NonCashBenefitDTO inputVO) {
 		return inputVO;
 	}
 	
-	public NonCashBenefitVO updateNonCashBenefit(NonCashBenefitVO inputVO) {
+	public NonCashBenefitDTO updateNonCashBenefit(NonCashBenefitDTO inputVO) {
 		// Return the resulting VO
 		return inputVO;
 		
@@ -33,10 +33,10 @@ public class NonCashBenefitManager {
 		return false;
 	}
 	
-	public static NonCashBenefitVO generateNonCashBenefitVO() {
-		NonCashBenefitVO nonCashBenefitVO = new NonCashBenefitVO();
+	public static NonCashBenefitDTO generateNonCashBenefitVO() {
+		NonCashBenefitDTO nonCashBenefitDTO = new NonCashBenefitDTO();
 		
-		return nonCashBenefitVO;
+		return nonCashBenefitDTO;
 	}
 	
 }

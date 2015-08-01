@@ -1,4 +1,4 @@
-package org.openhmis.vo;
+package org.openhmis.dto;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,7 +9,7 @@ import org.openhmis.code.ClientSsvfFinancialAssistance;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class FinancialAssistanceVO {
+public class FinancialAssistanceDTO {
 	private String financialAssistanceId;
 	private String enrollmentId;
 
@@ -24,7 +24,7 @@ public class FinancialAssistanceVO {
 	private ClientSsvfFinancialAssistance ssvfTypeProvided;
 	private Long ssvfFaaAmount;
 
-	public FinancialAssistanceVO() {}
+	public FinancialAssistanceDTO() {}
 
 	@JsonProperty
 	public String getFinancialAssistanceId() {

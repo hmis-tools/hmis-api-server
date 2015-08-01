@@ -3,27 +3,27 @@ package org.openhmis.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openhmis.vo.DevelopmentalDisabilityVO;
+import org.openhmis.dto.DevelopmentalDisabilityDTO;
 
 public class DevelopmentalDisabilityManager {
 
 	public DevelopmentalDisabilityManager() {}
 
-	public DevelopmentalDisabilityVO getDevelopmentalDisabilityById(String enrollmentId) {
-		DevelopmentalDisabilityVO developmentalDisabilityVO = new DevelopmentalDisabilityVO();
-		return developmentalDisabilityVO;
+	public DevelopmentalDisabilityDTO getDevelopmentalDisabilityById(String enrollmentId) {
+		DevelopmentalDisabilityDTO developmentalDisabilityDTO = new DevelopmentalDisabilityDTO();
+		return developmentalDisabilityDTO;
 	}
 
-	public List<DevelopmentalDisabilityVO> getDevelopmentalDisabilitysByEnrollmentId(String enrollmentId) {
-		List<DevelopmentalDisabilityVO> developmentalDisabilityVOs = new ArrayList<DevelopmentalDisabilityVO>();
-		return developmentalDisabilityVOs;
+	public List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilitysByEnrollmentId(String enrollmentId) {
+		List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = new ArrayList<DevelopmentalDisabilityDTO>();
+		return developmentalDisabilityDTOs;
 	}
 	
-	public DevelopmentalDisabilityVO addDevelopmentalDisability(DevelopmentalDisabilityVO inputVO) {
+	public DevelopmentalDisabilityDTO addDevelopmentalDisability(DevelopmentalDisabilityDTO inputVO) {
 		return inputVO;
 	}
 	
-	public DevelopmentalDisabilityVO updateDevelopmentalDisability(DevelopmentalDisabilityVO inputVO) {
+	public DevelopmentalDisabilityDTO updateDevelopmentalDisability(DevelopmentalDisabilityDTO inputVO) {
 		// Return the resulting VO
 		return inputVO;
 		
@@ -33,10 +33,10 @@ public class DevelopmentalDisabilityManager {
 		return false;
 	}
 	
-	public static DevelopmentalDisabilityVO generateDevelopmentalDisabilityVO() {
-		DevelopmentalDisabilityVO developmentalDisabilityVO = new DevelopmentalDisabilityVO();
+	public static DevelopmentalDisabilityDTO generateDevelopmentalDisabilityVO() {
+		DevelopmentalDisabilityDTO developmentalDisabilityDTO = new DevelopmentalDisabilityDTO();
 		
-		return developmentalDisabilityVO;
+		return developmentalDisabilityDTO;
 	}
 	
 }

@@ -3,27 +3,27 @@ package org.openhmis.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openhmis.vo.FinancialAssistanceVO;
+import org.openhmis.dto.FinancialAssistanceDTO;
 
 public class FinancialAssistanceManager {
 
 	public FinancialAssistanceManager() {}
 
-	public FinancialAssistanceVO getFinancialAssistanceById(String enrollmentId) {
-		FinancialAssistanceVO financialAssistanceVO = new FinancialAssistanceVO();
-		return financialAssistanceVO;
+	public FinancialAssistanceDTO getFinancialAssistanceById(String enrollmentId) {
+		FinancialAssistanceDTO financialAssistanceDTO = new FinancialAssistanceDTO();
+		return financialAssistanceDTO;
 	}
 
-	public List<FinancialAssistanceVO> getFinancialAssistancesByEnrollmentId(String enrollmentId) {
-		List<FinancialAssistanceVO> financialAssistanceVOs = new ArrayList<FinancialAssistanceVO>();
-		return financialAssistanceVOs;
+	public List<FinancialAssistanceDTO> getFinancialAssistancesByEnrollmentId(String enrollmentId) {
+		List<FinancialAssistanceDTO> financialAssistanceDTOs = new ArrayList<FinancialAssistanceDTO>();
+		return financialAssistanceDTOs;
 	}
 	
-	public FinancialAssistanceVO addFinancialAssistance(FinancialAssistanceVO inputVO) {
+	public FinancialAssistanceDTO addFinancialAssistance(FinancialAssistanceDTO inputVO) {
 		return inputVO;
 	}
 	
-	public FinancialAssistanceVO updateFinancialAssistance(FinancialAssistanceVO inputVO) {
+	public FinancialAssistanceDTO updateFinancialAssistance(FinancialAssistanceDTO inputVO) {
 		// Return the resulting VO
 		return inputVO;
 		
@@ -33,10 +33,10 @@ public class FinancialAssistanceManager {
 		return false;
 	}
 	
-	public static FinancialAssistanceVO generateFinancialAssistanceVO() {
-		FinancialAssistanceVO financialAssistanceVO = new FinancialAssistanceVO();
+	public static FinancialAssistanceDTO generateFinancialAssistanceVO() {
+		FinancialAssistanceDTO financialAssistanceDTO = new FinancialAssistanceDTO();
 		
-		return financialAssistanceVO;
+		return financialAssistanceDTO;
 	}
 	
 }

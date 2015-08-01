@@ -3,27 +3,27 @@ package org.openhmis.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openhmis.vo.SubstanceAbuseVO;
+import org.openhmis.dto.SubstanceAbuseDTO;
 
 public class SubstanceAbuseManager {
 
 	public SubstanceAbuseManager() {}
 
-	public SubstanceAbuseVO getSubstanceAbuseById(String enrollmentId) {
-		SubstanceAbuseVO substanceAbuseVO = new SubstanceAbuseVO();
-		return substanceAbuseVO;
+	public SubstanceAbuseDTO getSubstanceAbuseById(String enrollmentId) {
+		SubstanceAbuseDTO substanceAbuseDTO = new SubstanceAbuseDTO();
+		return substanceAbuseDTO;
 	}
 
-	public List<SubstanceAbuseVO> getSubstanceAbusesByEnrollmentId(String enrollmentId) {
-		List<SubstanceAbuseVO> substanceAbuseVOs = new ArrayList<SubstanceAbuseVO>();
-		return substanceAbuseVOs;
+	public List<SubstanceAbuseDTO> getSubstanceAbusesByEnrollmentId(String enrollmentId) {
+		List<SubstanceAbuseDTO> substanceAbuseDTOs = new ArrayList<SubstanceAbuseDTO>();
+		return substanceAbuseDTOs;
 	}
 	
-	public SubstanceAbuseVO addSubstanceAbuse(SubstanceAbuseVO inputVO) {
+	public SubstanceAbuseDTO addSubstanceAbuse(SubstanceAbuseDTO inputVO) {
 		return inputVO;
 	}
 	
-	public SubstanceAbuseVO updateSubstanceAbuse(SubstanceAbuseVO inputVO) {
+	public SubstanceAbuseDTO updateSubstanceAbuse(SubstanceAbuseDTO inputVO) {
 		// Return the resulting VO
 		return inputVO;
 		
@@ -33,10 +33,10 @@ public class SubstanceAbuseManager {
 		return false;
 	}
 	
-	public static SubstanceAbuseVO generateSubstanceAbuseVO() {
-		SubstanceAbuseVO substanceAbuseVO = new SubstanceAbuseVO();
+	public static SubstanceAbuseDTO generateSubstanceAbuseVO() {
+		SubstanceAbuseDTO substanceAbuseDTO = new SubstanceAbuseDTO();
 		
-		return substanceAbuseVO;
+		return substanceAbuseDTO;
 	}
 	
 }

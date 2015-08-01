@@ -1,4 +1,4 @@
-package org.openhmis.vo;
+package org.openhmis.dto;
 
 import java.util.Date;
 import java.util.List;
@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 
-public class ReferralVO {
+public class ReferralDTO {
 	private String referralId;
 	private String enrollmentId;
 
@@ -25,7 +25,7 @@ public class ReferralVO {
 	// RHY (2014, 4.16B)
 	private ClientRhyReferral rhyTypeProvided;
 
-	public ReferralVO() {}
+	public ReferralDTO() {}
 	
 	@JsonProperty
 	public String getReferralId() {

@@ -3,27 +3,27 @@ package org.openhmis.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openhmis.vo.ChronicHealthConditionVO;
+import org.openhmis.dto.ChronicHealthConditionDTO;
 
 public class ChronicHealthConditionManager {
 
 	public ChronicHealthConditionManager() {}
 
-	public ChronicHealthConditionVO getChronicHealthConditionById(String enrollmentId) {
-		ChronicHealthConditionVO chronicHealthConditionVO = new ChronicHealthConditionVO();
-		return chronicHealthConditionVO;
+	public ChronicHealthConditionDTO getChronicHealthConditionById(String enrollmentId) {
+		ChronicHealthConditionDTO chronicHealthConditionDTO = new ChronicHealthConditionDTO();
+		return chronicHealthConditionDTO;
 	}
 
-	public List<ChronicHealthConditionVO> getChronicHealthConditionsByEnrollmentId(String enrollmentId) {
-		List<ChronicHealthConditionVO> chronicHealthConditionVOs = new ArrayList<ChronicHealthConditionVO>();
-		return chronicHealthConditionVOs;
+	public List<ChronicHealthConditionDTO> getChronicHealthConditionsByEnrollmentId(String enrollmentId) {
+		List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = new ArrayList<ChronicHealthConditionDTO>();
+		return chronicHealthConditionDTOs;
 	}
 	
-	public ChronicHealthConditionVO addChronicHealthCondition(ChronicHealthConditionVO inputVO) {
+	public ChronicHealthConditionDTO addChronicHealthCondition(ChronicHealthConditionDTO inputVO) {
 		return inputVO;
 	}
 	
-	public ChronicHealthConditionVO updateChronicHealthCondition(ChronicHealthConditionVO inputVO) {
+	public ChronicHealthConditionDTO updateChronicHealthCondition(ChronicHealthConditionDTO inputVO) {
 		// Return the resulting VO
 		return inputVO;
 		
@@ -33,10 +33,10 @@ public class ChronicHealthConditionManager {
 		return false;
 	}
 	
-	public static ChronicHealthConditionVO generateChronicHealthConditionVO() {
-		ChronicHealthConditionVO chronicHealthConditionVO = new ChronicHealthConditionVO();
+	public static ChronicHealthConditionDTO generateChronicHealthConditionVO() {
+		ChronicHealthConditionDTO chronicHealthConditionDTO = new ChronicHealthConditionDTO();
 		
-		return chronicHealthConditionVO;
+		return chronicHealthConditionDTO;
 	}
 	
 }

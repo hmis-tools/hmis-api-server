@@ -1,4 +1,4 @@
-package org.openhmis.vo;
+package org.openhmis.dto;
 
 import java.util.Date;
 import java.util.List;
@@ -8,27 +8,27 @@ import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class DevelopmentalDisabilityVO {
-	private String developmentalDisabilityId;
+public class ChronicHealthConditionDTO {
+	private String chronicHealthConditionId;
 	private String enrollmentId;
 
-	// Program Specific Data Standards: Physical Disability (2014, 4.5)
+	// Program Specific Data Standards: Chronic Health Condition (2014, 4.7)
 	private Date informationDate;
 	private YesNoReason response;
 	private YesNoReason indefiniteAndImpairs;
 	private YesNo documentationOnFile;
 	private YesNoReason receivingServices;
 
-	public DevelopmentalDisabilityVO() {}
+	public ChronicHealthConditionDTO() {}
 
 	@JsonProperty
-	public String getDevelopmentalDisabilityId() {
-		return developmentalDisabilityId;
+	public String getChronicHealthConditionId() {
+		return chronicHealthConditionId;
 	}
 
 	@JsonProperty
-	public void setDevelopmentalDisabilityId(String developmentalDisabilityId) {
-		this.developmentalDisabilityId = developmentalDisabilityId;
+	public void setChronicHealthConditionId(String chronicHealthConditionId) {
+		this.chronicHealthConditionId = chronicHealthConditionId;
 	}
 
 	@JsonProperty
@@ -90,6 +90,7 @@ public class DevelopmentalDisabilityVO {
 	public void setReceivingServices(YesNoReason receivingServices) {
 		this.receivingServices = receivingServices;
 	}
-	
+
 	
 }
+

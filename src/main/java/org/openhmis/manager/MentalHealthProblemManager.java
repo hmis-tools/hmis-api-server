@@ -3,27 +3,27 @@ package org.openhmis.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openhmis.vo.MentalHealthProblemVO;
+import org.openhmis.dto.MentalHealthProblemDTO;
 
 public class MentalHealthProblemManager {
 
 	public MentalHealthProblemManager() {}
 
-	public MentalHealthProblemVO getMentalHealthProblemById(String enrollmentId) {
-		MentalHealthProblemVO mentalHealthProblemVO = new MentalHealthProblemVO();
-		return mentalHealthProblemVO;
+	public MentalHealthProblemDTO getMentalHealthProblemById(String enrollmentId) {
+		MentalHealthProblemDTO mentalHealthProblemDTO = new MentalHealthProblemDTO();
+		return mentalHealthProblemDTO;
 	}
 
-	public List<MentalHealthProblemVO> getMentalHealthProblemsByEnrollmentId(String enrollmentId) {
-		List<MentalHealthProblemVO> mentalHealthProblemVOs = new ArrayList<MentalHealthProblemVO>();
-		return mentalHealthProblemVOs;
+	public List<MentalHealthProblemDTO> getMentalHealthProblemsByEnrollmentId(String enrollmentId) {
+		List<MentalHealthProblemDTO> mentalHealthProblemDTOs = new ArrayList<MentalHealthProblemDTO>();
+		return mentalHealthProblemDTOs;
 	}
 	
-	public MentalHealthProblemVO addMentalHealthProblem(MentalHealthProblemVO inputVO) {
+	public MentalHealthProblemDTO addMentalHealthProblem(MentalHealthProblemDTO inputVO) {
 		return inputVO;
 	}
 	
-	public MentalHealthProblemVO updateMentalHealthProblem(MentalHealthProblemVO inputVO) {
+	public MentalHealthProblemDTO updateMentalHealthProblem(MentalHealthProblemDTO inputVO) {
 		// Return the resulting VO
 		return inputVO;
 		
@@ -33,10 +33,10 @@ public class MentalHealthProblemManager {
 		return false;
 	}
 	
-	public static MentalHealthProblemVO generateMentalHealthProblemVO() {
-		MentalHealthProblemVO mentalHealthProblemVO = new MentalHealthProblemVO();
+	public static MentalHealthProblemDTO generateMentalHealthProblemVO() {
+		MentalHealthProblemDTO mentalHealthProblemDTO = new MentalHealthProblemDTO();
 		
-		return mentalHealthProblemVO;
+		return mentalHealthProblemDTO;
 	}
 	
 }

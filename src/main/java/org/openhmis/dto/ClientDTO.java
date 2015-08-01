@@ -1,6 +1,6 @@
 
 
-package org.openhmis.vo;
+package org.openhmis.dto;
 
 import java.util.Date;
 
@@ -17,7 +17,7 @@ import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ClientVO {
+public class ClientDTO {
 	
 	/**
 	 * The client object represents a client record
@@ -82,7 +82,7 @@ public class ClientVO {
 	private Date dateCreated;
 	private Date dateUpdated;
 
-	public ClientVO() {
+	public ClientDTO() {
 		super();
 		this.nameDataQuality = ClientNameDataQuality.PARTIAL;
 	}

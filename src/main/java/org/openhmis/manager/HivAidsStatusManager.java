@@ -3,27 +3,27 @@ package org.openhmis.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openhmis.vo.HivAidsStatusVO;
+import org.openhmis.dto.HivAidsStatusDTO;
 
 public class HivAidsStatusManager {
 
 	public HivAidsStatusManager() {}
 
-	public HivAidsStatusVO getHivAidsStatusById(String enrollmentId) {
-		HivAidsStatusVO hivAidsStatusVO = new HivAidsStatusVO();
-		return hivAidsStatusVO;
+	public HivAidsStatusDTO getHivAidsStatusById(String enrollmentId) {
+		HivAidsStatusDTO hivAidsStatusDTO = new HivAidsStatusDTO();
+		return hivAidsStatusDTO;
 	}
 
-	public List<HivAidsStatusVO> getHivAidsStatusesByEnrollmentId(String enrollmentId) {
-		List<HivAidsStatusVO> hivAidsStatusVOs = new ArrayList<HivAidsStatusVO>();
-		return hivAidsStatusVOs;
+	public List<HivAidsStatusDTO> getHivAidsStatusesByEnrollmentId(String enrollmentId) {
+		List<HivAidsStatusDTO> hivAidsStatusDTOs = new ArrayList<HivAidsStatusDTO>();
+		return hivAidsStatusDTOs;
 	}
 	
-	public HivAidsStatusVO addHivAidsStatus(HivAidsStatusVO inputVO) {
+	public HivAidsStatusDTO addHivAidsStatus(HivAidsStatusDTO inputVO) {
 		return inputVO;
 	}
 	
-	public HivAidsStatusVO updateHivAidsStatus(HivAidsStatusVO inputVO) {
+	public HivAidsStatusDTO updateHivAidsStatus(HivAidsStatusDTO inputVO) {
 		// Return the resulting VO
 		return inputVO;
 		
@@ -33,10 +33,10 @@ public class HivAidsStatusManager {
 		return false;
 	}
 	
-	public static HivAidsStatusVO generateHivAidsStatusVO() {
-		HivAidsStatusVO hivAidsStatusVO = new HivAidsStatusVO();
+	public static HivAidsStatusDTO generateHivAidsStatusVO() {
+		HivAidsStatusDTO hivAidsStatusDTO = new HivAidsStatusDTO();
 		
-		return hivAidsStatusVO;
+		return hivAidsStatusDTO;
 	}
 	
 }

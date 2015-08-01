@@ -29,23 +29,23 @@ import org.openhmis.code.YesNo;
 import org.openhmis.code.YesNoReason;
 import org.openhmis.dao.PathClientProgramDAO;
 import org.openhmis.domain.PathClientProgram;
-import org.openhmis.vo.ChronicHealthConditionVO;
-import org.openhmis.vo.ContactVO;
-import org.openhmis.vo.DevelopmentalDisabilityVO;
-import org.openhmis.vo.DomesticAbuseVO;
-import org.openhmis.vo.FinancialAssistanceVO;
-import org.openhmis.vo.HealthInsuranceVO;
-import org.openhmis.vo.HivAidsStatusVO;
-import org.openhmis.vo.MedicalAssistanceVO;
-import org.openhmis.vo.IncomeSourceVO;
-import org.openhmis.vo.MentalHealthProblemVO;
-import org.openhmis.vo.NonCashBenefitVO;
-import org.openhmis.vo.PhysicalDisabilityVO;
-import org.openhmis.vo.ReferralVO;
-import org.openhmis.vo.ServiceVO;
-import org.openhmis.vo.SubstanceAbuseVO;
-import org.openhmis.vo.ExitVO;
-import org.openhmis.vo.EnrollmentVO;
+import org.openhmis.dto.ChronicHealthConditionDTO;
+import org.openhmis.dto.ContactDTO;
+import org.openhmis.dto.DevelopmentalDisabilityDTO;
+import org.openhmis.dto.DomesticAbuseDTO;
+import org.openhmis.dto.EnrollmentDTO;
+import org.openhmis.dto.ExitDTO;
+import org.openhmis.dto.FinancialAssistanceDTO;
+import org.openhmis.dto.HealthInsuranceDTO;
+import org.openhmis.dto.HivAidsStatusDTO;
+import org.openhmis.dto.IncomeSourceDTO;
+import org.openhmis.dto.MedicalAssistanceDTO;
+import org.openhmis.dto.MentalHealthProblemDTO;
+import org.openhmis.dto.NonCashBenefitDTO;
+import org.openhmis.dto.PhysicalDisabilityDTO;
+import org.openhmis.dto.ReferralDTO;
+import org.openhmis.dto.ServiceDTO;
+import org.openhmis.dto.SubstanceAbuseDTO;
 
 public class EnrollmentManager {
 
@@ -53,19 +53,19 @@ public class EnrollmentManager {
 	
 	public EnrollmentManager() {}
 
-	public EnrollmentVO getEnrollmentById(String enrollmentId) {
+	public EnrollmentDTO getEnrollmentById(String enrollmentId) {
 		Integer programKey = Integer.parseInt(enrollmentId);
 		
 		// Collect the data for this client
 		PathClientProgram pathClientProgram = pathClientProgramDAO.getPathClientProgramByProgramKey(programKey);
 		
-		EnrollmentVO enrollmentVO = EnrollmentManager.generateEnrollmentVO(pathClientProgram);
+		EnrollmentDTO enrollmentDTO = EnrollmentManager.generateEnrollmentVO(pathClientProgram);
 
-		return enrollmentVO;
+		return enrollmentDTO;
 	}
 
-	public List<EnrollmentVO> getEnrollments() {
-		List<EnrollmentVO> enrollmentVOs = new ArrayList<EnrollmentVO>();
+	public List<EnrollmentDTO> getEnrollments() {
+		List<EnrollmentDTO> enrollmentDTOs = new ArrayList<EnrollmentDTO>();
 		
 		// Collect the enrollments
 		List<PathClientProgram> pathClientPrograms = pathClientProgramDAO.getPathClientPrograms();
@@ -74,14 +74,14 @@ public class EnrollmentManager {
 		// TODO: this should be done in a single query
 		for (Iterator<PathClientProgram> iterator = pathClientPrograms.iterator(); iterator.hasNext();) {
 		 	PathClientProgram pathClientProgram = iterator.next();
-		 	EnrollmentVO enrollmentVO = EnrollmentManager.generateEnrollmentVO(pathClientProgram);
-		 	enrollmentVOs.add(enrollmentVO);
+		 	EnrollmentDTO enrollmentDTO = EnrollmentManager.generateEnrollmentVO(pathClientProgram);
+		 	enrollmentDTOs.add(enrollmentDTO);
 		 }
 		
-		return enrollmentVOs;
+		return enrollmentDTOs;
 	}
 	
-	public EnrollmentVO addEnrollment(EnrollmentVO inputVO) {
+	public EnrollmentDTO addEnrollment(EnrollmentDTO inputVO) {
 		
 		// Generate a PathClient from the input
 		PathClientProgram pathClientProgram = EnrollmentManager.generatePathClientProgram(inputVO);
@@ -94,7 +94,7 @@ public class EnrollmentManager {
 		return EnrollmentManager.generateEnrollmentVO(pathClientProgram);
 	}
 	
-	public EnrollmentVO updateEnrollment(EnrollmentVO inputVO) {
+	public EnrollmentDTO updateEnrollment(EnrollmentDTO inputVO) {
 		PathClientProgram pathClientProgram = EnrollmentManager.generatePathClientProgram(inputVO);
 		pathClientProgram.setProgramKey(Integer.parseInt(inputVO.getEnrollmentId()));
 
@@ -110,209 +110,209 @@ public class EnrollmentManager {
 		return true;
 	}
 	
-	public static EnrollmentVO generateEnrollmentVO(PathClientProgram pathClientProgram) {
-		EnrollmentVO enrollmentVO = new EnrollmentVO();
+	public static EnrollmentDTO generateEnrollmentVO(PathClientProgram pathClientProgram) {
+		EnrollmentDTO enrollmentDTO = new EnrollmentDTO();
 		
-		enrollmentVO.setEnrollmentId(pathClientProgram.getProgramKey().toString());
+		enrollmentDTO.setEnrollmentId(pathClientProgram.getProgramKey().toString());
 
 		// The client object associated with this enrollment
-		enrollmentVO.setPersonalId(pathClientProgram.getClientKey().toString());
+		enrollmentDTO.setPersonalId(pathClientProgram.getClientKey().toString());
 
 		// Project Exit Object
-		enrollmentVO.setProjectExit(new ExitVO());
+		enrollmentDTO.setProjectExit(new ExitDTO());
 
 		// Universal Data Standard: Disabling Condition (2014, 3.8)
-		enrollmentVO.setDisablingCondition(YesNoReason.NOT_COLLECTED);
+		enrollmentDTO.setDisablingCondition(YesNoReason.NOT_COLLECTED);
 
 		// Universal Data Standard: Residence Prior to Project Entry (2014, 3.9)
-		enrollmentVO.setResidencePrior(ClientResidencePrior.NOT_COLLECTED);
-		enrollmentVO.setOtherResidence("");
-		enrollmentVO.setResidencePriorLengthOfStay(ClientResidencePriorLengthOfStay.NOT_COLLECTED);
+		enrollmentDTO.setResidencePrior(ClientResidencePrior.NOT_COLLECTED);
+		enrollmentDTO.setOtherResidence("");
+		enrollmentDTO.setResidencePriorLengthOfStay(ClientResidencePriorLengthOfStay.NOT_COLLECTED);
 
 		// Universal Data Standard: Project Entry Date (2014, 3.10)
-		enrollmentVO.setEntryDate(pathClientProgram.getEntryDate());
+		enrollmentDTO.setEntryDate(pathClientProgram.getEntryDate());
 
 		// Universal Data Standard: Household ID (2014, 3.14)
-		enrollmentVO.setHouseholdId("");
+		enrollmentDTO.setHouseholdId("");
 
 		// Universal Data Standard: Relationship to Head of Household (2014, 3.15)
-		enrollmentVO.setRelationshipToHoH(ClientRelationshipToHoH.NOT_COLLECTED);
+		enrollmentDTO.setRelationshipToHoH(ClientRelationshipToHoH.NOT_COLLECTED);
 
 		// Universal Data Standard: Client Location (2014, 3.16)
-		enrollmentVO.setClientLocationInformationDate(new Date());
-		enrollmentVO.setCocCode("");
+		enrollmentDTO.setClientLocationInformationDate(new Date());
+		enrollmentDTO.setCocCode("");
 
 		// Universal Data Standard: Length of Time on Street, in an Emergency Shelter, or Safe Haven (2014, 3.17)
-		enrollmentVO.setContinuouslyHomelessOneYear(YesNoReason.NOT_COLLECTED);
-		enrollmentVO.setTimesHomelessInPastThreeYears(ClientTimesHomelessPastThreeYears.NOT_COLLECTED);
-		enrollmentVO.setMonthsHomelessPastThreeYears(ClientMonthsHomelessPastThreeYears.NOT_COLLECTED);
-		enrollmentVO.setMonthsHomelessThisTime(0);
-		enrollmentVO.setStatusDocumentedCode(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setContinuouslyHomelessOneYear(YesNoReason.NOT_COLLECTED);
+		enrollmentDTO.setTimesHomelessInPastThreeYears(ClientTimesHomelessPastThreeYears.NOT_COLLECTED);
+		enrollmentDTO.setMonthsHomelessPastThreeYears(ClientMonthsHomelessPastThreeYears.NOT_COLLECTED);
+		enrollmentDTO.setMonthsHomelessThisTime(0);
+		enrollmentDTO.setStatusDocumentedCode(YesNo.NOT_COLLECTED);
 
 		// Program Specific Data Standards: Housing Status (2014, 4.1)
 		// Collection: Project Entry
-		enrollmentVO.setHousingStatus(ClientHousingStatus.NOT_COLLECTED);
+		enrollmentDTO.setHousingStatus(ClientHousingStatus.NOT_COLLECTED);
 
 		// Program Specific Data Standards: Income Sources (2014, 4.2)
-		enrollmentVO.setIncomeSources(new ArrayList<IncomeSourceVO>());
+		enrollmentDTO.setIncomeSources(new ArrayList<IncomeSourceDTO>());
 
 		// Program Specific Data Standards: Non-cash Benefits (2014, 4.3)
-		enrollmentVO.setNonCashBenefits(new ArrayList<NonCashBenefitVO>());
+		enrollmentDTO.setNonCashBenefits(new ArrayList<NonCashBenefitDTO>());
 
 		// Program Specific Data Standards: Health Insurance (2014, 4.4)
-		enrollmentVO.setHealthInsurances(new ArrayList<HealthInsuranceVO>());
+		enrollmentDTO.setHealthInsurances(new ArrayList<HealthInsuranceDTO>());
 
 		// Program Specific Data Standards: Physical Disability (2014, 4.5)
-		enrollmentVO.setPhysicalDisabilities(new ArrayList<PhysicalDisabilityVO>());
+		enrollmentDTO.setPhysicalDisabilities(new ArrayList<PhysicalDisabilityDTO>());
 
 		// Program Specific Data Standards: Developmental Disability (2014, 4.6)
-		enrollmentVO.setDevelopmentalDisabilities(new ArrayList<DevelopmentalDisabilityVO>());
+		enrollmentDTO.setDevelopmentalDisabilities(new ArrayList<DevelopmentalDisabilityDTO>());
 		
 		// Program Specific Data Standards: Chronic Health Condition (2014, 4.7)
-		enrollmentVO.setChronicHealthConditions(new ArrayList<ChronicHealthConditionVO>());
+		enrollmentDTO.setChronicHealthConditions(new ArrayList<ChronicHealthConditionDTO>());
 
 		// Program Specific Data Standards: HIV/AIDS (2014, 4.8)
-		enrollmentVO.setHivAidsStatuses(new ArrayList<HivAidsStatusVO>());
+		enrollmentDTO.setHivAidsStatuses(new ArrayList<HivAidsStatusDTO>());
 
 		// Program Specific Data Standards: Mental Health Problem (2014, 4.9)
-		enrollmentVO.setMentalHealthProblems(new ArrayList<MentalHealthProblemVO>());
+		enrollmentDTO.setMentalHealthProblems(new ArrayList<MentalHealthProblemDTO>());
 
 		// Program Specific Data Standards: Substance Abuse (2014, 4.10)
-		enrollmentVO.setSubstanceAbuses(new ArrayList<SubstanceAbuseVO>());
+		enrollmentDTO.setSubstanceAbuses(new ArrayList<SubstanceAbuseDTO>());
 
 		// Program Specific Data Standards: Domestic Abuse (2014, 4.11)
-		enrollmentVO.setDomesticAbuses(new ArrayList<DomesticAbuseVO>());
+		enrollmentDTO.setDomesticAbuses(new ArrayList<DomesticAbuseDTO>());
 
 		// Program Specific Data Standards: Contact (2014, 4.12)
-		enrollmentVO.setContacts(new ArrayList<ContactVO>());
+		enrollmentDTO.setContacts(new ArrayList<ContactDTO>());
 
 		// Program Specific Data Standards: Date of Engagement (2014, 4.13)
-		enrollmentVO.setDateOfEngagement(pathClientProgram.getEngagementDate());
+		enrollmentDTO.setDateOfEngagement(pathClientProgram.getEngagementDate());
 
 		// Program Specific Data Standards: Services Provided (2014, 4.14)
-		enrollmentVO.setServices(new ArrayList<ServiceVO>());
+		enrollmentDTO.setServices(new ArrayList<ServiceDTO>());
 
 		// Program Specific Data Standards: Financial Assets Provided (2014, 4.15)
-		enrollmentVO.setFinancialAssistances(new ArrayList<FinancialAssistanceVO>());
+		enrollmentDTO.setFinancialAssistances(new ArrayList<FinancialAssistanceDTO>());
 
 		// Program Specific Data Standards: References Provided (2014, 4.16)
-		enrollmentVO.setReferrals(new ArrayList<ReferralVO>());
+		enrollmentDTO.setReferrals(new ArrayList<ReferralDTO>());
 
 		// Program Specific Data Standards: Residential Move-in Date (2014, 4.17)
-		enrollmentVO.setResidentialMoveInDate(new Date());
-		enrollmentVO.setInPermanentHousing(YesNo.NOT_COLLECTED);
-		enrollmentVO.setPermanentHousingMoveDate(new Date());
+		enrollmentDTO.setResidentialMoveInDate(new Date());
+		enrollmentDTO.setInPermanentHousing(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setPermanentHousingMoveDate(new Date());
 
 		// PATH Specific Data Standards: PATH Status (2014, 4.20)
-		enrollmentVO.setDateOfPathStatus(new Date());
-		enrollmentVO.setClientEnrolledInPath(YesNo.NOT_COLLECTED);
-		enrollmentVO.setReasonNotEnrolled(ClientReasonNotEnrolled.NOT_COLLECTED);
+		enrollmentDTO.setDateOfPathStatus(new Date());
+		enrollmentDTO.setClientEnrolledInPath(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setReasonNotEnrolled(ClientReasonNotEnrolled.NOT_COLLECTED);
 
 		// RHY Specific Data Standards: RHY-BCP Status (2014, 4.22)
-		enrollmentVO.setDateOfBcpStatus(new Date());
-		enrollmentVO.setFysbYouth(YesNo.NOT_COLLECTED);
-		enrollmentVO.setReasonNoServices(ClientReasonNoServices.NOT_COLLECTED);
+		enrollmentDTO.setDateOfBcpStatus(new Date());
+		enrollmentDTO.setFysbYouth(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setReasonNoServices(ClientReasonNoServices.NOT_COLLECTED);
 
 		// RHY Specific Data Standards: Sexual Orientation (2014, 4.23)
-		enrollmentVO.setSexualOrientation(ClientSexualOrientation.NOT_COLLECTED);
+		enrollmentDTO.setSexualOrientation(ClientSexualOrientation.NOT_COLLECTED);
 
 		// RHY Specific Data Standards: Last Grade Completed (2014, 4.24)
-		enrollmentVO.setLastGradeCompleted(ClientLastGradeCompleted.NOT_COLLECTED);
+		enrollmentDTO.setLastGradeCompleted(ClientLastGradeCompleted.NOT_COLLECTED);
 		
 		// RHY Specific Data Standards: School Status (2014, 4.25)
-		enrollmentVO.setSchoolStatus(ClientSchoolStatus.NOT_COLLECTED);
+		enrollmentDTO.setSchoolStatus(ClientSchoolStatus.NOT_COLLECTED);
 
 		// RHY Specific Data Standards: Employment Status (2014, 4.26)
-		enrollmentVO.setEmployedInformationDate(new Date());
-		enrollmentVO.setEmployed(YesNoReason.NOT_COLLECTED);
-		enrollmentVO.setEmploymentType(ClientEmploymentType.NOT_COLLECTED);
-		enrollmentVO.setNotEmployedReason(ClientNotEmployedReason.NOT_COLLECTED);
+		enrollmentDTO.setEmployedInformationDate(new Date());
+		enrollmentDTO.setEmployed(YesNoReason.NOT_COLLECTED);
+		enrollmentDTO.setEmploymentType(ClientEmploymentType.NOT_COLLECTED);
+		enrollmentDTO.setNotEmployedReason(ClientNotEmployedReason.NOT_COLLECTED);
 
 		// RHY Specific Data Standards: General Health Status (2014, 4.27)
-		enrollmentVO.setGeneralHealthStatus(ClientHealthStatus.NOT_COLLECTED);
+		enrollmentDTO.setGeneralHealthStatus(ClientHealthStatus.NOT_COLLECTED);
 
 		// RHY Specific Data Standards: Dental Health Status (2014, 4.28)
-		enrollmentVO.setDentalHealthStatus(ClientHealthStatus.NOT_COLLECTED);
+		enrollmentDTO.setDentalHealthStatus(ClientHealthStatus.NOT_COLLECTED);
 
 		// RHY Specific Data Standards: Mental Health Status (2014, 4.29)
-		enrollmentVO.setMentalHealthStatus(ClientHealthStatus.NOT_COLLECTED);
+		enrollmentDTO.setMentalHealthStatus(ClientHealthStatus.NOT_COLLECTED);
 
 		// RHY Specific Data Standards: Pregnancy Status (2014, 4.30)
-		enrollmentVO.setPregnancyStatusCode(YesNoReason.NOT_COLLECTED);
-		enrollmentVO.setPregnancyDueDate(new Date());
+		enrollmentDTO.setPregnancyStatusCode(YesNoReason.NOT_COLLECTED);
+		enrollmentDTO.setPregnancyDueDate(new Date());
 
 		// RHY Specific Data Standards: Formerly Child Welfare (2014, 4.31)
-		enrollmentVO.setFormerlyChildWelfare(YesNoReason.NOT_COLLECTED);
-		enrollmentVO.setChildWelfareYears(ClientRhyNumberOfYears.NOT_COLLECTED);
-		enrollmentVO.setChildWelfareMonths(0);
+		enrollmentDTO.setFormerlyChildWelfare(YesNoReason.NOT_COLLECTED);
+		enrollmentDTO.setChildWelfareYears(ClientRhyNumberOfYears.NOT_COLLECTED);
+		enrollmentDTO.setChildWelfareMonths(0);
 
 		// RHY Specific Data Standards: Formerly Juvenile Justice (2014, 4.32)
-		enrollmentVO.setFormerWardJuvenileJustice(YesNoReason.NOT_COLLECTED);
-		enrollmentVO.setJuvenileJusticeYears(ClientRhyNumberOfYears.NOT_COLLECTED);
-		enrollmentVO.setJuvenileJusticeMonths(0);
+		enrollmentDTO.setFormerWardJuvenileJustice(YesNoReason.NOT_COLLECTED);
+		enrollmentDTO.setJuvenileJusticeYears(ClientRhyNumberOfYears.NOT_COLLECTED);
+		enrollmentDTO.setJuvenileJusticeMonths(0);
 
 		// RHY Specific Data Standards: Young Person's Critical Issues (2014, 4.33)
-		enrollmentVO.setHouseholdDynamics(YesNo.NOT_COLLECTED);
-		enrollmentVO.setSexualOrientationGenderIdYouth(YesNo.NOT_COLLECTED);
-		enrollmentVO.setSexualOrientationGenderIdFam(YesNo.NOT_COLLECTED);
-		enrollmentVO.setHousingIssuesYouth(YesNo.NOT_COLLECTED);
-		enrollmentVO.setHousingIssuesFam(YesNo.NOT_COLLECTED);
-		enrollmentVO.setSchoolEducationalIssuesYouth(YesNo.NOT_COLLECTED);
-		enrollmentVO.setSchoolEducationalIssuesFam(YesNo.NOT_COLLECTED);
-		enrollmentVO.setUnemploymentYouth(YesNo.NOT_COLLECTED);
-		enrollmentVO.setUnemploymentFam(YesNo.NOT_COLLECTED);
-		enrollmentVO.setMentalHealthIssuesYouth(YesNo.NOT_COLLECTED);
-		enrollmentVO.setMentalHealthIssuesFam(YesNo.NOT_COLLECTED);
-		enrollmentVO.setHealthIssuesYouth(YesNo.NOT_COLLECTED);
-		enrollmentVO.setHealthIssuesFam(YesNo.NOT_COLLECTED);
-		enrollmentVO.setPhysicalDisabilityYouth(YesNo.NOT_COLLECTED);
-		enrollmentVO.setPhysicalDisabilityFam(YesNo.NOT_COLLECTED);
-		enrollmentVO.setMentalDisabilityYouth(YesNo.NOT_COLLECTED);
-		enrollmentVO.setMentalDisabilityFam(YesNo.NOT_COLLECTED);
-		enrollmentVO.setAbuseAndNeglectYouth(YesNo.NOT_COLLECTED);
-		enrollmentVO.setAbuseAndNeglectFam(YesNo.NOT_COLLECTED);
-		enrollmentVO.setAlcoholDrugAbuseYouth(YesNo.NOT_COLLECTED);
-		enrollmentVO.setAlcoholDrugAbuseFam(YesNo.NOT_COLLECTED);
-		enrollmentVO.setInsufficientIncome(YesNo.NOT_COLLECTED);
-		enrollmentVO.setActiveMilitaryParent(YesNo.NOT_COLLECTED);
-		enrollmentVO.setIncarceratedParent(YesNo.NOT_COLLECTED);
-		enrollmentVO.setIncarceratedParentStatus(ClientIncarceratedParentStatus.NOT_COLLECTED);
+		enrollmentDTO.setHouseholdDynamics(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setSexualOrientationGenderIdYouth(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setSexualOrientationGenderIdFam(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setHousingIssuesYouth(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setHousingIssuesFam(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setSchoolEducationalIssuesYouth(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setSchoolEducationalIssuesFam(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setUnemploymentYouth(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setUnemploymentFam(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setMentalHealthIssuesYouth(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setMentalHealthIssuesFam(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setHealthIssuesYouth(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setHealthIssuesFam(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setPhysicalDisabilityYouth(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setPhysicalDisabilityFam(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setMentalDisabilityYouth(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setMentalDisabilityFam(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setAbuseAndNeglectYouth(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setAbuseAndNeglectFam(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setAlcoholDrugAbuseYouth(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setAlcoholDrugAbuseFam(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setInsufficientIncome(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setActiveMilitaryParent(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setIncarceratedParent(YesNo.NOT_COLLECTED);
+		enrollmentDTO.setIncarceratedParentStatus(ClientIncarceratedParentStatus.NOT_COLLECTED);
 
 		// RHY Specific Data Standards: Referral Source (2014, 4.34)
-		enrollmentVO.setReferralSource(ClientReferralSource.NOT_COLLECTED);
-		enrollmentVO.setCountOUtreachReferralApproaches(0);
+		enrollmentDTO.setReferralSource(ClientReferralSource.NOT_COLLECTED);
+		enrollmentDTO.setCountOUtreachReferralApproaches(0);
 
 		// RHY Specific Data Standards: Commercial Sexual Exploitation (2014, 4.35)
-		enrollmentVO.setExchangeForSexPastThreeMonths(YesNoReason.NOT_COLLECTED);
-		enrollmentVO.setCountOfExchangeForSex(ClientCountExchangeForSex.NOT_COLLECTED);
-		enrollmentVO.setAskedOrForcedToExchangeForSex(YesNoReason.NOT_COLLECTED);
+		enrollmentDTO.setExchangeForSexPastThreeMonths(YesNoReason.NOT_COLLECTED);
+		enrollmentDTO.setCountOfExchangeForSex(ClientCountExchangeForSex.NOT_COLLECTED);
+		enrollmentDTO.setAskedOrForcedToExchangeForSex(YesNoReason.NOT_COLLECTED);
 
 		// HOPWA Specific Data Standards: Medical Assistance (2014, 4.39)
-		enrollmentVO.setMedicalAssistances(new ArrayList<MedicalAssistanceVO>());
+		enrollmentDTO.setMedicalAssistances(new ArrayList<MedicalAssistanceDTO>());
 
 		// RHSP Specific Data Standards: Worst Housing Situation (2014, 4.40)
-		enrollmentVO.setWorstHousingSituation(YesNoReason.NOT_COLLECTED);
+		enrollmentDTO.setWorstHousingSituation(YesNoReason.NOT_COLLECTED);
 
 		// VA Specific Data Standards: Percent of AMI (2014, 4.42)
-		enrollmentVO.setPercentAmi(ClientPercentAmi.NOT_COLLECTED);
+		enrollmentDTO.setPercentAmi(ClientPercentAmi.NOT_COLLECTED);
 
 		// VA Specific Data Standards: Last Permanent Address (2014, 4.43)
-		enrollmentVO.setLastPermanentStreet("");
-		enrollmentVO.setLastPermanentCity("");
-		enrollmentVO.setLastPermanentState("");
-		enrollmentVO.setLastPermanentZip("");
-		enrollmentVO.setAddressDataQuality(ClientAddressDataQuality.NOT_COLLECTED);
+		enrollmentDTO.setLastPermanentStreet("");
+		enrollmentDTO.setLastPermanentCity("");
+		enrollmentDTO.setLastPermanentState("");
+		enrollmentDTO.setLastPermanentZip("");
+		enrollmentDTO.setAddressDataQuality(ClientAddressDataQuality.NOT_COLLECTED);
 
 		// Export Standard Fields
-		enrollmentVO.setDateCreated(pathClientProgram.getCreateDate());
-		enrollmentVO.setDateUpdated(pathClientProgram.getUpdateDate());
+		enrollmentDTO.setDateCreated(pathClientProgram.getCreateDate());
+		enrollmentDTO.setDateUpdated(pathClientProgram.getUpdateDate());
 		
-		return enrollmentVO;
+		return enrollmentDTO;
 	}
 	
-	public static PathClientProgram generatePathClientProgram(EnrollmentVO enrollmentVO) {
+	public static PathClientProgram generatePathClientProgram(EnrollmentDTO enrollmentDTO) {
 		PathClientProgram pathClientProgram = new PathClientProgram();
-		pathClientProgram.setClientKey(Integer.parseInt(enrollmentVO.getPersonalId()));
+		pathClientProgram.setClientKey(Integer.parseInt(enrollmentDTO.getPersonalId()));
 		pathClientProgram.setUpdateDate(new Date());
 		pathClientProgram.setUpdateTimestamp(new Date());
 		

@@ -1,4 +1,4 @@
-package org.openhmis.vo;
+package org.openhmis.dto;
 
 import java.util.Date;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class IncomeSourceVO {
+public class IncomeSourceDTO {
 	private String incomeSourceId;
 	private String enrollmentId;
 
@@ -47,7 +47,7 @@ public class IncomeSourceVO {
 	private YesNo otherIncomeSource;
 	private Double otherIncomeAmount;
 
-	public IncomeSourceVO() {}
+	public IncomeSourceDTO() {}
 
 	@JsonProperty
 	public String getIncomeSourceId() {

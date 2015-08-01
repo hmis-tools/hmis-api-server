@@ -1,4 +1,4 @@
-package org.openhmis.vo;
+package org.openhmis.dto;
 
 import java.util.Date;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class HealthInsuranceVO {
+public class HealthInsuranceDTO {
 	private String healthInsuranceId;
 	private String enrollmentId;
 
@@ -33,7 +33,7 @@ public class HealthInsuranceVO {
 	private YesNo stateHealthIns;
 	private ClientReasonNotInsured noStateHealthInsReason;
 
-	public HealthInsuranceVO() {}
+	public HealthInsuranceDTO() {}
 
 	@JsonProperty
 	public String getHealthInsuranceId() {

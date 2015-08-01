@@ -3,27 +3,27 @@ package org.openhmis.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openhmis.vo.PhysicalDisabilityVO;
+import org.openhmis.dto.PhysicalDisabilityDTO;
 
 public class PhysicalDisabilityManager {
 
 	public PhysicalDisabilityManager() {}
 
-	public PhysicalDisabilityVO getPhysicalDisabilityById(String enrollmentId) {
-		PhysicalDisabilityVO physicalDisabilityVO = new PhysicalDisabilityVO();
-		return physicalDisabilityVO;
+	public PhysicalDisabilityDTO getPhysicalDisabilityById(String enrollmentId) {
+		PhysicalDisabilityDTO physicalDisabilityDTO = new PhysicalDisabilityDTO();
+		return physicalDisabilityDTO;
 	}
 
-	public List<PhysicalDisabilityVO> getPhysicalDisabilitiesByEnrollmentId(String enrollmentId) {
-		List<PhysicalDisabilityVO> physicalDisabilityVOs = new ArrayList<PhysicalDisabilityVO>();
-		return physicalDisabilityVOs;
+	public List<PhysicalDisabilityDTO> getPhysicalDisabilitiesByEnrollmentId(String enrollmentId) {
+		List<PhysicalDisabilityDTO> physicalDisabilityDTOs = new ArrayList<PhysicalDisabilityDTO>();
+		return physicalDisabilityDTOs;
 	}
 	
-	public PhysicalDisabilityVO addPhysicalDisability(PhysicalDisabilityVO inputVO) {
+	public PhysicalDisabilityDTO addPhysicalDisability(PhysicalDisabilityDTO inputVO) {
 		return inputVO;
 	}
 	
-	public PhysicalDisabilityVO updatePhysicalDisability(PhysicalDisabilityVO inputVO) {
+	public PhysicalDisabilityDTO updatePhysicalDisability(PhysicalDisabilityDTO inputVO) {
 		// Return the resulting VO
 		return inputVO;
 		
@@ -33,10 +33,10 @@ public class PhysicalDisabilityManager {
 		return false;
 	}
 	
-	public static PhysicalDisabilityVO generatePhysicalDisabilityVO() {
-		PhysicalDisabilityVO physicalDisabilityVO = new PhysicalDisabilityVO();
+	public static PhysicalDisabilityDTO generatePhysicalDisabilityVO() {
+		PhysicalDisabilityDTO physicalDisabilityDTO = new PhysicalDisabilityDTO();
 		
-		return physicalDisabilityVO;
+		return physicalDisabilityDTO;
 	}
 	
 }

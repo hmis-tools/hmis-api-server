@@ -16,8 +16,8 @@ import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 import org.openhmis.code.ClientNameDataQuality;
+import org.openhmis.dto.ClientDTO;
 import org.openhmis.manager.ClientManager;
-import org.openhmis.vo.ClientVO;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -37,8 +37,8 @@ public class ClientService {
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getClients() throws JsonProcessingException {
-		List<ClientVO> clientVOs = clientManager.getClients();
-		return om.writeValueAsString(clientVOs);
+		List<ClientDTO> clientDTOs = clientManager.getClients();
+		return om.writeValueAsString(clientDTOs);
 	}
 	
 	@POST
@@ -47,8 +47,8 @@ public class ClientService {
 	public String createClient(String data) throws JsonParseException, JsonMappingException, IOException {
 		// This endpoint takes in a raw json STRING as input.
 		// TODO: support the serialization of individual POST parameters
-		ClientVO inputVO = om.readValue(data, ClientVO.class);
-		ClientVO outputVO = clientManager.addClient(inputVO);
+		ClientDTO inputVO = om.readValue(data, ClientDTO.class);
+		ClientDTO outputVO = clientManager.addClient(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -56,18 +56,18 @@ public class ClientService {
 	@Path("/{personalId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getClient(@PathParam("personalId") String personalId) throws JsonProcessingException {
-		ClientVO clientVO = clientManager.getClientByPersonalId(personalId);
-		return om.writeValueAsString(clientVO);
+		ClientDTO clientDTO = clientManager.getClientByPersonalId(personalId);
+		return om.writeValueAsString(clientDTO);
 	}
 	
 	@PUT
 	@Path("/{personalId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String updateClient(@PathParam("personalId") String personalId, String data) throws JsonParseException, JsonMappingException, IOException {
-		ClientVO inputVO = om.readValue(data, ClientVO.class);
+		ClientDTO inputVO = om.readValue(data, ClientDTO.class);
 		inputVO.setPersonalId(personalId);
 		
-		ClientVO outputVO = clientManager.updateClient(inputVO);
+		ClientDTO outputVO = clientManager.updateClient(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	

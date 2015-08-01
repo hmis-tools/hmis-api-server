@@ -3,27 +3,27 @@ package org.openhmis.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openhmis.vo.ContactVO;
+import org.openhmis.dto.ContactDTO;
 
 public class ContactManager {
 
 	public ContactManager() {}
 
-	public ContactVO getContactById(String enrollmentId) {
-		ContactVO contactVO = new ContactVO();
-		return contactVO;
+	public ContactDTO getContactById(String enrollmentId) {
+		ContactDTO contactDTO = new ContactDTO();
+		return contactDTO;
 	}
 
-	public List<ContactVO> getContactsByEnrollmentId(String enrollmentId) {
-		List<ContactVO> contactVOs = new ArrayList<ContactVO>();
-		return contactVOs;
+	public List<ContactDTO> getContactsByEnrollmentId(String enrollmentId) {
+		List<ContactDTO> contactDTOs = new ArrayList<ContactDTO>();
+		return contactDTOs;
 	}
 	
-	public ContactVO addContact(ContactVO inputVO) {
+	public ContactDTO addContact(ContactDTO inputVO) {
 		return inputVO;
 	}
 	
-	public ContactVO updateContact(ContactVO inputVO) {
+	public ContactDTO updateContact(ContactDTO inputVO) {
 		// Return the resulting VO
 		return inputVO;
 		
@@ -33,10 +33,10 @@ public class ContactManager {
 		return false;
 	}
 	
-	public static ContactVO generateContactVO() {
-		ContactVO contactVO = new ContactVO();
+	public static ContactDTO generateContactVO() {
+		ContactDTO contactDTO = new ContactDTO();
 		
-		return contactVO;
+		return contactDTO;
 	}
 	
 }

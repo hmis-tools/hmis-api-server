@@ -1,4 +1,4 @@
-package org.openhmis.vo;
+package org.openhmis.dto;
 
 import java.util.Date;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.openhmis.code.YesNoReason;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class DomesticAbuseVO {
+public class DomesticAbuseDTO {
 	private String domesticAbuseId;
 	private String enrollmentId;
 
@@ -18,7 +18,7 @@ public class DomesticAbuseVO {
 	private YesNoReason domesticViolenceVictim;
 	private ClientWhenDvOccurred whenOccurred;
 
-	public DomesticAbuseVO() {}
+	public DomesticAbuseDTO() {}
 
 	@JsonProperty
 	public String getDomesticAbuseId() {

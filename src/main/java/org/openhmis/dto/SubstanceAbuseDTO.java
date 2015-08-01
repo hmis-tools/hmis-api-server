@@ -1,38 +1,36 @@
-package org.openhmis.vo;
+package org.openhmis.dto;
 
 import java.util.Date;
-import java.util.List;
 
+import org.openhmis.code.ClientDisabilityResponse;
 import org.openhmis.code.ClientPathHowConfirmed;
-import org.openhmis.code.ClientPathSmiInformation;
 import org.openhmis.code.YesNo;
 import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class MentalHealthProblemVO {
-	private String mentalHealthProblemId;
+public class SubstanceAbuseDTO {
+	private String substanceAbuseId;
 	private String enrollmentId;
 
-	// Program Specific Data Standards: Mental Health Problem (2014, 4.9)
+	// Program Specific Data Standards: Substance Abuse (2014, 4.10)
 	private Date informationDate;
-	private YesNoReason response;
+	private ClientDisabilityResponse response;
 	private YesNoReason indefiniteAndImpairs;
 	private YesNo documentationOnFile;
 	private YesNoReason receivingServices;
 	private ClientPathHowConfirmed pathHowConfirmed;
-	private ClientPathSmiInformation pathSmiInformation;
 
-	public MentalHealthProblemVO() {}
+	public SubstanceAbuseDTO() {}
 
 	@JsonProperty
-	public String getMentalHealthProblemId() {
-		return mentalHealthProblemId;
+	public String getSubstanceAbuseId() {
+		return substanceAbuseId;
 	}
 
 	@JsonProperty
-	public void setMentalHealthProblemId(String mentalHealthProblemId) {
-		this.mentalHealthProblemId = mentalHealthProblemId;
+	public void setSubstanceAbuseId(String substanceAbuseId) {
+		this.substanceAbuseId = substanceAbuseId;
 	}
 
 	@JsonProperty
@@ -56,12 +54,12 @@ public class MentalHealthProblemVO {
 	}
 
 	@JsonProperty
-	public YesNoReason getResponse() {
+	public ClientDisabilityResponse getResponse() {
 		return response;
 	}
 
 	@JsonProperty
-	public void setResponse(YesNoReason response) {
+	public void setResponse(ClientDisabilityResponse response) {
 		this.response = response;
 	}
 
@@ -104,17 +102,5 @@ public class MentalHealthProblemVO {
 	public void setPathHowConfirmed(ClientPathHowConfirmed pathHowConfirmed) {
 		this.pathHowConfirmed = pathHowConfirmed;
 	}
-
-	@JsonProperty
-	public ClientPathSmiInformation getPathSmiInformation() {
-		return pathSmiInformation;
-	}
-
-	@JsonProperty
-	public void setPathSmiInformation(ClientPathSmiInformation pathSmiInformation) {
-		this.pathSmiInformation = pathSmiInformation;
-	}
-	
-	
 }
 
