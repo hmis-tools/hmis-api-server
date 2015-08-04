@@ -63,7 +63,7 @@ public class ProjectService {
 	@Produces({MediaType.APPLICATION_JSON})
 	public String updateProject(@PathParam("projectId") String projectId, String data) throws JsonParseException, JsonMappingException, IOException {
 		ProjectDTO inputVO = om.readValue(data, ProjectDTO.class);
-		inputVO.setPersonalId(projectId);
+		inputVO.setProjectID(projectId);
 		
 		ProjectDTO outputVO = projectManager.updateProject(inputVO);
 		return om.writeValueAsString(outputVO);
