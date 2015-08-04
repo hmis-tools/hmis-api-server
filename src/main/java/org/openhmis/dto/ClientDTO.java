@@ -82,10 +82,7 @@ public class ClientDTO {
 	private Date dateCreated;
 	private Date dateUpdated;
 
-	public ClientDTO() {
-		super();
-		this.nameDataQuality = ClientNameDataQuality.PARTIAL;
-	}
+	public ClientDTO() {}
 
 	// Getters / Setters
 	@JsonProperty
