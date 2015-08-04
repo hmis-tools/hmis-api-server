@@ -33,7 +33,7 @@ public class MedicalAssistanceManager {
 		return false;
 	}
 	
-	public static MedicalAssistanceDTO generateMedicalAssistanceVO() {
+	public static MedicalAssistanceDTO generateMedicalAssistanceDTO() {
 		MedicalAssistanceDTO medicalAssistanceDTO = new MedicalAssistanceDTO();
 		
 		return medicalAssistanceDTO;

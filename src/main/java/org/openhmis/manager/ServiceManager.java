@@ -33,7 +33,7 @@ public class ServiceManager {
 		return false;
 	}
 	
-	public static ServiceDTO generateServiceVO() {
+	public static ServiceDTO generateServiceDTO() {
 		ServiceDTO serviceDTO = new ServiceDTO();
 		
 		return serviceDTO;

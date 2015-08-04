@@ -27,7 +27,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Path("/projects")
 public class ProjectService {
 	private static final ObjectMapper om = new ObjectMapper();
-	private static final ProjectManager projectManager = new ProjectManager();
 
 	public ProjectService() {}
 
@@ -35,7 +34,7 @@ public class ProjectService {
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getProjects() throws JsonProcessingException {
-		List<ProjectDTO> projectDTOs = projectManager.getProjects();
+		List<ProjectDTO> projectDTOs = ProjectManager.getProjects();
 		return om.writeValueAsString(projectDTOs);
 	}
 	
@@ -46,7 +45,7 @@ public class ProjectService {
 		// This endpoint takes in a raw json STRING as input.
 		// TODO: support the serialization of individual POST parameters
 		ProjectDTO inputVO = om.readValue(data, ProjectDTO.class);
-		ProjectDTO outputVO = projectManager.addProject(inputVO);
+		ProjectDTO outputVO = ProjectManager.addProject(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -54,7 +53,7 @@ public class ProjectService {
 	@Path("/{projectId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getProject(@PathParam("projectId") String projectId) throws JsonProcessingException {
-		ProjectDTO projectDTO = projectManager.getProjectById(projectId);
+		ProjectDTO projectDTO = ProjectManager.getProjectById(projectId);
 		return om.writeValueAsString(projectDTO);
 	}
 	
@@ -63,9 +62,9 @@ public class ProjectService {
 	@Produces({MediaType.APPLICATION_JSON})
 	public String updateProject(@PathParam("projectId") String projectId, String data) throws JsonParseException, JsonMappingException, IOException {
 		ProjectDTO inputVO = om.readValue(data, ProjectDTO.class);
-		inputVO.setProjectID(projectId);
+		inputVO.setProjectId(projectId);
 		
-		ProjectDTO outputVO = projectManager.updateProject(inputVO);
+		ProjectDTO outputVO = ProjectManager.updateProject(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -73,7 +72,7 @@ public class ProjectService {
 	@Path("/{projectId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String deleteProject(@PathParam("projectId") String projectId) throws JsonParseException, JsonMappingException, IOException {
-		projectManager.deleteProject(projectId);
+		ProjectManager.deleteProject(projectId);
 		return "true";
 	}
 }

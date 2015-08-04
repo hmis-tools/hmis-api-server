@@ -33,7 +33,7 @@ public class ContactManager {
 		return false;
 	}
 	
-	public static ContactDTO generateContactVO() {
+	public static ContactDTO generateContactDTO() {
 		ContactDTO contactDTO = new ContactDTO();
 		
 		return contactDTO;

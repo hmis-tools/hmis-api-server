@@ -33,7 +33,7 @@ public class ReferralManager {
 		return false;
 	}
 	
-	public static ReferralDTO generateReferralVO() {
+	public static ReferralDTO generateReferralDTO() {
 		ReferralDTO referralDTO = new ReferralDTO();
 		
 		return referralDTO;

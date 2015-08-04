@@ -33,7 +33,7 @@ public class IncomeSourceManager {
 		return false;
 	}
 	
-	public static IncomeSourceDTO generateIncomeSourceVO() {
+	public static IncomeSourceDTO generateIncomeSourceDTO() {
 		IncomeSourceDTO incomeSourceDTO = new IncomeSourceDTO();
 		
 		return incomeSourceDTO;

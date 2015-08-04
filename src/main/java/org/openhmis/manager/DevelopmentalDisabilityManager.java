@@ -33,7 +33,7 @@ public class DevelopmentalDisabilityManager {
 		return false;
 	}
 	
-	public static DevelopmentalDisabilityDTO generateDevelopmentalDisabilityVO() {
+	public static DevelopmentalDisabilityDTO generateDevelopmentalDisabilityDTO() {
 		DevelopmentalDisabilityDTO developmentalDisabilityDTO = new DevelopmentalDisabilityDTO();
 		
 		return developmentalDisabilityDTO;

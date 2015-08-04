@@ -33,7 +33,7 @@ public class PhysicalDisabilityManager {
 		return false;
 	}
 	
-	public static PhysicalDisabilityDTO generatePhysicalDisabilityVO() {
+	public static PhysicalDisabilityDTO generatePhysicalDisabilityDTO() {
 		PhysicalDisabilityDTO physicalDisabilityDTO = new PhysicalDisabilityDTO();
 		
 		return physicalDisabilityDTO;

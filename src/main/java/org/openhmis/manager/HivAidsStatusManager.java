@@ -33,7 +33,7 @@ public class HivAidsStatusManager {
 		return false;
 	}
 	
-	public static HivAidsStatusDTO generateHivAidsStatusVO() {
+	public static HivAidsStatusDTO generateHivAidsStatusDTO() {
 		HivAidsStatusDTO hivAidsStatusDTO = new HivAidsStatusDTO();
 		
 		return hivAidsStatusDTO;

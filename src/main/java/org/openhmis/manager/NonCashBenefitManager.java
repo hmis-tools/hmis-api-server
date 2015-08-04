@@ -33,7 +33,7 @@ public class NonCashBenefitManager {
 		return false;
 	}
 	
-	public static NonCashBenefitDTO generateNonCashBenefitVO() {
+	public static NonCashBenefitDTO generateNonCashBenefitDTO() {
 		NonCashBenefitDTO nonCashBenefitDTO = new NonCashBenefitDTO();
 		
 		return nonCashBenefitDTO;

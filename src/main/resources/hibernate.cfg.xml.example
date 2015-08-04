@@ -18,6 +18,11 @@
         <mapping class="org.openhmis.domain.PathClientRace" />
         <mapping class="org.openhmis.domain.PathClientVeteranInfo" />
         <mapping class="org.openhmis.domain.PathClientProgram" />
+        <mapping class="org.openhmis.domain.TmpProjectSite" />
+        <mapping class="org.openhmis.domain.TmpProjectInventory" />
+        <mapping class="org.openhmis.domain.TmpProjectCoc" />
+        <mapping class="org.openhmis.domain.TmpProject" />
+        <mapping class="org.openhmis.domain.TmpProjectFunder" />
 
 	</session-factory>
 

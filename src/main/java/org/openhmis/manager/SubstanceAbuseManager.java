@@ -33,7 +33,7 @@ public class SubstanceAbuseManager {
 		return false;
 	}
 	
-	public static SubstanceAbuseDTO generateSubstanceAbuseVO() {
+	public static SubstanceAbuseDTO generateSubstanceAbuseDTO() {
 		SubstanceAbuseDTO substanceAbuseDTO = new SubstanceAbuseDTO();
 		
 		return substanceAbuseDTO;

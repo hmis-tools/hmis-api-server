@@ -33,7 +33,7 @@ public class DomesticAbuseManager {
 		return false;
 	}
 	
-	public static DomesticAbuseDTO generateDomesticAbuseVO() {
+	public static DomesticAbuseDTO generateDomesticAbuseDTO() {
 		DomesticAbuseDTO domesticAbuseDTO = new DomesticAbuseDTO();
 		
 		return domesticAbuseDTO;

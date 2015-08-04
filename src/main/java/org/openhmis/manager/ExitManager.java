@@ -33,7 +33,7 @@ public class ExitManager {
 		return false;
 	}
 	
-	public static ExitDTO generateExitVO() {
+	public static ExitDTO generateExitDTO() {
 		ExitDTO exitDTO = new ExitDTO();
 		
 		return exitDTO;

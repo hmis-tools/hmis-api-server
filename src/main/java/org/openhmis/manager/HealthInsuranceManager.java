@@ -33,7 +33,7 @@ public class HealthInsuranceManager {
 		return false;
 	}
 	
-	public static HealthInsuranceDTO generateHealthInsuranceVO() {
+	public static HealthInsuranceDTO generateHealthInsuranceDTO() {
 		HealthInsuranceDTO healthInsuranceDTO = new HealthInsuranceDTO();
 		
 		return healthInsuranceDTO;

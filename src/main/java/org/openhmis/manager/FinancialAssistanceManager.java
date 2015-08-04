@@ -33,7 +33,7 @@ public class FinancialAssistanceManager {
 		return false;
 	}
 	
-	public static FinancialAssistanceDTO generateFinancialAssistanceVO() {
+	public static FinancialAssistanceDTO generateFinancialAssistanceDTO() {
 		FinancialAssistanceDTO financialAssistanceDTO = new FinancialAssistanceDTO();
 		
 		return financialAssistanceDTO;

@@ -23,6 +23,9 @@ public class CoCDTO {
 	// Universal Data Standard: Project Identifiers (2014, 2.2) 
 	private String coCCode;
 
+	// Universal Data Standard: Inventories (2014, 2.7)
+	private List<InventoryDTO> inventories;
+
 	// Universal Data Standard: Sites (2014, 2.8)
 	private List<SiteDTO> sites;
 
@@ -61,6 +64,16 @@ public class CoCDTO {
 	@JsonProperty
 	public void setCoCCode(String coCCode) {
 		this.coCCode = coCCode;
+	}
+
+	@JsonProperty
+	public List<InventoryDTO> getInventories() {
+		return inventories;
+	}
+
+	@JsonProperty
+	public void setInventories(List<InventoryDTO> inventories) {
+		this.inventories = inventories;
 	}
 
 	@JsonProperty

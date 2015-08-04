@@ -24,7 +24,7 @@ public class ProjectDTO {
 	 */
 
 	// Universal Data Standard: Project Identifiers (2014, 2.2) 
-	private String projectID;
+	private String projectId;
 	private String projectName;
 
 	// Universal Data Standard: Project CoC (2014, 2.3)
@@ -42,9 +42,6 @@ public class ProjectDTO {
 	// Universal Data Standard: Funders (2014, 2.6)
 	private List<FunderDTO> funders;
 
-	// Universal Data Standard: Inventories (2014, 2.7)
-	private List<InventoryDTO> inventories;
-
 	// Universal Data Standard: Target Population (2014 2.9)
 	private ProjectTargetPopulation targetPopulation;
 
@@ -56,13 +53,13 @@ public class ProjectDTO {
 	}
 
 	@JsonProperty
-	public String getProjectID() {
-		return projectID;
+	public String getProjectId() {
+		return projectId;
 	}
 
 	@JsonProperty
-	public void setProjectID(String projectID) {
-		this.projectID = projectID;
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
 	}
 
 	@JsonProperty
@@ -143,16 +140,6 @@ public class ProjectDTO {
 	@JsonProperty
 	public void setFunders(List<FunderDTO> funders) {
 		this.funders = funders;
-	}
-
-	@JsonProperty
-	public List<InventoryDTO> getInventories() {
-		return inventories;
-	}
-
-	@JsonProperty
-	public void setInventories(List<InventoryDTO> inventories) {
-		this.inventories = inventories;
 	}
 
 	@JsonProperty

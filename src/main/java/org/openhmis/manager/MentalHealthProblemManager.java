@@ -33,7 +33,7 @@ public class MentalHealthProblemManager {
 		return false;
 	}
 	
-	public static MentalHealthProblemDTO generateMentalHealthProblemVO() {
+	public static MentalHealthProblemDTO generateMentalHealthProblemDTO() {
 		MentalHealthProblemDTO mentalHealthProblemDTO = new MentalHealthProblemDTO();
 		
 		return mentalHealthProblemDTO;

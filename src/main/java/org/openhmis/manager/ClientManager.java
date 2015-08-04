@@ -40,7 +40,7 @@ public class ClientManager {
 		List<PathClientRace> pathRaces = pathClientRaceDAO.getPathRacesByClientKey(clientKey);
 		PathClientVeteranInfo pathVeteranInfo = pathClientVeteranInfoDAO.getPathVeteranInfoByClientKey(clientKey);
 		
-		ClientDTO clientDTO = ClientManager.generateClientVO(pathClient, pathRaces, pathVeteranInfo);
+		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, pathRaces, pathVeteranInfo);
 
 		return clientDTO;
 	}
@@ -59,17 +59,17 @@ public class ClientManager {
 			List<PathClientRace> pathRaces = pathClientRaceDAO.getPathRacesByClientKey(clientKey);
 			PathClientVeteranInfo pathVeteranInfo = pathClientVeteranInfoDAO.getPathVeteranInfoByClientKey(clientKey);
 
-			ClientDTO clientDTO = ClientManager.generateClientVO(pathClient, pathRaces, pathVeteranInfo);
+			ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, pathRaces, pathVeteranInfo);
 			clientDTOs.add(clientDTO);
 		}
 		
 		return clientDTOs;
 	}
 	
-	public ClientDTO addClient(ClientDTO inputVO) {
+	public ClientDTO addClient(ClientDTO inputDTO) {
 		
 		// Generate a PathClient from the input
-		PathClient pathClient = ClientManager.generatePathClient(inputVO);
+		PathClient pathClient = ClientManager.generatePathClient(inputDTO);
 		
 		// Set Export fields
 		pathClient.setUpdateDate(new Date());
@@ -80,10 +80,10 @@ public class ClientManager {
 
 		// Save the client to allow secondary object generation
 		pathClientDAO.save(pathClient);
-		inputVO.setPersonalId(pathClient.getClientKey().toString());
+		inputDTO.setPersonalId(pathClient.getClientKey().toString());
 		
 		// Save the races
-		List<PathClientRace> pathRaces = ClientManager.generatePathClientRaces(inputVO);
+		List<PathClientRace> pathRaces = ClientManager.generatePathClientRaces(inputDTO);
 		for (Iterator<PathClientRace> iterator = pathRaces.iterator(); iterator.hasNext();) {
 			PathClientRace pathRace = iterator.next();
 			pathRace.setUpdateTimestamp(new Date());
@@ -91,20 +91,20 @@ public class ClientManager {
 		}
 
 		// Save Veteran Info
-		PathClientVeteranInfo pathVeteranInfo = ClientManager.generatePathVeteranInfo(inputVO);
+		PathClientVeteranInfo pathVeteranInfo = ClientManager.generatePathVeteranInfo(inputDTO);
 		pathVeteranInfo.setUpdateTimestamp(new Date());
 		pathVeteranInfo.setClientKey(pathClient.getClientKey());
 		pathClientVeteranInfoDAO.save(pathVeteranInfo);
 		
 		// Return the resulting VO
-		return ClientManager.generateClientVO(pathClient, pathRaces, pathVeteranInfo);
+		return ClientManager.generateClientDTO(pathClient, pathRaces, pathVeteranInfo);
 	}
 	
-	public ClientDTO updateClient(ClientDTO inputVO) {
+	public ClientDTO updateClient(ClientDTO inputDTO) {
 		
 		// Generate a PathClient from the input
-		PathClient pathClient = ClientManager.generatePathClient(inputVO);
-		pathClient.setClientKey(Integer.parseInt(inputVO.getPersonalId()));
+		PathClient pathClient = ClientManager.generatePathClient(inputDTO);
+		pathClient.setClientKey(Integer.parseInt(inputDTO.getPersonalId()));
 		pathClient.setUpdateDate(new Date());
 		pathClient.setUpdateTimestamp(new Date());
 		
@@ -119,7 +119,7 @@ public class ClientManager {
 		}
 		
 		// Save new races
-		List<PathClientRace> newPathRaces = ClientManager.generatePathClientRaces(inputVO);
+		List<PathClientRace> newPathRaces = ClientManager.generatePathClientRaces(inputDTO);
 		for (Iterator<PathClientRace> iterator = newPathRaces.iterator(); iterator.hasNext();) {
 			PathClientRace newPathRace = iterator.next();
 			newPathRace.setUpdateTimestamp(new Date());
@@ -128,12 +128,12 @@ public class ClientManager {
 		
 		// Update Veteran Info
 		// NOTE: client key is the primary key, so we don't need to look up any stored values
-		PathClientVeteranInfo pathVeteranInfo = ClientManager.generatePathVeteranInfo(inputVO);
+		PathClientVeteranInfo pathVeteranInfo = ClientManager.generatePathVeteranInfo(inputDTO);
 		pathVeteranInfo.setUpdateTimestamp(new Date());
 		pathClientVeteranInfoDAO.update(pathVeteranInfo);
 
 		// Return the resulting VO
-		return ClientManager.generateClientVO(pathClient, newPathRaces, pathVeteranInfo);
+		return ClientManager.generateClientDTO(pathClient, newPathRaces, pathVeteranInfo);
 	}
 	
 	public boolean deleteClient(String personalId) {
@@ -154,7 +154,7 @@ public class ClientManager {
 		return true;
 	}
 	
-	public static ClientDTO generateClientVO(PathClient pathClient, List<PathClientRace> pathRaces, PathClientVeteranInfo pathVeteranInfo) {
+	public static ClientDTO generateClientDTO(PathClient pathClient, List<PathClientRace> pathRaces, PathClientVeteranInfo pathVeteranInfo) {
 		ClientDTO clientDTO = new ClientDTO();
 		// Universal Data Standard: Personal ID (2014, 3.13) 
 		clientDTO.setPersonalId(pathClient.getClientKey().toString());

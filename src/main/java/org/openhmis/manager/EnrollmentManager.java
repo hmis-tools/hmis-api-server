@@ -59,7 +59,7 @@ public class EnrollmentManager {
 		// Collect the data for this client
 		PathClientProgram pathClientProgram = pathClientProgramDAO.getPathClientProgramByProgramKey(programKey);
 		
-		EnrollmentDTO enrollmentDTO = EnrollmentManager.generateEnrollmentVO(pathClientProgram);
+		EnrollmentDTO enrollmentDTO = EnrollmentManager.generateEnrollmentDTO(pathClientProgram);
 
 		return enrollmentDTO;
 	}
@@ -74,32 +74,32 @@ public class EnrollmentManager {
 		// TODO: this should be done in a single query
 		for (Iterator<PathClientProgram> iterator = pathClientPrograms.iterator(); iterator.hasNext();) {
 		 	PathClientProgram pathClientProgram = iterator.next();
-		 	EnrollmentDTO enrollmentDTO = EnrollmentManager.generateEnrollmentVO(pathClientProgram);
+		 	EnrollmentDTO enrollmentDTO = EnrollmentManager.generateEnrollmentDTO(pathClientProgram);
 		 	enrollmentDTOs.add(enrollmentDTO);
 		 }
 		
 		return enrollmentDTOs;
 	}
 	
-	public EnrollmentDTO addEnrollment(EnrollmentDTO inputVO) {
+	public EnrollmentDTO addEnrollment(EnrollmentDTO inputDTO) {
 		
 		// Generate a PathClient from the input
-		PathClientProgram pathClientProgram = EnrollmentManager.generatePathClientProgram(inputVO);
+		PathClientProgram pathClientProgram = EnrollmentManager.generatePathClientProgram(inputDTO);
 		pathClientProgram.setCreateDate(new Date());
 		pathClientProgram.setUpdateDate(new Date());
 		pathClientProgram.setUpdateTimestamp(new Date());
 		pathClientProgramDAO.save(pathClientProgram);
 		
 		// Return the resulting VO
-		return EnrollmentManager.generateEnrollmentVO(pathClientProgram);
+		return EnrollmentManager.generateEnrollmentDTO(pathClientProgram);
 	}
 	
-	public EnrollmentDTO updateEnrollment(EnrollmentDTO inputVO) {
-		PathClientProgram pathClientProgram = EnrollmentManager.generatePathClientProgram(inputVO);
-		pathClientProgram.setProgramKey(Integer.parseInt(inputVO.getEnrollmentId()));
+	public EnrollmentDTO updateEnrollment(EnrollmentDTO inputDTO) {
+		PathClientProgram pathClientProgram = EnrollmentManager.generatePathClientProgram(inputDTO);
+		pathClientProgram.setProgramKey(Integer.parseInt(inputDTO.getEnrollmentId()));
 
 		// Return the resulting VO
-		return inputVO;
+		return inputDTO;
 		
 	}
 	
@@ -110,7 +110,7 @@ public class EnrollmentManager {
 		return true;
 	}
 	
-	public static EnrollmentDTO generateEnrollmentVO(PathClientProgram pathClientProgram) {
+	public static EnrollmentDTO generateEnrollmentDTO(PathClientProgram pathClientProgram) {
 		EnrollmentDTO enrollmentDTO = new EnrollmentDTO();
 		
 		enrollmentDTO.setEnrollmentId(pathClientProgram.getProgramKey().toString());

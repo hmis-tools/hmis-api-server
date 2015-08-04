@@ -33,7 +33,7 @@ public class ChronicHealthConditionManager {
 		return false;
 	}
 	
-	public static ChronicHealthConditionDTO generateChronicHealthConditionVO() {
+	public static ChronicHealthConditionDTO generateChronicHealthConditionDTO() {
 		ChronicHealthConditionDTO chronicHealthConditionDTO = new ChronicHealthConditionDTO();
 		
 		return chronicHealthConditionDTO;
