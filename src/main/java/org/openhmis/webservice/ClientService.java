@@ -74,7 +74,7 @@ public class ClientService {
 	@DELETE
 	@Path("/{personalId}")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String updateClient(@PathParam("personalId") String personalId) throws JsonParseException, JsonMappingException, IOException {
+	public String deleteClient(@PathParam("personalId") String personalId) throws JsonParseException, JsonMappingException, IOException {
 		clientManager.deleteClient(personalId);
 		return "true";
 	}
