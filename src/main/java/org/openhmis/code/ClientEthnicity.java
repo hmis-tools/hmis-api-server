@@ -11,8 +11,8 @@ import org.openhmis.code.serialization.CodeLookup;
 
 @JsonSerialize(using = CodeSerializer.class)
 public enum ClientEthnicity implements BaseCode {
-	NON_HISPANIC (104, "Non-Hispanic/Non-Latino"),
-	HISPANIC (105, "Hispanic/Latino"),
+	NON_HISPANIC (0, "Non-Hispanic/Non-Latino"),
+	HISPANIC (1, "Hispanic/Latino"),
 	UNKNOWN (8, "Client doesn't know"),
 	REFUSED (9, "Client refused"),
 	NOT_COLLECTED (99, "Data not collected");
