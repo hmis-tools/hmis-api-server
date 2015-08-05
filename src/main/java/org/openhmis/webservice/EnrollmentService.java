@@ -277,15 +277,15 @@ public class EnrollmentService {
 
 	/* Developmental Disability Endpoints */
 	@GET
-	@Path("/{enrollmentId}/developmental-disabilitys")
+	@Path("/{enrollmentId}/developmental-disabilities")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String getDevelopmentalDisabilitys(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = developmentalDisabilityManager.getDevelopmentalDisabilitysByEnrollmentId(enrollmentId);
+	public String getDevelopmentalDisabilities(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
+		List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = developmentalDisabilityManager.getDevelopmentalDisabilitiesByEnrollmentId(enrollmentId);
 		return om.writeValueAsString(developmentalDisabilityDTOs);
 	}
 	
 	@GET
-	@Path("/{enrollmentId}/developmental-disabilitys/{developmentalDisabilityId}")
+	@Path("/{enrollmentId}/developmental-disabilities/{developmentalDisabilityId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getDevelopmentalDisability(@PathParam("enrollmentId") String enrollmentId, @PathParam("developmentalDisabilityId") String developmentalDisabilityId) throws JsonProcessingException {
 		DevelopmentalDisabilityDTO developmentalDisabilityDTO = developmentalDisabilityManager.getDevelopmentalDisabilityById(developmentalDisabilityId);
@@ -293,7 +293,7 @@ public class EnrollmentService {
 	}
 	
 	@POST
-	@Path("/{enrollmentId}/developmental-disabilitys")
+	@Path("/{enrollmentId}/developmental-disabilities")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String createDevelopmentalDisability(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		DevelopmentalDisabilityDTO inputVO = om.readValue(data, DevelopmentalDisabilityDTO.class);
@@ -303,7 +303,7 @@ public class EnrollmentService {
 	}
 	
 	@PUT
-	@Path("/{enrollmentId}/developmental-disabilitys/{developmentalDisabilityId}")
+	@Path("/{enrollmentId}/developmental-disabilities/{developmentalDisabilityId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String updateDevelopmentalDisability(@PathParam("enrollmentId") String enrollmentId, @PathParam("developmentalDisabilityId") String developmentalDisabilityId, String data) throws IOException {
 		DevelopmentalDisabilityDTO inputVO = om.readValue(data, DevelopmentalDisabilityDTO.class);
@@ -315,7 +315,7 @@ public class EnrollmentService {
 	}
 	
 	@DELETE
-	@Path("/{enrollmentId}/developmental-disabilitys/{developmentalDisabilityId}")
+	@Path("/{enrollmentId}/developmental-disabilities/{developmentalDisabilityId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String deleteDevelopmentalDisability(@PathParam("enrollmentId") String enrollmentId,  @PathParam("developmentalDisabilityId") String developmentalDisabilityId) throws JsonParseException, JsonMappingException, IOException {
 		developmentalDisabilityManager.deleteDevelopmentalDisability(developmentalDisabilityId);

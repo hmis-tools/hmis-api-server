@@ -14,7 +14,7 @@ public class DevelopmentalDisabilityManager {
 		return developmentalDisabilityDTO;
 	}
 
-	public List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilitysByEnrollmentId(String enrollmentId) {
+	public List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilitiesByEnrollmentId(String enrollmentId) {
 		List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = new ArrayList<DevelopmentalDisabilityDTO>();
 		return developmentalDisabilityDTOs;
 	}
