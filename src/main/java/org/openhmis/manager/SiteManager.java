@@ -82,7 +82,7 @@ public class SiteManager {
 	
 	public static SiteDTO generateSiteDTO(TmpProjectSite tmpProjectSite) {
 		SiteDTO siteDTO = new SiteDTO();
-		siteDTO.setProjectCoCId(tmpProjectSite.getProjectCoCId().toString());
+		siteDTO.setProjectCoCId(tmpProjectSite.getProjectCoCid().toString());
 
 		// Universal Data Standard: Site (2014, 2.8) 
 		siteDTO.setPrincipalSite(YesNo.valueByCode(tmpProjectSite.getPrincipalSite()));
@@ -102,7 +102,7 @@ public class SiteManager {
 	public static TmpProjectSite generateTmpProjectSite(SiteDTO inputDTO) {
 		TmpProjectSite tmpProjectSite = new TmpProjectSite();
 		
-		tmpProjectSite.setProjectCoCId(Integer.parseInt(inputDTO.getProjectCoCId()));
+		tmpProjectSite.setProjectCoCid(Integer.parseInt(inputDTO.getProjectCoCId()));
 		
 		// Universal Data Standard: Site (2014, 2.8) 
 		tmpProjectSite.setPrincipalSite(inputDTO.getPrincipalSite().getCode());

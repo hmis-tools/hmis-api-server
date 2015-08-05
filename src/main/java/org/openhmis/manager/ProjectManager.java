@@ -10,16 +10,7 @@ import org.openhmis.code.ProjectTrackingMethod;
 import org.openhmis.code.ProjectType;
 import org.openhmis.code.YesNo;
 import org.openhmis.dao.TmpProjectDAO;
-import org.openhmis.domain.PathClient;
-import org.openhmis.domain.PathClientRace;
-import org.openhmis.domain.PathClientVeteranInfo;
 import org.openhmis.domain.TmpProject;
-import org.openhmis.domain.TmpProjectCoC;
-import org.openhmis.domain.TmpProjectInventory;
-import org.openhmis.dto.ClientDTO;
-import org.openhmis.dto.CoCDTO;
-import org.openhmis.dto.FunderDTO;
-import org.openhmis.dto.InventoryDTO;
 import org.openhmis.dto.ProjectDTO;
 
 public class ProjectManager {

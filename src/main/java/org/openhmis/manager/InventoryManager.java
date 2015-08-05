@@ -82,7 +82,7 @@ public class InventoryManager {
 	public static InventoryDTO generateInventoryDTO(TmpProjectInventory tmpProjectInventory) {
 		InventoryDTO inventoryDTO = new InventoryDTO();
 		
-		inventoryDTO.setProjectCoCId(tmpProjectInventory.getProjectCoCId().toString());
+		inventoryDTO.setProjectCoCId(tmpProjectInventory.getProjectCoCid().toString());
 
 		// Universal Data Standard: Bed and Unit Inventory Information (2014, 2.7) 
 		inventoryDTO.setInformationDate(tmpProjectInventory.getInformationDate());
@@ -109,7 +109,7 @@ public class InventoryManager {
 	public static TmpProjectInventory generateTmpProjectInventory(InventoryDTO inputDTO) {
 		TmpProjectInventory tmpProjectInventory = new TmpProjectInventory();
 		
-		tmpProjectInventory.setProjectCoCId(Integer.parseInt(inputDTO.getProjectCoCId()));
+		tmpProjectInventory.setProjectCoCid(Integer.parseInt(inputDTO.getProjectCoCId()));
 
 		// Universal Data Standard: Bed and Unit Inventory Information (2014, 2.7) 
 		tmpProjectInventory.setInformationDate(inputDTO.getInformationDate());

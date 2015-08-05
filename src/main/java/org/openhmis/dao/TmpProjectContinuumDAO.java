@@ -4,16 +4,16 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.openhmis.domain.TmpProjectCoC;
+import org.openhmis.domain.TmpProjectContinuum;
 
-public class TmpProjectCoCDAO extends BaseDAO {
+public class TmpProjectContinuumDAO extends BaseDAO {
 
 	// default constructor
-	public TmpProjectCoCDAO() { }
+	public TmpProjectContinuumDAO() { }
 
-	public TmpProjectCoC getTmpProjectCoCByProjectCoCId(Integer projectCoCId)  {
+	public TmpProjectContinuum getTmpProjectContinuumByProjectCoCId(Integer projectCoCId)  {
 		String queryString = "select projectCoC " + 
-			"from TmpProjectCoC as projectCoC " + 
+			"from TmpProjectContinuum as projectCoC " + 
 			"where projectCoC.projectCoCId =:projectCoCId";
 
 		Session session = getSession();
@@ -21,25 +21,25 @@ public class TmpProjectCoCDAO extends BaseDAO {
 		queryObject.setParameter("projectCoCId", projectCoCId);
 		queryObject.setMaxResults(1);
 		
-		List<TmpProjectCoC> results = queryObject.list();
+		List<TmpProjectContinuum> results = queryObject.list();
 		session.close();
 		
 		if(results.size() > 0)
-			return (TmpProjectCoC)results.get(0);
+			return (TmpProjectContinuum)results.get(0);
 		else
 			return null;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpProjectCoC> getTmpProjectCoCsByProjectId(Integer projectId) {
+	public List<TmpProjectContinuum> getTmpProjectContinuumsByProjectId(Integer projectId) {
 		String queryString = "select projectCoC " + 
-				"from TmpProjectCoC as projectCoC" + 
+				"from TmpProjectContinuum as projectCoC" + 
 				"where projectCoC.projectId =:projectId";
 
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
 		queryObject.setParameter("projectId", projectId);
-		List<TmpProjectCoC> results = queryObject.list();
+		List<TmpProjectContinuum> results = queryObject.list();
 		session.close();
 		return results;
 	}

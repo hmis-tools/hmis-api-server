@@ -5,19 +5,19 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.openhmis.dao.TmpProjectCoCDAO;
-import org.openhmis.domain.TmpProjectCoC;
+import org.openhmis.dao.TmpProjectContinuumDAO;
+import org.openhmis.domain.TmpProjectContinuum;
 import org.openhmis.dto.CoCDTO;
 
 public class CoCManager {
-	private static final TmpProjectCoCDAO tmpProjectCoCDAO = new TmpProjectCoCDAO();
+	private static final TmpProjectContinuumDAO tmpProjectContinuumDAO = new TmpProjectContinuumDAO();
 
 	public CoCManager() {}
 
 	public static CoCDTO getCoCByProjectCoCId(String projectCoCId) {
 		Integer projectCoCIdInt = Integer.parseInt(projectCoCId);
-		TmpProjectCoC tmpProjectCoC= tmpProjectCoCDAO.getTmpProjectCoCByProjectCoCId(projectCoCIdInt);		
-		CoCDTO CoCDTO = CoCManager.generateCoCDTO(tmpProjectCoC);
+		TmpProjectContinuum tmpProjectContinuum= tmpProjectContinuumDAO.getTmpProjectContinuumByProjectCoCId(projectCoCIdInt);		
+		CoCDTO CoCDTO = CoCManager.generateCoCDTO(tmpProjectContinuum);
 		return CoCDTO;
 	}
 
@@ -25,14 +25,14 @@ public class CoCManager {
 		List<CoCDTO> coCDTOs = new ArrayList<CoCDTO>();
 
 		// Collect the projects
-		List<TmpProjectCoC> tmpProjectCoCs = tmpProjectCoCDAO.getTmpProjectCoCsByProjectId(Integer.parseInt(projectId));
+		List<TmpProjectContinuum> tmpProjectContinuums = tmpProjectContinuumDAO.getTmpProjectContinuumsByProjectId(Integer.parseInt(projectId));
 
 		// For each project, collect and map the data
 		// TODO: this should be done in a single query
-		for (Iterator<TmpProjectCoC> iterator = tmpProjectCoCs.iterator(); iterator.hasNext();) {
-			TmpProjectCoC tmpProjectCoC = iterator.next();
+		for (Iterator<TmpProjectContinuum> iterator = tmpProjectContinuums.iterator(); iterator.hasNext();) {
+			TmpProjectContinuum tmpProjectContinuum = iterator.next();
 
-			CoCDTO coCDTO = CoCManager.generateCoCDTO(tmpProjectCoC);
+			CoCDTO coCDTO = CoCManager.generateCoCDTO(tmpProjectContinuum);
 			coCDTOs.add(coCDTO);
 		}
 		return coCDTOs;
@@ -42,50 +42,50 @@ public class CoCManager {
 	public static CoCDTO addCoC(CoCDTO inputDTO) {
 
 		// Generate a PathClient from the input
-		TmpProjectCoC tmpProjectCoC = CoCManager.generateTmpProjectCoC(inputDTO);
+		TmpProjectContinuum tmpProjectContinuum = CoCManager.generateTmpProjectContinuum(inputDTO);
 		
 		// Set Export fields
-		tmpProjectCoC.setDateCreated(new Date());
-		tmpProjectCoC.setDateUpdated(new Date());
+		tmpProjectContinuum.setDateCreated(new Date());
+		tmpProjectContinuum.setDateUpdated(new Date());
 		
 		// Save the client to allow secondary object generation
-		tmpProjectCoCDAO.save(tmpProjectCoC);
-		inputDTO.setProjectCoCId(tmpProjectCoC.getProjectCoCId().toString());
+		tmpProjectContinuumDAO.save(tmpProjectContinuum);
+		inputDTO.setProjectCoCId(tmpProjectContinuum.getProjectCocId().toString());
 		
 		// Return the resulting VO
-		return CoCManager.generateCoCDTO(tmpProjectCoC);
+		return CoCManager.generateCoCDTO(tmpProjectContinuum);
 	}
 	
 	public static CoCDTO updateCoC(CoCDTO inputDTO) {
 		// Generate a TmpProject from the input
-		TmpProjectCoC tmpProjectCoC = CoCManager.generateTmpProjectCoC(inputDTO);
-		tmpProjectCoC.setProjectCoCId(Integer.parseInt(inputDTO.getProjectCoCId()));
-		tmpProjectCoC.setDateUpdated(new Date());
+		TmpProjectContinuum tmpProjectContinuum = CoCManager.generateTmpProjectContinuum(inputDTO);
+		tmpProjectContinuum.setProjectCocId(Integer.parseInt(inputDTO.getProjectCoCId()));
+		tmpProjectContinuum.setDateUpdated(new Date());
 		
 		// Update the client
-		tmpProjectCoCDAO.update(tmpProjectCoC);
+		tmpProjectContinuumDAO.update(tmpProjectContinuum);
 		
 		// Return the resulting VO
-		return CoCManager.generateCoCDTO(tmpProjectCoC);
+		return CoCManager.generateCoCDTO(tmpProjectContinuum);
 		
 	}
 	
 	public static boolean deleteCoC(String projectCoCId) {
-		TmpProjectCoC tmpProjectCoC = tmpProjectCoCDAO.getTmpProjectCoCByProjectCoCId(Integer.parseInt(projectCoCId));
-		tmpProjectCoCDAO.delete(tmpProjectCoC);
+		TmpProjectContinuum tmpProjectContinuum = tmpProjectContinuumDAO.getTmpProjectContinuumByProjectCoCId(Integer.parseInt(projectCoCId));
+		tmpProjectContinuumDAO.delete(tmpProjectContinuum);
 		
 		return true;
 	}
 	
-	public static CoCDTO generateCoCDTO(TmpProjectCoC tmpProjectCoC) {
-		Integer projectCoCId = tmpProjectCoC.getProjectCoCId();
+	public static CoCDTO generateCoCDTO(TmpProjectContinuum tmpProjectContinuum) {
+		Integer projectCoCId = tmpProjectContinuum.getProjectCocId();
 		
 		CoCDTO coCDTO = new CoCDTO();
-		coCDTO.setProjectCoCId(tmpProjectCoC.getProjectCoCId().toString());
-		coCDTO.setProjectId(tmpProjectCoC.getProjectId().toString());
+		coCDTO.setProjectCoCId(tmpProjectContinuum.getProjectCocId().toString());
+		coCDTO.setProjectId(tmpProjectContinuum.getProjectId().toString());
 		
 		// Universal Data Standard: Project Identifiers (2014, 2.2) 
-		coCDTO.setCoCCode(tmpProjectCoC.getCoCcode());
+		coCDTO.setCoCCode(tmpProjectContinuum.getCocCode());
 
 		// Universal Data Standard: Inventories (2014, 2.7)
 		coCDTO.setInventories(InventoryManager.getInventoriesByProjectCoCId(projectCoCId.toString()));
@@ -94,25 +94,25 @@ public class CoCManager {
 		coCDTO.setSites(SiteManager.getSitesByProjectCoCId(projectCoCId.toString()));
 
 		// Export Standard Fields
-		coCDTO.setDateCreated(tmpProjectCoC.getDateCreated());
-		coCDTO.setDateUpdated(tmpProjectCoC.getDateUpdated());
+		coCDTO.setDateCreated(tmpProjectContinuum.getDateCreated());
+		coCDTO.setDateUpdated(tmpProjectContinuum.getDateUpdated());
 		
 		return coCDTO;
 	}
 
-	public static TmpProjectCoC generateTmpProjectCoC(CoCDTO inputDTO) {
-		TmpProjectCoC tmpProjectCoC = new TmpProjectCoC();
+	public static TmpProjectContinuum generateTmpProjectContinuum(CoCDTO inputDTO) {
+		TmpProjectContinuum tmpProjectContinuum = new TmpProjectContinuum();
 	
-		tmpProjectCoC.setProjectId(Integer.parseInt(inputDTO.getProjectId()));
+		tmpProjectContinuum.setProjectId(Integer.parseInt(inputDTO.getProjectId()));
 
 		// Universal Data Standard: Project Identifiers (2014, 2.2) 
-		tmpProjectCoC.setCoCcode(inputDTO.getCoCCode());
+		tmpProjectContinuum.setCocCode(inputDTO.getCoCCode());
 
 		// Export Standard Fields
-		tmpProjectCoC.setDateCreated(inputDTO.getDateCreated());
-		tmpProjectCoC.setDateUpdated(inputDTO.getDateUpdated());
+		tmpProjectContinuum.setDateCreated(inputDTO.getDateCreated());
+		tmpProjectContinuum.setDateUpdated(inputDTO.getDateUpdated());
 		
-		return tmpProjectCoC;
+		return tmpProjectContinuum;
 
 	}
 	

@@ -14,15 +14,15 @@
 		<property name="javax.persistence.validation.mode">none</property>
 		<!-- ENDING OF CONFIG SETTINGS -->
 
-        <mapping class="org.openhmis.domain.PathClient" />
-        <mapping class="org.openhmis.domain.PathClientRace" />
-        <mapping class="org.openhmis.domain.PathClientVeteranInfo" />
+        <mapping class="org.openhmis.domain.TmpProjectFunder" />
         <mapping class="org.openhmis.domain.PathClientProgram" />
+        <mapping class="org.openhmis.domain.PathClientVeteranInfo" />
+        <mapping class="org.openhmis.domain.PathClient" />
         <mapping class="org.openhmis.domain.TmpProjectSite" />
         <mapping class="org.openhmis.domain.TmpProjectInventory" />
-        <mapping class="org.openhmis.domain.TmpProjectCoc" />
+        <mapping class="org.openhmis.domain.TmpProjectContinuum" />
         <mapping class="org.openhmis.domain.TmpProject" />
-        <mapping class="org.openhmis.domain.TmpProjectFunder" />
+        <mapping class="org.openhmis.domain.PathClientRace" />
 
 	</session-factory>
 
