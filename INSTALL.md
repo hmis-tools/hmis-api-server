@@ -129,9 +129,7 @@ Import sample data (or real data, if you have some):
 ---------------------------------------------------
 
 ```shell
-        $> for name in src/main/resources/db/data/*.sql; do 
-          mysql -u openhmis_user -p openhmis < ${name}; 
-        done
+        mysql -u openhmis_user -p openhmis < src/main/resources/db/data/DATA.sql
 ```
 
 Run the web service:
