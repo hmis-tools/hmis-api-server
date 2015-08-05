@@ -233,11 +233,14 @@ public class ClientManager {
 		if(pathClient.getEthnicityKey() != null) {
 			switch(pathClient.getEthnicityKey()) {
 				case 104: 
-					clientDTO.setEthnicity(ClientEthnicity.HISPANIC);
-				case 105:
 					clientDTO.setEthnicity(ClientEthnicity.NON_HISPANIC);
+					break;
+				case 105:
+					clientDTO.setEthnicity(ClientEthnicity.HISPANIC);
+					break;
 				default:
 					clientDTO.setEthnicity(ClientEthnicity.valueByCode(pathClient.getEthnicityKey()));
+					break;
 			}
 		}
 		
@@ -292,12 +295,15 @@ public class ClientManager {
 		
 		// Universal Data Standard: Ethnicity (2014, 3.5)
 		switch(clientDTO.getEthnicity()) {
-			case HISPANIC: 
+			case NON_HISPANIC: 
 				pathClient.setEthnicityKey(104);
-			case NON_HISPANIC:
+				break;
+			case HISPANIC:
 				pathClient.setEthnicityKey(105);
+				break;
 			default:
 				pathClient.setEthnicityKey(clientDTO.getEthnicity().getCode());
+				break;
 		}
 
 		// Universal Data Standard: Gender (2014, 3.6)
