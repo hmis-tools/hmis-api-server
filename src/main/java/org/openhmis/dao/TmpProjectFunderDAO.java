@@ -33,7 +33,7 @@ public class TmpProjectFunderDAO extends BaseDAO {
 	@SuppressWarnings("unchecked")
 	public List<TmpProjectFunder> getTmpProjectFundersByProjectId(Integer projectId) {
 		String queryString = "select projectFunder " + 
-				"from TmpProjectFunder as projectFunder" + 
+				"from TmpProjectFunder as projectFunder " + 
 				"where projectFunder.projectId =:projectId";
 
 		Session session = getSession();

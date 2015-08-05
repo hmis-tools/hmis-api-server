@@ -31,14 +31,14 @@ public class TmpProjectSiteDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpProjectSite> getTmpProjectSitesByProjectCoCId(Integer projectCoCId) {
+	public List<TmpProjectSite> getTmpProjectSitesByProjectCoCId(Integer projectCoCid) {
 		String queryString = "select projectSite " + 
-				"from TmpProjectSite as projectSite" + 
-				"where projectSite.projectCoCId =:projectCoCId";
+				"from TmpProjectSite as projectSite " + 
+				"where projectSite.projectCoCid =:projectCoCid";
 
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("projectCoCId", projectCoCId);
+		queryObject.setParameter("projectCoCid", projectCoCid);
 		List<TmpProjectSite> results = queryObject.list();
 		session.close();
 		return results;

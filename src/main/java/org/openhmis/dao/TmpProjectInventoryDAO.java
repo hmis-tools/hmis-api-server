@@ -31,14 +31,14 @@ public class TmpProjectInventoryDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpProjectInventory> getTmpProjectInventoriesByProjectCoCId(Integer projectCoCId) {
+	public List<TmpProjectInventory> getTmpProjectInventoriesByProjectCoCId(Integer projectCoCid) {
 		String queryString = "select projectInventory " + 
-				"from TmpProjectInventory as projectInventory" + 
-				"where projectInventory.projectCoCId =:projectCoCId";
+				"from TmpProjectInventory as projectInventory " + 
+				"where projectInventory.projectCoCid =:projectCoCid";
 
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("projectCoCId", projectCoCId);
+		queryObject.setParameter("projectCoCid", projectCoCid);
 		List<TmpProjectInventory> results = queryObject.list();
 		session.close();
 		return results;

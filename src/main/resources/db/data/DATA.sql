@@ -55,3 +55,13 @@ Insert into PATH_CLIENT_RACE (CLIENT_KEY,RACE_KEY,PRIMARY_KEY,UPDATE_TIMESTAMP,M
 
 Insert into PATH_CLIENT_VETERAN_INFO (VETERAN_KEY,CLIENT_KEY,YR_ENTER_MILITARY,YR_SEP_MILITARY,MILITARY_BRANCH,DISCHARGE_STATUS,WORLD_WAR_II,KOREAN_WAR,VIETNAM_WAR,PERSIAN_WAR,AFGHANISTAN_WAR,IRAQ_FREEDOM,IRAQ_DAWN,OTHER,CREATE_USER_KEY,UPDATE_USER_KEY,CREATE_DATE,UPDATE_TIMESTAMP,VERIFIED_DATE) values (21,715839,'1995','1997',1,1,0,0,0,1,0,0,0,0,null,null,null,null,null);
 
+INSERT INTO `TMP_PROJECT` (`projectId`, `projectName`, `continuumProject`, `projectType`, `residentialAffiliation`, `resProjectId`, `trackingMethod`, `targetPopulation`, `dateCreated`, `dateUpdated`) VALUES (1, 'Example Project', '1', '1', '1', '0', '3', '1', '2015-08-04', '2015-08-04');
+
+INSERT INTO `TMP_PROJECT_CONTINUUM` (`project_coc_id`, `project_id`, `coc_code`, `date_created`, `date_updated`) VALUES ('1', '1', 'EXMPL', '2015-08-04', '2015-08-04');
+
+INSERT INTO `TMP_PROJECT_FUNDER` (`funderId`, `projectId`, `funder`, `grantId`, `startDate`, `endDate`, `dateCreated`, `dateUpdated`) VALUES ('1', '1', '1', '1234', '2015-08-04', '2015-08-04', '2015-08-04', '2015-08-04');
+
+INSERT INTO `TMP_PROJECT_INVENTORY` (`inventoryId`, `projectCoCId`, `informationDate`, `householdType`, `bedType`, `availability`, `unitInventory`, `bedInventory`, `chBedInventory`, `vetBedInventory`, `youthBedInventory`, `youthAgeGroup`, `inventoryStartDate`, `inventoryEndDate`, `participatingBeds`, `dateCreated`, `dateUpdated`) VALUES ('1', '1', '2015-08-04', '0', '1', '1', '10', '10', '10', '10', '10', '1', '2015-08-04', '2015-08-04', '10', '2015-08-04', '2015-08-04');
+
+INSERT INTO `TMP_PROJECT_SITE` (`siteId`, `projectCoCId`, `principalSite`, `geocode`, `address`, `city`, `state`, `zip`, `dateCreated`) VALUES ('1', '1', '1', '11.1\'11.1', '123 Fake St', 'Fakesville', 'GA', '12345', '2015-08-04');
+

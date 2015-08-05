@@ -11,14 +11,14 @@ public class TmpProjectContinuumDAO extends BaseDAO {
 	// default constructor
 	public TmpProjectContinuumDAO() { }
 
-	public TmpProjectContinuum getTmpProjectContinuumByProjectCoCId(Integer projectCoCId)  {
-		String queryString = "select projectCoC " + 
-			"from TmpProjectContinuum as projectCoC " + 
-			"where projectCoC.projectCoCId =:projectCoCId";
+	public TmpProjectContinuum getTmpProjectContinuumByProjectCoCId(Integer projectCocId)  {
+		String queryString = "select projectContinuum " + 
+			"from TmpProjectContinuum as projectContinuum " + 
+			"where projectContinuum.projectCocId =:projectCocId";
 
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("projectCoCId", projectCoCId);
+		queryObject.setParameter("projectCocId", projectCocId);
 		queryObject.setMaxResults(1);
 		
 		List<TmpProjectContinuum> results = queryObject.list();
@@ -32,9 +32,9 @@ public class TmpProjectContinuumDAO extends BaseDAO {
 	
 	@SuppressWarnings("unchecked")
 	public List<TmpProjectContinuum> getTmpProjectContinuumsByProjectId(Integer projectId) {
-		String queryString = "select projectCoC " + 
-				"from TmpProjectContinuum as projectCoC" + 
-				"where projectCoC.projectId =:projectId";
+		String queryString = "select projectContinuum " + 
+				"from TmpProjectContinuum as projectContinuum " + 
+				"where projectContinuum.projectId =:projectId";
 
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);

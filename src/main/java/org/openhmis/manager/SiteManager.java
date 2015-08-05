@@ -82,6 +82,7 @@ public class SiteManager {
 	
 	public static SiteDTO generateSiteDTO(TmpProjectSite tmpProjectSite) {
 		SiteDTO siteDTO = new SiteDTO();
+		siteDTO.setSiteId(tmpProjectSite.getSiteId().toString());
 		siteDTO.setProjectCoCId(tmpProjectSite.getProjectCoCid().toString());
 
 		// Universal Data Standard: Site (2014, 2.8) 

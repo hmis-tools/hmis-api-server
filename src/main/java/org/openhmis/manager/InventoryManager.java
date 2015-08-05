@@ -81,7 +81,8 @@ public class InventoryManager {
 	
 	public static InventoryDTO generateInventoryDTO(TmpProjectInventory tmpProjectInventory) {
 		InventoryDTO inventoryDTO = new InventoryDTO();
-		
+
+		inventoryDTO.setInventoryId(tmpProjectInventory.getInventoryId().toString());
 		inventoryDTO.setProjectCoCId(tmpProjectInventory.getProjectCoCid().toString());
 
 		// Universal Data Standard: Bed and Unit Inventory Information (2014, 2.7) 
