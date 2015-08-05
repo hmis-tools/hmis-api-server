@@ -16,7 +16,7 @@ _In order for those endpoints to function correctly, you must also create a loca
 
 1. Install JDK 1.7.x
 
-   On Debian GNU/Linux 'testing' dist as of 2015-07-30, `sudo apt-get install openjdk-7-jre` should work.
+   On Debian GNU/Linux 'testing' dist as of 2015-07-30, `sudo apt-get install openjdk-7-jre openjdk-7-jdk` should work.
 
 2. Install [Maven (3.x)](https://maven.apache.org/download.cgi).
 
