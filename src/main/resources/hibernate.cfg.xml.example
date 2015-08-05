@@ -23,6 +23,7 @@
         <mapping class="org.openhmis.domain.TmpProjectContinuum" />
         <mapping class="org.openhmis.domain.TmpProject" />
         <mapping class="org.openhmis.domain.PathClientRace" />
+        <mapping class="org.openhmis.domain.TmpOrganization" />
 
 	</session-factory>
 

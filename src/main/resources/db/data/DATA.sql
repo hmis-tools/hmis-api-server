@@ -65,3 +65,4 @@ INSERT INTO `TMP_PROJECT_INVENTORY` (`inventoryId`, `projectCoCId`, `information
 
 INSERT INTO `TMP_PROJECT_SITE` (`siteId`, `projectCoCId`, `principalSite`, `geocode`, `address`, `city`, `state`, `zip`, `dateCreated`) VALUES ('1', '1', '1', '11.1\'11.1', '123 Fake St', 'Fakesville', 'GA', '12345', '2015-08-04');
 
+INSERT INTO `TMP_ORGANIZATION` (`organizationId`, `organizationName`, `dateCreated`, `dateUpdated`) VALUES ('1', 'FromeCo', '2015-08-04', '2015-08-04');
