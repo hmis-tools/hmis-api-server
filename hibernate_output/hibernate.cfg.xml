@@ -1,19 +1,18 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC
-          "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-          "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-
-	<session-factory>
-		<!-- BEGINNING OF CONFIG SETTINGS -->
-		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
-		<property name="connection.url">jdbc:mysql://localhost/myDatabasename</property>
-		<property name="connection.username">myUsername</property>
-		<property name="connection.password">myPassword</property>
-		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="javax.persistence.validation.mode">none</property>
-		<!-- ENDING OF CONFIG SETTINGS -->
-
+    <session-factory>
+        <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.password"></property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost/openhmis</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.javax.persistence.validation.mode">none</property>
+        <property name="hibernate.search.autoregister_listeners">false</property>
+        <property name="hibernate.validator.apply_to_ddl">false</property>
         <mapping class="org.openhmis.domain.TmpMedicalAssistance" />
         <mapping class="org.openhmis.domain.TmpProjectContinuum" />
         <mapping class="org.openhmis.domain.TmpProjectInventory" />
@@ -42,7 +41,5 @@
         <mapping class="org.openhmis.domain.TmpIncomeSource" />
         <mapping class="org.openhmis.domain.PathClientRace" />
         <mapping class="org.openhmis.domain.TmpDevelopmentalDisability" />
-
-	</session-factory>
-
+    </session-factory>
 </hibernate-configuration>
