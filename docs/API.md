@@ -36,8 +36,7 @@ methods](http://htmlpreview.github.io/?https://github.com/hmis-api/api/blob/mast
 and we are working to expand the compatible area.  Interoperability is
 a primary goal of OpenHMIS.
 
-Historical background:
-----------------------
+#### Historical background:
 
 There have been two earlier versions of the OpenHMIS API, both of them
 based on the HUD 2010 data standards.  Neither should be used as a
@@ -50,6 +49,8 @@ instead of on HUD 2014, but we list them here for reference:
 
 OpenHMIS API Reference Documentation
 ====================================
+
+_(Note: The latest development version of this documentation is always available [on GitHub](https://github.com/PCNI/OpenHMIS/blob/feature-compass_schema/docs/API.md).)_
 
 The OpenHMIS API is a [RESTful
 API](https://en.wikipedia.org/wiki/Representational_state_transfer)
@@ -103,6 +104,13 @@ Extending that with the appropriate personalId value ...
          ... }
 
 POST, PUT, and DELETE work as expected.
+
+Note that you cannot edit fields inside nested objects.  For example,
+if you PUT an Enrollment object (containing `income sources` nested
+within it) to `services/enrollments/3/`, you should not expect changes
+in nested income sources to take effect.  Instead, to change or add
+those income sources, you must use the appropriate nested endpoint,
+e.g., `services/enrollments/3/income-sources/1`.
 
 # Top-level resources:
 
