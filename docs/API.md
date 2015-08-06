@@ -1,16 +1,115 @@
-# OpenHMIS API
-_version?_
+OpenHMIS API
+============
 
-See: https://github.com/PCNI/OpenHMIS
+Introduction
+------------
 
+The OpenHMIS API is a web-based API for collecting data and generating
+reports about sources and users of social services.
 
-The API has the following top-level resources:
+The OpenHMIS API is vendor-neutral.  It is fully open and can be
+implemented by anyone writing an HMIS application, allowing their
+application to process HMIS information with any source that speaks
+the same API.  It is based on the the 2014 data standards from the
+[U.S. Department of Housing and Urban Development
+(HUD)](http://hud.gov/), and is independent from the underlying data
+storage system, that is, it is not related to nor dependent on any
+particular database schema.
 
-- Clients
-- Enrollments
-- Organizations
-- Projects
+The latest version of the API is version 3 and provides complete
+coverage of the HUD 2014 data standards, though it is still in
+beta-testing while it undergoes further review and validation.
 
+For more information about the HUD 2014 standards, see:
+
+* [HMIS Data Exchange Resources](http://www.hudhdx.info/VendorResources.aspx) (only items with "2014" or later next to them)
+* [2014 HMIS Logical Model UML diagram](http://www.hudhdx.info/Resources/Vendors/4_0/HMIS_Logical_Model.pdf)
+* [HUD 2014 HMIS Data Dictionary](https://www.hudexchange.info/resource/3824/hmis-data-dictionary/)
+* [HUD HMIS 2014 CSV Format Specification](http://www.hudhdx.info/Resources/Vendors/4_0/HMISCSVSpecifications4_0FINAL.pdf)
+
+Note that the OpenHMIS API has a shared origin with the [HMIS API
+project](https://github.com/hmis-api/) project, and we are actively
+coordinating with that API to achieve maximum possible compatibility.
+Currently the OpenHMIS API is compatible with the HMIS API in almost
+all of the [core
+methods](http://htmlpreview.github.io/?https://github.com/hmis-api/api/blob/master/doc/hmis-api.html)
+and we are working to expand the compatible area.  Interoperability is
+a primary goal of OpenHMIS.
+
+Historical background:
+----------------------
+
+There have been two earlier versions of the OpenHMIS API, both of them
+based on the HUD 2010 data standards.  Neither should be used as a
+basis for new development now, since they are based on HUD 2010
+instead of on HUD 2014, but we list them here for reference:
+
+* [OpenHMIS API v1](https://drive.google.com/viewerng/viewer?a=v&pid=sites&srcid=cGNuaS5vcmd8b3BlbmhtaXN8Z3g6NGVmMWE3NzQ5OWRlOTA0Mw).  This API is implemented by the [`deprecated_v1_api`](https://github.com/PCNI/OpenHMIS/tree/deprecated_v1_api) branch, and is the API currently used by the [Homeless Helper](https://github.com/PCNI/homeless-helper) application.
+
+* [OpenHMIS API v2](https://code.google.com/p/openciss/wiki/openCISS_API_v2).  No clients use this version and no known servers implement it.
+
+OpenHMIS API Reference Documentation
+====================================
+
+The OpenHMIS API is a [RESTful
+API](https://en.wikipedia.org/wiki/Representational_state_transfer)
+that works as you would expect if you are familiar with other RESTful
+APIs.
+
+Requests to URLs returns JSON objects.  For intermediate URLs, these
+objects are lists, and the contents of the list are sub-objects of
+whatever type would be fetched by extending the URL with the natural
+next component.  For example, assuming that
+`http://hmis.example.com/openhmis/` is the API services base, then a
+GET request to
+
+        http://hmis.example.com/openhmis/services/clients
+
+would fetch a list of clients like this:
+
+        [
+            {"personalId":"336788",
+             "firstName":"Renee",
+             "middleName":null,
+             "lastName":"Mover",
+             "nameSuffix":null,
+             "nameDataQuality":99,
+             "ssn":"459834818",
+             ... }
+            {"personalId":"336823",
+             "firstName":"Tommy",
+             "middleName":null,
+             "lastName":"Harbison",
+             "nameSuffix":null,
+             "nameDataQuality":99,
+             "ssn":"106533370"," 
+             ... }
+            ...
+        ]
+
+Extending that with the appropriate personalId value ...
+
+        http://hmis.example.com/openhmis/services/clients/336788
+    
+...would fetch the corresponding individual Client:
+
+        {"personalId":"336788",
+         "firstName":"Renee",
+         "middleName":null,
+         "lastName":"Mover",
+         "nameSuffix":null,
+         "nameDataQuality":99,
+         "ssn":"459834818",
+         ... }
+
+POST, PUT, and DELETE work as expected.
+
+# Top-level resources:
+
+* Clients
+* Enrollments
+* Organizations
+* Projects
 
 # Clients
 

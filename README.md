@@ -2,7 +2,7 @@ OpenHMIS
 ========
 
 The OpenHMIS project is an [open source](LICENSE.md),
-[standards-based](API.md) HMIS (Homeless Management Information
+[standards-based](docs/API.md) HMIS (Homeless Management Information
 System).
 
 OpenHMIS is set of open standards for storing and exchanging HMIS data
@@ -16,7 +16,7 @@ See [OpenHMIS.org](http://openhmis.org/) for more information.
 This repository contains the OpenHMIS API specification, and a server
 implementing that API.
 
-For more about the API, please see [API.md](API.md).
+For more about the API, please see [API.md](docs/API.md).
 
 For more about the server code, please see [INSTALL.md](INSTALL.md).
 
