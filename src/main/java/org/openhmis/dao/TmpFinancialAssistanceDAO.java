@@ -11,7 +11,7 @@ public class TmpFinancialAssistanceDAO extends BaseDAO {
 	public TmpFinancialAssistanceDAO() {
 	}
 
-	public TmpFinancialAssistance getTmpFinancialAssistanceByFinancialAssistanceId(Integer financialAssistanceId)  {
+	public TmpFinancialAssistance getTmpFinancialAssistanceById(Integer financialAssistanceId)  {
 		String queryString = "select financialAssistance " + 
 			"from TmpFinancialAssistance as financialAssistance " + 
 			"where financialAssistance.financialAssistanceId =:financialAssistanceId";

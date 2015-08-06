@@ -11,7 +11,7 @@ public class TmpProjectSiteDAO extends BaseDAO {
 	// default constructor
 	public TmpProjectSiteDAO() { }
 
-	public TmpProjectSite getTmpProjectSiteBySiteId(Integer siteId)  {
+	public TmpProjectSite getTmpProjectSiteById(Integer siteId)  {
 		String queryString = "select projectSite " + 
 			"from TmpProjectSite as projectSite " + 
 			"where projectSite.siteId =:siteId";

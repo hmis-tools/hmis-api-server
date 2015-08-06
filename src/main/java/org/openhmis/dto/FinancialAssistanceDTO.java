@@ -24,6 +24,10 @@ public class FinancialAssistanceDTO {
 	private ClientSsvfFinancialAssistance ssvfTypeProvided;
 	private Long ssvfFaaAmount;
 
+	// Export Standard Fields
+	private Date dateCreated;
+	private Date dateUpdated;
+
 	public FinancialAssistanceDTO() {}
 
 	@JsonProperty
@@ -95,6 +99,26 @@ public class FinancialAssistanceDTO {
 	@JsonProperty
 	public void setSsvfFaaAmount(Long ssvfFaaAmount) {
 		this.ssvfFaaAmount = ssvfFaaAmount;
+	}
+
+	@JsonProperty
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	@JsonProperty
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@JsonProperty
+	public Date getDateUpdated() {
+		return dateUpdated;
+	}
+
+	@JsonProperty
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
 	}
 	
 	

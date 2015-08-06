@@ -6,5 +6,7 @@ CREATE TABLE `TMP_SUBSTANCE_ABUSE` (
 	indefiniteAndImpairs INT,
 	documentationOnFile INT,
 	receivingServices INT,
-	pathHowConfirmed INT
+	pathHowConfirmed INT,
+	dateCreated DATE, 
+	dateUpdated DATE
 );

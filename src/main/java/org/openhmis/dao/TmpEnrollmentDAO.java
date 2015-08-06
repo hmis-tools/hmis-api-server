@@ -11,7 +11,7 @@ public class TmpEnrollmentDAO extends BaseDAO {
 	public TmpEnrollmentDAO() {
 	}
 
-	public TmpEnrollment getTmpEnrollmentByEnrollmentId(Integer enrollmentId)  {
+	public TmpEnrollment getTmpEnrollmentById(Integer enrollmentId)  {
 		String queryString = "select enrollment " + 
 			"from TmpEnrollment as enrollment " + 
 			"where enrollment.enrollmentId =:enrollmentId";

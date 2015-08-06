@@ -1,6 +1,6 @@
 package org.openhmis.domain;
 
-// Generated Aug 5, 2015 8:35:20 PM by Hibernate Tools 4.3.1
+// Generated Aug 5, 2015 10:00:15 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -25,18 +25,22 @@ public class TmpReferral implements java.io.Serializable {
 	private Integer pathTypeProvided;
 	private Integer referralOutcome;
 	private Integer rhyTypeProvided;
+	private Date dateCreated;
+	private Date dateUpdated;
 
 	public TmpReferral() {
 	}
 
 	public TmpReferral(Integer enrollmentId, Date referralDate,
 			Integer pathTypeProvided, Integer referralOutcome,
-			Integer rhyTypeProvided) {
+			Integer rhyTypeProvided, Date dateCreated, Date dateUpdated) {
 		this.enrollmentId = enrollmentId;
 		this.referralDate = referralDate;
 		this.pathTypeProvided = pathTypeProvided;
 		this.referralOutcome = referralOutcome;
 		this.rhyTypeProvided = rhyTypeProvided;
+		this.dateCreated = dateCreated;
+		this.dateUpdated = dateUpdated;
 	}
 
 	@Id
@@ -94,6 +98,26 @@ public class TmpReferral implements java.io.Serializable {
 
 	public void setRhyTypeProvided(Integer rhyTypeProvided) {
 		this.rhyTypeProvided = rhyTypeProvided;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "dateCreated", length = 10)
+	public Date getDateCreated() {
+		return this.dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "dateUpdated", length = 10)
+	public Date getDateUpdated() {
+		return this.dateUpdated;
+	}
+
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
 	}
 
 }

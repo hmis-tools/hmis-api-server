@@ -11,7 +11,7 @@ public class TmpMentalHealthProblemDAO extends BaseDAO {
 	public TmpMentalHealthProblemDAO() {
 	}
 
-	public TmpMentalHealthProblem getTmpMentalHealthProblemByMentalHealthProblemId(Integer mentalHealthProblemId)  {
+	public TmpMentalHealthProblem getTmpMentalHealthProblemById(Integer mentalHealthProblemId)  {
 		String queryString = "select mentalHealthProblem " + 
 			"from TmpMentalHealthProblem as mentalHealthProblem " + 
 			"where mentalHealthProblem.mentalHealthProblemId =:mentalHealthProblemId";

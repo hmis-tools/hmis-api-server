@@ -1,6 +1,6 @@
 package org.openhmis.domain;
 
-// Generated Aug 5, 2015 8:35:20 PM by Hibernate Tools 4.3.1
+// Generated Aug 5, 2015 10:00:15 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -24,16 +24,21 @@ public class TmpDomesticAbuse implements java.io.Serializable {
 	private Date informationDate;
 	private Integer domesticViolenceVictim;
 	private Integer whenOccurred;
+	private Date dateCreated;
+	private Date dateUpdated;
 
 	public TmpDomesticAbuse() {
 	}
 
 	public TmpDomesticAbuse(Integer enrollmentId, Date informationDate,
-			Integer domesticViolenceVictim, Integer whenOccurred) {
+			Integer domesticViolenceVictim, Integer whenOccurred,
+			Date dateCreated, Date dateUpdated) {
 		this.enrollmentId = enrollmentId;
 		this.informationDate = informationDate;
 		this.domesticViolenceVictim = domesticViolenceVictim;
 		this.whenOccurred = whenOccurred;
+		this.dateCreated = dateCreated;
+		this.dateUpdated = dateUpdated;
 	}
 
 	@Id
@@ -82,6 +87,26 @@ public class TmpDomesticAbuse implements java.io.Serializable {
 
 	public void setWhenOccurred(Integer whenOccurred) {
 		this.whenOccurred = whenOccurred;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "dateCreated", length = 10)
+	public Date getDateCreated() {
+		return this.dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "dateUpdated", length = 10)
+	public Date getDateUpdated() {
+		return this.dateUpdated;
+	}
+
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
 	}
 
 }

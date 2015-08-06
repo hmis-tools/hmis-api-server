@@ -23,7 +23,7 @@ public class SiteManager {
 	public SiteManager() {}
 
 	public static SiteDTO getSiteBySiteId(String siteId) {
-		SiteDTO siteDTO = SiteManager.generateSiteDTO(tmpProjectSiteDAO.getTmpProjectSiteBySiteId(Integer.parseInt(siteId)));
+		SiteDTO siteDTO = SiteManager.generateSiteDTO(tmpProjectSiteDAO.getTmpProjectSiteById(Integer.parseInt(siteId)));
 		return siteDTO;
 	}
 
@@ -74,7 +74,7 @@ public class SiteManager {
 	}
 	
 	public static boolean deleteSite(String siteId) {
-		TmpProjectSite tmpProjectSite = tmpProjectSiteDAO.getTmpProjectSiteBySiteId(Integer.parseInt(siteId));
+		TmpProjectSite tmpProjectSite = tmpProjectSiteDAO.getTmpProjectSiteById(Integer.parseInt(siteId));
 		tmpProjectSiteDAO.delete(tmpProjectSite);
 		
 		return true;

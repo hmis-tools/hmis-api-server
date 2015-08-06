@@ -28,5 +28,7 @@ CREATE TABLE `TMP_EXIT` (
 	projectCompletionStatus INT,
 	earlyExitReason INT,
 	earlyExpulsionReason INT,
-	familyReunificationCode INT
+	familyReunificationCode INT,
+	dateCreated DATE, 
+	dateUpdated DATE
 );

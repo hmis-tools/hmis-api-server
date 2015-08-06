@@ -20,6 +20,9 @@ public class PhysicalDisabilityDTO {
 	private YesNo documentationOnFile;
 	private YesNoReason receivingServices;
 
+	// Export Standard Fields
+	private Date dateCreated;
+	private Date dateUpdated;
 
 	public PhysicalDisabilityDTO() {}
 	
@@ -105,6 +108,26 @@ public class PhysicalDisabilityDTO {
 	@JsonProperty
 	public void setReceivingServices(YesNoReason receivingServices) {
 		this.receivingServices = receivingServices;
+	}
+
+	@JsonProperty
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	@JsonProperty
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@JsonProperty
+	public Date getDateUpdated() {
+		return dateUpdated;
+	}
+
+	@JsonProperty
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
 	}
 }
 

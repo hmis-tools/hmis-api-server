@@ -11,7 +11,7 @@ public class TmpContactDAO extends BaseDAO {
 	public TmpContactDAO() {
 	}
 
-	public TmpContact getTmpContactByContactId(Integer contactId)  {
+	public TmpContact getTmpContactById(Integer contactId)  {
 		String queryString = "select contact " + 
 			"from Contact as contact " + 
 			"where contact.contactId =:contactId";

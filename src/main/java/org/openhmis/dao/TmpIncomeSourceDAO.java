@@ -11,7 +11,7 @@ public class TmpIncomeSourceDAO extends BaseDAO {
 	public TmpIncomeSourceDAO() {
 	}
 
-	public TmpIncomeSource getTmpIncomeSourceByIncomeSourceId(Integer incomeSourceId)  {
+	public TmpIncomeSource getTmpIncomeSourceById(Integer incomeSourceId)  {
 		String queryString = "select incomeSource " + 
 			"from TmpIncomeSource as incomeSource " + 
 			"where incomeSource.incomeSourceId =:incomeSourceId";

@@ -1,6 +1,6 @@
 package org.openhmis.domain;
 
-// Generated Aug 5, 2015 8:35:20 PM by Hibernate Tools 4.3.1
+// Generated Aug 5, 2015 10:00:15 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -26,19 +26,24 @@ public class TmpFinancialAssistance implements java.io.Serializable {
 	private Integer hopwaFaaAmount;
 	private Integer ssvfTypeProvided;
 	private Integer ssvfFaaAmount;
+	private Date dateCreated;
+	private Date dateUpdated;
 
 	public TmpFinancialAssistance() {
 	}
 
 	public TmpFinancialAssistance(Integer enrollmentId, Date dateProvided,
 			Integer hopwaTypeProvided, Integer hopwaFaaAmount,
-			Integer ssvfTypeProvided, Integer ssvfFaaAmount) {
+			Integer ssvfTypeProvided, Integer ssvfFaaAmount, Date dateCreated,
+			Date dateUpdated) {
 		this.enrollmentId = enrollmentId;
 		this.dateProvided = dateProvided;
 		this.hopwaTypeProvided = hopwaTypeProvided;
 		this.hopwaFaaAmount = hopwaFaaAmount;
 		this.ssvfTypeProvided = ssvfTypeProvided;
 		this.ssvfFaaAmount = ssvfFaaAmount;
+		this.dateCreated = dateCreated;
+		this.dateUpdated = dateUpdated;
 	}
 
 	@Id
@@ -105,6 +110,26 @@ public class TmpFinancialAssistance implements java.io.Serializable {
 
 	public void setSsvfFaaAmount(Integer ssvfFaaAmount) {
 		this.ssvfFaaAmount = ssvfFaaAmount;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "dateCreated", length = 10)
+	public Date getDateCreated() {
+		return this.dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "dateUpdated", length = 10)
+	public Date getDateUpdated() {
+		return this.dateUpdated;
+	}
+
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
 	}
 
 }

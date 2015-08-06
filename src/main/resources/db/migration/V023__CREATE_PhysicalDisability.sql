@@ -5,5 +5,7 @@ CREATE TABLE `TMP_PHYSICAL_DISABILITY` (
 	response INT,
 	indefiniteAndImpairs INT,
 	documentationOnFile INT,
-	receivingServices INT
+	receivingServices INT,
+	dateCreated DATE, 
+	dateUpdated DATE
 );

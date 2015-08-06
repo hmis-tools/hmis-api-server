@@ -11,7 +11,7 @@ public class TmpReferralDAO extends BaseDAO {
 	public TmpReferralDAO() {
 	}
 
-	public TmpReferral getTmpReferralByReferralId(Integer referralId)  {
+	public TmpReferral getTmpReferralById(Integer referralId)  {
 		String queryString = "select referral " + 
 			"from TmpReferral as referral " + 
 			"where referral.referralId =:referralId";

@@ -33,5 +33,7 @@ CREATE TABLE `TMP_INCOME_SOURCE` (
 	alimony INT,
 	alimonyAmount INT,
 	otherIncomeSource INT,
-	otherIncomeAmount INT
+	otherIncomeAmount INT,
+	dateCreated DATE, 
+	dateUpdated DATE
 );

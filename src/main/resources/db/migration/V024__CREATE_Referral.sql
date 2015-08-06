@@ -4,5 +4,7 @@ CREATE TABLE `TMP_REFERRAL` (
 	referralDate DATE,
 	pathTypeProvided INT,
 	referralOutcome INT,
-	rhyTypeProvided INT
+	rhyTypeProvided INT,
+	dateCreated DATE, 
+	dateUpdated DATE
 );

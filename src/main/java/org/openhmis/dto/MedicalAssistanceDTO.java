@@ -20,6 +20,10 @@ public class MedicalAssistanceDTO {
 	private YesNoReason adap;
 	private ClientNoAssistanceReason noAdapReason;
 
+	// Export Standard Fields
+	private Date dateCreated;
+	private Date dateUpdated;
+
 	public MedicalAssistanceDTO() {}
 
 	@JsonProperty
@@ -91,6 +95,26 @@ public class MedicalAssistanceDTO {
 	@JsonProperty
 	public void setNoAdapReason(ClientNoAssistanceReason noAdapReason) {
 		this.noAdapReason = noAdapReason;
+	}
+
+	@JsonProperty
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	@JsonProperty
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@JsonProperty
+	public Date getDateUpdated() {
+		return dateUpdated;
+	}
+
+	@JsonProperty
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
 	}
 	
 	

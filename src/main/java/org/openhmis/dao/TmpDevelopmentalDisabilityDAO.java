@@ -11,7 +11,7 @@ public class TmpDevelopmentalDisabilityDAO extends BaseDAO {
 	public TmpDevelopmentalDisabilityDAO() {
 	}
 
-	public TmpDevelopmentalDisability getTmpDevelopmentalDisabilityByDevelopmentalDisabilityId(Integer developmentalDisabilityId)  {
+	public TmpDevelopmentalDisability getTmpDevelopmentalDisabilityById(Integer developmentalDisabilityId)  {
 		String queryString = "select developmentalDisability " + 
 			"from TmpDevelopmentalDisability as developmentalDisability " + 
 			"where developmentalDisability.developmentalDisabilityId =:developmentalDisabilityId";
@@ -31,7 +31,7 @@ public class TmpDevelopmentalDisabilityDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpDevelopmentalDisability> getTmpDevelopmentalDisabilitysByEnrollmentId(Integer enrollmentId) {
+	public List<TmpDevelopmentalDisability> getTmpDevelopmentalDisabilitiesByEnrollmentId(Integer enrollmentId) {
 		String queryString = "select developmentalDisability " + 
 				"from TmpDevelopmentalDisability as developmentalDisability " + 
 				"where developmentalDisability.enrollmentId =:enrollmentId";

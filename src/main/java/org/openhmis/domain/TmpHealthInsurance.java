@@ -1,6 +1,6 @@
 package org.openhmis.domain;
 
-// Generated Aug 5, 2015 8:35:20 PM by Hibernate Tools 4.3.1
+// Generated Aug 5, 2015 10:00:15 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -39,6 +39,8 @@ public class TmpHealthInsurance implements java.io.Serializable {
 	private Integer noPayReason;
 	private Integer stateHealthIns;
 	private Integer noStateHealthInsReason;
+	private Date dateCreated;
+	private Date dateUpdated;
 
 	public TmpHealthInsurance() {
 	}
@@ -51,7 +53,7 @@ public class TmpHealthInsurance implements java.io.Serializable {
 			Integer employerProvided, Integer noEmployerProvidedReason,
 			Integer cobra, Integer noCobraReason, Integer pay,
 			Integer noPayReason, Integer stateHealthIns,
-			Integer noStateHealthInsReason) {
+			Integer noStateHealthInsReason, Date dateCreated, Date dateUpdated) {
 		this.enrollmentId = enrollmentId;
 		this.informationDate = informationDate;
 		this.insuranceFromAnySource = insuranceFromAnySource;
@@ -71,6 +73,8 @@ public class TmpHealthInsurance implements java.io.Serializable {
 		this.noPayReason = noPayReason;
 		this.stateHealthIns = stateHealthIns;
 		this.noStateHealthInsReason = noStateHealthInsReason;
+		this.dateCreated = dateCreated;
+		this.dateUpdated = dateUpdated;
 	}
 
 	@Id
@@ -254,6 +258,26 @@ public class TmpHealthInsurance implements java.io.Serializable {
 
 	public void setNoStateHealthInsReason(Integer noStateHealthInsReason) {
 		this.noStateHealthInsReason = noStateHealthInsReason;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "dateCreated", length = 10)
+	public Date getDateCreated() {
+		return this.dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "dateUpdated", length = 10)
+	public Date getDateUpdated() {
+		return this.dateUpdated;
+	}
+
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
 	}
 
 }

@@ -11,7 +11,7 @@ public class TmpPhysicalDisabilityDAO extends BaseDAO {
 	public TmpPhysicalDisabilityDAO() {
 	}
 
-	public TmpPhysicalDisability getTmpPhysicalDisabilityByPhyiscalDisabilityId(Integer phyiscalDisabilityId)  {
+	public TmpPhysicalDisability getTmpPhysicalDisabilityById(Integer phyiscalDisabilityId)  {
 		String queryString = "select phyiscalDisability " + 
 			"from TmpPhysicalDisability as phyiscalDisability " + 
 			"where phyiscalDisability.phyiscalDisabilityId =:phyiscalDisabilityId";
@@ -31,7 +31,7 @@ public class TmpPhysicalDisabilityDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpPhysicalDisability> getTmpPhysicalDisabilitysByEnrollmentId(Integer enrollmentId) {
+	public List<TmpPhysicalDisability> getTmpPhysicalDisabilitiesByEnrollmentId(Integer enrollmentId) {
 		String queryString = "select phyiscalDisability " + 
 				"from TmpPhysicalDisability as phyiscalDisability " + 
 				"where phyiscalDisability.enrollmentId =:enrollmentId";

@@ -21,6 +21,10 @@ public class SubstanceAbuseDTO {
 	private YesNoReason receivingServices;
 	private ClientPathHowConfirmed pathHowConfirmed;
 
+	// Export Standard Fields
+	private Date dateCreated;
+	private Date dateUpdated;
+	
 	public SubstanceAbuseDTO() {}
 
 	@JsonProperty
@@ -101,6 +105,26 @@ public class SubstanceAbuseDTO {
 	@JsonProperty
 	public void setPathHowConfirmed(ClientPathHowConfirmed pathHowConfirmed) {
 		this.pathHowConfirmed = pathHowConfirmed;
+	}
+
+	@JsonProperty
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	@JsonProperty
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@JsonProperty
+	public Date getDateUpdated() {
+		return dateUpdated;
+	}
+
+	@JsonProperty
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
 	}
 }
 

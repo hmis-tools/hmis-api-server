@@ -16,7 +16,7 @@ public class CoCManager {
 
 	public static CoCDTO getCoCByProjectCoCId(String projectCoCId) {
 		Integer projectCoCIdInt = Integer.parseInt(projectCoCId);
-		TmpProjectContinuum tmpProjectContinuum= tmpProjectContinuumDAO.getTmpProjectContinuumByProjectCoCId(projectCoCIdInt);		
+		TmpProjectContinuum tmpProjectContinuum= tmpProjectContinuumDAO.getTmpProjectContinuumById(projectCoCIdInt);		
 		CoCDTO CoCDTO = CoCManager.generateCoCDTO(tmpProjectContinuum);
 		return CoCDTO;
 	}
@@ -71,7 +71,7 @@ public class CoCManager {
 	}
 	
 	public static boolean deleteCoC(String projectCoCId) {
-		TmpProjectContinuum tmpProjectContinuum = tmpProjectContinuumDAO.getTmpProjectContinuumByProjectCoCId(Integer.parseInt(projectCoCId));
+		TmpProjectContinuum tmpProjectContinuum = tmpProjectContinuumDAO.getTmpProjectContinuumById(Integer.parseInt(projectCoCId));
 		tmpProjectContinuumDAO.delete(tmpProjectContinuum);
 		
 		return true;

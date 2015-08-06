@@ -11,7 +11,7 @@ public class TmpServiceDAO extends BaseDAO {
 	public TmpServiceDAO() {
 	}
 
-	public TmpService getTmpServiceByServiceId(Integer serviceId)  {
+	public TmpService getTmpServiceById(Integer serviceId)  {
 		String queryString = "select service " + 
 			"from TmpService as service " + 
 			"where service.serviceId =:serviceId";

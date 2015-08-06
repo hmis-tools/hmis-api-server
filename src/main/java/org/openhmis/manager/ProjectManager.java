@@ -19,7 +19,7 @@ public class ProjectManager {
 	public ProjectManager() {}
 
 	public static ProjectDTO getProjectById(String projectId) {
-		ProjectDTO projectDTO = ProjectManager.generateProjectDTO(tmpProjectDAO.getTmpProjectByProjectId(Integer.parseInt(projectId)));
+		ProjectDTO projectDTO = ProjectManager.generateProjectDTO(tmpProjectDAO.getTmpProjectById(Integer.parseInt(projectId)));
 		return projectDTO;
 	}
 
@@ -90,7 +90,7 @@ public class ProjectManager {
 	}
 	
 	public static boolean deleteProject(String projectId) {
-		TmpProject tmpProject = tmpProjectDAO.getTmpProjectByProjectId(Integer.parseInt(projectId));
+		TmpProject tmpProject = tmpProjectDAO.getTmpProjectById(Integer.parseInt(projectId));
 		tmpProjectDAO.delete(tmpProject);
 		
 		return true;

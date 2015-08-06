@@ -11,7 +11,7 @@ public class TmpHivAidsStatusDAO extends BaseDAO {
 	public TmpHivAidsStatusDAO() {
 	}
 
-	public TmpHivAidsStatus getTmpHivAidsStatusByHivAidsStatusId(Integer hivAidsStatusId)  {
+	public TmpHivAidsStatus getTmpHivAidsStatusById(Integer hivAidsStatusId)  {
 		String queryString = "select hivAidsStatus " + 
 			"from TmpHivAidsStatus as hivAidsStatus " + 
 			"where hivAidsStatus.hivAidsStatusId =:hivAidsStatusId";
@@ -31,7 +31,7 @@ public class TmpHivAidsStatusDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpHivAidsStatus> getTmpHivAidsStatussByEnrollmentId(Integer enrollmentId) {
+	public List<TmpHivAidsStatus> getTmpHivAidsStatusesByEnrollmentId(Integer enrollmentId) {
 		String queryString = "select hivAidsStatus " + 
 				"from TmpHivAidsStatus as hivAidsStatus " + 
 				"where hivAidsStatus.enrollmentId =:enrollmentId";

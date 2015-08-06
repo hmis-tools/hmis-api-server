@@ -23,7 +23,7 @@ public class OrganizationManager {
 	public OrganizationManager() {}
 
 	public static OrganizationDTO getOrganizationByOrganizationId(String organizationId) {
-		OrganizationDTO organizationDTO = OrganizationManager.generateOrganizationDTO(tmpOrganizationDAO.getTmpOrganizationByOrganizationId(Integer.parseInt(organizationId)));
+		OrganizationDTO organizationDTO = OrganizationManager.generateOrganizationDTO(tmpOrganizationDAO.getTmpOrganizationById(Integer.parseInt(organizationId)));
 		return organizationDTO;
 	}
 
@@ -74,7 +74,7 @@ public class OrganizationManager {
 	}
 	
 	public static boolean deleteOrganization(String organizationId) {
-		TmpOrganization tmpOrganization = tmpOrganizationDAO.getTmpOrganizationByOrganizationId(Integer.parseInt(organizationId));
+		TmpOrganization tmpOrganization = tmpOrganizationDAO.getTmpOrganizationById(Integer.parseInt(organizationId));
 		tmpOrganizationDAO.delete(tmpOrganization);
 		
 		return true;

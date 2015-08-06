@@ -11,7 +11,7 @@ public class TmpDomesticAbuseDAO extends BaseDAO {
 	public TmpDomesticAbuseDAO() {
 	}
 
-	public TmpDomesticAbuse getTmpDomesticAbuseByDomesticAbuseId(Integer domesticAbuseId)  {
+	public TmpDomesticAbuse getTmpDomesticAbuseById(Integer domesticAbuseId)  {
 		String queryString = "select domesticAbuse " + 
 			"from TmpDomesticAbuse as domesticAbuse " + 
 			"where domesticAbuse.domesticAbuseId =:domesticAbuseId";

@@ -7,5 +7,7 @@ CREATE TABLE `TMP_MENTAL_HEALTH_PROBLEM` (
 	documentationOnFile INT,
 	receivingServices INT,
 	pathHowConfirmed INT,
-	pathSmiInformation INT
+	pathSmiInformation INT,
+	dateCreated DATE, 
+	dateUpdated DATE
 );

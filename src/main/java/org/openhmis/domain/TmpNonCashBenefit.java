@@ -1,6 +1,6 @@
 package org.openhmis.domain;
 
-// Generated Aug 5, 2015 8:35:20 PM by Hibernate Tools 4.3.1
+// Generated Aug 5, 2015 10:00:15 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -32,6 +32,8 @@ public class TmpNonCashBenefit implements java.io.Serializable {
 	private Integer otherBenefitsSource;
 	private Integer rentalAssistanceTemp;
 	private String otherBenefitsSourceIdentify;
+	private Date dateCreated;
+	private Date dateUpdated;
 
 	public TmpNonCashBenefit() {
 	}
@@ -41,7 +43,8 @@ public class TmpNonCashBenefit implements java.io.Serializable {
 			Integer tanfChildCare, Integer tanfTransportation,
 			Integer otherTanf, Integer rentalAssistanceOngoing,
 			Integer otherBenefitsSource, Integer rentalAssistanceTemp,
-			String otherBenefitsSourceIdentify) {
+			String otherBenefitsSourceIdentify, Date dateCreated,
+			Date dateUpdated) {
 		this.enrollmentId = enrollmentId;
 		this.informationDate = informationDate;
 		this.benefitsFromAnySource = benefitsFromAnySource;
@@ -54,6 +57,8 @@ public class TmpNonCashBenefit implements java.io.Serializable {
 		this.otherBenefitsSource = otherBenefitsSource;
 		this.rentalAssistanceTemp = rentalAssistanceTemp;
 		this.otherBenefitsSourceIdentify = otherBenefitsSourceIdentify;
+		this.dateCreated = dateCreated;
+		this.dateUpdated = dateUpdated;
 	}
 
 	@Id
@@ -175,6 +180,26 @@ public class TmpNonCashBenefit implements java.io.Serializable {
 	public void setOtherBenefitsSourceIdentify(
 			String otherBenefitsSourceIdentify) {
 		this.otherBenefitsSourceIdentify = otherBenefitsSourceIdentify;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "dateCreated", length = 10)
+	public Date getDateCreated() {
+		return this.dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "dateUpdated", length = 10)
+	public Date getDateUpdated() {
+		return this.dateUpdated;
+	}
+
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
 	}
 
 }

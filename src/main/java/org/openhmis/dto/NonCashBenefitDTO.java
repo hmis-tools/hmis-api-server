@@ -25,6 +25,10 @@ public class NonCashBenefitDTO {
 	private YesNo rentalAssistanceTemp;
 	private String otherBenefitsSourceIdentify;
 
+	// Export Standard Fields
+	private Date dateCreated;
+	private Date dateUpdated;
+
 	public NonCashBenefitDTO() {}
 
 	@JsonProperty
@@ -155,6 +159,26 @@ public class NonCashBenefitDTO {
 	@JsonProperty
 	public void setOtherBenefitsSourceIdentify(String otherBenefitsSourceIdentify) {
 		this.otherBenefitsSourceIdentify = otherBenefitsSourceIdentify;
+	}
+
+	@JsonProperty
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	@JsonProperty
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@JsonProperty
+	public Date getDateUpdated() {
+		return dateUpdated;
+	}
+
+	@JsonProperty
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
 	}
 	
 	

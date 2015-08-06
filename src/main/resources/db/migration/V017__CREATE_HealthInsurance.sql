@@ -18,5 +18,7 @@ CREATE TABLE `TMP_HEALTH_INSURANCE` (
 	Pay INT,
 	noPayReason INT,
 	stateHealthIns INT,
-	noStateHealthInsReason INT
+	noStateHealthInsReason INT,
+	dateCreated DATE, 
+	dateUpdated DATE
 );

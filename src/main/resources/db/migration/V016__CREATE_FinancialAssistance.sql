@@ -5,5 +5,7 @@ CREATE TABLE `TMP_FINANCIAL_ASSISTANCE` (
 	hopwaTypeProvided INT,
 	hopwaFaaAmount INT,
 	ssvfTypeProvided INT,
-	ssvfFaaAmount INT
+	ssvfFaaAmount INT,
+	dateCreated DATE, 
+	dateUpdated DATE
 );

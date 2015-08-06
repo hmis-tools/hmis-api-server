@@ -1,6 +1,7 @@
 package org.openhmis.webservice;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -62,23 +63,6 @@ public class EnrollmentService {
 	private static final ObjectMapper om = new ObjectMapper();
 	private static final EnrollmentManager enrollmentManager = new EnrollmentManager();
 
-	private static final ChronicHealthConditionManager chronicHealthConditionManager = new ChronicHealthConditionManager();
-	private static final ContactManager contactManager = new ContactManager();
-	private static final DevelopmentalDisabilityManager developmentalDisabilityManager = new DevelopmentalDisabilityManager();
-	private static final DomesticAbuseManager domesticAbuseManager = new DomesticAbuseManager();
-	private static final ExitManager exitManager = new ExitManager();
-	private static final FinancialAssistanceManager financialAssistanceManager = new FinancialAssistanceManager();
-	private static final HealthInsuranceManager healthInsuranceManager = new HealthInsuranceManager();
-	private static final HivAidsStatusManager hivAidsStatusManager = new HivAidsStatusManager();
-	private static final IncomeSourceManager incomeSourceManager = new IncomeSourceManager();
-	private static final MedicalAssistanceManager medicalAssistanceManager = new MedicalAssistanceManager();
-	private static final MentalHealthProblemManager mentalHealthProblemManager = new MentalHealthProblemManager();
-	private static final NonCashBenefitManager nonCashBenefitManager = new NonCashBenefitManager();
-	private static final PhysicalDisabilityManager physicalDisabilityManager = new PhysicalDisabilityManager();
-	private static final ReferralManager referralManager = new ReferralManager();
-	private static final ServiceManager serviceManager = new ServiceManager();
-	private static final SubstanceAbuseManager substanceAbuseManager = new SubstanceAbuseManager();
-	
 	public EnrollmentService() {}
 
 
@@ -136,7 +120,10 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/exits")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getExits(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<ExitDTO> exitDTOs = exitManager.getExitsByEnrollmentId(enrollmentId);
+		// Exits are weird because right now only one can exist but they are still separate...
+		// TODO: figure out whether or not we want exists to have history
+		List<ExitDTO> exitDTOs = new ArrayList<ExitDTO>();
+		exitDTOs.add(ExitManager.getExitByEnrollmentId(enrollmentId));
 		return om.writeValueAsString(exitDTOs);
 	}
 	
@@ -144,7 +131,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/exits/{exitId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getExit(@PathParam("enrollmentId") String enrollmentId, @PathParam("exitId") String exitId) throws JsonProcessingException {
-		ExitDTO exitDTO = exitManager.getExitById(exitId);
+		ExitDTO exitDTO = ExitManager.getExitById(exitId);
 		return om.writeValueAsString(exitDTO);
 	}
 	
@@ -154,7 +141,7 @@ public class EnrollmentService {
 	public String createExit(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		ExitDTO inputVO = om.readValue(data, ExitDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		ExitDTO outputVO = exitManager.addExit(inputVO);
+		ExitDTO outputVO = ExitManager.addExit(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -166,7 +153,7 @@ public class EnrollmentService {
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setExitId(exitId);
 
-		ExitDTO outputVO = exitManager.updateExit(inputVO);
+		ExitDTO outputVO = ExitManager.updateExit(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -174,7 +161,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/exits/{exitId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String deleteExit(@PathParam("enrollmentId") String enrollmentId,  @PathParam("exitId") String exitId) throws JsonParseException, JsonMappingException, IOException {
-		exitManager.deleteExit(exitId);
+		ExitManager.deleteExit(exitId);
 		return "true";
 	}
 
@@ -184,7 +171,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/chronic-health-conditions")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getChronicHealthConditions(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = chronicHealthConditionManager.getChronicHealthConditionsByEnrollmentId(enrollmentId);
+		List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = ChronicHealthConditionManager.getChronicHealthConditionsByEnrollmentId(enrollmentId);
 		return om.writeValueAsString(chronicHealthConditionDTOs);
 	}
 	
@@ -192,7 +179,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/chronic-health-conditions/{chronicHealthConditionId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getChronicHealthCondition(@PathParam("enrollmentId") String enrollmentId, @PathParam("chronicHealthConditionId") String chronicHealthConditionId) throws JsonProcessingException {
-		ChronicHealthConditionDTO chronicHealthConditionDTO = chronicHealthConditionManager.getChronicHealthConditionById(chronicHealthConditionId);
+		ChronicHealthConditionDTO chronicHealthConditionDTO = ChronicHealthConditionManager.getChronicHealthConditionById(chronicHealthConditionId);
 		return om.writeValueAsString(chronicHealthConditionDTO);
 	}
 	
@@ -202,7 +189,7 @@ public class EnrollmentService {
 	public String createChronicHealthCondition(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		ChronicHealthConditionDTO inputVO = om.readValue(data, ChronicHealthConditionDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		ChronicHealthConditionDTO outputVO = chronicHealthConditionManager.addChronicHealthCondition(inputVO);
+		ChronicHealthConditionDTO outputVO = ChronicHealthConditionManager.addChronicHealthCondition(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -214,7 +201,7 @@ public class EnrollmentService {
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setChronicHealthConditionId(chronicHealthConditionId);
 
-		ChronicHealthConditionDTO outputVO = chronicHealthConditionManager.updateChronicHealthCondition(inputVO);
+		ChronicHealthConditionDTO outputVO = ChronicHealthConditionManager.updateChronicHealthCondition(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -222,7 +209,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/chronic-health-conditions/{chronicHealthConditionId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String deleteChronicHealthCondition(@PathParam("enrollmentId") String enrollmentId,  @PathParam("chronicHealthConditionId") String chronicHealthConditionId) throws JsonParseException, JsonMappingException, IOException {
-		chronicHealthConditionManager.deleteChronicHealthCondition(chronicHealthConditionId);
+		ChronicHealthConditionManager.deleteChronicHealthCondition(chronicHealthConditionId);
 		return "true";
 	}
 
@@ -232,7 +219,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/contacts")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getContacts(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<ContactDTO> contactDTOs = contactManager.getContactsByEnrollmentId(enrollmentId);
+		List<ContactDTO> contactDTOs = ContactManager.getContactsByEnrollmentId(enrollmentId);
 		return om.writeValueAsString(contactDTOs);
 	}
 	
@@ -240,7 +227,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/contacts/{contactId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getContact(@PathParam("enrollmentId") String enrollmentId, @PathParam("contactId") String contactId) throws JsonProcessingException {
-		ContactDTO contactDTO = contactManager.getContactById(contactId);
+		ContactDTO contactDTO = ContactManager.getContactById(contactId);
 		return om.writeValueAsString(contactDTO);
 	}
 	
@@ -250,7 +237,7 @@ public class EnrollmentService {
 	public String createContact(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		ContactDTO inputVO = om.readValue(data, ContactDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		ContactDTO outputVO = contactManager.addContact(inputVO);
+		ContactDTO outputVO = ContactManager.addContact(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -262,7 +249,7 @@ public class EnrollmentService {
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setContactId(contactId);
 
-		ContactDTO outputVO = contactManager.updateContact(inputVO);
+		ContactDTO outputVO = ContactManager.updateContact(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -270,7 +257,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/contacts/{contactId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String deleteContact(@PathParam("enrollmentId") String enrollmentId,  @PathParam("contactId") String contactId) throws JsonParseException, JsonMappingException, IOException {
-		contactManager.deleteContact(contactId);
+		ContactManager.deleteContact(contactId);
 		return "true";
 	}
 
@@ -280,7 +267,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/developmental-disabilities")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getDevelopmentalDisabilities(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = developmentalDisabilityManager.getDevelopmentalDisabilitiesByEnrollmentId(enrollmentId);
+		List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = DevelopmentalDisabilityManager.getDevelopmentalDisabilitiesByEnrollmentId(enrollmentId);
 		return om.writeValueAsString(developmentalDisabilityDTOs);
 	}
 	
@@ -288,7 +275,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/developmental-disabilities/{developmentalDisabilityId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getDevelopmentalDisability(@PathParam("enrollmentId") String enrollmentId, @PathParam("developmentalDisabilityId") String developmentalDisabilityId) throws JsonProcessingException {
-		DevelopmentalDisabilityDTO developmentalDisabilityDTO = developmentalDisabilityManager.getDevelopmentalDisabilityById(developmentalDisabilityId);
+		DevelopmentalDisabilityDTO developmentalDisabilityDTO = DevelopmentalDisabilityManager.getDevelopmentalDisabilityById(developmentalDisabilityId);
 		return om.writeValueAsString(developmentalDisabilityDTO);
 	}
 	
@@ -298,7 +285,7 @@ public class EnrollmentService {
 	public String createDevelopmentalDisability(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		DevelopmentalDisabilityDTO inputVO = om.readValue(data, DevelopmentalDisabilityDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		DevelopmentalDisabilityDTO outputVO = developmentalDisabilityManager.addDevelopmentalDisability(inputVO);
+		DevelopmentalDisabilityDTO outputVO = DevelopmentalDisabilityManager.addDevelopmentalDisability(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -310,7 +297,7 @@ public class EnrollmentService {
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setDevelopmentalDisabilityId(developmentalDisabilityId);
 
-		DevelopmentalDisabilityDTO outputVO = developmentalDisabilityManager.updateDevelopmentalDisability(inputVO);
+		DevelopmentalDisabilityDTO outputVO = DevelopmentalDisabilityManager.updateDevelopmentalDisability(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -318,7 +305,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/developmental-disabilities/{developmentalDisabilityId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String deleteDevelopmentalDisability(@PathParam("enrollmentId") String enrollmentId,  @PathParam("developmentalDisabilityId") String developmentalDisabilityId) throws JsonParseException, JsonMappingException, IOException {
-		developmentalDisabilityManager.deleteDevelopmentalDisability(developmentalDisabilityId);
+		DevelopmentalDisabilityManager.deleteDevelopmentalDisability(developmentalDisabilityId);
 		return "true";
 	}
 
@@ -328,7 +315,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/domestic-abuses")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getDomesticAbuses(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<DomesticAbuseDTO> domesticAbuseDTOs = domesticAbuseManager.getDomesticAbusesByEnrollmentId(enrollmentId);
+		List<DomesticAbuseDTO> domesticAbuseDTOs = DomesticAbuseManager.getDomesticAbusesByEnrollmentId(enrollmentId);
 		return om.writeValueAsString(domesticAbuseDTOs);
 	}
 	
@@ -336,7 +323,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/domestic-abuses/{domesticAbuseId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getDomesticAbuse(@PathParam("enrollmentId") String enrollmentId, @PathParam("domesticAbuseId") String domesticAbuseId) throws JsonProcessingException {
-		DomesticAbuseDTO domesticAbuseDTO = domesticAbuseManager.getDomesticAbuseById(domesticAbuseId);
+		DomesticAbuseDTO domesticAbuseDTO = DomesticAbuseManager.getDomesticAbuseById(domesticAbuseId);
 		return om.writeValueAsString(domesticAbuseDTO);
 	}
 	
@@ -346,7 +333,7 @@ public class EnrollmentService {
 	public String createDomesticAbuse(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		DomesticAbuseDTO inputVO = om.readValue(data, DomesticAbuseDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		DomesticAbuseDTO outputVO = domesticAbuseManager.addDomesticAbuse(inputVO);
+		DomesticAbuseDTO outputVO = DomesticAbuseManager.addDomesticAbuse(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -358,7 +345,7 @@ public class EnrollmentService {
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setDomesticAbuseId(domesticAbuseId);
 
-		DomesticAbuseDTO outputVO = domesticAbuseManager.updateDomesticAbuse(inputVO);
+		DomesticAbuseDTO outputVO = DomesticAbuseManager.updateDomesticAbuse(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -366,7 +353,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/domestic-abuses/{domesticAbuseId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String deleteDomesticAbuse(@PathParam("enrollmentId") String enrollmentId,  @PathParam("domesticAbuseId") String domesticAbuseId) throws JsonParseException, JsonMappingException, IOException {
-		domesticAbuseManager.deleteDomesticAbuse(domesticAbuseId);
+		DomesticAbuseManager.deleteDomesticAbuse(domesticAbuseId);
 		return "true";
 	}
 
@@ -376,7 +363,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/financial-assitances")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getFinancialAssistances(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<FinancialAssistanceDTO> financialAssistanceDTOs = financialAssistanceManager.getFinancialAssistancesByEnrollmentId(enrollmentId);
+		List<FinancialAssistanceDTO> financialAssistanceDTOs = FinancialAssistanceManager.getFinancialAssistancesByEnrollmentId(enrollmentId);
 		return om.writeValueAsString(financialAssistanceDTOs);
 	}
 	
@@ -384,7 +371,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/financial-assitances/{financialAssistanceId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getFinancialAssistance(@PathParam("enrollmentId") String enrollmentId, @PathParam("financialAssistanceId") String financialAssistanceId) throws JsonProcessingException {
-		FinancialAssistanceDTO financialAssistanceDTO = financialAssistanceManager.getFinancialAssistanceById(financialAssistanceId);
+		FinancialAssistanceDTO financialAssistanceDTO = FinancialAssistanceManager.getFinancialAssistanceById(financialAssistanceId);
 		return om.writeValueAsString(financialAssistanceDTO);
 	}
 	
@@ -394,7 +381,7 @@ public class EnrollmentService {
 	public String createFinancialAssistance(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		FinancialAssistanceDTO inputVO = om.readValue(data, FinancialAssistanceDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		FinancialAssistanceDTO outputVO = financialAssistanceManager.addFinancialAssistance(inputVO);
+		FinancialAssistanceDTO outputVO = FinancialAssistanceManager.addFinancialAssistance(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -406,7 +393,7 @@ public class EnrollmentService {
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setFinancialAssistanceId(financialAssistanceId);
 
-		FinancialAssistanceDTO outputVO = financialAssistanceManager.updateFinancialAssistance(inputVO);
+		FinancialAssistanceDTO outputVO = FinancialAssistanceManager.updateFinancialAssistance(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -414,7 +401,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/financial-assitances/{financialAssistanceId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String deleteFinancialAssistance(@PathParam("enrollmentId") String enrollmentId,  @PathParam("financialAssistanceId") String financialAssistanceId) throws JsonParseException, JsonMappingException, IOException {
-		financialAssistanceManager.deleteFinancialAssistance(financialAssistanceId);
+		FinancialAssistanceManager.deleteFinancialAssistance(financialAssistanceId);
 		return "true";
 	}
 
@@ -423,7 +410,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/health-insurances")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getHealthInsurances(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<HealthInsuranceDTO> healthInsuranceDTOs = healthInsuranceManager.getHealthInsurancesByEnrollmentId(enrollmentId);
+		List<HealthInsuranceDTO> healthInsuranceDTOs = HealthInsuranceManager.getHealthInsurancesByEnrollmentId(enrollmentId);
 		return om.writeValueAsString(healthInsuranceDTOs);
 	}
 	
@@ -431,7 +418,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/health-insurances/{healthInsuranceId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getHealthInsurance(@PathParam("enrollmentId") String enrollmentId, @PathParam("healthInsuranceId") String healthInsuranceId) throws JsonProcessingException {
-		HealthInsuranceDTO healthInsuranceDTO = healthInsuranceManager.getHealthInsuranceById(healthInsuranceId);
+		HealthInsuranceDTO healthInsuranceDTO = HealthInsuranceManager.getHealthInsuranceById(healthInsuranceId);
 		return om.writeValueAsString(healthInsuranceDTO);
 	}
 	
@@ -441,7 +428,7 @@ public class EnrollmentService {
 	public String createHealthInsurance(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		HealthInsuranceDTO inputVO = om.readValue(data, HealthInsuranceDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		HealthInsuranceDTO outputVO = healthInsuranceManager.addHealthInsurance(inputVO);
+		HealthInsuranceDTO outputVO = HealthInsuranceManager.addHealthInsurance(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -453,7 +440,7 @@ public class EnrollmentService {
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setHealthInsuranceId(healthInsuranceId);
 
-		HealthInsuranceDTO outputVO = healthInsuranceManager.updateHealthInsurance(inputVO);
+		HealthInsuranceDTO outputVO = HealthInsuranceManager.updateHealthInsurance(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -461,7 +448,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/health-insurances/{healthInsuranceId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String deleteHealthInsurance(@PathParam("enrollmentId") String enrollmentId,  @PathParam("healthInsuranceId") String healthInsuranceId) throws JsonParseException, JsonMappingException, IOException {
-		healthInsuranceManager.deleteHealthInsurance(healthInsuranceId);
+		HealthInsuranceManager.deleteHealthInsurance(healthInsuranceId);
 		return "true";
 	}
 
@@ -470,7 +457,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/hiv-aids-statuses")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getHivAidsStatuses(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<HivAidsStatusDTO> hivAidsStatusDTOs = hivAidsStatusManager.getHivAidsStatusesByEnrollmentId(enrollmentId);
+		List<HivAidsStatusDTO> hivAidsStatusDTOs = HivAidsStatusManager.getHivAidsStatusesByEnrollmentId(enrollmentId);
 		return om.writeValueAsString(hivAidsStatusDTOs);
 	}
 	
@@ -478,7 +465,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/hiv-aids-statuses/{hivAidsStatusId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getHivAidsStatus(@PathParam("enrollmentId") String enrollmentId, @PathParam("hivAidsStatusId") String hivAidsStatusId) throws JsonProcessingException {
-		HivAidsStatusDTO hivAidsStatusDTO = hivAidsStatusManager.getHivAidsStatusById(hivAidsStatusId);
+		HivAidsStatusDTO hivAidsStatusDTO = HivAidsStatusManager.getHivAidsStatusById(hivAidsStatusId);
 		return om.writeValueAsString(hivAidsStatusDTO);
 	}
 	
@@ -488,7 +475,7 @@ public class EnrollmentService {
 	public String createHivAidsStatus(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		HivAidsStatusDTO inputVO = om.readValue(data, HivAidsStatusDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		HivAidsStatusDTO outputVO = hivAidsStatusManager.addHivAidsStatus(inputVO);
+		HivAidsStatusDTO outputVO = HivAidsStatusManager.addHivAidsStatus(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -500,7 +487,7 @@ public class EnrollmentService {
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setHivAidsStatusId(hivAidsStatusId);
 
-		HivAidsStatusDTO outputVO = hivAidsStatusManager.updateHivAidsStatus(inputVO);
+		HivAidsStatusDTO outputVO = HivAidsStatusManager.updateHivAidsStatus(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -508,7 +495,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/hiv-aids-statuses/{hivAidsStatusId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String deleteHivAidsStatus(@PathParam("enrollmentId") String enrollmentId,  @PathParam("hivAidsStatusId") String hivAidsStatusId) throws JsonParseException, JsonMappingException, IOException {
-		hivAidsStatusManager.deleteHivAidsStatus(hivAidsStatusId);
+		HivAidsStatusManager.deleteHivAidsStatus(hivAidsStatusId);
 		return "true";
 	}
 
@@ -517,7 +504,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/medical-assistances")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getMedicalAssistances(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<MedicalAssistanceDTO> medicalAssistanceDTOs = medicalAssistanceManager.getMedicalAssistancesByEnrollmentId(enrollmentId);
+		List<MedicalAssistanceDTO> medicalAssistanceDTOs = MedicalAssistanceManager.getMedicalAssistancesByEnrollmentId(enrollmentId);
 		return om.writeValueAsString(medicalAssistanceDTOs);
 	}
 	
@@ -525,7 +512,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/medical-assistances/{medicalAssistanceId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getMedicalAssistance(@PathParam("enrollmentId") String enrollmentId, @PathParam("medicalAssistanceId") String medicalAssistanceId) throws JsonProcessingException {
-		MedicalAssistanceDTO medicalAssistanceDTO = medicalAssistanceManager.getMedicalAssistanceById(medicalAssistanceId);
+		MedicalAssistanceDTO medicalAssistanceDTO = MedicalAssistanceManager.getMedicalAssistanceById(medicalAssistanceId);
 		return om.writeValueAsString(medicalAssistanceDTO);
 	}
 	
@@ -535,7 +522,7 @@ public class EnrollmentService {
 	public String createMedicalAssistance(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		MedicalAssistanceDTO inputVO = om.readValue(data, MedicalAssistanceDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		MedicalAssistanceDTO outputVO = medicalAssistanceManager.addMedicalAssistance(inputVO);
+		MedicalAssistanceDTO outputVO = MedicalAssistanceManager.addMedicalAssistance(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -547,7 +534,7 @@ public class EnrollmentService {
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setMedicalAssistanceId(medicalAssistanceId);
 
-		MedicalAssistanceDTO outputVO = medicalAssistanceManager.updateMedicalAssistance(inputVO);
+		MedicalAssistanceDTO outputVO = MedicalAssistanceManager.updateMedicalAssistance(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -555,7 +542,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/medical-assistances/{medicalAssistanceId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String deleteMedicalAssistance(@PathParam("enrollmentId") String enrollmentId,  @PathParam("medicalAssistanceId") String medicalAssistanceId) throws JsonParseException, JsonMappingException, IOException {
-		medicalAssistanceManager.deleteMedicalAssistance(medicalAssistanceId);
+		MedicalAssistanceManager.deleteMedicalAssistance(medicalAssistanceId);
 		return "true";
 	}
 
@@ -564,7 +551,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/income-sources")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getIncomeSources(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<IncomeSourceDTO> incomeSourceDTOs = incomeSourceManager.getIncomeSourcesByEnrollmentId(enrollmentId);
+		List<IncomeSourceDTO> incomeSourceDTOs = IncomeSourceManager.getIncomeSourcesByEnrollmentId(enrollmentId);
 		return om.writeValueAsString(incomeSourceDTOs);
 	}
 	
@@ -572,7 +559,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/income-sources/{incomeSourceId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getIncomeSource(@PathParam("enrollmentId") String enrollmentId, @PathParam("incomeSourceId") String incomeSourceId) throws JsonProcessingException {
-		IncomeSourceDTO incomeSourceDTO = incomeSourceManager.getIncomeSourceById(incomeSourceId);
+		IncomeSourceDTO incomeSourceDTO = IncomeSourceManager.getIncomeSourceById(incomeSourceId);
 		return om.writeValueAsString(incomeSourceDTO);
 	}
 	
@@ -582,7 +569,7 @@ public class EnrollmentService {
 	public String createIncomeSource(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		IncomeSourceDTO inputVO = om.readValue(data, IncomeSourceDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		IncomeSourceDTO outputVO = incomeSourceManager.addIncomeSource(inputVO);
+		IncomeSourceDTO outputVO = IncomeSourceManager.addIncomeSource(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -594,7 +581,7 @@ public class EnrollmentService {
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setIncomeSourceId(incomeSourceId);
 
-		IncomeSourceDTO outputVO = incomeSourceManager.updateIncomeSource(inputVO);
+		IncomeSourceDTO outputVO = IncomeSourceManager.updateIncomeSource(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -602,7 +589,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/income-sources/{incomeSourceId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String deleteIncomeSource(@PathParam("enrollmentId") String enrollmentId,  @PathParam("incomeSourceId") String incomeSourceId) throws JsonParseException, JsonMappingException, IOException {
-		incomeSourceManager.deleteIncomeSource(incomeSourceId);
+		IncomeSourceManager.deleteIncomeSource(incomeSourceId);
 		return "true";
 	}
 
@@ -611,7 +598,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/noncash-benefits")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getNonCashBenefits(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<NonCashBenefitDTO> nonCashBenefitDTOs = nonCashBenefitManager.getNonCashBenefitsByEnrollmentId(enrollmentId);
+		List<NonCashBenefitDTO> nonCashBenefitDTOs = NonCashBenefitManager.getNonCashBenefitsByEnrollmentId(enrollmentId);
 		return om.writeValueAsString(nonCashBenefitDTOs);
 	}
 	
@@ -619,7 +606,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/noncash-benefits/{nonCashBenefitId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getNonCashBenefit(@PathParam("enrollmentId") String enrollmentId, @PathParam("nonCashBenefitId") String nonCashBenefitId) throws JsonProcessingException {
-		NonCashBenefitDTO nonCashBenefitDTO = nonCashBenefitManager.getNonCashBenefitById(nonCashBenefitId);
+		NonCashBenefitDTO nonCashBenefitDTO = NonCashBenefitManager.getNonCashBenefitById(nonCashBenefitId);
 		return om.writeValueAsString(nonCashBenefitDTO);
 	}
 	
@@ -629,7 +616,7 @@ public class EnrollmentService {
 	public String createNonCashBenefit(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		NonCashBenefitDTO inputVO = om.readValue(data, NonCashBenefitDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		NonCashBenefitDTO outputVO = nonCashBenefitManager.addNonCashBenefit(inputVO);
+		NonCashBenefitDTO outputVO = NonCashBenefitManager.addNonCashBenefit(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -641,7 +628,7 @@ public class EnrollmentService {
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setNonCashBenefitId(nonCashBenefitId);
 
-		NonCashBenefitDTO outputVO = nonCashBenefitManager.updateNonCashBenefit(inputVO);
+		NonCashBenefitDTO outputVO = NonCashBenefitManager.updateNonCashBenefit(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -649,7 +636,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/noncash-benefits/{nonCashBenefitId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String deleteNonCashBenefit(@PathParam("enrollmentId") String enrollmentId,  @PathParam("nonCashBenefitId") String nonCashBenefitId) throws JsonParseException, JsonMappingException, IOException {
-		nonCashBenefitManager.deleteNonCashBenefit(nonCashBenefitId);
+		NonCashBenefitManager.deleteNonCashBenefit(nonCashBenefitId);
 		return "true";
 	}
 
@@ -658,7 +645,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/physical-disabilities")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getPhysicalDisabilities(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<PhysicalDisabilityDTO> physicalDisabilityDTOs = physicalDisabilityManager.getPhysicalDisabilitiesByEnrollmentId(enrollmentId);
+		List<PhysicalDisabilityDTO> physicalDisabilityDTOs = PhysicalDisabilityManager.getPhysicalDisabilitiesByEnrollmentId(enrollmentId);
 		return om.writeValueAsString(physicalDisabilityDTOs);
 	}
 	
@@ -666,7 +653,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/physical-disabilities/{physicalDisabilityId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getPhysicalDisability(@PathParam("enrollmentId") String enrollmentId, @PathParam("physicalDisabilityId") String physicalDisabilityId) throws JsonProcessingException {
-		PhysicalDisabilityDTO physicalDisabilityDTO = physicalDisabilityManager.getPhysicalDisabilityById(physicalDisabilityId);
+		PhysicalDisabilityDTO physicalDisabilityDTO = PhysicalDisabilityManager.getPhysicalDisabilityById(physicalDisabilityId);
 		return om.writeValueAsString(physicalDisabilityDTO);
 	}
 	
@@ -676,7 +663,7 @@ public class EnrollmentService {
 	public String createPhysicalDisability(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		PhysicalDisabilityDTO inputVO = om.readValue(data, PhysicalDisabilityDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		PhysicalDisabilityDTO outputVO = physicalDisabilityManager.addPhysicalDisability(inputVO);
+		PhysicalDisabilityDTO outputVO = PhysicalDisabilityManager.addPhysicalDisability(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -688,7 +675,7 @@ public class EnrollmentService {
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setPhysicalDisabilityId(physicalDisabilityId);
 
-		PhysicalDisabilityDTO outputVO = physicalDisabilityManager.updatePhysicalDisability(inputVO);
+		PhysicalDisabilityDTO outputVO = PhysicalDisabilityManager.updatePhysicalDisability(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -696,7 +683,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/physical-disabilities/{physicalDisabilityId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String deletePhysicalDisability(@PathParam("enrollmentId") String enrollmentId,  @PathParam("physicalDisabilityId") String physicalDisabilityId) throws JsonParseException, JsonMappingException, IOException {
-		physicalDisabilityManager.deletePhysicalDisability(physicalDisabilityId);
+		PhysicalDisabilityManager.deletePhysicalDisability(physicalDisabilityId);
 		return "true";
 	}
 
@@ -705,7 +692,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/referrals")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getReferrals(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<ReferralDTO> referralDTOs = referralManager.getReferralsByEnrollmentId(enrollmentId);
+		List<ReferralDTO> referralDTOs = ReferralManager.getReferralsByEnrollmentId(enrollmentId);
 		return om.writeValueAsString(referralDTOs);
 	}
 	
@@ -713,7 +700,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/referrals/{referralId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getReferral(@PathParam("enrollmentId") String enrollmentId, @PathParam("referralId") String referralId) throws JsonProcessingException {
-		ReferralDTO referralDTO = referralManager.getReferralById(referralId);
+		ReferralDTO referralDTO = ReferralManager.getReferralById(referralId);
 		return om.writeValueAsString(referralDTO);
 	}
 	
@@ -723,7 +710,7 @@ public class EnrollmentService {
 	public String createReferral(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		ReferralDTO inputVO = om.readValue(data, ReferralDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		ReferralDTO outputVO = referralManager.addReferral(inputVO);
+		ReferralDTO outputVO = ReferralManager.addReferral(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -735,7 +722,7 @@ public class EnrollmentService {
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setReferralId(referralId);
 
-		ReferralDTO outputVO = referralManager.updateReferral(inputVO);
+		ReferralDTO outputVO = ReferralManager.updateReferral(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -743,7 +730,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/referrals/{referralId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String deleteReferral(@PathParam("enrollmentId") String enrollmentId,  @PathParam("referralId") String referralId) throws JsonParseException, JsonMappingException, IOException {
-		referralManager.deleteReferral(referralId);
+		ReferralManager.deleteReferral(referralId);
 		return "true";
 	}
 
@@ -752,7 +739,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/services")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getServices(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<ServiceDTO> serviceDTOs = serviceManager.getServicesByEnrollmentId(enrollmentId);
+		List<ServiceDTO> serviceDTOs = ServiceManager.getServicesByEnrollmentId(enrollmentId);
 		return om.writeValueAsString(serviceDTOs);
 	}
 	
@@ -760,7 +747,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/services/{serviceId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getService(@PathParam("enrollmentId") String enrollmentId, @PathParam("serviceId") String serviceId) throws JsonProcessingException {
-		ServiceDTO serviceDTO = serviceManager.getServiceById(serviceId);
+		ServiceDTO serviceDTO = ServiceManager.getServiceById(serviceId);
 		return om.writeValueAsString(serviceDTO);
 	}
 	
@@ -770,7 +757,7 @@ public class EnrollmentService {
 	public String createService(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		ServiceDTO inputVO = om.readValue(data, ServiceDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		ServiceDTO outputVO = serviceManager.addService(inputVO);
+		ServiceDTO outputVO = ServiceManager.addService(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -782,7 +769,7 @@ public class EnrollmentService {
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setServiceId(serviceId);
 
-		ServiceDTO outputVO = serviceManager.updateService(inputVO);
+		ServiceDTO outputVO = ServiceManager.updateService(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -790,7 +777,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/services/{serviceId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String deleteService(@PathParam("enrollmentId") String enrollmentId,  @PathParam("serviceId") String serviceId) throws JsonParseException, JsonMappingException, IOException {
-		serviceManager.deleteService(serviceId);
+		ServiceManager.deleteService(serviceId);
 		return "true";
 	}
 
@@ -799,7 +786,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/substance-abuses")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getSubstanceAbuses(@PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		List<SubstanceAbuseDTO> substanceAbuseDTOs = substanceAbuseManager.getSubstanceAbusesByEnrollmentId(enrollmentId);
+		List<SubstanceAbuseDTO> substanceAbuseDTOs = SubstanceAbuseManager.getSubstanceAbusesByEnrollmentId(enrollmentId);
 		return om.writeValueAsString(substanceAbuseDTOs);
 	}
 	
@@ -807,7 +794,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/substance-abuses/{substanceAbuseId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String getSubstanceAbuse(@PathParam("enrollmentId") String enrollmentId, @PathParam("substanceAbuseId") String substanceAbuseId) throws JsonProcessingException {
-		SubstanceAbuseDTO substanceAbuseDTO = substanceAbuseManager.getSubstanceAbuseById(substanceAbuseId);
+		SubstanceAbuseDTO substanceAbuseDTO = SubstanceAbuseManager.getSubstanceAbuseById(substanceAbuseId);
 		return om.writeValueAsString(substanceAbuseDTO);
 	}
 	
@@ -817,7 +804,7 @@ public class EnrollmentService {
 	public String createSubstanceAbuse(@PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		SubstanceAbuseDTO inputVO = om.readValue(data, SubstanceAbuseDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
-		SubstanceAbuseDTO outputVO = substanceAbuseManager.addSubstanceAbuse(inputVO);
+		SubstanceAbuseDTO outputVO = SubstanceAbuseManager.addSubstanceAbuse(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -829,7 +816,7 @@ public class EnrollmentService {
 		inputVO.setEnrollmentId(enrollmentId);
 		inputVO.setSubstanceAbuseId(substanceAbuseId);
 
-		SubstanceAbuseDTO outputVO = substanceAbuseManager.updateSubstanceAbuse(inputVO);
+		SubstanceAbuseDTO outputVO = SubstanceAbuseManager.updateSubstanceAbuse(inputVO);
 		return om.writeValueAsString(outputVO);
 	}
 	
@@ -837,7 +824,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/substance-abuses/{substanceAbuseId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public String deleteSubstanceAbuse(@PathParam("enrollmentId") String enrollmentId,  @PathParam("substanceAbuseId") String substanceAbuseId) throws JsonParseException, JsonMappingException, IOException {
-		substanceAbuseManager.deleteSubstanceAbuse(substanceAbuseId);
+		SubstanceAbuseManager.deleteSubstanceAbuse(substanceAbuseId);
 		return "true";
 	}
 

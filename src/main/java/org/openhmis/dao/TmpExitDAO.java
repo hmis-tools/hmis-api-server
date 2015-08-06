@@ -11,7 +11,7 @@ public class TmpExitDAO extends BaseDAO {
 	public TmpExitDAO() {
 	}
 
-	public TmpExit getTmpExitByExitId(Integer exitId)  {
+	public TmpExit getTmpExitById(Integer exitId)  {
 		String queryString = "select exit " + 
 			"from TmpExit as exit " + 
 			"where exit.exitId =:exitId";
@@ -31,7 +31,7 @@ public class TmpExitDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpExit> getTmpExitsByEnrollmentId(Integer enrollmentId) {
+	public TmpExit getTmpExitByEnrollmentId(Integer enrollmentId) {
 		String queryString = "select exit " + 
 				"from TmpExit as exit " + 
 				"where exit.enrollmentId =:enrollmentId";
@@ -39,8 +39,14 @@ public class TmpExitDAO extends BaseDAO {
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
 		queryObject.setParameter("enrollmentId", enrollmentId);
+		queryObject.setMaxResults(1);
+		
 		List<TmpExit> results = queryObject.list();
 		session.close();
-		return results;
+
+		if(results.size() > 0)
+			return (TmpExit)results.get(0);
+		else
+			return null;
 	}
 }

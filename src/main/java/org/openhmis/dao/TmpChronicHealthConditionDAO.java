@@ -11,7 +11,7 @@ public class TmpChronicHealthConditionDAO extends BaseDAO {
 	public TmpChronicHealthConditionDAO() {
 	}
 
-	public TmpChronicHealthCondition getTmpChronicHealthConditionByChronicHealthConditionId(Integer chronicHealthConditionId)  {
+	public TmpChronicHealthCondition getTmpChronicHealthConditionById(Integer chronicHealthConditionId)  {
 		String queryString = "select chronicHealthCondition " + 
 			"from TmpChronicHealthCondition as chronicHealthCondition " + 
 			"where chronicHealthCondition.chronicHealthConditionId =:chronicHealthConditionId";

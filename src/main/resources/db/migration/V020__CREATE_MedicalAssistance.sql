@@ -5,5 +5,7 @@ CREATE TABLE `TMP_MEDICAL_ASSISTANCE` (
 	hivAidsAssistance INT,
 	noHivAidsAssistanceReason INT,
 	adap INT,
-	noAdapReason INT
+	noAdapReason INT,
+	dateCreated DATE, 
+	dateUpdated DATE
 );

@@ -25,6 +25,10 @@ public class ReferralDTO {
 	// RHY (2014, 4.16B)
 	private ClientRhyReferral rhyTypeProvided;
 
+	// Export Standard Fields
+	private Date dateCreated;
+	private Date dateUpdated;
+
 	public ReferralDTO() {}
 	
 	@JsonProperty
@@ -85,5 +89,25 @@ public class ReferralDTO {
 	@JsonProperty
 	public void setRhyTypeProvided(ClientRhyReferral rhyTypeProvided) {
 		this.rhyTypeProvided = rhyTypeProvided;
+	}
+
+	@JsonProperty
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	@JsonProperty
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@JsonProperty
+	public Date getDateUpdated() {
+		return dateUpdated;
+	}
+
+	@JsonProperty
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
 	}
 }

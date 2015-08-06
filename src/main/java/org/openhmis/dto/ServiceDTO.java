@@ -35,6 +35,10 @@ public class ServiceDTO {
 	private ClientSsvfSubType5 ssvfDirectSubTypeProvided;
 	private String ssvfOtherService;
 
+	// Export Standard Fields
+	private Date dateCreated;
+	private Date dateUpdated;
+
 	public ServiceDTO() {}
 	
 	@JsonProperty
@@ -147,5 +151,25 @@ public class ServiceDTO {
 	@JsonProperty
 	public void setSsvfOtherService(String ssvfOtherService) {
 		this.ssvfOtherService = ssvfOtherService;
+	}
+
+	@JsonProperty
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	@JsonProperty
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@JsonProperty
+	public Date getDateUpdated() {
+		return dateUpdated;
+	}
+
+	@JsonProperty
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
 	}
 }

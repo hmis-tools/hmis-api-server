@@ -11,7 +11,7 @@ public class TmpProjectInventoryDAO extends BaseDAO {
 	// default constructor
 	public TmpProjectInventoryDAO() { }
 
-	public TmpProjectInventory getTmpProjectInventoryByInventoryId(Integer inventoryId)  {
+	public TmpProjectInventory getTmpProjectInventoryById(Integer inventoryId)  {
 		String queryString = "select projectInventory " + 
 			"from TmpProjectInventory as projectInventory " + 
 			"where projectInventory.inventoryId =:inventoryId";

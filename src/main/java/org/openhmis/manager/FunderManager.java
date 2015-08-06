@@ -17,7 +17,7 @@ public class FunderManager {
 
 	public static FunderDTO getFunderByProjectFunderId(String projectFunderId) {
 		Integer projectFunderIdInt = Integer.parseInt(projectFunderId);
-		TmpProjectFunder tmpProjectFunder= tmpProjectFunderDAO.getTmpProjectFunderByFunderId(projectFunderIdInt);		
+		TmpProjectFunder tmpProjectFunder= tmpProjectFunderDAO.getTmpProjectFunderById(projectFunderIdInt);		
 		FunderDTO FunderDTO = FunderManager.generateFunderDTO(tmpProjectFunder);
 		return FunderDTO;
 	}
@@ -72,7 +72,7 @@ public class FunderManager {
 	}
 	
 	public static boolean deleteFunder(String projectFunderId) {
-		TmpProjectFunder tmpProjectFunder = tmpProjectFunderDAO.getTmpProjectFunderByFunderId(Integer.parseInt(projectFunderId));
+		TmpProjectFunder tmpProjectFunder = tmpProjectFunderDAO.getTmpProjectFunderById(Integer.parseInt(projectFunderId));
 		tmpProjectFunderDAO.delete(tmpProjectFunder);
 		
 		return true;

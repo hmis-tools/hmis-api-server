@@ -1,6 +1,6 @@
 package org.openhmis.domain;
 
-// Generated Aug 5, 2015 8:35:20 PM by Hibernate Tools 4.3.1
+// Generated Aug 5, 2015 10:00:15 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -30,6 +30,8 @@ public class TmpService implements java.io.Serializable {
 	private Integer ssvfCoordinatingSubTypeProvided;
 	private Integer ssvfDirectSubTypeProvided;
 	private String ssvfOtherService;
+	private Date dateCreated;
+	private Date dateUpdated;
 
 	public TmpService() {
 	}
@@ -39,7 +41,8 @@ public class TmpService implements java.io.Serializable {
 			Integer hopwaTypeProvided, Integer ssvfTypeProvided,
 			Integer ssvfVaSubTypeProvided,
 			Integer ssvfCoordinatingSubTypeProvided,
-			Integer ssvfDirectSubTypeProvided, String ssvfOtherService) {
+			Integer ssvfDirectSubTypeProvided, String ssvfOtherService,
+			Date dateCreated, Date dateUpdated) {
 		this.enrollmentId = enrollmentId;
 		this.dateProvided = dateProvided;
 		this.pathTypeProvided = pathTypeProvided;
@@ -50,6 +53,8 @@ public class TmpService implements java.io.Serializable {
 		this.ssvfCoordinatingSubTypeProvided = ssvfCoordinatingSubTypeProvided;
 		this.ssvfDirectSubTypeProvided = ssvfDirectSubTypeProvided;
 		this.ssvfOtherService = ssvfOtherService;
+		this.dateCreated = dateCreated;
+		this.dateUpdated = dateUpdated;
 	}
 
 	@Id
@@ -153,6 +158,26 @@ public class TmpService implements java.io.Serializable {
 
 	public void setSsvfOtherService(String ssvfOtherService) {
 		this.ssvfOtherService = ssvfOtherService;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "dateCreated", length = 10)
+	public Date getDateCreated() {
+		return this.dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "dateUpdated", length = 10)
+	public Date getDateUpdated() {
+		return this.dateUpdated;
+	}
+
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
 	}
 
 }

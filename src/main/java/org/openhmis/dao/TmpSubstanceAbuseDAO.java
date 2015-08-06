@@ -11,7 +11,7 @@ public class TmpSubstanceAbuseDAO extends BaseDAO {
 	public TmpSubstanceAbuseDAO() {
 	}
 
-	public TmpSubstanceAbuse getTmpSubstanceAbuseBySubstanceAbuseId(Integer substanceAbuseId)  {
+	public TmpSubstanceAbuse getTmpSubstanceAbuseById(Integer substanceAbuseId)  {
 		String queryString = "select substanceAbuse " + 
 			"from TmpSubstanceAbuse as substanceAbuse " + 
 			"where substanceAbuse.substanceAbuseId =:substanceAbuseId";

@@ -11,7 +11,7 @@ public class TmpProjectContinuumDAO extends BaseDAO {
 	// default constructor
 	public TmpProjectContinuumDAO() { }
 
-	public TmpProjectContinuum getTmpProjectContinuumByProjectCoCId(Integer projectCocId)  {
+	public TmpProjectContinuum getTmpProjectContinuumById(Integer projectCocId)  {
 		String queryString = "select projectContinuum " + 
 			"from TmpProjectContinuum as projectContinuum " + 
 			"where projectContinuum.projectCocId =:projectCocId";

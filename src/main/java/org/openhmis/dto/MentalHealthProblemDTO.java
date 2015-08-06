@@ -23,6 +23,10 @@ public class MentalHealthProblemDTO {
 	private ClientPathHowConfirmed pathHowConfirmed;
 	private ClientPathSmiInformation pathSmiInformation;
 
+	// Export Standard Fields
+	private Date dateCreated;
+	private Date dateUpdated;
+
 	public MentalHealthProblemDTO() {}
 
 	@JsonProperty
@@ -113,6 +117,26 @@ public class MentalHealthProblemDTO {
 	@JsonProperty
 	public void setPathSmiInformation(ClientPathSmiInformation pathSmiInformation) {
 		this.pathSmiInformation = pathSmiInformation;
+	}
+
+	@JsonProperty
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	@JsonProperty
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@JsonProperty
+	public Date getDateUpdated() {
+		return dateUpdated;
+	}
+
+	@JsonProperty
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
 	}
 	
 	

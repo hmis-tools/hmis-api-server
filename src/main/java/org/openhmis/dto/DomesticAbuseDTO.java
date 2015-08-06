@@ -18,6 +18,10 @@ public class DomesticAbuseDTO {
 	private YesNoReason domesticViolenceVictim;
 	private ClientWhenDvOccurred whenOccurred;
 
+	// Export Standard Fields
+	private Date dateCreated;
+	private Date dateUpdated;
+
 	public DomesticAbuseDTO() {}
 
 	@JsonProperty
@@ -68,6 +72,26 @@ public class DomesticAbuseDTO {
 	@JsonProperty
 	public void setWhenOccurred(ClientWhenDvOccurred whenOccurred) {
 		this.whenOccurred = whenOccurred;
+	}
+
+	@JsonProperty
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	@JsonProperty
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@JsonProperty
+	public Date getDateUpdated() {
+		return dateUpdated;
+	}
+
+	@JsonProperty
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
 	}
 	
 	

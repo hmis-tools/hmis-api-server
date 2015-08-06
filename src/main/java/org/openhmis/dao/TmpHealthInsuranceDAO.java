@@ -11,7 +11,7 @@ public class TmpHealthInsuranceDAO extends BaseDAO {
 	public TmpHealthInsuranceDAO() {
 	}
 
-	public TmpHealthInsurance getTmpHealthInsuranceByHealthInsuranceId(Integer healthInsuranceId)  {
+	public TmpHealthInsurance getTmpHealthInsuranceById(Integer healthInsuranceId)  {
 		String queryString = "select healthInsurance " + 
 			"from TmpHealthInsurance as healthInsurance " + 
 			"where healthInsurance.healthInsuranceId =:healthInsuranceId";

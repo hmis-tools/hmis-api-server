@@ -11,7 +11,7 @@ public class TmpProjectFunderDAO extends BaseDAO {
 	// default constructor
 	public TmpProjectFunderDAO() { }
 
-	public TmpProjectFunder getTmpProjectFunderByFunderId(Integer funderId)  {
+	public TmpProjectFunder getTmpProjectFunderById(Integer funderId)  {
 		String queryString = "select projectFunder " + 
 			"from TmpProjectFunder as projectFunder " + 
 			"where projectFunder.funderId =:funderId";

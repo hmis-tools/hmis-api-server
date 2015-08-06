@@ -11,5 +11,7 @@ CREATE TABLE `TMP_NON_CASH_BENEFIT` (
 	rentalAssistanceOngoing INT,
 	otherBenefitsSource INT,
 	rentalAssistanceTemp INT,
-	otherBenefitsSourceIdentify VARCHAR(255)
+	otherBenefitsSourceIdentify VARCHAR(255),
+	dateCreated DATE, 
+	dateUpdated DATE
 );

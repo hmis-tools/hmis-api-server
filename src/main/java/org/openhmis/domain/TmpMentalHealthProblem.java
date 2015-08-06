@@ -1,6 +1,6 @@
 package org.openhmis.domain;
 
-// Generated Aug 5, 2015 8:35:20 PM by Hibernate Tools 4.3.1
+// Generated Aug 5, 2015 10:00:15 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -28,6 +28,8 @@ public class TmpMentalHealthProblem implements java.io.Serializable {
 	private Integer receivingServices;
 	private Integer pathHowConfirmed;
 	private Integer pathSmiInformation;
+	private Date dateCreated;
+	private Date dateUpdated;
 
 	public TmpMentalHealthProblem() {
 	}
@@ -35,7 +37,8 @@ public class TmpMentalHealthProblem implements java.io.Serializable {
 	public TmpMentalHealthProblem(Integer enrollmentId, Date informationDate,
 			Integer response, Integer indefiniteAndImpairs,
 			Integer documentationOnFile, Integer receivingServices,
-			Integer pathHowConfirmed, Integer pathSmiInformation) {
+			Integer pathHowConfirmed, Integer pathSmiInformation,
+			Date dateCreated, Date dateUpdated) {
 		this.enrollmentId = enrollmentId;
 		this.informationDate = informationDate;
 		this.response = response;
@@ -44,6 +47,8 @@ public class TmpMentalHealthProblem implements java.io.Serializable {
 		this.receivingServices = receivingServices;
 		this.pathHowConfirmed = pathHowConfirmed;
 		this.pathSmiInformation = pathSmiInformation;
+		this.dateCreated = dateCreated;
+		this.dateUpdated = dateUpdated;
 	}
 
 	@Id
@@ -128,6 +133,26 @@ public class TmpMentalHealthProblem implements java.io.Serializable {
 
 	public void setPathSmiInformation(Integer pathSmiInformation) {
 		this.pathSmiInformation = pathSmiInformation;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "dateCreated", length = 10)
+	public Date getDateCreated() {
+		return this.dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "dateUpdated", length = 10)
+	public Date getDateUpdated() {
+		return this.dateUpdated;
+	}
+
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
 	}
 
 }

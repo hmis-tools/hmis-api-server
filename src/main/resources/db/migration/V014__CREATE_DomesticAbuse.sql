@@ -3,5 +3,7 @@ CREATE TABLE `TMP_DOMESTIC_ABUSE` (
 	enrollmentId INT,
 	informationDate DATE,
 	domesticViolenceVictim INT,
-	whenOccurred INT
+	whenOccurred INT,
+	dateCreated DATE, 
+	dateUpdated DATE
 );

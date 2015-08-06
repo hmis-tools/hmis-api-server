@@ -5,5 +5,7 @@ CREATE TABLE `TMP_HIV_AIDS_STATUS` (
 	response INT,
 	indefiniteAndImpairs INT,
 	documentationOnFile INT,
-	receivingServices INT
+	receivingServices INT,
+	dateCreated DATE, 
+	dateUpdated DATE
 );

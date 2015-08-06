@@ -9,5 +9,7 @@ CREATE TABLE `TMP_SERVICE` (
 	ssvfVaSubTypeProvided INT,
 	ssvfCoordinatingSubTypeProvided INT,
 	ssvfDirectSubTypeProvided INT,
-	ssvfOtherService VARCHAR(255)
+	ssvfOtherService VARCHAR(255),
+	dateCreated DATE, 
+	dateUpdated DATE
 );

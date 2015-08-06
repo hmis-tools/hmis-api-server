@@ -11,7 +11,7 @@ public class TmpOrganizationDAO extends BaseDAO {
 	// default constructor
 	public TmpOrganizationDAO() { }
 
-	public TmpOrganization getTmpOrganizationByOrganizationId(Integer organizationId)  {
+	public TmpOrganization getTmpOrganizationById(Integer organizationId)  {
 		String queryString = "select organization " + 
 			"from TmpOrganization as organization " + 
 			"where organization.organizationId =:organizationId";

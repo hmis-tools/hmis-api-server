@@ -11,7 +11,7 @@ public class TmpNonCashBenefitDAO extends BaseDAO {
 	public TmpNonCashBenefitDAO() {
 	}
 
-	public TmpNonCashBenefit getTmpNonCashBenefitByNonCashBenefitId(Integer nonCashBenefitId)  {
+	public TmpNonCashBenefit getTmpNonCashBenefitById(Integer nonCashBenefitId)  {
 		String queryString = "select nonCashBenefit " + 
 			"from TmpNonCashBenefit as nonCashBenefit " + 
 			"where nonCashBenefit.nonCashBenefitId =:nonCashBenefitId";

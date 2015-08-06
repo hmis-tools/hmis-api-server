@@ -22,7 +22,7 @@ public class InventoryManager {
 	public InventoryManager() {}
 
 	public static InventoryDTO getInventoryByInventoryId(String inventoryId) {
-		InventoryDTO inventoryDTO = InventoryManager.generateInventoryDTO(tmpProjectInventoryDAO.getTmpProjectInventoryByInventoryId(Integer.parseInt(inventoryId)));
+		InventoryDTO inventoryDTO = InventoryManager.generateInventoryDTO(tmpProjectInventoryDAO.getTmpProjectInventoryById(Integer.parseInt(inventoryId)));
 		return inventoryDTO;
 	}
 
@@ -73,7 +73,7 @@ public class InventoryManager {
 	}
 	
 	public static boolean deleteInventory(String inventoryId) {
-		TmpProjectInventory tmpProjectInventory = tmpProjectInventoryDAO.getTmpProjectInventoryByInventoryId(Integer.parseInt(inventoryId));
+		TmpProjectInventory tmpProjectInventory = tmpProjectInventoryDAO.getTmpProjectInventoryById(Integer.parseInt(inventoryId));
 		tmpProjectInventoryDAO.delete(tmpProjectInventory);
 		
 		return true;
@@ -126,6 +126,10 @@ public class InventoryManager {
 		tmpProjectInventory.setInventoryStartDate(inputDTO.getInventoryStartDate());
 		tmpProjectInventory.setInventoryEndDate(inputDTO.getInventoryEndDate());
 		tmpProjectInventory.setParticipatingBeds(inputDTO.getHmisParticipatingBeds());
+		
+		// Export Standard Fields
+		tmpProjectInventory.setDateCreated(inputDTO.getDateCreated());
+		tmpProjectInventory.setDateUpdated(inputDTO.getDateUpdated());
 		
 		return tmpProjectInventory;
 	}

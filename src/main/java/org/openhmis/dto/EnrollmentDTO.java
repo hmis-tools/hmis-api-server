@@ -251,7 +251,7 @@ public class EnrollmentDTO {
 	// RHY Specific Data Standards: Referral Source (2014, 4.34)
 	// Collection: Project Entry
 	private ClientReferralSource referralSource;
-	private Integer countOUtreachReferralApproaches;
+	private Integer countOutreachReferralApproaches;
 
 	// RHY Specific Data Standards: Commercial Sexual Exploitation (2014, 4.35)
 	private YesNoReason exchangeForSexPastThreeMonths;
@@ -1162,14 +1162,14 @@ public class EnrollmentDTO {
 	}
 
 	@JsonProperty
-	public Integer getCountOUtreachReferralApproaches() {
-		return countOUtreachReferralApproaches;
+	public Integer getCountOutreachReferralApproaches() {
+		return countOutreachReferralApproaches;
 	}
 
 	@JsonProperty
-	public void setCountOUtreachReferralApproaches(
-			Integer countOUtreachReferralApproaches) {
-		this.countOUtreachReferralApproaches = countOUtreachReferralApproaches;
+	public void setCountOutreachReferralApproaches(
+			Integer countOutreachReferralApproaches) {
+		this.countOutreachReferralApproaches = countOutreachReferralApproaches;
 	}
 
 	@JsonProperty
