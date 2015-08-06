@@ -1,5 +1,5 @@
 CREATE TABLE `ENROLLMENT` (
-	enrollmentId INT,
+	enrollmentId INT AUTO_INCREMENT PRIMARY KEY,
 	personalId INT,
 	projectExit INT,
 	disablingCondition INT,
