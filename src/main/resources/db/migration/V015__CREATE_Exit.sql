@@ -1,4 +1,4 @@
-CREATE TABLE `EXIT` (
+CREATE TABLE `TMP_EXIT` (
 	exitId INT AUTO_INCREMENT PRIMARY KEY,
 	enrollmentId INT,
 	projectExitDate DATE,
