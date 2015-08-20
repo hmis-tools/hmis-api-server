@@ -27,18 +27,18 @@ The following things are 100% vendor-neutral.  They should be able to
 be reused by every vendor in the world who wants to have an
 implementation of the API:
 
-**1)** **Service objects: [src/main/java/org/openhmis/webservice](https://github.com/PCNI/OpenHMIS/tree/feature-compass_schema/src/main/java/org/openhmis/webservice)**
+**1)** **Service objects: [src/main/java/org/openhmis/webservice](src/main/java/org/openhmis/webservice)**
 
         These define the endpoint structure (which currently closely
         matches the https://github.com/hmis-api/api spec as well).
 
-**2)** **Data Transfer Objects (DTOs): [src/main/java/org/openhmis/dto](https://github.com/PCNI/OpenHMIS/tree/feature-compass_schema/src/main/java/org/openhmis/dto)**
+**2)** **Data Transfer Objects (DTOs): [src/main/java/org/openhmis/dto](src/main/java/org/openhmis/dto)**
 
         These define the endpoint input/output object structures
         (e.g. field names and the JSON objects that are returned and
         taken in by the endpoints).
 
-**3)** **Codes: [src/main/java/org/openhmis/code](https://github.com/PCNI/OpenHMIS/tree/feature-compass_schema/src/main/java/org/openhmis/code)**
+**3)** **Codes: [src/main/java/org/openhmis/code](src/main/java/org/openhmis/code)**
 
         These define the values of an object (e.g. "EmploymentType 2
         means part time").
@@ -48,20 +48,20 @@ Then there are then the following types of object where the
 similar between implementations, regardless of vendor -- but the
 details of the implementation are inherently vendor-specific:
 
-**4)** **Domain Objects: [src/main/java/org/openhmis/domain](https://github.com/PCNI/OpenHMIS/tree/feature-compass_schema/src/main/java/org/openhmis/domain)**
+**4)** **Domain Objects: [src/main/java/org/openhmis/domain](src/main/java/org/openhmis/domain)**
 
         These are automatically generated objects, created by
         Hibernate tools in Eclipse.  They are explicitly defined to
         mirror a schema.
 
-**5)** **Data Access Objects (DAOs): [src/main/java/org/openhmis/dao]((https://github.com/PCNI/OpenHMIS/tree/feature-compass_schema/src/main/java/org/openhmis/dao)**
+**5)** **Data Access Objects (DAOs): [src/main/java/org/openhmis/dao](src/main/java/org/openhmis/dao)**
 
         These are manually created objects (one object per domain
         object) which can usually be automatically or
         semi-automatically generated.  They just make it possible to
         query the database using the domain objects.
 
-**6)** **Manager Objects: [src/main/java/org/openhmis/manager]((https://github.com/PCNI/OpenHMIS/tree/feature-compass_schema/src/main/java/org/openhmis/manager)**
+**6)** **Manager Objects: [src/main/java/org/openhmis/manager](src/main/java/org/openhmis/manager)**
 
         These are manually created objects (one object per DTO), and
         actually do the mapping logic between the vendor-specific
