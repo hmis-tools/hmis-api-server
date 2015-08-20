@@ -16,9 +16,11 @@ See [OpenHMIS.org](http://openhmis.org/) for more information.
 This repository contains the OpenHMIS API specification, and a server
 implementing that API.
 
-For more about the API, please see [API.md](docs/API.md).
+For more about the API, see [API.md](docs/API.md).
 
-For more about the server code, please see [INSTALL.md](INSTALL.md).
+For how to deploy this server, see [INSTALL.md](INSTALL.md).
+
+For information about the design of the code, see [DESIGN.md](docs/DESIGN.md).
 
 
 Directory Structure
