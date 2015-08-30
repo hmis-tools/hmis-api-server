@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -25,6 +26,7 @@ import org.openhmis.manager.FunderManager;
 import org.openhmis.manager.InventoryManager;
 import org.openhmis.manager.ProjectManager;
 import org.openhmis.manager.SiteManager;
+import org.openhmis.util.Authentication;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -41,7 +43,9 @@ public class ProjectService {
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String getProjects() throws JsonProcessingException {
+	public String getProjects(@HeaderParam("Authorization") String authorization) throws JsonProcessingException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		List<ProjectDTO> projectDTOs = ProjectManager.getProjects();
 		return om.writeValueAsString(projectDTOs);
 	}
@@ -49,7 +53,9 @@ public class ProjectService {
 	@POST
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String createProject(String data) throws JsonParseException, JsonMappingException, IOException {
+	public String createProject(@HeaderParam("Authorization") String authorization, String data) throws JsonParseException, JsonMappingException, IOException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		// This endpoint takes in a raw json STRING as input.
 		// TODO: support the serialization of individual POST parameters
 		ProjectDTO inputVO = om.readValue(data, ProjectDTO.class);
@@ -60,7 +66,9 @@ public class ProjectService {
 	@GET
 	@Path("/{projectId}")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String getProject(@PathParam("projectId") String projectId) throws JsonProcessingException {
+	public String getProject(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId) throws JsonProcessingException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		ProjectDTO projectDTO = ProjectManager.getProjectById(projectId);
 		return om.writeValueAsString(projectDTO);
 	}
@@ -68,7 +76,9 @@ public class ProjectService {
 	@PUT
 	@Path("/{projectId}")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String updateProject(@PathParam("projectId") String projectId, String data) throws JsonParseException, JsonMappingException, IOException {
+	public String updateProject(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, String data) throws JsonParseException, JsonMappingException, IOException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		ProjectDTO inputVO = om.readValue(data, ProjectDTO.class);
 		inputVO.setProjectId(projectId);
 		
@@ -79,7 +89,9 @@ public class ProjectService {
 	@DELETE
 	@Path("/{projectId}")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String deleteProject(@PathParam("projectId") String projectId) throws JsonParseException, JsonMappingException, IOException {
+	public String deleteProject(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId) throws JsonParseException, JsonMappingException, IOException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		ProjectManager.deleteProject(projectId);
 		return "true";
 	}
@@ -88,7 +100,9 @@ public class ProjectService {
 	@GET
 	@Path("/{projectId}/cocs")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String getCoCs(@PathParam("projectId") String projectId) throws JsonProcessingException {
+	public String getCoCs(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId) throws JsonProcessingException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		List<CoCDTO> coCDTOs = CoCManager.getCoCsByProjectId(projectId);
 		return om.writeValueAsString(coCDTOs);
 	}
@@ -96,7 +110,9 @@ public class ProjectService {
 	@GET
 	@Path("/{projectId}/cocs/{coCId}")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String getCoC(@PathParam("projectId") String projectId, @PathParam("coCId") String coCId) throws JsonProcessingException {
+	public String getCoC(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId) throws JsonProcessingException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		CoCDTO coCDTO = CoCManager.getCoCByProjectCoCId(coCId);
 		return om.writeValueAsString(coCDTO);
 	}
@@ -104,7 +120,9 @@ public class ProjectService {
 	@POST
 	@Path("/{projectId}/cocs")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String createCoC(@PathParam("projectId") String projectId, String data) throws IOException {
+	public String createCoC(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, String data) throws IOException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		CoCDTO inputVO = om.readValue(data, CoCDTO.class);
 		inputVO.setProjectId(projectId);
 		CoCDTO outputVO = CoCManager.addCoC(inputVO);
@@ -114,7 +132,9 @@ public class ProjectService {
 	@PUT
 	@Path("/{projectId}/cocs/{coCId}")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String updateCoC(@PathParam("projectId") String projectId, @PathParam("coCId") String coCId, String data) throws IOException {
+	public String updateCoC(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, String data) throws IOException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		CoCDTO inputVO = om.readValue(data, CoCDTO.class);
 		inputVO.setProjectId(projectId);
 		inputVO.setProjectCoCId(coCId);
@@ -126,7 +146,9 @@ public class ProjectService {
 	@DELETE
 	@Path("/{projectId}/cocs/{coCId}")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String deleteCoC(@PathParam("projectId") String projectId,  @PathParam("coCId") String coCId) throws JsonParseException, JsonMappingException, IOException {
+	public String deleteCoC(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId,  @PathParam("coCId") String coCId) throws JsonParseException, JsonMappingException, IOException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		CoCManager.deleteCoC(coCId);
 		return "true";
 	}
@@ -135,7 +157,9 @@ public class ProjectService {
 	@GET
 	@Path("/{projectId}/funders")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String getFunders(@PathParam("projectId") String projectId) throws JsonProcessingException {
+	public String getFunders(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId) throws JsonProcessingException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		List<FunderDTO> funderDTOs = FunderManager.getFundersByProjectId(projectId);
 		return om.writeValueAsString(funderDTOs);
 	}
@@ -143,7 +167,9 @@ public class ProjectService {
 	@GET
 	@Path("/{projectId}/funders/{funderId}")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String getFunder(@PathParam("projectId") String projectId, @PathParam("funderId") String funderId) throws JsonProcessingException {
+	public String getFunder(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("funderId") String funderId) throws JsonProcessingException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		FunderDTO funderDTO = FunderManager.getFunderByProjectFunderId(funderId);
 		return om.writeValueAsString(funderDTO);
 	}
@@ -151,7 +177,9 @@ public class ProjectService {
 	@POST
 	@Path("/{projectId}/funders")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String createFunder(@PathParam("projectId") String projectId, String data) throws IOException {
+	public String createFunder(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, String data) throws IOException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		FunderDTO inputVO = om.readValue(data, FunderDTO.class);
 		inputVO.setProjectId(projectId);
 		FunderDTO outputVO = FunderManager.addFunder(inputVO);
@@ -161,7 +189,9 @@ public class ProjectService {
 	@PUT
 	@Path("/{projectId}/funders/{funderId}")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String updateFunder(@PathParam("projectId") String projectId, @PathParam("funderId") String funderId, String data) throws IOException {
+	public String updateFunder(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("funderId") String funderId, String data) throws IOException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		FunderDTO inputVO = om.readValue(data, FunderDTO.class);
 		inputVO.setProjectId(projectId);
 		inputVO.setFunderId(funderId);
@@ -173,7 +203,9 @@ public class ProjectService {
 	@DELETE
 	@Path("/{projectId}/funders/{funderId}")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String deleteFunder(@PathParam("projectId") String projectId,  @PathParam("funderId") String funderId) throws JsonParseException, JsonMappingException, IOException {
+	public String deleteFunder(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId,  @PathParam("funderId") String funderId) throws JsonParseException, JsonMappingException, IOException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		FunderManager.deleteFunder(funderId);
 		return "true";
 	}
@@ -182,7 +214,9 @@ public class ProjectService {
 	@GET
 	@Path("/{projectId}/cocs/{coCId}/inventories")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String getInventorys(@PathParam("projectId") String projectId, @PathParam("coCId") String coCId) throws JsonProcessingException {
+	public String getInventorys(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId) throws JsonProcessingException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		List<InventoryDTO> inventoryDTOs = InventoryManager.getInventoriesByProjectCoCId(coCId);
 		return om.writeValueAsString(inventoryDTOs);
 	}
@@ -190,7 +224,9 @@ public class ProjectService {
 	@GET
 	@Path("/{projectId}/cocs/{coCId}/inventories/{inventoryId}")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String getInventory(@PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @PathParam("inventoryId") String inventoryId) throws JsonProcessingException {
+	public String getInventory(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @PathParam("inventoryId") String inventoryId) throws JsonProcessingException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		InventoryDTO inventoryDTO = InventoryManager.getInventoryByInventoryId(inventoryId);
 		return om.writeValueAsString(inventoryDTO);
 	}
@@ -198,7 +234,9 @@ public class ProjectService {
 	@POST
 	@Path("/{projectId}/cocs/{coCId}/inventories")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String createInventory(@PathParam("projectId") String projectId, @PathParam("coCId") String coCId, String data) throws IOException {
+	public String createInventory(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, String data) throws IOException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		InventoryDTO inputVO = om.readValue(data, InventoryDTO.class);
 		inputVO.setProjectCoCId(coCId);
 		InventoryDTO outputVO = InventoryManager.addInventory(inputVO);
@@ -208,7 +246,9 @@ public class ProjectService {
 	@PUT
 	@Path("/{projectId}/cocs/{coCId}/inventories/{inventoryId}")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String updateInventory(@PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @PathParam("inventoryId") String inventoryId, String data) throws IOException {
+	public String updateInventory(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @PathParam("inventoryId") String inventoryId, String data) throws IOException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		InventoryDTO inputVO = om.readValue(data, InventoryDTO.class);
 		inputVO.setProjectCoCId(coCId);
 		inputVO.setInventoryId(inventoryId);
@@ -220,7 +260,9 @@ public class ProjectService {
 	@DELETE
 	@Path("/{projectId}/cocs/{coCId}/inventories/{inventoryId}")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String deleteInventory(@PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @PathParam("inventoryId") String inventoryId) throws JsonParseException, JsonMappingException, IOException {
+	public String deleteInventory(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @PathParam("inventoryId") String inventoryId) throws JsonParseException, JsonMappingException, IOException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		InventoryManager.deleteInventory(inventoryId);
 		return "true";
 	}
@@ -229,7 +271,9 @@ public class ProjectService {
 	@GET
 	@Path("/{projectId}/cocs/{coCId}/sites")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String getSites(@PathParam("projectId") String projectId, @PathParam("coCId") String coCId) throws JsonProcessingException {
+	public String getSites(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId) throws JsonProcessingException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		List<SiteDTO> siteDTOs = SiteManager.getSitesByProjectCoCId(coCId);
 		return om.writeValueAsString(siteDTOs);
 	}
@@ -237,7 +281,9 @@ public class ProjectService {
 	@GET
 	@Path("/{projectId}/cocs/{coCId}/sites/{siteId}")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String getSite(@PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @PathParam("siteId") String siteId) throws JsonProcessingException {
+	public String getSite(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @PathParam("siteId") String siteId) throws JsonProcessingException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		SiteDTO siteDTO = SiteManager.getSiteBySiteId(siteId);
 		return om.writeValueAsString(siteDTO);
 	}
@@ -245,7 +291,9 @@ public class ProjectService {
 	@POST
 	@Path("/{projectId}/cocs/{coCId}/sites")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String createSite(@PathParam("projectId") String projectId, @PathParam("coCId") String coCId, String data) throws IOException {
+	public String createSite(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, String data) throws IOException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		SiteDTO inputVO = om.readValue(data, SiteDTO.class);
 		inputVO.setProjectCoCId(coCId);
 		SiteDTO outputVO = SiteManager.addSite(inputVO);
@@ -255,7 +303,9 @@ public class ProjectService {
 	@PUT
 	@Path("/{projectId}/cocs/{coCId}/sites/{siteId}")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String updateSite(@PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @PathParam("siteId") String siteId, String data) throws IOException {
+	public String updateSite(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @PathParam("siteId") String siteId, String data) throws IOException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		SiteDTO inputVO = om.readValue(data, SiteDTO.class);
 		inputVO.setProjectCoCId(coCId);
 		inputVO.setSiteId(siteId);
@@ -267,7 +317,9 @@ public class ProjectService {
 	@DELETE
 	@Path("/{projectId}/cocs/{coCId}/sites/{siteId}")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String deleteSite(@PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @PathParam("siteId") String siteId) throws JsonParseException, JsonMappingException, IOException {
+	public String deleteSite(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @PathParam("siteId") String siteId) throws JsonParseException, JsonMappingException, IOException {
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new Error("You are not authorized to access this content");
 		SiteManager.deleteSite(siteId);
 		return "true";
 	}
