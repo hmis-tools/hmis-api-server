@@ -35,12 +35,10 @@ public class AuthenticationService {
 
 	public AuthenticationService() {}
 
-	@GET
-	@Path("/google/{code}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@POST
+	@Path("/google")
 	public String authenticate(String code) {
-		Authentication.googleAuthenticate(code);
-		return "Sup";
+		return Authentication.googleAuthenticate(code);
 	}
 
 }

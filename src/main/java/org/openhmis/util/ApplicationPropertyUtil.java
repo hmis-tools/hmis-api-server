@@ -4,41 +4,28 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class ApplicationPropertyUtil 
-{
+public class ApplicationPropertyUtil {
 	InputStream input = null;
 	Properties properties = new Properties();
 	String propFileName = "application.properties";
 	
-	public ApplicationPropertyUtil()
-	{
+	public ApplicationPropertyUtil() {
 		
 	}
-	public String getApplicationVersion() throws Exception
-	{
-		String applicationVersion = "";
-		try
-		{
+
+	private void loadPropertiesFile() throws Exception {
+		try {
 			input = getClass().getClassLoader().getResourceAsStream(propFileName);
-			if (input != null)
-			{
+			if (input != null) {
 				properties.load(input);
 			}
-			else 
-			{
-					throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
+			else {
+				throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
 			}
-			applicationVersion = properties.getProperty("application.version");
-	 
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			throw new Exception("Unable to read property file " + e.getMessage());
-		}
-		finally
-		{
-			if (input != null)
-			{
+		} finally {
+			if (input != null) {
 				try
 				{
 					input.close();
@@ -49,6 +36,36 @@ public class ApplicationPropertyUtil
 				}
 			}
 		}
-		return applicationVersion;
 	}
+
+	public String getApplicationVersion() {
+		try {
+			loadPropertiesFile();
+		} catch (Exception e) {
+			return "";
+		}
+
+		return properties.getProperty("application.version");
+	}
+
+	public String getGoogleClientId() {
+		try {
+			loadPropertiesFile();
+		} catch (Exception e) {
+			return "";
+		}
+
+		return properties.getProperty("google.clientId");
+	}
+
+	public String getGoogleSecret() {
+		try {
+			loadPropertiesFile();
+		} catch (Exception e) {
+			return "";
+		}
+
+		return properties.getProperty("google.secret");
+	}
+
 }

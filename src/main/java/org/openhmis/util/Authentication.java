@@ -33,47 +33,35 @@ public class Authentication {
 
 	private Authentication() {}
 
-	public static void googleAuthenticate(String code) {
- 		Properties properties = new Properties();
- 		String propertyFileLocation = null;
- 		try {
- 			InitialContext context;
-			context = new InitialContext();
-	 		propertyFileLocation = (String) context.lookup("java:comp/src/config");
-		} catch (NamingException e1) {}
- 		if (propertyFileLocation!= null) {
-			File propertyFile = new File(propertyFileLocation  + "/authentication.properties");
-			InputStream is;
-			try {
-				is = new FileInputStream(propertyFile);
-				properties.load(is);
-			} catch (FileNotFoundException e1) {
-				// Couldn't load the property file
-			} catch (IOException e) {
-				// Property file wasn't of the proper format
-			}
+	public static String googleAuthenticate(String code) {
 
-			try {
-				// Upgrade the authorization code into an access and refresh token.
-				GoogleTokenResponse tokenResponse =
-					new GoogleAuthorizationCodeTokenRequest(TRANSPORT, JSON_FACTORY,
-						properties.getProperty("google.clientid"), properties.getProperty("google.clientsecret"), code, "postmessage").execute();
+		ApplicationPropertyUtil applicationPropertyUtil = new ApplicationPropertyUtil();
 
-				// You can read the Google user ID in the ID token.
-				// This sample does not use the user ID.
-				GoogleIdToken idToken = tokenResponse.parseIdToken();
-				String gplusId = idToken.getPayload().getSubject();
+		String clientId = applicationPropertyUtil.getGoogleClientId();
+		String secret = applicationPropertyUtil.getGoogleSecret();
+		try {
+			// Upgrade the authorization code into an access and refresh token.
+			GoogleTokenResponse tokenResponse =
+				new GoogleAuthorizationCodeTokenRequest(TRANSPORT, JSON_FACTORY,
+					clientId, secret, code, "postmessage").execute();
 
-				// Store the token in the session for later use.
-				//request.getSession().setAttribute("token", tokenResponse.toString());
+			// You can read the Google user ID in the ID token.
+			// This sample does not use the user ID.
+			GoogleIdToken idToken = tokenResponse.parseIdToken();
+			String gplusId = idToken.getPayload().getSubject();
+			return gplusId;
 
-				// Store the auth type for later use
-				//request.getSession().setAttribute("isGoogle", true);
-			} catch (TokenResponseException e) {
-				// Failed to upgrade the authorization code.
-			} catch (IOException e) {
-				// Failed to read token data from Google.
-			}
+			// Store the token in the session for later use.
+			//request.getSession().setAttribute("token", tokenResponse.toString());
+
+			// Store the auth type for later use
+			//request.getSession().setAttribute("isGoogle", true);
+		} catch (TokenResponseException e) {
+			return "Token Fail" + e.getMessage();
+			// Failed to upgrade the authorization code.
+		} catch (IOException e) {
+			return "Read Google Data Fail";
+			// Failed to read token data from Google.
 		}
 	}
 
