@@ -31,3 +31,8 @@ This repository generally uses the [Standard Directory Layout](https://maven.apa
 Instructions for Contributing
 -------------------
 If you are interested in contributing to this repository, please review our [Contributors Guide](CONTRIBUTING.md) which explains policies, guidelines, and general advice.
+
+
+Authentication
+-------------------
+This API uses [Google Sign-in](https://developers.google.com/identity/) for authentication.  To build an application powered by this API, your application must the Google Sign-in [server side flow](https://developers.google.com/identity/sign-in/web/server-side-flow).
