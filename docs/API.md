@@ -64,7 +64,7 @@ next component.  For example, assuming that
 `http://hmis.example.com/openhmis/` is the API services base, then a
 GET request to
 
-        http://hmis.example.com/openhmis/services/clients
+        http://hmis.example.com/openhmis/api/v3/clients
 
 would fetch a list of clients like this:
 
@@ -90,7 +90,7 @@ would fetch a list of clients like this:
 
 Extending that with the appropriate personalId value ...
 
-        http://hmis.example.com/openhmis/services/clients/336788
+        http://hmis.example.com/openhmis/api/v3/clients/336788
     
 ...would fetch the corresponding individual Client:
 
@@ -131,7 +131,7 @@ URI: `/clients`
   - Parameters: None
   - Responses: Returns all clients found.
   - Example:
-    Call: `$ curl http://localhost:8080/openhmis/services/clients/`
+    Call: `$ curl http://localhost:8080/openhmis/api/v3/clients/`
     Response: ```[
   {
     "dateUpdated": "2015-05-08",
@@ -214,7 +214,7 @@ URI: `/clients`
     - This should be a JSON-formatted string with data element names matching those in the example above.
   - Responses: Returns the newly created client as a JSON-formatted string.
   - Example:
-    Call: `curl -X POST -d '{"firstName":"secondRenee","middleName":null,"lastName":"Mover","nameSuffix":null,"nameDataQuality":99,"ssn":"459834818","ssnDataQuality":1,"dob":"2045-01-24","dobDataQuality":1,"amIndAKNative":0,"asian":0,"blackAfAmerican":0,"nativeHIOtherPacific":0,"white":1,"raceNone":8,"ethnicity":0,"gender":2,"otherGender":null,"veteranStatus":0,"yearEnteredService":null,"yearSeparated":null,"worldWarII":99,"koreanWar":99,"vietnamWar":99,"desertStorm":99,"afghanistanOEF":99,"iraqOIF":99,"iraqOND":99,"otherTheater":99,"militaryBranch":99,"dischargeStatus":99,"dateCreated":"2003-03-03","dateUpdated":"2015-05-08"}' 'http://localhost:8080/openhmis/services/clients/'`
+    Call: `curl -X POST -d '{"firstName":"secondRenee","middleName":null,"lastName":"Mover","nameSuffix":null,"nameDataQuality":99,"ssn":"459834818","ssnDataQuality":1,"dob":"2045-01-24","dobDataQuality":1,"amIndAKNative":0,"asian":0,"blackAfAmerican":0,"nativeHIOtherPacific":0,"white":1,"raceNone":8,"ethnicity":0,"gender":2,"otherGender":null,"veteranStatus":0,"yearEnteredService":null,"yearSeparated":null,"worldWarII":99,"koreanWar":99,"vietnamWar":99,"desertStorm":99,"afghanistanOEF":99,"iraqOIF":99,"iraqOND":99,"otherTheater":99,"militaryBranch":99,"dischargeStatus":99,"dateCreated":"2003-03-03","dateUpdated":"2015-05-08"}' 'http://localhost:8080/openhmis/api/v3/clients/'`
     Response: ```{
   "dateUpdated": 1438811623501,
   "dateCreated": 1438811623501,
@@ -259,7 +259,7 @@ URI: `/clients`
   - Parameters: Takes a `personalId`.
   - Responses: Returns a single client with `personalId` matching the parameter passed in.
   - Example:
-    - Call: `$ curl http://localhost:8080/openhmis/services/clients/336788`
+    - Call: `$ curl http://localhost:8080/openhmis/api/v3/clients/336788`
     - Response: ```{
   "dateUpdated": "2015-05-08",
   "dateCreated": "2003-03-03",
@@ -313,7 +313,7 @@ URI: `/clients`
   - Parameters: Takes a `personalId` for the client to be deleted.
   - Responses: Returns `true` if the client was successfully deleted.
   - Example:
-    - Call: `$ curl -X DELETE http://localhost:8080/openhmis/services/clients/336788`
+    - Call: `$ curl -X DELETE http://localhost:8080/openhmis/api/v3/clients/336788`
     - Response: `true`
 
 
@@ -325,7 +325,7 @@ URI: `/clients`
   - Parameters: None
   - Responses: Returns all enrollments.
   - Example:
-    - Call: `$ curl http://localhost:8080/openhmis/services/enrollments`
+    - Call: `$ curl http://localhost:8080/openhmis/api/v3/enrollments`
     - Response: ```[{
     "dateUpdated": "2015-05-08",
     "dateCreated": "2005-06-08",
@@ -598,7 +598,7 @@ URI: `/clients`
   - Parameters: Takes an `enrollmentId`.
   - Responses: Returns an enrollment with all subresources.
   - Example:
-    - Call: `$ curl http://localhost:8080/openhmis/services/enrollments/46521`
+    - Call: `$ curl http://localhost:8080/openhmis/api/v3/enrollments/46521`
     - Response: ```{
   "dateUpdated": "2015-05-08",
   "dateCreated": "2005-06-08",
@@ -753,7 +753,7 @@ URI: `/clients`
   - Parameters: Takes an `enrollmentId` for the client to be deleted.
   - Responses: Returns `true` if the enrollment was successfully deleted.
   - Example:
-    - Call: `$ curl -X DELETE http://localhost:8080/openhmis/services/enrollments/46521
+    - Call: `$ curl -X DELETE http://localhost:8080/openhmis/api/v3/enrollments/46521
     - Response: `true`
 
 

@@ -165,6 +165,6 @@ Run the web service:
         [INFO] ------------------------------------------------------------------------
     ```
 
-4. If your web service is properly configured, [http://localhost:8080/openhmis/services/healthcheck](http://localhost:8080/openhmis/services/healthcheck) should display "Your service is working." 
+4. If your web service is properly configured, [http://localhost:8080/openhmis/api/v3/healthcheck](http://localhost:8080/openhmis/api/v3/healthcheck) should display "Your service is working." 
 
-5. If the schema is properly set up, [http://localhost:8080/openhmis/services/clients](http://localhost:8080/openhmis/services/clients) should yield a valid XML object.
+5. If the schema is properly set up, [http://localhost:8080/openhmis/api/v3/clients](http://localhost:8080/openhmis/api/v3/clients) should yield a valid XML object.
