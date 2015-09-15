@@ -5,7 +5,7 @@ The OpenHMIS API is a web-based API for collecting data and generating
 reports about sources and users of social services.  The latest
 version of the API is version 3 and it is currently under development:
 
-* [OpenHMIS API, v3](http://htmlpreview.github.io/?https://github.com/PCNI/OpenHMIS/blob/master/doc/openhmis-api.html)
+* [OpenHMIS API, v3](https://github.com/PCNI/OpenHMIS/blob/feature-compass_schema/docs/API.md)
 
 Although the API is still in development, there is an
 incomplete/unstable version of it (both server and demo client)
