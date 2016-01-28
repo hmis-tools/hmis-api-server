@@ -9,12 +9,10 @@ package org.openhmis.util;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 import javax.naming.InitialContext;
-import javax.naming.NamingException;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -37,7 +35,7 @@ public class HibernateSessionFactory {
      */ 	
  	 private static String CONFIG_FILE_LOCATION = "/hibernate.cfg.xml";
  	 private static final ThreadLocal<Session> threadLocal = new ThreadLocal<Session>();
-     private  static Configuration configuration = new Configuration();    
+     private static Configuration configuration = new Configuration();    
      private static org.hibernate.SessionFactory sessionFactory;
      private static String configFile = CONFIG_FILE_LOCATION;
      private static Properties properties = new Properties();

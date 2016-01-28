@@ -1,19 +1,40 @@
-/* Copyright (c) 2014 Pathways Community Network Institute
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 package org.openhmis.dao;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.openhmis.util.HibernateSessionFactory;
 
-public interface BaseDAO 
-{
-	public Boolean save(Object object);
-	public Boolean update(Object object);
-	public Boolean delete(Object object);
+
+public class BaseDAO {
 	
-	public Session getSession();
+	public Boolean save(Object object) {
+		Session session = getSession();
+		Transaction tx = session.beginTransaction();
+		session.save(object);
+		tx.commit();
+		session.close();
+		return Boolean.TRUE;
+	}
+
+	public Boolean update(Object object) {
+		Session session = getSession();
+		Transaction tx = session.beginTransaction();
+		session.merge(object);
+		tx.commit();
+		session.close();
+		return Boolean.TRUE;
+	}
+
+	public Boolean delete(Object object) {
+		Session session = getSession();
+		Transaction tx = session.beginTransaction();
+		session.delete(object);
+		tx.commit();
+		session.close();
+		return Boolean.TRUE;
+	}
+
+	public Session getSession() {
+		return HibernateSessionFactory.getSession();
+	}
 }
