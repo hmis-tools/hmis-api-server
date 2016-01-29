@@ -42,7 +42,7 @@ public class OrganizationService {
 
 	@GET
 	@Path("/")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getOrganizations(@HeaderParam("Authorization") String authorization) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -52,7 +52,7 @@ public class OrganizationService {
 	
 	@POST
 	@Path("/")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createOrganization(@HeaderParam("Authorization") String authorization, String data) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -65,7 +65,7 @@ public class OrganizationService {
 	
 	@GET
 	@Path("/{organizationId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getOrganization(@HeaderParam("Authorization") String authorization, @PathParam("organizationId") String organizationId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -75,7 +75,7 @@ public class OrganizationService {
 	
 	@PUT
 	@Path("/{organizationId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String updateOrganization(@HeaderParam("Authorization") String authorization, @PathParam("organizationId") String organizationId, String data) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -88,7 +88,7 @@ public class OrganizationService {
 	
 	@DELETE
 	@Path("/{organizationId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteOrganization(@HeaderParam("Authorization") String authorization, @PathParam("organizationId") String organizationId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");

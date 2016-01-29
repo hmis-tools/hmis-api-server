@@ -72,7 +72,7 @@ public class EnrollmentService {
 	
 	@GET
 	@Path("/")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getEnrollments(@HeaderParam("Authorization") String authorization) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -82,7 +82,7 @@ public class EnrollmentService {
 	
 	@GET
 	@Path("/{enrollmentId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getClient(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -92,7 +92,7 @@ public class EnrollmentService {
 
 	@POST
 	@Path("/")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createEnrollment(@HeaderParam("Authorization") String authorization, String data) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -105,7 +105,7 @@ public class EnrollmentService {
 	
 	@PUT
 	@Path("/{enrollmentId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String updateEnrollment(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -118,7 +118,7 @@ public class EnrollmentService {
 	
 	@DELETE
 	@Path("/{enrollmentId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteEnrollment(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -130,7 +130,7 @@ public class EnrollmentService {
 	/* Exit Endpoints */
 	@GET
 	@Path("/{enrollmentId}/exits")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getExits(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -143,7 +143,7 @@ public class EnrollmentService {
 	
 	@GET
 	@Path("/{enrollmentId}/exits/{exitId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getExit(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("exitId") String exitId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -153,7 +153,7 @@ public class EnrollmentService {
 	
 	@POST
 	@Path("/{enrollmentId}/exits")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createExit(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -165,7 +165,7 @@ public class EnrollmentService {
 	
 	@PUT
 	@Path("/{enrollmentId}/exits/{exitId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String updateExit(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("exitId") String exitId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -179,7 +179,7 @@ public class EnrollmentService {
 	
 	@DELETE
 	@Path("/{enrollmentId}/exits/{exitId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteExit(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId,  @PathParam("exitId") String exitId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -191,7 +191,7 @@ public class EnrollmentService {
 	/* Chronic Health Condition Endpoints */
 	@GET
 	@Path("/{enrollmentId}/chronic-health-conditions")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getChronicHealthConditions(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -201,7 +201,7 @@ public class EnrollmentService {
 	
 	@GET
 	@Path("/{enrollmentId}/chronic-health-conditions/{chronicHealthConditionId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getChronicHealthCondition(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("chronicHealthConditionId") String chronicHealthConditionId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -211,7 +211,7 @@ public class EnrollmentService {
 	
 	@POST
 	@Path("/{enrollmentId}/chronic-health-conditions")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createChronicHealthCondition(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -223,7 +223,7 @@ public class EnrollmentService {
 	
 	@PUT
 	@Path("/{enrollmentId}/chronic-health-conditions/{chronicHealthConditionId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String updateChronicHealthCondition(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("chronicHealthConditionId") String chronicHealthConditionId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -237,7 +237,7 @@ public class EnrollmentService {
 	
 	@DELETE
 	@Path("/{enrollmentId}/chronic-health-conditions/{chronicHealthConditionId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteChronicHealthCondition(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId,  @PathParam("chronicHealthConditionId") String chronicHealthConditionId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -249,7 +249,7 @@ public class EnrollmentService {
 	/* Contact Endpoints */
 	@GET
 	@Path("/{enrollmentId}/contacts")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getContacts(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -259,7 +259,7 @@ public class EnrollmentService {
 	
 	@GET
 	@Path("/{enrollmentId}/contacts/{contactId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getContact(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("contactId") String contactId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -269,7 +269,7 @@ public class EnrollmentService {
 	
 	@POST
 	@Path("/{enrollmentId}/contacts")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createContact(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -281,7 +281,7 @@ public class EnrollmentService {
 	
 	@PUT
 	@Path("/{enrollmentId}/contacts/{contactId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String updateContact(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("contactId") String contactId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -295,7 +295,7 @@ public class EnrollmentService {
 	
 	@DELETE
 	@Path("/{enrollmentId}/contacts/{contactId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteContact(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId,  @PathParam("contactId") String contactId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -307,7 +307,7 @@ public class EnrollmentService {
 	/* Developmental Disability Endpoints */
 	@GET
 	@Path("/{enrollmentId}/developmental-disabilities")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getDevelopmentalDisabilities(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -317,7 +317,7 @@ public class EnrollmentService {
 	
 	@GET
 	@Path("/{enrollmentId}/developmental-disabilities/{developmentalDisabilityId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getDevelopmentalDisability(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("developmentalDisabilityId") String developmentalDisabilityId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -327,7 +327,7 @@ public class EnrollmentService {
 	
 	@POST
 	@Path("/{enrollmentId}/developmental-disabilities")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createDevelopmentalDisability(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -339,7 +339,7 @@ public class EnrollmentService {
 	
 	@PUT
 	@Path("/{enrollmentId}/developmental-disabilities/{developmentalDisabilityId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String updateDevelopmentalDisability(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("developmentalDisabilityId") String developmentalDisabilityId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -353,7 +353,7 @@ public class EnrollmentService {
 	
 	@DELETE
 	@Path("/{enrollmentId}/developmental-disabilities/{developmentalDisabilityId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteDevelopmentalDisability(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId,  @PathParam("developmentalDisabilityId") String developmentalDisabilityId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -365,7 +365,7 @@ public class EnrollmentService {
 	/* Domestic Abuse Endpoints */
 	@GET
 	@Path("/{enrollmentId}/domestic-abuses")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getDomesticAbuses(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -375,7 +375,7 @@ public class EnrollmentService {
 	
 	@GET
 	@Path("/{enrollmentId}/domestic-abuses/{domesticAbuseId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getDomesticAbuse(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("domesticAbuseId") String domesticAbuseId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -385,7 +385,7 @@ public class EnrollmentService {
 	
 	@POST
 	@Path("/{enrollmentId}/domestic-abuses")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createDomesticAbuse(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -397,7 +397,7 @@ public class EnrollmentService {
 	
 	@PUT
 	@Path("/{enrollmentId}/domestic-abuses/{domesticAbuseId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String updateDomesticAbuse(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("domesticAbuseId") String domesticAbuseId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -411,7 +411,7 @@ public class EnrollmentService {
 	
 	@DELETE
 	@Path("/{enrollmentId}/domestic-abuses/{domesticAbuseId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteDomesticAbuse(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId,  @PathParam("domesticAbuseId") String domesticAbuseId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -423,7 +423,7 @@ public class EnrollmentService {
 	/* Financial Assistance Endpoints */
 	@GET
 	@Path("/{enrollmentId}/financial-assitances")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getFinancialAssistances(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -433,7 +433,7 @@ public class EnrollmentService {
 	
 	@GET
 	@Path("/{enrollmentId}/financial-assitances/{financialAssistanceId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getFinancialAssistance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("financialAssistanceId") String financialAssistanceId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -443,7 +443,7 @@ public class EnrollmentService {
 	
 	@POST
 	@Path("/{enrollmentId}/financial-assitances")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createFinancialAssistance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -455,7 +455,7 @@ public class EnrollmentService {
 	
 	@PUT
 	@Path("/{enrollmentId}/financial-assitances/{financialAssistanceId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String updateFinancialAssistance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("financialAssistanceId") String financialAssistanceId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -469,7 +469,7 @@ public class EnrollmentService {
 	
 	@DELETE
 	@Path("/{enrollmentId}/financial-assitances/{financialAssistanceId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteFinancialAssistance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId,  @PathParam("financialAssistanceId") String financialAssistanceId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -480,7 +480,7 @@ public class EnrollmentService {
 	/* Health Insurance Endpoints */
 	@GET
 	@Path("/{enrollmentId}/health-insurances")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getHealthInsurances(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -490,7 +490,7 @@ public class EnrollmentService {
 	
 	@GET
 	@Path("/{enrollmentId}/health-insurances/{healthInsuranceId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getHealthInsurance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("healthInsuranceId") String healthInsuranceId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -500,7 +500,7 @@ public class EnrollmentService {
 	
 	@POST
 	@Path("/{enrollmentId}/health-insurances")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createHealthInsurance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -512,7 +512,7 @@ public class EnrollmentService {
 	
 	@PUT
 	@Path("/{enrollmentId}/health-insurances/{healthInsuranceId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String updateHealthInsurance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("healthInsuranceId") String healthInsuranceId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -526,7 +526,7 @@ public class EnrollmentService {
 	
 	@DELETE
 	@Path("/{enrollmentId}/health-insurances/{healthInsuranceId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteHealthInsurance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId,  @PathParam("healthInsuranceId") String healthInsuranceId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -537,7 +537,7 @@ public class EnrollmentService {
 	/* HIV Aids Endpoints */
 	@GET
 	@Path("/{enrollmentId}/hiv-aids-statuses")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getHivAidsStatuses(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -547,7 +547,7 @@ public class EnrollmentService {
 	
 	@GET
 	@Path("/{enrollmentId}/hiv-aids-statuses/{hivAidsStatusId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getHivAidsStatus(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("hivAidsStatusId") String hivAidsStatusId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -557,7 +557,7 @@ public class EnrollmentService {
 	
 	@POST
 	@Path("/{enrollmentId}/hiv-aids-statuses")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createHivAidsStatus(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -569,7 +569,7 @@ public class EnrollmentService {
 	
 	@PUT
 	@Path("/{enrollmentId}/hiv-aids-statuses/{hivAidsStatusId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String updateHivAidsStatus(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("hivAidsStatusId") String hivAidsStatusId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -583,7 +583,7 @@ public class EnrollmentService {
 	
 	@DELETE
 	@Path("/{enrollmentId}/hiv-aids-statuses/{hivAidsStatusId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteHivAidsStatus(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId,  @PathParam("hivAidsStatusId") String hivAidsStatusId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -594,7 +594,7 @@ public class EnrollmentService {
 	/* Medical Assistance Endpoints */
 	@GET
 	@Path("/{enrollmentId}/medical-assistances")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getMedicalAssistances(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -604,7 +604,7 @@ public class EnrollmentService {
 	
 	@GET
 	@Path("/{enrollmentId}/medical-assistances/{medicalAssistanceId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getMedicalAssistance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("medicalAssistanceId") String medicalAssistanceId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -614,7 +614,7 @@ public class EnrollmentService {
 	
 	@POST
 	@Path("/{enrollmentId}/medical-assistances")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createMedicalAssistance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -626,7 +626,7 @@ public class EnrollmentService {
 	
 	@PUT
 	@Path("/{enrollmentId}/medical-assistances/{medicalAssistanceId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String updateMedicalAssistance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("medicalAssistanceId") String medicalAssistanceId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -640,7 +640,7 @@ public class EnrollmentService {
 	
 	@DELETE
 	@Path("/{enrollmentId}/medical-assistances/{medicalAssistanceId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteMedicalAssistance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId,  @PathParam("medicalAssistanceId") String medicalAssistanceId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -651,7 +651,7 @@ public class EnrollmentService {
 	/* Income Source Endpoints */
 	@GET
 	@Path("/{enrollmentId}/income-sources")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getIncomeSources(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -661,7 +661,7 @@ public class EnrollmentService {
 	
 	@GET
 	@Path("/{enrollmentId}/income-sources/{incomeSourceId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getIncomeSource(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("incomeSourceId") String incomeSourceId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -671,7 +671,7 @@ public class EnrollmentService {
 	
 	@POST
 	@Path("/{enrollmentId}/income-sources")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createIncomeSource(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -683,7 +683,7 @@ public class EnrollmentService {
 	
 	@PUT
 	@Path("/{enrollmentId}/income-sources/{incomeSourceId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String updateIncomeSource(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("incomeSourceId") String incomeSourceId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -697,7 +697,7 @@ public class EnrollmentService {
 	
 	@DELETE
 	@Path("/{enrollmentId}/income-sources/{incomeSourceId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteIncomeSource(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId,  @PathParam("incomeSourceId") String incomeSourceId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -708,7 +708,7 @@ public class EnrollmentService {
 	/* NonCash Benefit Endpoints */
 	@GET
 	@Path("/{enrollmentId}/noncash-benefits")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getNonCashBenefits(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -718,7 +718,7 @@ public class EnrollmentService {
 	
 	@GET
 	@Path("/{enrollmentId}/noncash-benefits/{nonCashBenefitId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getNonCashBenefit(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("nonCashBenefitId") String nonCashBenefitId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -728,7 +728,7 @@ public class EnrollmentService {
 	
 	@POST
 	@Path("/{enrollmentId}/noncash-benefits")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createNonCashBenefit(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -740,7 +740,7 @@ public class EnrollmentService {
 	
 	@PUT
 	@Path("/{enrollmentId}/noncash-benefits/{nonCashBenefitId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createNonCashBenefit(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("nonCashBenefitId") String nonCashBenefitId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -754,7 +754,7 @@ public class EnrollmentService {
 	
 	@DELETE
 	@Path("/{enrollmentId}/noncash-benefits/{nonCashBenefitId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteNonCashBenefit(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId,  @PathParam("nonCashBenefitId") String nonCashBenefitId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -765,7 +765,7 @@ public class EnrollmentService {
 	/* Physical Disability Endpoints */
 	@GET
 	@Path("/{enrollmentId}/physical-disabilities")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getPhysicalDisabilities(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -775,7 +775,7 @@ public class EnrollmentService {
 	
 	@GET
 	@Path("/{enrollmentId}/physical-disabilities/{physicalDisabilityId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getPhysicalDisability(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("physicalDisabilityId") String physicalDisabilityId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -785,7 +785,7 @@ public class EnrollmentService {
 	
 	@POST
 	@Path("/{enrollmentId}/physical-disabilities")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createPhysicalDisability(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -797,7 +797,7 @@ public class EnrollmentService {
 	
 	@PUT
 	@Path("/{enrollmentId}/physical-disabilities/{physicalDisabilityId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String updatePhysicalDisability(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("physicalDisabilityId") String physicalDisabilityId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -811,7 +811,7 @@ public class EnrollmentService {
 	
 	@DELETE
 	@Path("/{enrollmentId}/physical-disabilities/{physicalDisabilityId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deletePhysicalDisability(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId,  @PathParam("physicalDisabilityId") String physicalDisabilityId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -822,7 +822,7 @@ public class EnrollmentService {
 	/* Referral Endpoints */
 	@GET
 	@Path("/{enrollmentId}/referrals")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getReferrals(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -832,7 +832,7 @@ public class EnrollmentService {
 	
 	@GET
 	@Path("/{enrollmentId}/referrals/{referralId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getReferral(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("referralId") String referralId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -842,7 +842,7 @@ public class EnrollmentService {
 	
 	@POST
 	@Path("/{enrollmentId}/referrals")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createReferral(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -854,7 +854,7 @@ public class EnrollmentService {
 	
 	@PUT
 	@Path("/{enrollmentId}/referrals/{referralId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String updateReferral(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("referralId") String referralId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -868,7 +868,7 @@ public class EnrollmentService {
 	
 	@DELETE
 	@Path("/{enrollmentId}/referrals/{referralId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteReferral(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId,  @PathParam("referralId") String referralId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -879,7 +879,7 @@ public class EnrollmentService {
 	/* Service Endpoints */
 	@GET
 	@Path("/{enrollmentId}/services")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getServices(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -889,7 +889,7 @@ public class EnrollmentService {
 	
 	@GET
 	@Path("/{enrollmentId}/services/{serviceId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getService(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("serviceId") String serviceId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -899,7 +899,7 @@ public class EnrollmentService {
 	
 	@POST
 	@Path("/{enrollmentId}/services")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createService(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -911,7 +911,7 @@ public class EnrollmentService {
 	
 	@PUT
 	@Path("/{enrollmentId}/services/{serviceId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String updateService(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("serviceId") String serviceId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -925,7 +925,7 @@ public class EnrollmentService {
 	
 	@DELETE
 	@Path("/{enrollmentId}/services/{serviceId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteService(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId,  @PathParam("serviceId") String serviceId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -936,7 +936,7 @@ public class EnrollmentService {
 	/* Substance Abuse Endpoints */
 	@GET
 	@Path("/{enrollmentId}/substance-abuses")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getSubstanceAbuses(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -946,7 +946,7 @@ public class EnrollmentService {
 	
 	@GET
 	@Path("/{enrollmentId}/substance-abuses/{substanceAbuseId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getSubstanceAbuse(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("substanceAbuseId") String substanceAbuseId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -956,7 +956,7 @@ public class EnrollmentService {
 	
 	@POST
 	@Path("/{enrollmentId}/substance-abuses")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createSubstanceAbuse(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -968,7 +968,7 @@ public class EnrollmentService {
 	
 	@PUT
 	@Path("/{enrollmentId}/substance-abuses/{substanceAbuseId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String updateSubstanceAbuse(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("substanceAbuseId") String substanceAbuseId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -982,7 +982,7 @@ public class EnrollmentService {
 	
 	@DELETE
 	@Path("/{enrollmentId}/substance-abuses/{substanceAbuseId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteSubstanceAbuse(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId,  @PathParam("substanceAbuseId") String substanceAbuseId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");

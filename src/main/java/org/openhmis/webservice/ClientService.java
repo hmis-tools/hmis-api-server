@@ -37,7 +37,7 @@ public class ClientService {
 
 	@GET
 	@Path("/")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getClients(@HeaderParam("Authorization") String authorization) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -47,7 +47,7 @@ public class ClientService {
 	
 	@POST
 	@Path("/")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createClient(@HeaderParam("Authorization") String authorization, String data) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -60,7 +60,7 @@ public class ClientService {
 	
 	@GET
 	@Path("/{personalId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getClient(@HeaderParam("Authorization") String authorization, @PathParam("personalId") String personalId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -70,7 +70,7 @@ public class ClientService {
 	
 	@PUT
 	@Path("/{personalId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String updateClient(@HeaderParam("Authorization") String authorization, @PathParam("personalId") String personalId, String data) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -83,7 +83,7 @@ public class ClientService {
 	
 	@DELETE
 	@Path("/{personalId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteClient(@HeaderParam("Authorization") String authorization, @PathParam("personalId") String personalId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");

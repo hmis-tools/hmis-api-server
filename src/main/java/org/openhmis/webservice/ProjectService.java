@@ -42,7 +42,7 @@ public class ProjectService {
 
 	@GET
 	@Path("/")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getProjects(@HeaderParam("Authorization") String authorization) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -52,7 +52,7 @@ public class ProjectService {
 	
 	@POST
 	@Path("/")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createProject(@HeaderParam("Authorization") String authorization, String data) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -65,7 +65,7 @@ public class ProjectService {
 	
 	@GET
 	@Path("/{projectId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getProject(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -75,7 +75,7 @@ public class ProjectService {
 	
 	@PUT
 	@Path("/{projectId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String updateProject(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, String data) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -88,7 +88,7 @@ public class ProjectService {
 	
 	@DELETE
 	@Path("/{projectId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteProject(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -99,7 +99,7 @@ public class ProjectService {
 	/* CoC Endpoints */
 	@GET
 	@Path("/{projectId}/cocs")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getCoCs(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -109,7 +109,7 @@ public class ProjectService {
 	
 	@GET
 	@Path("/{projectId}/cocs/{coCId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getCoC(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -119,7 +119,7 @@ public class ProjectService {
 	
 	@POST
 	@Path("/{projectId}/cocs")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createCoC(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -131,7 +131,7 @@ public class ProjectService {
 	
 	@PUT
 	@Path("/{projectId}/cocs/{coCId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String updateCoC(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -145,7 +145,7 @@ public class ProjectService {
 	
 	@DELETE
 	@Path("/{projectId}/cocs/{coCId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteCoC(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId,  @PathParam("coCId") String coCId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -156,7 +156,7 @@ public class ProjectService {
 	/* Funder Endpoints */
 	@GET
 	@Path("/{projectId}/funders")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getFunders(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -166,7 +166,7 @@ public class ProjectService {
 	
 	@GET
 	@Path("/{projectId}/funders/{funderId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getFunder(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("funderId") String funderId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -176,7 +176,7 @@ public class ProjectService {
 	
 	@POST
 	@Path("/{projectId}/funders")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createFunder(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -188,7 +188,7 @@ public class ProjectService {
 	
 	@PUT
 	@Path("/{projectId}/funders/{funderId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String updateFunder(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("funderId") String funderId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -202,7 +202,7 @@ public class ProjectService {
 	
 	@DELETE
 	@Path("/{projectId}/funders/{funderId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteFunder(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId,  @PathParam("funderId") String funderId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -213,7 +213,7 @@ public class ProjectService {
 	/* Inventory Endpoints */
 	@GET
 	@Path("/{projectId}/cocs/{coCId}/inventories")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getInventorys(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -223,7 +223,7 @@ public class ProjectService {
 	
 	@GET
 	@Path("/{projectId}/cocs/{coCId}/inventories/{inventoryId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getInventory(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @PathParam("inventoryId") String inventoryId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -233,7 +233,7 @@ public class ProjectService {
 	
 	@POST
 	@Path("/{projectId}/cocs/{coCId}/inventories")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createInventory(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -245,7 +245,7 @@ public class ProjectService {
 	
 	@PUT
 	@Path("/{projectId}/cocs/{coCId}/inventories/{inventoryId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String updateInventory(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @PathParam("inventoryId") String inventoryId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -259,7 +259,7 @@ public class ProjectService {
 	
 	@DELETE
 	@Path("/{projectId}/cocs/{coCId}/inventories/{inventoryId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteInventory(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @PathParam("inventoryId") String inventoryId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -270,7 +270,7 @@ public class ProjectService {
 	/* Site Endpoints */
 	@GET
 	@Path("/{projectId}/cocs/{coCId}/sites")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getSites(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -280,7 +280,7 @@ public class ProjectService {
 	
 	@GET
 	@Path("/{projectId}/cocs/{coCId}/sites/{siteId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String getSite(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @PathParam("siteId") String siteId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -290,7 +290,7 @@ public class ProjectService {
 	
 	@POST
 	@Path("/{projectId}/cocs/{coCId}/sites")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String createSite(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -302,7 +302,7 @@ public class ProjectService {
 	
 	@PUT
 	@Path("/{projectId}/cocs/{coCId}/sites/{siteId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String updateSite(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @PathParam("siteId") String siteId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
@@ -316,7 +316,7 @@ public class ProjectService {
 	
 	@DELETE
 	@Path("/{projectId}/cocs/{coCId}/sites/{siteId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteSite(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @PathParam("siteId") String siteId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
