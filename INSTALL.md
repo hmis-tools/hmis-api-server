@@ -132,9 +132,9 @@ Import sample data (or real data, if you have some):
         mysql -u openhmis_user -p openhmis < src/main/resources/db/data/DATA.sql
 ```
 
-Set up authentication
----------------------
-This API uses [Google Sign-in](https://developers.google.com/identity/) for authentication.  To build an application powered by this API, your application must use the Google Sign-in [server side flow](https://developers.google.com/identity/sign-in/web/server-side-flow).
+Set up OAuth authentication:
+----------------------------
+This API uses [Google Sign-in](https://developers.google.com/identity/) OAuth-style authentication.  To build an application powered by this API, your application must use the Google Sign-in [server side flow](https://developers.google.com/identity/sign-in/web/server-side-flow).
 
 1. Begin the [Google sign-in tutorial](https://developers.google.com/identity/sign-in/web/server-side-flow).  Create a client ID and a client secret and store them in a local `application.properties` file, then restart your app.
 
