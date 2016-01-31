@@ -2,6 +2,8 @@ package org.openhmis.dto;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.openhmis.code.ClientDestination;
 import org.openhmis.code.ClientEarlyExitReason;
 import org.openhmis.code.ClientEmploymentType;
@@ -17,6 +19,7 @@ import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@XmlRootElement
 public class ExitDTO {
 	
 	private String exitId;

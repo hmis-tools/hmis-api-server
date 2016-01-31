@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.openhmis.code.ClientHopwaFinancialAssistance;
 import org.openhmis.code.ClientSsvfFinancialAssistance;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@XmlRootElement
 public class FinancialAssistanceDTO {
 	private String financialAssistanceId;
 	private String enrollmentId;

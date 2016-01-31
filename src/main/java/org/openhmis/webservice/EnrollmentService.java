@@ -73,47 +73,47 @@ public class EnrollmentService {
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getEnrollments(@HeaderParam("Authorization") String authorization) throws JsonProcessingException {
+	public List<EnrollmentDTO> getEnrollments(@HeaderParam("Authorization") String authorization) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		List<EnrollmentDTO> enrollmentDTOs = enrollmentManager.getEnrollments();
-		return om.writeValueAsString(enrollmentDTOs);
+		return enrollmentDTOs;
 	}
 	
 	@GET
 	@Path("/{enrollmentId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getClient(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
+	public EnrollmentDTO getClient(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		EnrollmentDTO enrollmentDTO = enrollmentManager.getEnrollmentById(enrollmentId);
-		return om.writeValueAsString(enrollmentDTO);
+		return enrollmentDTO;
 	}
 
 	@POST
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String createEnrollment(@HeaderParam("Authorization") String authorization, String data) throws JsonParseException, JsonMappingException, IOException {
+	public EnrollmentDTO createEnrollment(@HeaderParam("Authorization") String authorization, String data) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		// This endpoint takes in a raw json STRING as input.
 		// TODO: support the serialization of individual POST parameters
 		EnrollmentDTO inputVO = om.readValue(data, EnrollmentDTO.class);
 		EnrollmentDTO outputVO = enrollmentManager.addEnrollment(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@PUT
 	@Path("/{enrollmentId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String updateEnrollment(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws JsonParseException, JsonMappingException, IOException {
+	public EnrollmentDTO updateEnrollment(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		EnrollmentDTO inputVO = om.readValue(data, EnrollmentDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		
 		EnrollmentDTO outputVO = enrollmentManager.updateEnrollment(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@DELETE
@@ -131,42 +131,42 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/exits")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getExits(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
+	public List<ExitDTO> getExits(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		// Exits are weird because right now only one can exist but they are still separate...
 		// TODO: figure out whether or not we want exists to have history
 		List<ExitDTO> exitDTOs = new ArrayList<ExitDTO>();
 		exitDTOs.add(ExitManager.getExitByEnrollmentId(enrollmentId));
-		return om.writeValueAsString(exitDTOs);
+		return exitDTOs;
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/exits/{exitId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getExit(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("exitId") String exitId) throws JsonProcessingException {
+	public ExitDTO getExit(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("exitId") String exitId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		ExitDTO exitDTO = ExitManager.getExitById(exitId);
-		return om.writeValueAsString(exitDTO);
+		return exitDTO;
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/exits")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String createExit(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
+	public ExitDTO createExit(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		ExitDTO inputVO = om.readValue(data, ExitDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		ExitDTO outputVO = ExitManager.addExit(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@PUT
 	@Path("/{enrollmentId}/exits/{exitId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String updateExit(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("exitId") String exitId, String data) throws IOException {
+	public ExitDTO updateExit(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("exitId") String exitId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		ExitDTO inputVO = om.readValue(data, ExitDTO.class);
@@ -174,7 +174,7 @@ public class EnrollmentService {
 		inputVO.setExitId(exitId);
 
 		ExitDTO outputVO = ExitManager.updateExit(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@DELETE
@@ -192,39 +192,39 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/chronic-health-conditions")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getChronicHealthConditions(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
+	public List<ChronicHealthConditionDTO> getChronicHealthConditions(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = ChronicHealthConditionManager.getChronicHealthConditionsByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(chronicHealthConditionDTOs);
+		return chronicHealthConditionDTOs;
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/chronic-health-conditions/{chronicHealthConditionId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getChronicHealthCondition(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("chronicHealthConditionId") String chronicHealthConditionId) throws JsonProcessingException {
+	public ChronicHealthConditionDTO getChronicHealthCondition(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("chronicHealthConditionId") String chronicHealthConditionId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		ChronicHealthConditionDTO chronicHealthConditionDTO = ChronicHealthConditionManager.getChronicHealthConditionById(chronicHealthConditionId);
-		return om.writeValueAsString(chronicHealthConditionDTO);
+		return chronicHealthConditionDTO;
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/chronic-health-conditions")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String createChronicHealthCondition(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
+	public ChronicHealthConditionDTO createChronicHealthCondition(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		ChronicHealthConditionDTO inputVO = om.readValue(data, ChronicHealthConditionDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		ChronicHealthConditionDTO outputVO = ChronicHealthConditionManager.addChronicHealthCondition(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@PUT
 	@Path("/{enrollmentId}/chronic-health-conditions/{chronicHealthConditionId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String updateChronicHealthCondition(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("chronicHealthConditionId") String chronicHealthConditionId, String data) throws IOException {
+	public ChronicHealthConditionDTO updateChronicHealthCondition(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("chronicHealthConditionId") String chronicHealthConditionId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		ChronicHealthConditionDTO inputVO = om.readValue(data, ChronicHealthConditionDTO.class);
@@ -232,7 +232,7 @@ public class EnrollmentService {
 		inputVO.setChronicHealthConditionId(chronicHealthConditionId);
 
 		ChronicHealthConditionDTO outputVO = ChronicHealthConditionManager.updateChronicHealthCondition(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@DELETE
@@ -250,39 +250,39 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/contacts")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getContacts(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
+	public List<ContactDTO> getContacts(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		List<ContactDTO> contactDTOs = ContactManager.getContactsByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(contactDTOs);
+		return contactDTOs;
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/contacts/{contactId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getContact(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("contactId") String contactId) throws JsonProcessingException {
+	public ContactDTO getContact(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("contactId") String contactId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		ContactDTO contactDTO = ContactManager.getContactById(contactId);
-		return om.writeValueAsString(contactDTO);
+		return contactDTO;
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/contacts")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String createContact(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
+	public ContactDTO createContact(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		ContactDTO inputVO = om.readValue(data, ContactDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		ContactDTO outputVO = ContactManager.addContact(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@PUT
 	@Path("/{enrollmentId}/contacts/{contactId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String updateContact(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("contactId") String contactId, String data) throws IOException {
+	public ContactDTO updateContact(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("contactId") String contactId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		ContactDTO inputVO = om.readValue(data, ContactDTO.class);
@@ -290,7 +290,7 @@ public class EnrollmentService {
 		inputVO.setContactId(contactId);
 
 		ContactDTO outputVO = ContactManager.updateContact(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@DELETE
@@ -308,39 +308,39 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/developmental-disabilities")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getDevelopmentalDisabilities(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
+	public List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilities(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = DevelopmentalDisabilityManager.getDevelopmentalDisabilitiesByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(developmentalDisabilityDTOs);
+		return developmentalDisabilityDTOs;
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/developmental-disabilities/{developmentalDisabilityId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getDevelopmentalDisability(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("developmentalDisabilityId") String developmentalDisabilityId) throws JsonProcessingException {
+	public DevelopmentalDisabilityDTO getDevelopmentalDisability(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("developmentalDisabilityId") String developmentalDisabilityId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		DevelopmentalDisabilityDTO developmentalDisabilityDTO = DevelopmentalDisabilityManager.getDevelopmentalDisabilityById(developmentalDisabilityId);
-		return om.writeValueAsString(developmentalDisabilityDTO);
+		return developmentalDisabilityDTO;
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/developmental-disabilities")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String createDevelopmentalDisability(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
+	public DevelopmentalDisabilityDTO createDevelopmentalDisability(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		DevelopmentalDisabilityDTO inputVO = om.readValue(data, DevelopmentalDisabilityDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		DevelopmentalDisabilityDTO outputVO = DevelopmentalDisabilityManager.addDevelopmentalDisability(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@PUT
 	@Path("/{enrollmentId}/developmental-disabilities/{developmentalDisabilityId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String updateDevelopmentalDisability(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("developmentalDisabilityId") String developmentalDisabilityId, String data) throws IOException {
+	public DevelopmentalDisabilityDTO updateDevelopmentalDisability(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("developmentalDisabilityId") String developmentalDisabilityId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		DevelopmentalDisabilityDTO inputVO = om.readValue(data, DevelopmentalDisabilityDTO.class);
@@ -348,7 +348,7 @@ public class EnrollmentService {
 		inputVO.setDevelopmentalDisabilityId(developmentalDisabilityId);
 
 		DevelopmentalDisabilityDTO outputVO = DevelopmentalDisabilityManager.updateDevelopmentalDisability(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@DELETE
@@ -366,39 +366,39 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/domestic-abuses")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getDomesticAbuses(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
+	public List<DomesticAbuseDTO> getDomesticAbuses(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		List<DomesticAbuseDTO> domesticAbuseDTOs = DomesticAbuseManager.getDomesticAbusesByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(domesticAbuseDTOs);
+		return domesticAbuseDTOs;
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/domestic-abuses/{domesticAbuseId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getDomesticAbuse(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("domesticAbuseId") String domesticAbuseId) throws JsonProcessingException {
+	public DomesticAbuseDTO getDomesticAbuse(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("domesticAbuseId") String domesticAbuseId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		DomesticAbuseDTO domesticAbuseDTO = DomesticAbuseManager.getDomesticAbuseById(domesticAbuseId);
-		return om.writeValueAsString(domesticAbuseDTO);
+		return domesticAbuseDTO;
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/domestic-abuses")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String createDomesticAbuse(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
+	public DomesticAbuseDTO createDomesticAbuse(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		DomesticAbuseDTO inputVO = om.readValue(data, DomesticAbuseDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		DomesticAbuseDTO outputVO = DomesticAbuseManager.addDomesticAbuse(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@PUT
 	@Path("/{enrollmentId}/domestic-abuses/{domesticAbuseId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String updateDomesticAbuse(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("domesticAbuseId") String domesticAbuseId, String data) throws IOException {
+	public DomesticAbuseDTO updateDomesticAbuse(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("domesticAbuseId") String domesticAbuseId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		DomesticAbuseDTO inputVO = om.readValue(data, DomesticAbuseDTO.class);
@@ -406,7 +406,7 @@ public class EnrollmentService {
 		inputVO.setDomesticAbuseId(domesticAbuseId);
 
 		DomesticAbuseDTO outputVO = DomesticAbuseManager.updateDomesticAbuse(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@DELETE
@@ -424,39 +424,39 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/financial-assitances")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getFinancialAssistances(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
+	public List<FinancialAssistanceDTO> getFinancialAssistances(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		List<FinancialAssistanceDTO> financialAssistanceDTOs = FinancialAssistanceManager.getFinancialAssistancesByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(financialAssistanceDTOs);
+		return financialAssistanceDTOs;
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/financial-assitances/{financialAssistanceId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getFinancialAssistance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("financialAssistanceId") String financialAssistanceId) throws JsonProcessingException {
+	public FinancialAssistanceDTO getFinancialAssistance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("financialAssistanceId") String financialAssistanceId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		FinancialAssistanceDTO financialAssistanceDTO = FinancialAssistanceManager.getFinancialAssistanceById(financialAssistanceId);
-		return om.writeValueAsString(financialAssistanceDTO);
+		return financialAssistanceDTO;
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/financial-assitances")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String createFinancialAssistance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
+	public FinancialAssistanceDTO createFinancialAssistance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		FinancialAssistanceDTO inputVO = om.readValue(data, FinancialAssistanceDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		FinancialAssistanceDTO outputVO = FinancialAssistanceManager.addFinancialAssistance(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@PUT
 	@Path("/{enrollmentId}/financial-assitances/{financialAssistanceId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String updateFinancialAssistance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("financialAssistanceId") String financialAssistanceId, String data) throws IOException {
+	public FinancialAssistanceDTO updateFinancialAssistance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("financialAssistanceId") String financialAssistanceId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		FinancialAssistanceDTO inputVO = om.readValue(data, FinancialAssistanceDTO.class);
@@ -464,7 +464,7 @@ public class EnrollmentService {
 		inputVO.setFinancialAssistanceId(financialAssistanceId);
 
 		FinancialAssistanceDTO outputVO = FinancialAssistanceManager.updateFinancialAssistance(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@DELETE
@@ -481,39 +481,39 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/health-insurances")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getHealthInsurances(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
+	public List<HealthInsuranceDTO> getHealthInsurances(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		List<HealthInsuranceDTO> healthInsuranceDTOs = HealthInsuranceManager.getHealthInsurancesByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(healthInsuranceDTOs);
+		return healthInsuranceDTOs;
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/health-insurances/{healthInsuranceId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getHealthInsurance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("healthInsuranceId") String healthInsuranceId) throws JsonProcessingException {
+	public HealthInsuranceDTO getHealthInsurance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("healthInsuranceId") String healthInsuranceId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		HealthInsuranceDTO healthInsuranceDTO = HealthInsuranceManager.getHealthInsuranceById(healthInsuranceId);
-		return om.writeValueAsString(healthInsuranceDTO);
+		return healthInsuranceDTO;
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/health-insurances")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String createHealthInsurance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
+	public HealthInsuranceDTO createHealthInsurance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		HealthInsuranceDTO inputVO = om.readValue(data, HealthInsuranceDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		HealthInsuranceDTO outputVO = HealthInsuranceManager.addHealthInsurance(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@PUT
 	@Path("/{enrollmentId}/health-insurances/{healthInsuranceId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String updateHealthInsurance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("healthInsuranceId") String healthInsuranceId, String data) throws IOException {
+	public HealthInsuranceDTO updateHealthInsurance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("healthInsuranceId") String healthInsuranceId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		HealthInsuranceDTO inputVO = om.readValue(data, HealthInsuranceDTO.class);
@@ -521,7 +521,7 @@ public class EnrollmentService {
 		inputVO.setHealthInsuranceId(healthInsuranceId);
 
 		HealthInsuranceDTO outputVO = HealthInsuranceManager.updateHealthInsurance(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@DELETE
@@ -538,39 +538,39 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/hiv-aids-statuses")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getHivAidsStatuses(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
+	public List<HivAidsStatusDTO> getHivAidsStatuses(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		List<HivAidsStatusDTO> hivAidsStatusDTOs = HivAidsStatusManager.getHivAidsStatusesByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(hivAidsStatusDTOs);
+		return hivAidsStatusDTOs;
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/hiv-aids-statuses/{hivAidsStatusId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getHivAidsStatus(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("hivAidsStatusId") String hivAidsStatusId) throws JsonProcessingException {
+	public HivAidsStatusDTO getHivAidsStatus(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("hivAidsStatusId") String hivAidsStatusId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		HivAidsStatusDTO hivAidsStatusDTO = HivAidsStatusManager.getHivAidsStatusById(hivAidsStatusId);
-		return om.writeValueAsString(hivAidsStatusDTO);
+		return hivAidsStatusDTO;
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/hiv-aids-statuses")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String createHivAidsStatus(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
+	public HivAidsStatusDTO createHivAidsStatus(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		HivAidsStatusDTO inputVO = om.readValue(data, HivAidsStatusDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		HivAidsStatusDTO outputVO = HivAidsStatusManager.addHivAidsStatus(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@PUT
 	@Path("/{enrollmentId}/hiv-aids-statuses/{hivAidsStatusId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String updateHivAidsStatus(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("hivAidsStatusId") String hivAidsStatusId, String data) throws IOException {
+	public HivAidsStatusDTO updateHivAidsStatus(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("hivAidsStatusId") String hivAidsStatusId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		HivAidsStatusDTO inputVO = om.readValue(data, HivAidsStatusDTO.class);
@@ -578,7 +578,7 @@ public class EnrollmentService {
 		inputVO.setHivAidsStatusId(hivAidsStatusId);
 
 		HivAidsStatusDTO outputVO = HivAidsStatusManager.updateHivAidsStatus(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@DELETE
@@ -595,39 +595,39 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/medical-assistances")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getMedicalAssistances(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
+	public List<MedicalAssistanceDTO> getMedicalAssistances(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		List<MedicalAssistanceDTO> medicalAssistanceDTOs = MedicalAssistanceManager.getMedicalAssistancesByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(medicalAssistanceDTOs);
+		return medicalAssistanceDTOs;
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/medical-assistances/{medicalAssistanceId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getMedicalAssistance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("medicalAssistanceId") String medicalAssistanceId) throws JsonProcessingException {
+	public MedicalAssistanceDTO getMedicalAssistance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("medicalAssistanceId") String medicalAssistanceId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		MedicalAssistanceDTO medicalAssistanceDTO = MedicalAssistanceManager.getMedicalAssistanceById(medicalAssistanceId);
-		return om.writeValueAsString(medicalAssistanceDTO);
+		return medicalAssistanceDTO;
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/medical-assistances")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String createMedicalAssistance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
+	public MedicalAssistanceDTO createMedicalAssistance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		MedicalAssistanceDTO inputVO = om.readValue(data, MedicalAssistanceDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		MedicalAssistanceDTO outputVO = MedicalAssistanceManager.addMedicalAssistance(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@PUT
 	@Path("/{enrollmentId}/medical-assistances/{medicalAssistanceId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String updateMedicalAssistance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("medicalAssistanceId") String medicalAssistanceId, String data) throws IOException {
+	public MedicalAssistanceDTO updateMedicalAssistance(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("medicalAssistanceId") String medicalAssistanceId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		MedicalAssistanceDTO inputVO = om.readValue(data, MedicalAssistanceDTO.class);
@@ -635,7 +635,7 @@ public class EnrollmentService {
 		inputVO.setMedicalAssistanceId(medicalAssistanceId);
 
 		MedicalAssistanceDTO outputVO = MedicalAssistanceManager.updateMedicalAssistance(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@DELETE
@@ -652,39 +652,39 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/income-sources")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getIncomeSources(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
+	public List<IncomeSourceDTO> getIncomeSources(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		List<IncomeSourceDTO> incomeSourceDTOs = IncomeSourceManager.getIncomeSourcesByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(incomeSourceDTOs);
+		return incomeSourceDTOs;
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/income-sources/{incomeSourceId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getIncomeSource(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("incomeSourceId") String incomeSourceId) throws JsonProcessingException {
+	public IncomeSourceDTO getIncomeSource(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("incomeSourceId") String incomeSourceId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		IncomeSourceDTO incomeSourceDTO = IncomeSourceManager.getIncomeSourceById(incomeSourceId);
-		return om.writeValueAsString(incomeSourceDTO);
+		return incomeSourceDTO;
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/income-sources")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String createIncomeSource(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
+	public IncomeSourceDTO createIncomeSource(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		IncomeSourceDTO inputVO = om.readValue(data, IncomeSourceDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		IncomeSourceDTO outputVO = IncomeSourceManager.addIncomeSource(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@PUT
 	@Path("/{enrollmentId}/income-sources/{incomeSourceId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String updateIncomeSource(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("incomeSourceId") String incomeSourceId, String data) throws IOException {
+	public IncomeSourceDTO updateIncomeSource(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("incomeSourceId") String incomeSourceId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		IncomeSourceDTO inputVO = om.readValue(data, IncomeSourceDTO.class);
@@ -692,7 +692,7 @@ public class EnrollmentService {
 		inputVO.setIncomeSourceId(incomeSourceId);
 
 		IncomeSourceDTO outputVO = IncomeSourceManager.updateIncomeSource(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@DELETE
@@ -709,39 +709,39 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/noncash-benefits")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getNonCashBenefits(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
+	public List<NonCashBenefitDTO> getNonCashBenefits(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		List<NonCashBenefitDTO> nonCashBenefitDTOs = NonCashBenefitManager.getNonCashBenefitsByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(nonCashBenefitDTOs);
+		return nonCashBenefitDTOs;
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/noncash-benefits/{nonCashBenefitId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getNonCashBenefit(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("nonCashBenefitId") String nonCashBenefitId) throws JsonProcessingException {
+	public NonCashBenefitDTO getNonCashBenefit(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("nonCashBenefitId") String nonCashBenefitId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		NonCashBenefitDTO nonCashBenefitDTO = NonCashBenefitManager.getNonCashBenefitById(nonCashBenefitId);
-		return om.writeValueAsString(nonCashBenefitDTO);
+		return nonCashBenefitDTO;
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/noncash-benefits")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String createNonCashBenefit(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
+	public NonCashBenefitDTO createNonCashBenefit(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		NonCashBenefitDTO inputVO = om.readValue(data, NonCashBenefitDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		NonCashBenefitDTO outputVO = NonCashBenefitManager.addNonCashBenefit(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@PUT
 	@Path("/{enrollmentId}/noncash-benefits/{nonCashBenefitId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String createNonCashBenefit(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("nonCashBenefitId") String nonCashBenefitId, String data) throws IOException {
+	public NonCashBenefitDTO createNonCashBenefit(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("nonCashBenefitId") String nonCashBenefitId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		NonCashBenefitDTO inputVO = om.readValue(data, NonCashBenefitDTO.class);
@@ -749,7 +749,7 @@ public class EnrollmentService {
 		inputVO.setNonCashBenefitId(nonCashBenefitId);
 
 		NonCashBenefitDTO outputVO = NonCashBenefitManager.updateNonCashBenefit(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@DELETE
@@ -766,39 +766,39 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/physical-disabilities")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getPhysicalDisabilities(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
+	public List<PhysicalDisabilityDTO> getPhysicalDisabilities(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		List<PhysicalDisabilityDTO> physicalDisabilityDTOs = PhysicalDisabilityManager.getPhysicalDisabilitiesByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(physicalDisabilityDTOs);
+		return physicalDisabilityDTOs;
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/physical-disabilities/{physicalDisabilityId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getPhysicalDisability(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("physicalDisabilityId") String physicalDisabilityId) throws JsonProcessingException {
+	public PhysicalDisabilityDTO getPhysicalDisability(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("physicalDisabilityId") String physicalDisabilityId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		PhysicalDisabilityDTO physicalDisabilityDTO = PhysicalDisabilityManager.getPhysicalDisabilityById(physicalDisabilityId);
-		return om.writeValueAsString(physicalDisabilityDTO);
+		return physicalDisabilityDTO;
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/physical-disabilities")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String createPhysicalDisability(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
+	public PhysicalDisabilityDTO createPhysicalDisability(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		PhysicalDisabilityDTO inputVO = om.readValue(data, PhysicalDisabilityDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		PhysicalDisabilityDTO outputVO = PhysicalDisabilityManager.addPhysicalDisability(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@PUT
 	@Path("/{enrollmentId}/physical-disabilities/{physicalDisabilityId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String updatePhysicalDisability(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("physicalDisabilityId") String physicalDisabilityId, String data) throws IOException {
+	public PhysicalDisabilityDTO updatePhysicalDisability(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("physicalDisabilityId") String physicalDisabilityId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		PhysicalDisabilityDTO inputVO = om.readValue(data, PhysicalDisabilityDTO.class);
@@ -806,7 +806,7 @@ public class EnrollmentService {
 		inputVO.setPhysicalDisabilityId(physicalDisabilityId);
 
 		PhysicalDisabilityDTO outputVO = PhysicalDisabilityManager.updatePhysicalDisability(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@DELETE
@@ -823,39 +823,39 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/referrals")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getReferrals(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
+	public List<ReferralDTO> getReferrals(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		List<ReferralDTO> referralDTOs = ReferralManager.getReferralsByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(referralDTOs);
+		return referralDTOs;
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/referrals/{referralId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getReferral(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("referralId") String referralId) throws JsonProcessingException {
+	public ReferralDTO getReferral(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("referralId") String referralId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		ReferralDTO referralDTO = ReferralManager.getReferralById(referralId);
-		return om.writeValueAsString(referralDTO);
+		return referralDTO;
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/referrals")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String createReferral(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
+	public ReferralDTO createReferral(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		ReferralDTO inputVO = om.readValue(data, ReferralDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		ReferralDTO outputVO = ReferralManager.addReferral(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@PUT
 	@Path("/{enrollmentId}/referrals/{referralId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String updateReferral(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("referralId") String referralId, String data) throws IOException {
+	public ReferralDTO updateReferral(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("referralId") String referralId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		ReferralDTO inputVO = om.readValue(data, ReferralDTO.class);
@@ -863,7 +863,7 @@ public class EnrollmentService {
 		inputVO.setReferralId(referralId);
 
 		ReferralDTO outputVO = ReferralManager.updateReferral(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@DELETE
@@ -880,39 +880,39 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/services")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getServices(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
+	public List<ServiceDTO> getServices(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		List<ServiceDTO> serviceDTOs = ServiceManager.getServicesByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(serviceDTOs);
+		return serviceDTOs;
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/services/{serviceId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getService(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("serviceId") String serviceId) throws JsonProcessingException {
+	public ServiceDTO getService(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("serviceId") String serviceId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		ServiceDTO serviceDTO = ServiceManager.getServiceById(serviceId);
-		return om.writeValueAsString(serviceDTO);
+		return serviceDTO;
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/services")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String createService(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
+	public ServiceDTO createService(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		ServiceDTO inputVO = om.readValue(data, ServiceDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		ServiceDTO outputVO = ServiceManager.addService(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@PUT
 	@Path("/{enrollmentId}/services/{serviceId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String updateService(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("serviceId") String serviceId, String data) throws IOException {
+	public ServiceDTO updateService(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("serviceId") String serviceId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		ServiceDTO inputVO = om.readValue(data, ServiceDTO.class);
@@ -920,7 +920,7 @@ public class EnrollmentService {
 		inputVO.setServiceId(serviceId);
 
 		ServiceDTO outputVO = ServiceManager.updateService(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@DELETE
@@ -937,39 +937,39 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/substance-abuses")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getSubstanceAbuses(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
+	public List<SubstanceAbuseDTO> getSubstanceAbuses(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		List<SubstanceAbuseDTO> substanceAbuseDTOs = SubstanceAbuseManager.getSubstanceAbusesByEnrollmentId(enrollmentId);
-		return om.writeValueAsString(substanceAbuseDTOs);
+		return substanceAbuseDTOs;
 	}
 	
 	@GET
 	@Path("/{enrollmentId}/substance-abuses/{substanceAbuseId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String getSubstanceAbuse(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("substanceAbuseId") String substanceAbuseId) throws JsonProcessingException {
+	public SubstanceAbuseDTO getSubstanceAbuse(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("substanceAbuseId") String substanceAbuseId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		SubstanceAbuseDTO substanceAbuseDTO = SubstanceAbuseManager.getSubstanceAbuseById(substanceAbuseId);
-		return om.writeValueAsString(substanceAbuseDTO);
+		return substanceAbuseDTO;
 	}
 	
 	@POST
 	@Path("/{enrollmentId}/substance-abuses")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String createSubstanceAbuse(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
+	public SubstanceAbuseDTO createSubstanceAbuse(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		SubstanceAbuseDTO inputVO = om.readValue(data, SubstanceAbuseDTO.class);
 		inputVO.setEnrollmentId(enrollmentId);
 		SubstanceAbuseDTO outputVO = SubstanceAbuseManager.addSubstanceAbuse(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@PUT
 	@Path("/{enrollmentId}/substance-abuses/{substanceAbuseId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String updateSubstanceAbuse(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("substanceAbuseId") String substanceAbuseId, String data) throws IOException {
+	public SubstanceAbuseDTO updateSubstanceAbuse(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @PathParam("substanceAbuseId") String substanceAbuseId, String data) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		SubstanceAbuseDTO inputVO = om.readValue(data, SubstanceAbuseDTO.class);
@@ -977,7 +977,7 @@ public class EnrollmentService {
 		inputVO.setSubstanceAbuseId(substanceAbuseId);
 
 		SubstanceAbuseDTO outputVO = SubstanceAbuseManager.updateSubstanceAbuse(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@DELETE

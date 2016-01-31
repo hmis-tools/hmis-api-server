@@ -2,10 +2,13 @@ package org.openhmis.dto;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.openhmis.code.ProjectFundingSource;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@XmlRootElement
 public class FunderDTO {
 	
 	/**

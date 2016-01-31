@@ -4,6 +4,8 @@ package org.openhmis.dto;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.openhmis.code.ProjectAvailability;
 import org.openhmis.code.ProjectBedType;
 import org.openhmis.code.ProjectHouseholdType;
@@ -11,6 +13,7 @@ import org.openhmis.code.ProjectYouthAgeGroup;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@XmlRootElement
 public class InventoryDTO {
 	
 	/**

@@ -3,6 +3,8 @@ package org.openhmis.dto;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.openhmis.code.ClientPathReferral;
 import org.openhmis.code.ClientPathReferralOutcome;
 import org.openhmis.code.ClientRhyReferral;
@@ -11,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 
+@XmlRootElement
 public class ReferralDTO {
 	private String referralId;
 	private String enrollmentId;

@@ -4,6 +4,8 @@ package org.openhmis.dto;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.openhmis.code.ClientDischargeStatus;
 import org.openhmis.code.ClientEthnicity;
 import org.openhmis.code.ClientGender;
@@ -17,6 +19,7 @@ import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@XmlRootElement
 public class ClientDTO {
 	
 	/**

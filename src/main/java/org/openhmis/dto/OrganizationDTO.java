@@ -4,8 +4,11 @@ package org.openhmis.dto;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@XmlRootElement
 public class OrganizationDTO {
 	
 	/**

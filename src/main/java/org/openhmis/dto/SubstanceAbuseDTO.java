@@ -2,6 +2,8 @@ package org.openhmis.dto;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.openhmis.code.ClientDisabilityResponse;
 import org.openhmis.code.ClientPathHowConfirmed;
 import org.openhmis.code.YesNo;
@@ -9,6 +11,7 @@ import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@XmlRootElement
 public class SubstanceAbuseDTO {
 	private String substanceAbuseId;
 	private String enrollmentId;
