@@ -83,6 +83,12 @@
 		</dependency>
 
 		<dependency>
+		  <groupId>org.glassfish.jersey.media</groupId>
+		  <artifactId>jersey-media-json-jackson</artifactId>
+		  <version>2.18</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.google.oauth-client</groupId>
 			<artifactId>google-oauth-client</artifactId>
 			<version>1.20.0</version>
