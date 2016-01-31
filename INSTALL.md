@@ -110,7 +110,7 @@ _Note: you do not need to install anything for this to work.  Flyway is automati
         $> vi src/config/flyway.properties
     ```
 
-3. To initialize and update the schema, run the following command in the `pom.xml` directory
+3. To initialize and update the schema, run the following command in the top-levle directory (the one containing the `pom.xml` file):
 
     ```shell
         $> mvn clean compile flyway:migrate
@@ -162,13 +162,13 @@ Run the web service:
 
 2. Using a Command Line Interface, navigate to the root directory of this code base.  It should be the one containing `pom.xml`
 
-3. Deploy using Maven:
+3. Deploy using Maven if this is the *first* time you've ever deployed this code:
 
     ```shell
         $> mvn tomcat7:deploy
     ```
 
-   If you have previously deployed this code with any tool, you will need to _redeploy_ using Maven.
+   But if you have previously deployed this code with any tool, then you should instead _redeploy_ using Maven:
 
     ```shell
         $> mvn tomcat7:redeploy
