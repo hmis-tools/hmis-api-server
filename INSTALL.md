@@ -90,7 +90,7 @@ _Note: you do not need to install anything for this to work.  Flyway is automati
 1. Using your tool of choice, create an empty MySQL schema, and create a user with access to it.
 
    The name of your schema is up to you; in this example we use
-   `openhmis`.  The username and password are likewies up to you; here
+   `openhmis`.  The username and password are likewise up to you; here
    we use `openhmis_user` and `openhmis_password`.
 
     ```shell
@@ -132,6 +132,29 @@ Import sample data (or real data, if you have some):
         mysql -u openhmis_user -p openhmis < src/main/resources/db/data/DATA.sql
 ```
 
+Set up authentication
+---------------------
+This API uses [Google Sign-in](https://developers.google.com/identity/) for authentication.  To build an application powered by this API, your application must use the Google Sign-in [server side flow](https://developers.google.com/identity/sign-in/web/server-side-flow).
+
+1. Begin the [Google sign-in tutorial](https://developers.google.com/identity/sign-in/web/server-side-flow).  Create a client ID and a client secret and store them in a local `application.properties` file, then restart your app.
+
+   ```shell
+        $> cp src/main/resources/application.properties.example src/main/resources/application.properties
+        $> emacs src/main/resources/application.properties
+        $> mvn tomcat7:redeploy
+   ```
+
+2. Continue the tutorial.  Use the code provided there to generate an authorization code and a token.  If you are setting this up locally for development purposes, use `http://localhost:8080` for the authorized Javascript origin and the authorized redirect URI.
+
+3. `POST` to `http://localhost:8080/openhmis/api/v3/authenticate/google` in part 6 of [the Google tutorial](https://developers.google.com/identity/sign-in/web/server-side-flow), passing the generated authentication code as the raw POST value, as explained there.
+
+4. Extract the `id_token` component from the JSON object returned in part 7 of the tutorial.  If instead you receive an error like `Token Fail: 401 Unauthorized`, check that your origin and redirect URIs are correct, that your `client_id` and `client_secret` are in `application.properties`, and that you've run `mvn tomcat7:redeploy` whenever any of these values change.
+
+5. For all API calls that require authentication include the HTTP header `Authorization` with the value of the `id_token` you collected in step 3.  To test these calls with specific headers, try the [Postman](https://www.getpostman.com/) app.
+
+You can test that you are passing your `id_token` correctly by using the `api/v3/healthcheck/authentication` endpoint
+
+
 Run the web service:
 --------------------
 
@@ -165,6 +188,8 @@ Run the web service:
         [INFO] ------------------------------------------------------------------------
     ```
 
-4. If your web service is properly configured, [http://localhost:8080/openhmis/api/v3/healthcheck](http://localhost:8080/openhmis/api/v3/healthcheck) should display "Your service is working." 
+4. If your web service is properly configured, [http://localhost:8080/openhmis/api/v3/healthcheck](http://localhost:8080/openhmis/api/v3/healthcheck) should display "Your service is working with version `<version>`."
 
-5. If the schema is properly set up, [http://localhost:8080/openhmis/api/v3/clients](http://localhost:8080/openhmis/api/v3/clients) should yield a valid XML object.
+5. If the authentication is working, then [http://localhost:8080/openhmis/api/v3/healthcheck/authentication](http://localhost:8080/openhmis/api/v3/healthcheck/authentication) should display "You have a valid authorization token."
+
+6.  Once authentication works, if the schema is properly set up, [http://localhost:8080/openhmis/api/v3/clients](http://localhost:8080/openhmis/api/v3/clients) should yield a valid XML object.

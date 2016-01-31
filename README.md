@@ -35,15 +35,3 @@ Instructions for Contributing
 If you are interested in contributing to this repository, please review our [Contributors Guide](CONTRIBUTING.md) which explains policies, guidelines, and general advice.
 
 
-Authentication
--------------------
-This API uses [Google Sign-in](https://developers.google.com/identity/) for authentication.  To build an application powered by this API, your application must the Google Sign-in [server side flow](https://developers.google.com/identity/sign-in/web/server-side-flow).
-
-In order to use an endpoint you must:
-
-1. Generate an authentication code on the client (see the linked resourced for advice on how to implement this in your client).
-2. `POST` to the `v3/authenticate/google` passing the generated authentication code generated in step 1 as the raw POST value.
-3. Extract the `id_token` component from the JSON object returned in step 2.
-4. For all API calls that require authentication include the HTTP header `Authorization` with the value of the `id_token` you collected in step 3.
-
-You can test that you are passing your `id_token` correctly by using the `api/v3/healthcheck/authentication` endpoint
