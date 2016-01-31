@@ -125,6 +125,14 @@ _Note: you do not need to install anything for this to work.  Flyway is automati
         $> vi src/main/resources/hibernate.cfg.xml
     ```
 
+5. Create the `application.properties` file.
+
+    ```shell
+        $> cp src/main/resources/application.properties.example src/main/resources/application.properties
+    ```
+
+   You shouldn't have to edit anything in that file.  (But some day that might change -- see https://github.com/PCNI/OpenHMIS/issues/38 for more information.)
+
 Import sample data (or real data, if you have some):
 ---------------------------------------------------
 
