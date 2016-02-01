@@ -50,14 +50,14 @@ instead of on HUD 2014, but we list them here for reference:
 OpenHMIS API Reference Documentation
 ====================================
 
-_(Note: The latest development version of this documentation is always available [on GitHub](https://github.com/PCNI/OpenHMIS/blob/feature-compass_schema/docs/API.md).)_
+_(Note: The latest development version of this documentation is always available [on GitHub](https://github.com/PCNI/OpenHMIS/blob/master/docs/API.md).)_
 
 The OpenHMIS API is a [RESTful
 API](https://en.wikipedia.org/wiki/Representational_state_transfer)
 that works as you would expect if you are familiar with other RESTful
 APIs.
 
-Requests to URLs returns JSON objects.  For intermediate URLs, these
+Requests to URLs return JSON objects.  For intermediate URLs, these
 objects are lists, and the contents of the list are sub-objects of
 whatever type would be fetched by extending the URL with the natural
 next component.  For example, assuming that
