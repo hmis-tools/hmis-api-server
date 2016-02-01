@@ -50,19 +50,36 @@ instead of on HUD 2014, but we list them here for reference:
 OpenHMIS API Reference Documentation
 ====================================
 
-_(Note: The latest development version of this documentation is always available [on GitHub](https://github.com/PCNI/OpenHMIS/blob/feature-compass_schema/docs/API.md).)_
+_(Note: The latest development version of this documentation is always available [on GitHub](https://github.com/PCNI/OpenHMIS/blob/feature-xml/docs/API.md).)_
 
 The OpenHMIS API is a [RESTful
 API](https://en.wikipedia.org/wiki/Representational_state_transfer)
 that works as you would expect if you are familiar with other RESTful
 APIs.
 
-Requests to URLs returns JSON objects.  For intermediate URLs, these
-objects are lists, and the contents of the list are sub-objects of
-whatever type would be fetched by extending the URL with the natural
-next component.  For example, assuming that
-`http://hmis.example.com/openhmis/` is the API services base, then a
-GET request to
+Requests bodies send and receive either JSON or XML representations of
+objects.  The examples in this document are all given in JSON, but the
+HTTP header `Content-Type` should be used to designate the format for
+data carried in a request, and the `Accept` header used to designate
+desired format of the response.  Thus, header pairs will either be
+this:
+
+    Content-Type: application/json
+    Accept: application/json
+
+or this:
+
+    Content-Type: application/xml
+    Accept: application/xml
+
+(Theoretically, a request could name different formats for sent and
+received data, but we assume you're not writing insane software.)
+
+For intermediate URLs, the objects being represented are lists, and
+the contents of the list are sub-objects of whatever type would be
+fetched by extending the URL with the natural next component.  For
+example, assuming that `http://hmis.example.com/openhmis/` is the API
+services base, then a GET request to
 
         http://hmis.example.com/openhmis/api/v3/clients
 
