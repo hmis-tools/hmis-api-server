@@ -48,12 +48,9 @@ public class ClientService {
 	@POST
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public ClientDTO createClient(@HeaderParam("Authorization") String authorization, String data) throws JsonParseException, JsonMappingException, IOException {
+	public ClientDTO createClient(@HeaderParam("Authorization") String authorization, ClientDTO inputVO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		// This endpoint takes in a raw json STRING as input.
-		// TODO: support the serialization of individual POST parameters
-		ClientDTO inputVO = om.readValue(data, ClientDTO.class);
 		ClientDTO outputVO = clientManager.addClient(inputVO);
 		return outputVO;
 	}
@@ -71,10 +68,9 @@ public class ClientService {
 	@PUT
 	@Path("/{personalId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public ClientDTO updateClient(@HeaderParam("Authorization") String authorization, @PathParam("personalId") String personalId, String data) throws JsonParseException, JsonMappingException, IOException {
+	public ClientDTO updateClient(@HeaderParam("Authorization") String authorization, @PathParam("personalId") String personalId, ClientDTO inputVO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		ClientDTO inputVO = om.readValue(data, ClientDTO.class);
 		inputVO.setPersonalId(personalId);
 		
 		ClientDTO outputVO = clientManager.updateClient(inputVO);

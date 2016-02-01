@@ -53,12 +53,9 @@ public class OrganizationService {
 	@POST
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public OrganizationDTO createOrganization(@HeaderParam("Authorization") String authorization, String data) throws JsonParseException, JsonMappingException, IOException {
+	public OrganizationDTO createOrganization(@HeaderParam("Authorization") String authorization, OrganizationDTO inputVO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		// This endpoint takes in a raw json STRING as input.
-		// TODO: support the serialization of individual POST parameters
-		OrganizationDTO inputVO = om.readValue(data, OrganizationDTO.class);
 		OrganizationDTO outputVO = OrganizationManager.addOrganization(inputVO);
 		return outputVO;
 	}
@@ -76,10 +73,9 @@ public class OrganizationService {
 	@PUT
 	@Path("/{organizationId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public OrganizationDTO updateOrganization(@HeaderParam("Authorization") String authorization, @PathParam("organizationId") String organizationId, String data) throws JsonParseException, JsonMappingException, IOException {
+	public OrganizationDTO updateOrganization(@HeaderParam("Authorization") String authorization, @PathParam("organizationId") String organizationId, OrganizationDTO inputVO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		OrganizationDTO inputVO = om.readValue(data, OrganizationDTO.class);
 		inputVO.setOrganizationId(organizationId);
 		
 		OrganizationDTO outputVO = OrganizationManager.updateOrganization(inputVO);

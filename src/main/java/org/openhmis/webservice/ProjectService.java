@@ -53,12 +53,9 @@ public class ProjectService {
 	@POST
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public ProjectDTO createProject(@HeaderParam("Authorization") String authorization, String data) throws JsonParseException, JsonMappingException, IOException {
+	public ProjectDTO createProject(@HeaderParam("Authorization") String authorization, ProjectDTO inputVO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		// This endpoint takes in a raw json STRING as input.
-		// TODO: support the serialization of individual POST parameters
-		ProjectDTO inputVO = om.readValue(data, ProjectDTO.class);
 		ProjectDTO outputVO = ProjectManager.addProject(inputVO);
 		return outputVO;
 	}
@@ -76,10 +73,9 @@ public class ProjectService {
 	@PUT
 	@Path("/{projectId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public ProjectDTO updateProject(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, String data) throws JsonParseException, JsonMappingException, IOException {
+	public ProjectDTO updateProject(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, ProjectDTO inputVO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		ProjectDTO inputVO = om.readValue(data, ProjectDTO.class);
 		inputVO.setProjectId(projectId);
 		
 		ProjectDTO outputVO = ProjectManager.updateProject(inputVO);
@@ -120,10 +116,9 @@ public class ProjectService {
 	@POST
 	@Path("/{projectId}/cocs")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public CoCDTO createCoC(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, String data) throws IOException {
+	public CoCDTO createCoC(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, CoCDTO inputVO) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		CoCDTO inputVO = om.readValue(data, CoCDTO.class);
 		inputVO.setProjectId(projectId);
 		CoCDTO outputVO = CoCManager.addCoC(inputVO);
 		return outputVO;
@@ -132,10 +127,9 @@ public class ProjectService {
 	@PUT
 	@Path("/{projectId}/cocs/{coCId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public CoCDTO updateCoC(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, String data) throws IOException {
+	public CoCDTO updateCoC(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, CoCDTO inputVO) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		CoCDTO inputVO = om.readValue(data, CoCDTO.class);
 		inputVO.setProjectId(projectId);
 		inputVO.setProjectCoCId(coCId);
 
@@ -177,10 +171,9 @@ public class ProjectService {
 	@POST
 	@Path("/{projectId}/funders")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public FunderDTO createFunder(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, String data) throws IOException {
+	public FunderDTO createFunder(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, FunderDTO inputVO) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		FunderDTO inputVO = om.readValue(data, FunderDTO.class);
 		inputVO.setProjectId(projectId);
 		FunderDTO outputVO = FunderManager.addFunder(inputVO);
 		return outputVO;
@@ -189,10 +182,9 @@ public class ProjectService {
 	@PUT
 	@Path("/{projectId}/funders/{funderId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public FunderDTO updateFunder(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("funderId") String funderId, String data) throws IOException {
+	public FunderDTO updateFunder(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("funderId") String funderId, FunderDTO inputVO) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		FunderDTO inputVO = om.readValue(data, FunderDTO.class);
 		inputVO.setProjectId(projectId);
 		inputVO.setFunderId(funderId);
 
@@ -234,10 +226,9 @@ public class ProjectService {
 	@POST
 	@Path("/{projectId}/cocs/{coCId}/inventories")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public InventoryDTO createInventory(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, String data) throws IOException {
+	public InventoryDTO createInventory(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, InventoryDTO inputVO) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		InventoryDTO inputVO = om.readValue(data, InventoryDTO.class);
 		inputVO.setProjectCoCId(coCId);
 		InventoryDTO outputVO = InventoryManager.addInventory(inputVO);
 		return outputVO;
@@ -246,10 +237,9 @@ public class ProjectService {
 	@PUT
 	@Path("/{projectId}/cocs/{coCId}/inventories/{inventoryId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public InventoryDTO updateInventory(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @PathParam("inventoryId") String inventoryId, String data) throws IOException {
+	public InventoryDTO updateInventory(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @PathParam("inventoryId") String inventoryId, InventoryDTO inputVO) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		InventoryDTO inputVO = om.readValue(data, InventoryDTO.class);
 		inputVO.setProjectCoCId(coCId);
 		inputVO.setInventoryId(inventoryId);
 
@@ -291,10 +281,9 @@ public class ProjectService {
 	@POST
 	@Path("/{projectId}/cocs/{coCId}/sites")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public SiteDTO createSite(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, String data) throws IOException {
+	public SiteDTO createSite(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, SiteDTO inputVO) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		SiteDTO inputVO = om.readValue(data, SiteDTO.class);
 		inputVO.setProjectCoCId(coCId);
 		SiteDTO outputVO = SiteManager.addSite(inputVO);
 		return outputVO;
@@ -303,10 +292,9 @@ public class ProjectService {
 	@PUT
 	@Path("/{projectId}/cocs/{coCId}/sites/{siteId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public SiteDTO updateSite(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @PathParam("siteId") String siteId, String data) throws IOException {
+	public SiteDTO updateSite(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @PathParam("siteId") String siteId, SiteDTO inputVO) throws IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		SiteDTO inputVO = om.readValue(data, SiteDTO.class);
 		inputVO.setProjectCoCId(coCId);
 		inputVO.setSiteId(siteId);
 
