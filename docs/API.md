@@ -57,17 +57,17 @@ API](https://en.wikipedia.org/wiki/Representational_state_transfer)
 that works as you would expect if you are familiar with other RESTful
 APIs.
 
-Requests bodies send and receive either JSON or XML representations of
+Request bodies send and receive either JSON or XML representations of
 objects.  The examples in this document are all given in JSON, but the
 HTTP header `Content-Type` should be used to designate the format for
-data carried in a request, and the `Accept` header used to designate
-desired format of the response.  Thus, header pairs will either be
-this:
+the data carried in a request, and the `Accept` header used to designate
+the desired format of the response.  Thus, header pairs will either be
+like this:
 
     Content-Type: application/json
     Accept: application/json
 
-or this:
+or like this:
 
     Content-Type: application/xml
     Accept: application/xml
