@@ -1,5 +1,6 @@
 package org.openhmis.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -28,6 +29,19 @@ public class PathClientDAO extends BaseDAO {
 			return (PathClient)results.get(0);
 		else
 			return null;
+	}
+
+	public List<PathClient> getPathClientsByUpdateDate(Date updatedSince)  {
+		String queryString = "select client " + 
+			"from PathClient as client " + 
+			"where client.updateDate >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updatedSince);
+		List<PathClient> results = queryObject.list();
+		session.close();
+		return results;
 	}
 	
 	@SuppressWarnings("unchecked")

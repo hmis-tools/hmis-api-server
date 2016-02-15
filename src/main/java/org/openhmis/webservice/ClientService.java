@@ -12,6 +12,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -20,6 +21,7 @@ import org.openhmis.code.ClientNameDataQuality;
 import org.openhmis.dto.ClientDTO;
 import org.openhmis.manager.ClientManager;
 import org.openhmis.util.Authentication;
+import org.openhmis.util.DateParser;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -38,11 +40,19 @@ public class ClientService {
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<ClientDTO> getClients(@HeaderParam("Authorization") String authorization) throws JsonProcessingException {
+	public List<ClientDTO> getClients(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		List<ClientDTO> clientDTOs = clientManager.getClients();
-		return clientDTOs;
+		
+		// If the user specified no updatedSince parameter, return all clients
+		if(updatedSince == null) {
+			List<ClientDTO> clientDTOs = clientManager.getClients();
+			return clientDTOs;			
+		} else {
+			List<ClientDTO> clientDTOs = clientManager.getClientsByUpdateDate(DateParser.parseDate(updatedSince));
+			return clientDTOs;			
+		}
+		
 	}
 	
 	@POST
