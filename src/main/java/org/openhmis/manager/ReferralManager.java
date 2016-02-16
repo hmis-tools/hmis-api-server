@@ -44,6 +44,22 @@ public class ReferralManager {
 		return referralDTOs;
 
 	}
+
+	public static List<ReferralDTO> getReferralsByEnrollmentId(String enrollmentId, Date updateDate) {
+		List<ReferralDTO> referralDTOs = new ArrayList<ReferralDTO>();
+
+		// Collect the referrals
+		List<TmpReferral> tmpReferrals = tmpReferralDAO.getTmpReferralsByEnrollmentId(Integer.parseInt(enrollmentId), updateDate);
+
+		// For each referral, collect and map the data
+		for (Iterator<TmpReferral> iterator = tmpReferrals.iterator(); iterator.hasNext();) {
+			TmpReferral tmpReferral = iterator.next();
+			ReferralDTO referralDTO = ReferralManager.generateReferralDTO(tmpReferral);
+			referralDTOs.add(referralDTO);
+		}
+		return referralDTOs;
+
+	}
 	
 	public static ReferralDTO addReferral(ReferralDTO inputDTO) {
 		// Generate a PathClient from the input

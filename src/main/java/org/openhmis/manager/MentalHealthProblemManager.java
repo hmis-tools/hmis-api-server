@@ -45,6 +45,22 @@ public class MentalHealthProblemManager {
 		return mentalHealthProblemDTOs;
 
 	}
+
+	public static List<MentalHealthProblemDTO> getMentalHealthProblemsByEnrollmentId(String enrollmentId, Date updateDate) {
+		List<MentalHealthProblemDTO> mentalHealthProblemDTOs = new ArrayList<MentalHealthProblemDTO>();
+
+		// Collect the mentalHealthProblems
+		List<TmpMentalHealthProblem> tmpMentalHealthProblems = tmpMentalHealthProblemDAO.getTmpMentalHealthProblemsByEnrollmentId(Integer.parseInt(enrollmentId), updateDate);
+
+		// For each mentalHealthProblem, collect and map the data
+		for (Iterator<TmpMentalHealthProblem> iterator = tmpMentalHealthProblems.iterator(); iterator.hasNext();) {
+			TmpMentalHealthProblem tmpMentalHealthProblem = iterator.next();
+			MentalHealthProblemDTO mentalHealthProblemDTO = MentalHealthProblemManager.generateMentalHealthProblemDTO(tmpMentalHealthProblem);
+			mentalHealthProblemDTOs.add(mentalHealthProblemDTO);
+		}
+		return mentalHealthProblemDTOs;
+
+	}
 	
 	public static MentalHealthProblemDTO addMentalHealthProblem(MentalHealthProblemDTO inputDTO) {
 		// Generate a PathClient from the input

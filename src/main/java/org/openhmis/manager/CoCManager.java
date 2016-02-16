@@ -38,6 +38,24 @@ public class CoCManager {
 		return coCDTOs;
 
 	}
+
+	public static List<CoCDTO> getCoCsByProjectId(String projectId, Date updateDate) {
+		List<CoCDTO> coCDTOs = new ArrayList<CoCDTO>();
+
+		// Collect the projects
+		List<TmpProjectContinuum> tmpProjectContinuums = tmpProjectContinuumDAO.getTmpProjectContinuumsByProjectId(Integer.parseInt(projectId), updateDate);
+
+		// For each project, collect and map the data
+		// TODO: this should be done in a single query
+		for (Iterator<TmpProjectContinuum> iterator = tmpProjectContinuums.iterator(); iterator.hasNext();) {
+			TmpProjectContinuum tmpProjectContinuum = iterator.next();
+
+			CoCDTO coCDTO = CoCManager.generateCoCDTO(tmpProjectContinuum);
+			coCDTOs.add(coCDTO);
+		}
+		return coCDTOs;
+
+	}
 	
 	public static CoCDTO addCoC(CoCDTO inputDTO) {
 

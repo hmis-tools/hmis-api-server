@@ -43,6 +43,22 @@ public class MedicalAssistanceManager {
 		return medicalAssistanceDTOs;
 
 	}
+
+	public static List<MedicalAssistanceDTO> getMedicalAssistancesByEnrollmentId(String enrollmentId, Date updateDate) {
+		List<MedicalAssistanceDTO> medicalAssistanceDTOs = new ArrayList<MedicalAssistanceDTO>();
+
+		// Collect the medicalAssistances
+		List<TmpMedicalAssistance> tmpMedicalAssistances = tmpMedicalAssistanceDAO.getTmpMedicalAssistancesByEnrollmentId(Integer.parseInt(enrollmentId), updateDate);
+
+		// For each medicalAssistance, collect and map the data
+		for (Iterator<TmpMedicalAssistance> iterator = tmpMedicalAssistances.iterator(); iterator.hasNext();) {
+			TmpMedicalAssistance tmpMedicalAssistance = iterator.next();
+			MedicalAssistanceDTO medicalAssistanceDTO = MedicalAssistanceManager.generateMedicalAssistanceDTO(tmpMedicalAssistance);
+			medicalAssistanceDTOs.add(medicalAssistanceDTO);
+		}
+		return medicalAssistanceDTOs;
+
+	}
 	
 	public static MedicalAssistanceDTO addMedicalAssistance(MedicalAssistanceDTO inputDTO) {
 		// Generate a PathClient from the input

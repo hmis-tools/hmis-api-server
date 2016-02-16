@@ -44,6 +44,22 @@ public class HealthInsuranceManager {
 		return healthInsuranceDTOs;
 
 	}
+
+	public static List<HealthInsuranceDTO> getHealthInsurancesByEnrollmentId(String enrollmentId, Date updateDate) {
+		List<HealthInsuranceDTO> healthInsuranceDTOs = new ArrayList<HealthInsuranceDTO>();
+
+		// Collect the healthInsurances
+		List<TmpHealthInsurance> tmpHealthInsurances = tmpHealthInsuranceDAO.getTmpHealthInsurancesByEnrollmentId(Integer.parseInt(enrollmentId), updateDate);
+
+		// For each healthInsurance, collect and map the data
+		for (Iterator<TmpHealthInsurance> iterator = tmpHealthInsurances.iterator(); iterator.hasNext();) {
+			TmpHealthInsurance tmpHealthInsurance = iterator.next();
+			HealthInsuranceDTO healthInsuranceDTO = HealthInsuranceManager.generateHealthInsuranceDTO(tmpHealthInsurance);
+			healthInsuranceDTOs.add(healthInsuranceDTO);
+		}
+		return healthInsuranceDTOs;
+
+	}
 	
 	public static HealthInsuranceDTO addHealthInsurance(HealthInsuranceDTO inputDTO) {
 		// Generate a PathClient from the input

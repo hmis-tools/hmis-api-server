@@ -33,10 +33,22 @@ public class ProjectManager {
 		// TODO: this should be done in a single query
 		for (Iterator<TmpProject> iterator = tmpProjects.iterator(); iterator.hasNext();) {
 			TmpProject tmpProject = iterator.next();
-//			Integer projectId = tmpProject.getProjectId();
-//			List<PathClientRace> pathRaces = pathClientRaceDAO.getPathRacesByClientKey(clientKey);
-//			PathClientVeteranInfo pathVeteranInfo = pathClientVeteranInfoDAO.getPathVeteranInfoByClientKey(clientKey);
+			ProjectDTO projectDTO = ProjectManager.generateProjectDTO(tmpProject);
+			projectDTOs.add(projectDTO);
+		}
+		return projectDTOs;
+	}
 
+	public static List<ProjectDTO> getProjectsByUpdateDate(Date updateDate) {
+		List<ProjectDTO> projectDTOs = new ArrayList<ProjectDTO>();
+
+		// Collect the projects
+		List<TmpProject> tmpProjects = tmpProjectDAO.getTmpProjectsByUpdateDate(updateDate);
+
+		// For each project, collect and map the data
+		// TODO: this should be done in a single query
+		for (Iterator<TmpProject> iterator = tmpProjects.iterator(); iterator.hasNext();) {
+			TmpProject tmpProject = iterator.next();
 			ProjectDTO projectDTO = ProjectManager.generateProjectDTO(tmpProject);
 			projectDTOs.add(projectDTO);
 		}
@@ -55,21 +67,7 @@ public class ProjectManager {
 		// Save the client to allow secondary object generation
 		tmpProjectDAO.save(tmpProject);
 		inputDTO.setProjectId(tmpProject.getProjectId().toString());
-		
-		// Save the races
-//		List<PathClientRace> pathRaces = ClientManager.generatePathClientRaces(inputDTO);
-//		for (Iterator<PathClientRace> iterator = pathRaces.iterator(); iterator.hasNext();) {
-//			PathClientRace pathRace = iterator.next();
-//			pathRace.setUpdateTimestamp(new Date());
-//			pathClientRaceDAO.save(pathRace);
-//		}
-//
-//		// Save Veteran Info
-//		PathClientVeteranInfo pathVeteranInfo = ClientManager.generatePathVeteranInfo(inputDTO);
-//		pathVeteranInfo.setUpdateTimestamp(new Date());
-//		pathVeteranInfo.setClientKey(pathClient.getClientKey());
-//		pathClientVeteranInfoDAO.save(pathVeteranInfo);
-		
+				
 		// Return the resulting VO
 		return ProjectManager.generateProjectDTO(tmpProject);
 	}

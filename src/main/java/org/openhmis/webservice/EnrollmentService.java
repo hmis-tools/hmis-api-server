@@ -20,6 +20,7 @@ import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 import org.openhmis.code.ClientNameDataQuality;
 import org.openhmis.dto.ChronicHealthConditionDTO;
+import org.openhmis.dto.ClientDTO;
 import org.openhmis.dto.ContactDTO;
 import org.openhmis.dto.DevelopmentalDisabilityDTO;
 import org.openhmis.dto.DomesticAbuseDTO;
@@ -54,6 +55,7 @@ import org.openhmis.manager.ReferralManager;
 import org.openhmis.manager.ServiceManager;
 import org.openhmis.manager.SubstanceAbuseManager;
 import org.openhmis.util.Authentication;
+import org.openhmis.util.DateParser;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -77,8 +79,15 @@ public class EnrollmentService {
 	public List<EnrollmentDTO> getEnrollments(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		List<EnrollmentDTO> enrollmentDTOs = enrollmentManager.getEnrollments();
-		return enrollmentDTOs;
+
+		// If the user specified no updatedSince parameter, return everything
+		if(updatedSince == null) {
+			List<EnrollmentDTO> enrollmentDTOs = enrollmentManager.getEnrollments();
+			return enrollmentDTOs;
+		} else {
+			List<EnrollmentDTO> enrollmentDTOs = enrollmentManager.getEnrollmentsByUpdateDate(DateParser.parseDate(updatedSince));
+			return enrollmentDTOs;			
+		}
 	}
 	
 	@GET
@@ -128,7 +137,7 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/exits")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<ExitDTO> getExits(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<ExitDTO> getExits(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		// Exits are weird because right now only one can exist but they are still separate...
@@ -190,8 +199,15 @@ public class EnrollmentService {
 	public List<ChronicHealthConditionDTO> getChronicHealthConditions(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = ChronicHealthConditionManager.getChronicHealthConditionsByEnrollmentId(enrollmentId);
-		return chronicHealthConditionDTOs;
+		
+		// If the user specified no updatedSince parameter, return everything
+		if(updatedSince == null) {
+			List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = ChronicHealthConditionManager.getChronicHealthConditionsByEnrollmentId(enrollmentId);
+			return chronicHealthConditionDTOs;
+		} else {
+			List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = ChronicHealthConditionManager.getChronicHealthConditionsByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
+			return chronicHealthConditionDTOs;
+		}
 	}
 	
 	@GET
@@ -246,8 +262,15 @@ public class EnrollmentService {
 	public List<ContactDTO> getContacts(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		List<ContactDTO> contactDTOs = ContactManager.getContactsByEnrollmentId(enrollmentId);
-		return contactDTOs;
+
+		// If the user specified no updatedSince parameter, return everything
+		if(updatedSince == null) {
+			List<ContactDTO> contactDTOs = ContactManager.getContactsByEnrollmentId(enrollmentId);
+			return contactDTOs;
+		} else {
+			List<ContactDTO> contactDTOs = ContactManager.getContactsByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
+			return contactDTOs;			
+		}
 	}
 	
 	@GET
@@ -302,8 +325,15 @@ public class EnrollmentService {
 	public List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilities(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = DevelopmentalDisabilityManager.getDevelopmentalDisabilitiesByEnrollmentId(enrollmentId);
-		return developmentalDisabilityDTOs;
+		
+		// If the user specified no updatedSince parameter, return everything
+		if(updatedSince == null) {
+			List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = DevelopmentalDisabilityManager.getDevelopmentalDisabilitiesByEnrollmentId(enrollmentId);
+			return developmentalDisabilityDTOs;
+		} else {
+			List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = DevelopmentalDisabilityManager.getDevelopmentalDisabilitiesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
+			return developmentalDisabilityDTOs;
+		}
 	}
 	
 	@GET
@@ -358,8 +388,15 @@ public class EnrollmentService {
 	public List<DomesticAbuseDTO> getDomesticAbuses(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		List<DomesticAbuseDTO> domesticAbuseDTOs = DomesticAbuseManager.getDomesticAbusesByEnrollmentId(enrollmentId);
-		return domesticAbuseDTOs;
+		
+		// If the user specified no updatedSince parameter, return everything
+		if(updatedSince == null) {
+			List<DomesticAbuseDTO> domesticAbuseDTOs = DomesticAbuseManager.getDomesticAbusesByEnrollmentId(enrollmentId);
+			return domesticAbuseDTOs;
+		} else {
+			List<DomesticAbuseDTO> domesticAbuseDTOs = DomesticAbuseManager.getDomesticAbusesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
+			return domesticAbuseDTOs;
+		}
 	}
 	
 	@GET
@@ -414,8 +451,15 @@ public class EnrollmentService {
 	public List<FinancialAssistanceDTO> getFinancialAssistances(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		List<FinancialAssistanceDTO> financialAssistanceDTOs = FinancialAssistanceManager.getFinancialAssistancesByEnrollmentId(enrollmentId);
-		return financialAssistanceDTOs;
+
+		// If the user specified no updatedSince parameter, return everything
+		if(updatedSince == null) {
+			List<FinancialAssistanceDTO> financialAssistanceDTOs = FinancialAssistanceManager.getFinancialAssistancesByEnrollmentId(enrollmentId);
+			return financialAssistanceDTOs;
+		} else {
+			List<FinancialAssistanceDTO> financialAssistanceDTOs = FinancialAssistanceManager.getFinancialAssistancesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
+			return financialAssistanceDTOs;
+		}
 	}
 	
 	@GET
@@ -469,8 +513,15 @@ public class EnrollmentService {
 	public List<HealthInsuranceDTO> getHealthInsurances(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		List<HealthInsuranceDTO> healthInsuranceDTOs = HealthInsuranceManager.getHealthInsurancesByEnrollmentId(enrollmentId);
-		return healthInsuranceDTOs;
+
+		// If the user specified no updatedSince parameter, return everything
+		if(updatedSince == null) {
+			List<HealthInsuranceDTO> healthInsuranceDTOs = HealthInsuranceManager.getHealthInsurancesByEnrollmentId(enrollmentId);
+			return healthInsuranceDTOs;
+		} else {
+			List<HealthInsuranceDTO> healthInsuranceDTOs = HealthInsuranceManager.getHealthInsurancesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
+			return healthInsuranceDTOs;
+		}
 	}
 	
 	@GET
@@ -524,8 +575,15 @@ public class EnrollmentService {
 	public List<HivAidsStatusDTO> getHivAidsStatuses(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		List<HivAidsStatusDTO> hivAidsStatusDTOs = HivAidsStatusManager.getHivAidsStatusesByEnrollmentId(enrollmentId);
-		return hivAidsStatusDTOs;
+
+		// If the user specified no updatedSince parameter, return everything
+		if(updatedSince == null) {
+			List<HivAidsStatusDTO> hivAidsStatusDTOs = HivAidsStatusManager.getHivAidsStatusesByEnrollmentId(enrollmentId);
+			return hivAidsStatusDTOs;
+		} else {
+			List<HivAidsStatusDTO> hivAidsStatusDTOs = HivAidsStatusManager.getHivAidsStatusesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
+			return hivAidsStatusDTOs;
+		}
 	}
 	
 	@GET
@@ -579,8 +637,15 @@ public class EnrollmentService {
 	public List<MedicalAssistanceDTO> getMedicalAssistances(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		List<MedicalAssistanceDTO> medicalAssistanceDTOs = MedicalAssistanceManager.getMedicalAssistancesByEnrollmentId(enrollmentId);
-		return medicalAssistanceDTOs;
+
+		// If the user specified no updatedSince parameter, return everything
+		if(updatedSince == null) {
+			List<MedicalAssistanceDTO> medicalAssistanceDTOs = MedicalAssistanceManager.getMedicalAssistancesByEnrollmentId(enrollmentId);
+			return medicalAssistanceDTOs;
+		} else {
+			List<MedicalAssistanceDTO> medicalAssistanceDTOs = MedicalAssistanceManager.getMedicalAssistancesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
+			return medicalAssistanceDTOs;
+		}
 	}
 	
 	@GET
@@ -634,8 +699,15 @@ public class EnrollmentService {
 	public List<IncomeSourceDTO> getIncomeSources(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		List<IncomeSourceDTO> incomeSourceDTOs = IncomeSourceManager.getIncomeSourcesByEnrollmentId(enrollmentId);
-		return incomeSourceDTOs;
+
+		// If the user specified no updatedSince parameter, return everything
+		if(updatedSince == null) {
+			List<IncomeSourceDTO> incomeSourceDTOs = IncomeSourceManager.getIncomeSourcesByEnrollmentId(enrollmentId);
+			return incomeSourceDTOs;
+		} else {
+			List<IncomeSourceDTO> incomeSourceDTOs = IncomeSourceManager.getIncomeSourcesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
+			return incomeSourceDTOs;
+		}
 	}
 	
 	@GET
@@ -689,8 +761,15 @@ public class EnrollmentService {
 	public List<NonCashBenefitDTO> getNonCashBenefits(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		List<NonCashBenefitDTO> nonCashBenefitDTOs = NonCashBenefitManager.getNonCashBenefitsByEnrollmentId(enrollmentId);
-		return nonCashBenefitDTOs;
+
+		// If the user specified no updatedSince parameter, return everything
+		if(updatedSince == null) {
+			List<NonCashBenefitDTO> nonCashBenefitDTOs = NonCashBenefitManager.getNonCashBenefitsByEnrollmentId(enrollmentId);
+			return nonCashBenefitDTOs;
+		} else {
+			List<NonCashBenefitDTO> nonCashBenefitDTOs = NonCashBenefitManager.getNonCashBenefitsByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
+			return nonCashBenefitDTOs;
+		}
 	}
 	
 	@GET
@@ -744,8 +823,15 @@ public class EnrollmentService {
 	public List<PhysicalDisabilityDTO> getPhysicalDisabilities(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		List<PhysicalDisabilityDTO> physicalDisabilityDTOs = PhysicalDisabilityManager.getPhysicalDisabilitiesByEnrollmentId(enrollmentId);
-		return physicalDisabilityDTOs;
+
+		// If the user specified no updatedSince parameter, return everything
+		if(updatedSince == null) {
+			List<PhysicalDisabilityDTO> physicalDisabilityDTOs = PhysicalDisabilityManager.getPhysicalDisabilitiesByEnrollmentId(enrollmentId);
+			return physicalDisabilityDTOs;
+		} else {
+			List<PhysicalDisabilityDTO> physicalDisabilityDTOs = PhysicalDisabilityManager.getPhysicalDisabilitiesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
+			return physicalDisabilityDTOs;
+		}
 	}
 	
 	@GET
@@ -799,8 +885,15 @@ public class EnrollmentService {
 	public List<ReferralDTO> getReferrals(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		List<ReferralDTO> referralDTOs = ReferralManager.getReferralsByEnrollmentId(enrollmentId);
-		return referralDTOs;
+
+		// If the user specified no updatedSince parameter, return everything
+		if(updatedSince == null) {
+			List<ReferralDTO> referralDTOs = ReferralManager.getReferralsByEnrollmentId(enrollmentId);
+			return referralDTOs;
+		} else {
+			List<ReferralDTO> referralDTOs = ReferralManager.getReferralsByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
+			return referralDTOs;
+		}
 	}
 	
 	@GET
@@ -854,8 +947,15 @@ public class EnrollmentService {
 	public List<ServiceDTO> getServices(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		List<ServiceDTO> serviceDTOs = ServiceManager.getServicesByEnrollmentId(enrollmentId);
-		return serviceDTOs;
+
+		// If the user specified no updatedSince parameter, return everything
+		if(updatedSince == null) {
+			List<ServiceDTO> serviceDTOs = ServiceManager.getServicesByEnrollmentId(enrollmentId);
+			return serviceDTOs;
+		} else {
+			List<ServiceDTO> serviceDTOs = ServiceManager.getServicesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
+			return serviceDTOs;
+		}
 	}
 	
 	@GET
@@ -909,8 +1009,15 @@ public class EnrollmentService {
 	public List<SubstanceAbuseDTO> getSubstanceAbuses(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		List<SubstanceAbuseDTO> substanceAbuseDTOs = SubstanceAbuseManager.getSubstanceAbusesByEnrollmentId(enrollmentId);
-		return substanceAbuseDTOs;
+
+		// If the user specified no updatedSince parameter, return everything
+		if(updatedSince == null) {
+			List<SubstanceAbuseDTO> substanceAbuseDTOs = SubstanceAbuseManager.getSubstanceAbusesByEnrollmentId(enrollmentId);
+			return substanceAbuseDTOs;
+		} else {
+			List<SubstanceAbuseDTO> substanceAbuseDTOs = SubstanceAbuseManager.getSubstanceAbusesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
+			return substanceAbuseDTOs;
+		}
 	}
 	
 	@GET

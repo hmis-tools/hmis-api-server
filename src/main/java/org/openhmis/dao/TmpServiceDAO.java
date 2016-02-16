@@ -1,5 +1,6 @@
 package org.openhmis.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -39,6 +40,22 @@ public class TmpServiceDAO extends BaseDAO {
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
 		queryObject.setParameter("enrollmentId", enrollmentId);
+		List<TmpService> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpService> getTmpServicesByEnrollmentId(Integer enrollmentId, Date updateDate) {
+		String queryString = "select service " + 
+				"from TmpService as service " + 
+				"where service.enrollmentId =:enrollmentId " + 
+				"  and service.updateDate >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("enrollmentId", enrollmentId);
+		queryObject.setParameter("updatedSince", updateDate);
 		List<TmpService> results = queryObject.list();
 		session.close();
 		return results;

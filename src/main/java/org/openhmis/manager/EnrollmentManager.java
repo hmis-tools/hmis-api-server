@@ -76,6 +76,22 @@ public class EnrollmentManager {
 		}
 		return enrollmentDTOs;
 	}
+
+
+	public List<EnrollmentDTO> getEnrollmentsByUpdateDate(Date updateDate) {
+		List<EnrollmentDTO> enrollmentDTOs = new ArrayList<EnrollmentDTO>();
+
+		// Collect the inventories
+		List<TmpEnrollment> tempEnrollments = tmpEnrollmentDAO.getTmpEnrollmentsByUpdateDate(updateDate);
+
+		// For each inventory, collect and map the data
+		for (Iterator<TmpEnrollment> iterator = tempEnrollments.iterator(); iterator.hasNext();) {
+			TmpEnrollment tempEnrollment = iterator.next();
+			EnrollmentDTO enrollmentDTO = EnrollmentManager.generateEnrollmentDTO(tempEnrollment);
+			enrollmentDTOs.add(enrollmentDTO);
+		}
+		return enrollmentDTOs;
+	}
 	
 	public EnrollmentDTO addEnrollment(EnrollmentDTO inputDTO) {
 		// Generate a PathClient from the input

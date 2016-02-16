@@ -1,5 +1,6 @@
 package org.openhmis.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -39,6 +40,22 @@ public class TmpProjectContinuumDAO extends BaseDAO {
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
 		queryObject.setParameter("projectId", projectId);
+		List<TmpProjectContinuum> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpProjectContinuum> getTmpProjectContinuumsByProjectId(Integer projectId, Date updateDate) {
+		String queryString = "select projectContinuum " + 
+				"from TmpProjectContinuum as projectContinuum " + 
+				"where projectContinuum.projectId =:projectId " + 
+				"  and projectContinuum.updateDate >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("projectId", projectId);
+		queryObject.setParameter("updatedSince", updateDate);
 		List<TmpProjectContinuum> results = queryObject.list();
 		session.close();
 		return results;

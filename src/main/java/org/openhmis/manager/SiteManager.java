@@ -42,6 +42,22 @@ public class SiteManager {
 		return siteDTOs;
 
 	}
+
+	public static List<SiteDTO> getSitesByProjectCoCId(String projectCoCId, Date updateDate) {
+		List<SiteDTO> siteDTOs = new ArrayList<SiteDTO>();
+
+		// Collect the sites
+		List<TmpProjectSite> tmpProjectSites = tmpProjectSiteDAO.getTmpProjectSitesByProjectCoCId(Integer.parseInt(projectCoCId), updateDate);
+
+		// For each site, collect and map the data
+		for (Iterator<TmpProjectSite> iterator = tmpProjectSites.iterator(); iterator.hasNext();) {
+			TmpProjectSite tmpProjectSite = iterator.next();
+			SiteDTO siteDTO = SiteManager.generateSiteDTO(tmpProjectSite);
+			siteDTOs.add(siteDTO);
+		}
+		return siteDTOs;
+
+	}
 	
 	public static SiteDTO addSite(SiteDTO inputDTO) {
 		// Generate a PathClient from the input

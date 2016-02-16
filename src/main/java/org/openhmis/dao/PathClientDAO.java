@@ -31,14 +31,14 @@ public class PathClientDAO extends BaseDAO {
 			return null;
 	}
 
-	public List<PathClient> getPathClientsByUpdateDate(Date updatedSince)  {
+	public List<PathClient> getPathClientsByUpdateDate(Date updateDate)  {
 		String queryString = "select client " + 
 			"from PathClient as client " + 
 			"where client.updateDate >= :updatedSince";
 
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("updatedSince", updatedSince);
+		queryObject.setParameter("updatedSince", updateDate);
 		List<PathClient> results = queryObject.list();
 		session.close();
 		return results;

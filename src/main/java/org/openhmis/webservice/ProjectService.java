@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
+import org.openhmis.dto.ClientDTO;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.InventoryDTO;
@@ -28,6 +29,7 @@ import org.openhmis.manager.InventoryManager;
 import org.openhmis.manager.ProjectManager;
 import org.openhmis.manager.SiteManager;
 import org.openhmis.util.Authentication;
+import org.openhmis.util.DateParser;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -47,8 +49,15 @@ public class ProjectService {
 	public List<ProjectDTO> getProjects(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		List<ProjectDTO> projectDTOs = ProjectManager.getProjects();
-		return projectDTOs;
+
+		// If the user specified no updatedSince parameter, return everything
+		if(updatedSince == null) {
+			List<ProjectDTO> projectDTOs = ProjectManager.getProjects();
+			return projectDTOs;
+		} else {
+			List<ProjectDTO> projectDTOs = ProjectManager.getProjectsByUpdateDate(DateParser.parseDate(updatedSince));
+			return projectDTOs;
+		}
 	}
 	
 	@POST
@@ -100,8 +109,15 @@ public class ProjectService {
 	public List<CoCDTO> getCoCs(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		List<CoCDTO> coCDTOs = CoCManager.getCoCsByProjectId(projectId);
-		return coCDTOs;
+
+		// If the user specified no updatedSince parameter, return everything
+		if(updatedSince == null) {
+			List<CoCDTO> coCDTOs = CoCManager.getCoCsByProjectId(projectId);
+			return coCDTOs;
+		} else {
+			List<CoCDTO> coCDTOs = CoCManager.getCoCsByProjectId(projectId, DateParser.parseDate(updatedSince));
+			return coCDTOs;
+		}
 	}
 	
 	@GET
@@ -155,8 +171,15 @@ public class ProjectService {
 	public List<FunderDTO> getFunders(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		List<FunderDTO> funderDTOs = FunderManager.getFundersByProjectId(projectId);
-		return funderDTOs;
+
+		// If the user specified no updatedSince parameter, return everything
+		if(updatedSince == null) {
+			List<FunderDTO> funderDTOs = FunderManager.getFundersByProjectId(projectId);
+			return funderDTOs;
+		} else {
+			List<FunderDTO> funderDTOs = FunderManager.getFundersByProjectId(projectId, DateParser.parseDate(updatedSince));
+			return funderDTOs;
+		}
 	}
 	
 	@GET
@@ -210,8 +233,15 @@ public class ProjectService {
 	public List<InventoryDTO> getInventorys(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		List<InventoryDTO> inventoryDTOs = InventoryManager.getInventoriesByProjectCoCId(coCId);
-		return inventoryDTOs;
+
+		// If the user specified no updatedSince parameter, return everything
+		if(updatedSince == null) {
+			List<InventoryDTO> inventoryDTOs = InventoryManager.getInventoriesByProjectCoCId(coCId);
+			return inventoryDTOs;
+		} else {
+			List<InventoryDTO> inventoryDTOs = InventoryManager.getInventoriesByProjectCoCId(coCId, DateParser.parseDate(updatedSince));
+			return inventoryDTOs;
+		}
 	}
 	
 	@GET
@@ -265,8 +295,15 @@ public class ProjectService {
 	public List<SiteDTO> getSites(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		List<SiteDTO> siteDTOs = SiteManager.getSitesByProjectCoCId(coCId);
-		return siteDTOs;
+
+		// If the user specified no updatedSince parameter, return everything
+		if(updatedSince == null) {
+			List<SiteDTO> siteDTOs = SiteManager.getSitesByProjectCoCId(coCId);
+			return siteDTOs;
+		} else {
+			List<SiteDTO> siteDTOs = SiteManager.getSitesByProjectCoCId(coCId, DateParser.parseDate(updatedSince));
+			return siteDTOs;
+		}
 	}
 	
 	@GET

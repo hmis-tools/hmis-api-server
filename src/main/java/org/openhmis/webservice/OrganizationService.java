@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
+import org.openhmis.dto.ClientDTO;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.InventoryDTO;
@@ -28,6 +29,7 @@ import org.openhmis.manager.InventoryManager;
 import org.openhmis.manager.OrganizationManager;
 import org.openhmis.manager.SiteManager;
 import org.openhmis.util.Authentication;
+import org.openhmis.util.DateParser;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -47,8 +49,15 @@ public class OrganizationService {
 	public List<OrganizationDTO> getOrganizations(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		List<OrganizationDTO> organizationDTOs = OrganizationManager.getOrganizations();
-		return organizationDTOs;
+
+		// If the user specified no updatedSince parameter, return everything
+		if(updatedSince == null) {
+			List<OrganizationDTO> organizationDTOs = OrganizationManager.getOrganizations();
+			return organizationDTOs;
+		} else {
+			List<OrganizationDTO> organizationDTOs = OrganizationManager.getOrganizationsByUpdateDate(DateParser.parseDate(updatedSince));
+			return organizationDTOs;
+		}
 	}
 	
 	@POST

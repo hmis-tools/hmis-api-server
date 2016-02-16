@@ -44,7 +44,7 @@ public class ClientService {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		
-		// If the user specified no updatedSince parameter, return all clients
+		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
 			List<ClientDTO> clientDTOs = clientManager.getClients();
 			return clientDTOs;			

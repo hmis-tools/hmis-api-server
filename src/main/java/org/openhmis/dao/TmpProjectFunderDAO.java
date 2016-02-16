@@ -1,5 +1,6 @@
 package org.openhmis.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -39,6 +40,22 @@ public class TmpProjectFunderDAO extends BaseDAO {
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
 		queryObject.setParameter("projectId", projectId);
+		List<TmpProjectFunder> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpProjectFunder> getTmpProjectFundersByProjectId(Integer projectId, Date updateDate) {
+		String queryString = "select projectFunder " + 
+				"from TmpProjectFunder as projectFunder " + 
+				"where projectFunder.projectId =:projectId " + 
+				"  and projectFunder.updateDate >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("projectId", projectId);
+		queryObject.setParameter("updatedSince", updateDate);
 		List<TmpProjectFunder> results = queryObject.list();
 		session.close();
 		return results;

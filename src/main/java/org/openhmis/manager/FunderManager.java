@@ -39,6 +39,24 @@ public class FunderManager {
 		return funderDTOs;
 
 	}
+
+	public static List<FunderDTO> getFundersByProjectId(String projectId, Date updateDate) {
+		List<FunderDTO> funderDTOs = new ArrayList<FunderDTO>();
+
+		// Collect the projects
+		List<TmpProjectFunder> tmpProjectFunders = tmpProjectFunderDAO.getTmpProjectFundersByProjectId(Integer.parseInt(projectId), updateDate);
+
+		// For each project, collect and map the data
+		// TODO: this should be done in a single query
+		for (Iterator<TmpProjectFunder> iterator = tmpProjectFunders.iterator(); iterator.hasNext();) {
+			TmpProjectFunder tmpProjectFunder = iterator.next();
+
+			FunderDTO funderDTO = FunderManager.generateFunderDTO(tmpProjectFunder);
+			funderDTOs.add(funderDTO);
+		}
+		return funderDTOs;
+
+	}
 	
 	public static FunderDTO addFunder(FunderDTO inputDTO) {
 

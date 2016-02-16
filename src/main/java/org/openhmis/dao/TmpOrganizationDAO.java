@@ -1,5 +1,6 @@
 package org.openhmis.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -37,6 +38,20 @@ public class TmpOrganizationDAO extends BaseDAO {
 
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
+		List<TmpOrganization> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpOrganization> getTmpOrganizationsByUpdateDate(Date updateDate) {
+		String queryString = "select organization " + 
+				"from TmpOrganization as organization " + 
+				"where organization.updateDate >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
 		List<TmpOrganization> results = queryObject.list();
 		session.close();
 		return results;

@@ -1,5 +1,6 @@
 package org.openhmis.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -39,6 +40,22 @@ public class TmpProjectInventoryDAO extends BaseDAO {
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
 		queryObject.setParameter("projectCoCid", projectCoCid);
+		List<TmpProjectInventory> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpProjectInventory> getTmpProjectInventoriesByProjectCoCId(Integer projectCoCid, Date updateDate) {
+		String queryString = "select projectInventory " + 
+				"from TmpProjectInventory as projectInventory " + 
+				"where projectInventory.projectCoCid =:projectCoCid " + 
+				"  and projectInventory.updateDate >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("projectCoCid", projectCoCid);
+		queryObject.setParameter("updatedSince", updateDate);
 		List<TmpProjectInventory> results = queryObject.list();
 		session.close();
 		return results;

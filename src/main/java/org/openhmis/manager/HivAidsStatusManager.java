@@ -43,6 +43,22 @@ public class HivAidsStatusManager {
 		return hivAidsStatusDTOs;
 
 	}
+
+	public static List<HivAidsStatusDTO> getHivAidsStatusesByEnrollmentId(String enrollmentId, Date updateDate) {
+		List<HivAidsStatusDTO> hivAidsStatusDTOs = new ArrayList<HivAidsStatusDTO>();
+
+		// Collect the hivAidsStatuses
+		List<TmpHivAidsStatus> tmpHivAidsStatuses = tmpHivAidsStatusDAO.getTmpHivAidsStatusesByEnrollmentId(Integer.parseInt(enrollmentId), updateDate);
+
+		// For each hivAidsStatus, collect and map the data
+		for (Iterator<TmpHivAidsStatus> iterator = tmpHivAidsStatuses.iterator(); iterator.hasNext();) {
+			TmpHivAidsStatus tmpHivAidsStatus = iterator.next();
+			HivAidsStatusDTO hivAidsStatusDTO = HivAidsStatusManager.generateHivAidsStatusDTO(tmpHivAidsStatus);
+			hivAidsStatusDTOs.add(hivAidsStatusDTO);
+		}
+		return hivAidsStatusDTOs;
+
+	}
 	
 	public static HivAidsStatusDTO addHivAidsStatus(HivAidsStatusDTO inputDTO) {
 		// Generate a PathClient from the input
