@@ -12,6 +12,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -43,7 +44,7 @@ public class ProjectService {
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<ProjectDTO> getProjects(@HeaderParam("Authorization") String authorization) throws JsonProcessingException {
+	public List<ProjectDTO> getProjects(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		List<ProjectDTO> projectDTOs = ProjectManager.getProjects();
@@ -96,7 +97,7 @@ public class ProjectService {
 	@GET
 	@Path("/{projectId}/cocs")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<CoCDTO> getCoCs(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId) throws JsonProcessingException {
+	public List<CoCDTO> getCoCs(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		List<CoCDTO> coCDTOs = CoCManager.getCoCsByProjectId(projectId);
@@ -151,7 +152,7 @@ public class ProjectService {
 	@GET
 	@Path("/{projectId}/funders")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<FunderDTO> getFunders(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId) throws JsonProcessingException {
+	public List<FunderDTO> getFunders(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		List<FunderDTO> funderDTOs = FunderManager.getFundersByProjectId(projectId);
@@ -206,7 +207,7 @@ public class ProjectService {
 	@GET
 	@Path("/{projectId}/cocs/{coCId}/inventories")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<InventoryDTO> getInventorys(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId) throws JsonProcessingException {
+	public List<InventoryDTO> getInventorys(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		List<InventoryDTO> inventoryDTOs = InventoryManager.getInventoriesByProjectCoCId(coCId);
@@ -261,7 +262,7 @@ public class ProjectService {
 	@GET
 	@Path("/{projectId}/cocs/{coCId}/sites")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<SiteDTO> getSites(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId) throws JsonProcessingException {
+	public List<SiteDTO> getSites(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @PathParam("coCId") String coCId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		List<SiteDTO> siteDTOs = SiteManager.getSitesByProjectCoCId(coCId);
