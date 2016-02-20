@@ -32,6 +32,32 @@ public class TmpContactDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<TmpContact> getTmpContacts() {
+		String queryString = "select contact " + 
+				"from TmpContact as contact";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<TmpContact> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpContact> getTmpContacts(Date updateDate) {
+		String queryString = "select contact " + 
+				"from TmpContact as contact " + 
+				"where contact.updateDate >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
+		List<TmpContact> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<TmpContact> getTmpContactsByEnrollmentId(Integer enrollmentId) {
 		String queryString = "select contact " + 
 				"from TmpContact as contact " + 

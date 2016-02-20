@@ -32,6 +32,32 @@ public class TmpProjectSiteDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<TmpProjectSite> getTmpProjectSites() {
+		String queryString = "select projectSite " + 
+				"from TmpProjectSite as projectSite";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<TmpProjectSite> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpProjectSite> getTmpProjectSites(Date updateDate) {
+		String queryString = "select projectSite " + 
+				"from TmpProjectSite as projectSite " + 
+				"where projectSite.updateDate >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
+		List<TmpProjectSite> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<TmpProjectSite> getTmpProjectSitesByProjectCoCId(Integer projectCoCid) {
 		String queryString = "select projectSite " + 
 				"from TmpProjectSite as projectSite " + 

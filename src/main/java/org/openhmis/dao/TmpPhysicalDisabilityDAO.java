@@ -32,6 +32,32 @@ public class TmpPhysicalDisabilityDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<TmpPhysicalDisability> getTmpPhysicalDisabilities() {
+		String queryString = "select phyiscalDisability " + 
+				"from TmpPhysicalDisability as phyiscalDisability";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<TmpPhysicalDisability> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpPhysicalDisability> getTmpPhysicalDisabilities(Date updateDate) {
+		String queryString = "select phyiscalDisability " + 
+				"from TmpPhysicalDisability as phyiscalDisability " + 
+				"where phyiscalDisability.updateDate >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
+		List<TmpPhysicalDisability> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<TmpPhysicalDisability> getTmpPhysicalDisabilitiesByEnrollmentId(Integer enrollmentId) {
 		String queryString = "select phyiscalDisability " + 
 				"from TmpPhysicalDisability as phyiscalDisability " + 

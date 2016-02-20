@@ -32,6 +32,32 @@ public class TmpProjectFunderDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<TmpProjectFunder> getTmpProjectFunders() {
+		String queryString = "select projectFunder " + 
+				"from TmpProjectFunder as projectFunder";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<TmpProjectFunder> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpProjectFunder> getTmpProjectFunders(Date updateDate) {
+		String queryString = "select projectFunder " + 
+				"from TmpProjectFunder as projectFunder " + 
+				"where projectFunder.updateDate >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
+		List<TmpProjectFunder> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<TmpProjectFunder> getTmpProjectFundersByProjectId(Integer projectId) {
 		String queryString = "select projectFunder " + 
 				"from TmpProjectFunder as projectFunder " + 

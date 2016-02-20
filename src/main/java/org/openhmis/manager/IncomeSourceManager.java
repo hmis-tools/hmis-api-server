@@ -28,6 +28,38 @@ public class IncomeSourceManager {
 		return incomeSourceDTO;
 	}
 
+	public static List<IncomeSourceDTO> getIncomeSources() {
+		List<IncomeSourceDTO> incomeSourceDTOs = new ArrayList<IncomeSourceDTO>();
+
+		// Collect the incomeSources
+		List<TmpIncomeSource> tmpIncomeSources = tmpIncomeSourceDAO.getTmpIncomeSources();
+
+		// For each incomeSource, collect and map the data
+		for (Iterator<TmpIncomeSource> iterator = tmpIncomeSources.iterator(); iterator.hasNext();) {
+			TmpIncomeSource tmpIncomeSource = iterator.next();
+			IncomeSourceDTO incomeSourceDTO = IncomeSourceManager.generateIncomeSourceDTO(tmpIncomeSource);
+			incomeSourceDTOs.add(incomeSourceDTO);
+		}
+		return incomeSourceDTOs;
+
+	}
+
+	public static List<IncomeSourceDTO> getIncomeSources(Date updateDate) {
+		List<IncomeSourceDTO> incomeSourceDTOs = new ArrayList<IncomeSourceDTO>();
+
+		// Collect the incomeSources
+		List<TmpIncomeSource> tmpIncomeSources = tmpIncomeSourceDAO.getTmpIncomeSources(updateDate);
+
+		// For each incomeSource, collect and map the data
+		for (Iterator<TmpIncomeSource> iterator = tmpIncomeSources.iterator(); iterator.hasNext();) {
+			TmpIncomeSource tmpIncomeSource = iterator.next();
+			IncomeSourceDTO incomeSourceDTO = IncomeSourceManager.generateIncomeSourceDTO(tmpIncomeSource);
+			incomeSourceDTOs.add(incomeSourceDTO);
+		}
+		return incomeSourceDTOs;
+
+	}
+
 	public static List<IncomeSourceDTO> getIncomeSourcesByEnrollmentId(String enrollmentId) {
 		List<IncomeSourceDTO> incomeSourceDTOs = new ArrayList<IncomeSourceDTO>();
 

@@ -32,6 +32,32 @@ public class TmpFinancialAssistanceDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<TmpFinancialAssistance> getTmpFinancialAssistances() {
+		String queryString = "select financialAssistance " + 
+				"from TmpFinancialAssistance as financialAssistance";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<TmpFinancialAssistance> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpFinancialAssistance> getTmpFinancialAssistances(Date updateDate) {
+		String queryString = "select financialAssistance " + 
+				"from TmpFinancialAssistance as financialAssistance " + 
+				"where financialAssistance.updateDate >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
+		List<TmpFinancialAssistance> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<TmpFinancialAssistance> getTmpFinancialAssistancesByEnrollmentId(Integer enrollmentId) {
 		String queryString = "select financialAssistance " + 
 				"from TmpFinancialAssistance as financialAssistance " + 

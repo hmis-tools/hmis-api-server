@@ -32,6 +32,32 @@ public class TmpDevelopmentalDisabilityDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<TmpDevelopmentalDisability> getTmpDevelopmentalDisabilities() {
+		String queryString = "select developmentalDisability " + 
+				"from TmpDevelopmentalDisability as developmentalDisability";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<TmpDevelopmentalDisability> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpDevelopmentalDisability> getTmpDevelopmentalDisabilities(Date updateDate) {
+		String queryString = "select developmentalDisability " + 
+				"from TmpDevelopmentalDisability as developmentalDisability " + 
+				"where developmentalDisability.updateDate >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
+		List<TmpDevelopmentalDisability> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<TmpDevelopmentalDisability> getTmpDevelopmentalDisabilitiesByEnrollmentId(Integer enrollmentId) {
 		String queryString = "select developmentalDisability " + 
 				"from TmpDevelopmentalDisability as developmentalDisability " + 

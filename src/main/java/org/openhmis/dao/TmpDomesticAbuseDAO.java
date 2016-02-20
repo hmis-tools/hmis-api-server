@@ -32,6 +32,32 @@ public class TmpDomesticAbuseDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<TmpDomesticAbuse> getTmpDomesticAbuses() {
+		String queryString = "select domesticAbuse " + 
+				"from TmpDomesticAbuse as domesticAbuse";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<TmpDomesticAbuse> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpDomesticAbuse> getTmpDomesticAbuses(Date updateDate) {
+		String queryString = "select domesticAbuse " + 
+				"from TmpDomesticAbuse as domesticAbuse " + 
+				"where domesticAbuse.updateDate >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
+		List<TmpDomesticAbuse> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<TmpDomesticAbuse> getTmpDomesticAbusesByEnrollmentId(Integer enrollmentId) {
 		String queryString = "select domesticAbuse " + 
 				"from TmpDomesticAbuse as domesticAbuse " + 

@@ -32,6 +32,32 @@ public class TmpSubstanceAbuseDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<TmpSubstanceAbuse> getTmpSubstanceAbuses() {
+		String queryString = "select substanceAbuse " + 
+				"from TmpSubstanceAbuse as substanceAbuse";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<TmpSubstanceAbuse> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpSubstanceAbuse> getTmpSubstanceAbuses(Date updateDate) {
+		String queryString = "select substanceAbuse " + 
+				"from TmpSubstanceAbuse as substanceAbuse " + 
+				"where substanceAbuse.updateDate >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
+		List<TmpSubstanceAbuse> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<TmpSubstanceAbuse> getTmpSubstanceAbusesByEnrollmentId(Integer enrollmentId) {
 		String queryString = "select substanceAbuse " + 
 				"from TmpSubstanceAbuse as substanceAbuse " + 

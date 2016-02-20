@@ -28,6 +28,38 @@ public class DevelopmentalDisabilityManager {
 		return developmentalDisabilityDTO;
 	}
 
+	public static List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilities() {
+		List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = new ArrayList<DevelopmentalDisabilityDTO>();
+
+		// Collect the developmentalDisabilities
+		List<TmpDevelopmentalDisability> tmpDevelopmentalDisabilities = tmpDevelopmentalDisabilityDAO.getTmpDevelopmentalDisabilities();
+
+		// For each developmentalDisability, collect and map the data
+		for (Iterator<TmpDevelopmentalDisability> iterator = tmpDevelopmentalDisabilities.iterator(); iterator.hasNext();) {
+			TmpDevelopmentalDisability tmpDevelopmentalDisability = iterator.next();
+			DevelopmentalDisabilityDTO developmentalDisabilityDTO = DevelopmentalDisabilityManager.generateDevelopmentalDisabilityDTO(tmpDevelopmentalDisability);
+			developmentalDisabilityDTOs.add(developmentalDisabilityDTO);
+		}
+		return developmentalDisabilityDTOs;
+
+	}
+
+	public static List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilities(Date updateDate) {
+		List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = new ArrayList<DevelopmentalDisabilityDTO>();
+
+		// Collect the developmentalDisabilities
+		List<TmpDevelopmentalDisability> tmpDevelopmentalDisabilities = tmpDevelopmentalDisabilityDAO.getTmpDevelopmentalDisabilities(updateDate);
+
+		// For each developmentalDisability, collect and map the data
+		for (Iterator<TmpDevelopmentalDisability> iterator = tmpDevelopmentalDisabilities.iterator(); iterator.hasNext();) {
+			TmpDevelopmentalDisability tmpDevelopmentalDisability = iterator.next();
+			DevelopmentalDisabilityDTO developmentalDisabilityDTO = DevelopmentalDisabilityManager.generateDevelopmentalDisabilityDTO(tmpDevelopmentalDisability);
+			developmentalDisabilityDTOs.add(developmentalDisabilityDTO);
+		}
+		return developmentalDisabilityDTOs;
+
+	}
+
 	public static List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilitiesByEnrollmentId(String enrollmentId) {
 		List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = new ArrayList<DevelopmentalDisabilityDTO>();
 

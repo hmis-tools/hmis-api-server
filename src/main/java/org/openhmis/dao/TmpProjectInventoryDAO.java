@@ -32,6 +32,32 @@ public class TmpProjectInventoryDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<TmpProjectInventory> getTmpProjectInventories() {
+		String queryString = "select projectInventory " + 
+				"from TmpProjectInventory as projectInventory";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<TmpProjectInventory> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpProjectInventory> getTmpProjectInventories(Date updateDate) {
+		String queryString = "select projectInventory " + 
+				"from TmpProjectInventory as projectInventory " + 
+				"where projectInventory.updateDate >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
+		List<TmpProjectInventory> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<TmpProjectInventory> getTmpProjectInventoriesByProjectCoCId(Integer projectCoCid) {
 		String queryString = "select projectInventory " + 
 				"from TmpProjectInventory as projectInventory " + 

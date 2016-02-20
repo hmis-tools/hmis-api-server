@@ -21,9 +21,41 @@ public class InventoryManager {
 
 	public InventoryManager() {}
 
-	public static InventoryDTO getInventoryByInventoryId(String inventoryId) {
+	public static InventoryDTO getInventoryById(String inventoryId) {
 		InventoryDTO inventoryDTO = InventoryManager.generateInventoryDTO(tmpProjectInventoryDAO.getTmpProjectInventoryById(Integer.parseInt(inventoryId)));
 		return inventoryDTO;
+	}
+
+	public static List<InventoryDTO> getInventories() {
+		List<InventoryDTO> inventoryDTOs = new ArrayList<InventoryDTO>();
+
+		// Collect the inventories
+		List<TmpProjectInventory> tmpProjectInventories = tmpProjectInventoryDAO.getTmpProjectInventories();
+
+		// For each inventory, collect and map the data
+		for (Iterator<TmpProjectInventory> iterator = tmpProjectInventories.iterator(); iterator.hasNext();) {
+			TmpProjectInventory tmpProjectInventory = iterator.next();
+			InventoryDTO inventoryDTO = InventoryManager.generateInventoryDTO(tmpProjectInventory);
+			inventoryDTOs.add(inventoryDTO);
+		}
+		return inventoryDTOs;
+
+	}
+
+	public static List<InventoryDTO> getInventories(Date updateDate) {
+		List<InventoryDTO> inventoryDTOs = new ArrayList<InventoryDTO>();
+
+		// Collect the inventories
+		List<TmpProjectInventory> tmpProjectInventories = tmpProjectInventoryDAO.getTmpProjectInventories(updateDate);
+
+		// For each inventory, collect and map the data
+		for (Iterator<TmpProjectInventory> iterator = tmpProjectInventories.iterator(); iterator.hasNext();) {
+			TmpProjectInventory tmpProjectInventory = iterator.next();
+			InventoryDTO inventoryDTO = InventoryManager.generateInventoryDTO(tmpProjectInventory);
+			inventoryDTOs.add(inventoryDTO);
+		}
+		return inventoryDTOs;
+
 	}
 
 	public static List<InventoryDTO> getInventoriesByProjectCoCId(String projectCoCId) {

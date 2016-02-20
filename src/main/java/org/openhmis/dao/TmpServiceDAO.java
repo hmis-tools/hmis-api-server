@@ -32,6 +32,32 @@ public class TmpServiceDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<TmpService> getTmpServices() {
+		String queryString = "select service " + 
+				"from TmpService as service";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<TmpService> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpService> getTmpServices(Date updateDate) {
+		String queryString = "select service " + 
+				"from TmpService as service " + 
+				"where service.updateDate >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
+		List<TmpService> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<TmpService> getTmpServicesByEnrollmentId(Integer enrollmentId) {
 		String queryString = "select service " + 
 				"from TmpService as service " + 

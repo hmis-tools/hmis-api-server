@@ -32,6 +32,32 @@ public class TmpNonCashBenefitDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<TmpNonCashBenefit> getTmpNonCashBenefits() {
+		String queryString = "select nonCashBenefit " + 
+				"from TmpNonCashBenefit as nonCashBenefit";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<TmpNonCashBenefit> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpNonCashBenefit> getTmpNonCashBenefits(Date updateDate) {
+		String queryString = "select nonCashBenefit " + 
+				"from TmpNonCashBenefit as nonCashBenefit " + 
+				"where nonCashBenefit.updateDate >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
+		List<TmpNonCashBenefit> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<TmpNonCashBenefit> getTmpNonCashBenefitsByEnrollmentId(Integer enrollmentId) {
 		String queryString = "select nonCashBenefit " + 
 				"from TmpNonCashBenefit as nonCashBenefit " + 

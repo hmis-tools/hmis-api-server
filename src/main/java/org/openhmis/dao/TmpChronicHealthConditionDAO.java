@@ -32,6 +32,32 @@ public class TmpChronicHealthConditionDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<TmpChronicHealthCondition> getTmpChronicHealthConditions() {
+		String queryString = "select chronicHealthCondition " + 
+				"from TmpChronicHealthCondition as chronicHealthCondition";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<TmpChronicHealthCondition> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpChronicHealthCondition> getTmpChronicHealthConditions(Date updateDate) {
+		String queryString = "select chronicHealthCondition " + 
+				"from TmpChronicHealthCondition as chronicHealthCondition " + 
+				"where chronicHealthCondition.updateDate >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
+		List<TmpChronicHealthCondition> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<TmpChronicHealthCondition> getTmpChronicHealthConditionsByEnrollmentId(Integer enrollmentId) {
 		String queryString = "select chronicHealthCondition " + 
 				"from TmpChronicHealthCondition as chronicHealthCondition " + 

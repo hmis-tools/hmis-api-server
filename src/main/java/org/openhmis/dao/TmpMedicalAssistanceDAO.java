@@ -32,6 +32,32 @@ public class TmpMedicalAssistanceDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<TmpMedicalAssistance> getTmpMedicalAssistances() {
+		String queryString = "select medicalAssistance " + 
+				"from TmpMedicalAssistance as medicalAssistance";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<TmpMedicalAssistance> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpMedicalAssistance> getTmpMedicalAssistances(Date updateDate) {
+		String queryString = "select medicalAssistance " + 
+				"from TmpMedicalAssistance as medicalAssistance " + 
+				"where medicalAssistance.updateDate >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
+		List<TmpMedicalAssistance> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<TmpMedicalAssistance> getTmpMedicalAssistancesByEnrollmentId(Integer enrollmentId) {
 		String queryString = "select medicalAssistance " + 
 				"from TmpMedicalAssistance as medicalAssistance " + 

@@ -32,6 +32,32 @@ public class TmpProjectContinuumDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<TmpProjectContinuum> getTmpProjectContinuums() {
+		String queryString = "select projectContinuum " + 
+				"from TmpProjectContinuum as projectContinuum";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<TmpProjectContinuum> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpProjectContinuum> getTmpProjectContinuums(Date updateDate) {
+		String queryString = "select projectContinuum " + 
+				"from TmpProjectContinuum as projectContinuum " + 
+				"where projectContinuum.updateDate >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
+		List<TmpProjectContinuum> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<TmpProjectContinuum> getTmpProjectContinuumsByProjectId(Integer projectId) {
 		String queryString = "select projectContinuum " + 
 				"from TmpProjectContinuum as projectContinuum " + 

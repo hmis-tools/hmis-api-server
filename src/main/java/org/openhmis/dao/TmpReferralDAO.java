@@ -32,6 +32,32 @@ public class TmpReferralDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<TmpReferral> getTmpReferrals() {
+		String queryString = "select referral " + 
+				"from TmpReferral as referral";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<TmpReferral> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpReferral> getTmpReferrals(Date updateDate) {
+		String queryString = "select referral " + 
+				"from TmpReferral as referral " + 
+				"where referral.updateDate >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
+		List<TmpReferral> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<TmpReferral> getTmpReferralsByEnrollmentId(Integer enrollmentId) {
 		String queryString = "select referral " + 
 				"from TmpReferral as referral " + 

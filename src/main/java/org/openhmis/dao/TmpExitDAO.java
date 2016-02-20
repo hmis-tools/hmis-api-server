@@ -1,9 +1,11 @@
 package org.openhmis.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.openhmis.domain.TmpEnrollment;
 import org.openhmis.domain.TmpExit;
 
 public class TmpExitDAO extends BaseDAO {
@@ -48,5 +50,31 @@ public class TmpExitDAO extends BaseDAO {
 			return (TmpExit)results.get(0);
 		else
 			return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpExit> getTmpExits() {
+		String queryString = "select exit " + 
+				"from TmpExit as exit";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<TmpExit> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpExit> getTmpExits(Date updateDate) {
+		String queryString = "select exit " + 
+				"from TmpExit as exit " + 
+				"  and exit.updateDate >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
+		List<TmpExit> results = queryObject.list();
+		session.close();
+		return results;
 	}
 }

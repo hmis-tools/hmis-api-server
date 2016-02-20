@@ -27,6 +27,38 @@ public class ContactManager {
 		return contactDTO;
 	}
 
+	public static List<ContactDTO> getContacts() {
+		List<ContactDTO> contactDTOs = new ArrayList<ContactDTO>();
+
+		// Collect the contacts
+		List<TmpContact> tmpContacts = tmpContactDAO.getTmpContacts();
+
+		// For each contact, collect and map the data
+		for (Iterator<TmpContact> iterator = tmpContacts.iterator(); iterator.hasNext();) {
+			TmpContact tmpContact = iterator.next();
+			ContactDTO contactDTO = ContactManager.generateContactDTO(tmpContact);
+			contactDTOs.add(contactDTO);
+		}
+		return contactDTOs;
+
+	}
+
+	public static List<ContactDTO> getContacts(Date updateDate) {
+		List<ContactDTO> contactDTOs = new ArrayList<ContactDTO>();
+
+		// Collect the contacts
+		List<TmpContact> tmpContacts = tmpContactDAO.getTmpContacts(updateDate);
+
+		// For each contact, collect and map the data
+		for (Iterator<TmpContact> iterator = tmpContacts.iterator(); iterator.hasNext();) {
+			TmpContact tmpContact = iterator.next();
+			ContactDTO contactDTO = ContactManager.generateContactDTO(tmpContact);
+			contactDTOs.add(contactDTO);
+		}
+		return contactDTOs;
+
+	}
+
 	public static List<ContactDTO> getContactsByEnrollmentId(String enrollmentId) {
 		List<ContactDTO> contactDTOs = new ArrayList<ContactDTO>();
 

@@ -28,6 +28,38 @@ public class DomesticAbuseManager {
 		return domesticAbuseDTO;
 	}
 
+	public static List<DomesticAbuseDTO> getDomesticAbuses() {
+		List<DomesticAbuseDTO> domesticAbuseDTOs = new ArrayList<DomesticAbuseDTO>();
+
+		// Collect the domesticAbuses
+		List<TmpDomesticAbuse> tmpDomesticAbuses = tmpDomesticAbuseDAO.getTmpDomesticAbuses();
+
+		// For each domesticAbuse, collect and map the data
+		for (Iterator<TmpDomesticAbuse> iterator = tmpDomesticAbuses.iterator(); iterator.hasNext();) {
+			TmpDomesticAbuse tmpDomesticAbuse = iterator.next();
+			DomesticAbuseDTO domesticAbuseDTO = DomesticAbuseManager.generateDomesticAbuseDTO(tmpDomesticAbuse);
+			domesticAbuseDTOs.add(domesticAbuseDTO);
+		}
+		return domesticAbuseDTOs;
+
+	}
+
+	public static List<DomesticAbuseDTO> getDomesticAbuses(Date updateDate) {
+		List<DomesticAbuseDTO> domesticAbuseDTOs = new ArrayList<DomesticAbuseDTO>();
+
+		// Collect the domesticAbuses
+		List<TmpDomesticAbuse> tmpDomesticAbuses = tmpDomesticAbuseDAO.getTmpDomesticAbuses(updateDate);
+
+		// For each domesticAbuse, collect and map the data
+		for (Iterator<TmpDomesticAbuse> iterator = tmpDomesticAbuses.iterator(); iterator.hasNext();) {
+			TmpDomesticAbuse tmpDomesticAbuse = iterator.next();
+			DomesticAbuseDTO domesticAbuseDTO = DomesticAbuseManager.generateDomesticAbuseDTO(tmpDomesticAbuse);
+			domesticAbuseDTOs.add(domesticAbuseDTO);
+		}
+		return domesticAbuseDTOs;
+
+	}
+
 	public static List<DomesticAbuseDTO> getDomesticAbusesByEnrollmentId(String enrollmentId) {
 		List<DomesticAbuseDTO> domesticAbuseDTOs = new ArrayList<DomesticAbuseDTO>();
 

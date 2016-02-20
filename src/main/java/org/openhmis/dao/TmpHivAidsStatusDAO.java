@@ -32,6 +32,32 @@ public class TmpHivAidsStatusDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<TmpHivAidsStatus> getTmpHivAidsStatuses() {
+		String queryString = "select hivAidsStatus " + 
+				"from TmpHivAidsStatus as hivAidsStatus";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<TmpHivAidsStatus> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpHivAidsStatus> getTmpHivAidsStatuses(Date updateDate) {
+		String queryString = "select hivAidsStatus " + 
+				"from TmpHivAidsStatus as hivAidsStatus " + 
+				"where hivAidsStatus.updateDate >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
+		List<TmpHivAidsStatus> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<TmpHivAidsStatus> getTmpHivAidsStatusesByEnrollmentId(Integer enrollmentId) {
 		String queryString = "select hivAidsStatus " + 
 				"from TmpHivAidsStatus as hivAidsStatus " + 
