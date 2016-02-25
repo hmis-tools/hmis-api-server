@@ -7,6 +7,7 @@ package org.openhmis.webservice;
 import java.io.IOException;
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -54,6 +55,7 @@ public class DomesticAbuseService {
 	
 	@POST
 	@Path("/")
+	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public DomesticAbuseDTO createDomesticAbuse(@HeaderParam("Authorization") String authorization, DomesticAbuseDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
@@ -74,6 +76,7 @@ public class DomesticAbuseService {
 	
 	@PUT
 	@Path("/{domesticAbuseId}")
+	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public DomesticAbuseDTO updateDomesticAbuse(@HeaderParam("Authorization") String authorization, @PathParam("domesticAbuseId") String domesticAbuseId, DomesticAbuseDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))

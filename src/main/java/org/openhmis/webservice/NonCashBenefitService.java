@@ -7,6 +7,7 @@ package org.openhmis.webservice;
 import java.io.IOException;
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -54,6 +55,7 @@ public class NonCashBenefitService {
 	
 	@POST
 	@Path("/")
+	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public NonCashBenefitDTO createNonCashBenefit(@HeaderParam("Authorization") String authorization, NonCashBenefitDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
@@ -74,6 +76,7 @@ public class NonCashBenefitService {
 	
 	@PUT
 	@Path("/{nonCashBenefitId}")
+	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public NonCashBenefitDTO updateNonCashBenefit(@HeaderParam("Authorization") String authorization, @PathParam("nonCashBenefitId") String nonCashBenefitId, NonCashBenefitDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))

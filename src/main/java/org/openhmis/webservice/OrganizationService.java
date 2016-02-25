@@ -62,6 +62,7 @@ public class OrganizationService {
 	
 	@POST
 	@Path("/")
+	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public OrganizationDTO createOrganization(@HeaderParam("Authorization") String authorization, OrganizationDTO inputVO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
@@ -82,6 +83,7 @@ public class OrganizationService {
 	
 	@PUT
 	@Path("/{organizationId}")
+	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public OrganizationDTO updateOrganization(@HeaderParam("Authorization") String authorization, @PathParam("organizationId") String organizationId, OrganizationDTO inputVO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
