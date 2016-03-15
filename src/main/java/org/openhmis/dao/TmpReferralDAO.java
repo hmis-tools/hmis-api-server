@@ -1,5 +1,6 @@
 package org.openhmis.dao;
 
+
 import java.util.Date;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class TmpReferralDAO extends BaseDAO {
 	public List<TmpReferral> getTmpReferrals(Date updateDate) {
 		String queryString = "select referral " + 
 				"from TmpReferral as referral " + 
-				"where referral.updateDate >= :updatedSince";
+				"where referral.dateUpdated >= :updatedSince";
 
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
@@ -76,7 +77,7 @@ public class TmpReferralDAO extends BaseDAO {
 		String queryString = "select referral " + 
 				"from TmpReferral as referral " + 
 				"where referral.enrollmentId =:enrollmentId " + 
-				"  and referral.updateDate >= :updatedSince";
+				"  and referral.dateUpdated >= :updatedSince";
 
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);

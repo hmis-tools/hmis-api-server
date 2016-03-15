@@ -1,5 +1,6 @@
 package org.openhmis.dao;
 
+
 import java.util.Date;
 import java.util.List;
 
@@ -68,7 +69,7 @@ public class TmpExitDAO extends BaseDAO {
 	public List<TmpExit> getTmpExits(Date updateDate) {
 		String queryString = "select exit " + 
 				"from TmpExit as exit " + 
-				"  and exit.updateDate >= :updatedSince";
+				"where exit.dateUpdated >= :updatedSince";
 
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);

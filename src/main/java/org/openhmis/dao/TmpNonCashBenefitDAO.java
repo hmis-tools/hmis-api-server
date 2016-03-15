@@ -1,5 +1,6 @@
 package org.openhmis.dao;
 
+
 import java.util.Date;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class TmpNonCashBenefitDAO extends BaseDAO {
 	public List<TmpNonCashBenefit> getTmpNonCashBenefits(Date updateDate) {
 		String queryString = "select nonCashBenefit " + 
 				"from TmpNonCashBenefit as nonCashBenefit " + 
-				"where nonCashBenefit.updateDate >= :updatedSince";
+				"where nonCashBenefit.dataeUpdated >= :updatedSince";
 
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
@@ -76,7 +77,7 @@ public class TmpNonCashBenefitDAO extends BaseDAO {
 		String queryString = "select nonCashBenefit " + 
 				"from TmpNonCashBenefit as nonCashBenefit " + 
 				"where nonCashBenefit.enrollmentId =:enrollmentId " + 
-				"  and nonCashBenefit.updateDate >= :updatedSince";
+				"  and nonCashBenefit.dateUpdated >= :updatedSince";
 
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);

@@ -1,5 +1,7 @@
 package org.openhmis.domain;
 
+
+
 // Generated Aug 5, 2015 10:00:15 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
@@ -102,6 +104,7 @@ public class TmpEnrollment implements java.io.Serializable {
 	private String lastPermanentState;
 	private String lastPermanentZip;
 	private Integer addressDataQuality;
+	
 	private Date dateCreated;
 	private Date dateUpdated;
 

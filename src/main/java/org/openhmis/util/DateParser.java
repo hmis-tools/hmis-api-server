@@ -25,6 +25,7 @@ public class DateParser {
 		List<SimpleDateFormat> knownPatterns = new ArrayList<SimpleDateFormat>();
 		
 		// Populate the list of valid patterns here
+		knownPatterns.add(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
 		knownPatterns.add(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 		knownPatterns.add(new SimpleDateFormat("yyyy-MM-dd"));
 

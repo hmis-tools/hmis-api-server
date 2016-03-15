@@ -1,5 +1,6 @@
 package org.openhmis.dao;
 
+
 import java.util.Date;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class TmpServiceDAO extends BaseDAO {
 	public List<TmpService> getTmpServices(Date updateDate) {
 		String queryString = "select service " + 
 				"from TmpService as service " + 
-				"where service.updateDate >= :updatedSince";
+				"where service.dateUpdated >= :updatedSince";
 
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
@@ -76,7 +77,7 @@ public class TmpServiceDAO extends BaseDAO {
 		String queryString = "select service " + 
 				"from TmpService as service " + 
 				"where service.enrollmentId =:enrollmentId " + 
-				"  and service.updateDate >= :updatedSince";
+				"  and service.dateUpdated >= :updatedSince";
 
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);

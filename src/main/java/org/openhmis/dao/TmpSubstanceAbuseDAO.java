@@ -1,5 +1,6 @@
 package org.openhmis.dao;
 
+
 import java.util.Date;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class TmpSubstanceAbuseDAO extends BaseDAO {
 	public List<TmpSubstanceAbuse> getTmpSubstanceAbuses(Date updateDate) {
 		String queryString = "select substanceAbuse " + 
 				"from TmpSubstanceAbuse as substanceAbuse " + 
-				"where substanceAbuse.updateDate >= :updatedSince";
+				"where substanceAbuse.dateUpdated >= :updatedSince";
 
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
@@ -76,7 +77,7 @@ public class TmpSubstanceAbuseDAO extends BaseDAO {
 		String queryString = "select substanceAbuse " + 
 				"from TmpSubstanceAbuse as substanceAbuse " + 
 				"where substanceAbuse.enrollmentId =:enrollmentId " + 
-				"  and substanceAbuse.updateDate >= :updatedSince";
+				"  and substanceAbuse.dateUpdated >= :updatedSince";
 
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);

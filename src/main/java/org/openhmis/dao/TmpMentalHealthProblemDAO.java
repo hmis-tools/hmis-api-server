@@ -1,5 +1,6 @@
 package org.openhmis.dao;
 
+
 import java.util.Date;
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class TmpMentalHealthProblemDAO extends BaseDAO {
 		String queryString = "select mentalHealthProblem " + 
 				"from TmpMentalHealthProblem as mentalHealthProblem " + 
 				"where mentalHealthProblem.enrollmentId =:enrollmentId " + 
-				"  and mentalHealthProblem.updateDate >= :updatedSince";
+				"  and mentalHealthProblem.dateUpdated >= :updatedSince";
 
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);

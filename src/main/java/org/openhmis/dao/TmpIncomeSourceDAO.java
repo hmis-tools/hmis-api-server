@@ -1,5 +1,6 @@
 package org.openhmis.dao;
 
+
 import java.util.Date;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class TmpIncomeSourceDAO extends BaseDAO {
 	public List<TmpIncomeSource> getTmpIncomeSources(Date updateDate) {
 		String queryString = "select incomeSource " + 
 				"from TmpIncomeSource as incomeSource " + 
-				"where incomeSource.updateDate >= :updatedSince";
+				"where incomeSource.dateUpdated >= :updatedSince";
 
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
@@ -76,7 +77,7 @@ public class TmpIncomeSourceDAO extends BaseDAO {
 		String queryString = "select incomeSource " + 
 				"from TmpIncomeSource as incomeSource " + 
 				"where incomeSource.enrollmentId =:enrollmentId " + 
-				"  and incomeSource.updateDate >= :updatedSince";
+				"  and incomeSource.dateUpdated >= :updatedSince";
 
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);

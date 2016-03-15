@@ -2,6 +2,7 @@ package org.openhmis.domain;
 // Generated Aug 4, 2015 11:17:14 PM by Hibernate Tools 4.3.1
 
 
+
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;

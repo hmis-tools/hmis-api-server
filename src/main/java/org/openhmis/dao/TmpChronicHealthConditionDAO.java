@@ -1,5 +1,6 @@
 package org.openhmis.dao;
 
+
 import java.util.Date;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class TmpChronicHealthConditionDAO extends BaseDAO {
 	public List<TmpChronicHealthCondition> getTmpChronicHealthConditions(Date updateDate) {
 		String queryString = "select chronicHealthCondition " + 
 				"from TmpChronicHealthCondition as chronicHealthCondition " + 
-				"where chronicHealthCondition.updateDate >= :updatedSince";
+				"where chronicHealthCondition.dateUpdated >= :updatedSince";
 
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
@@ -76,7 +77,7 @@ public class TmpChronicHealthConditionDAO extends BaseDAO {
 		String queryString = "select chronicHealthCondition " + 
 				"from TmpChronicHealthCondition as chronicHealthCondition " + 
 				"where chronicHealthCondition.enrollmentId =:enrollmentId " +
-				"  and chronicHealthCondition.updateDate >= :updatedSince";
+				"  and chronicHealthCondition.dateUpdated >= :updatedSince";
 
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
