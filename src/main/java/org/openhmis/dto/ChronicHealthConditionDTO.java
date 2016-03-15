@@ -40,6 +40,16 @@ public class ChronicHealthConditionDTO {
 	}
 
 	@JsonProperty
+	public String getId() {
+		return enrollmentId;
+	}
+
+	@JsonProperty
+	public void setId(String enrollmentId) {
+		this.enrollmentId = enrollmentId;
+	}
+
+	@JsonProperty
 	public String getEnrollmentId() {
 		return enrollmentId;
 	}

@@ -57,6 +57,16 @@ public class ProjectDTO {
 	}
 
 	@JsonProperty
+	public String getId() {
+		return projectId;
+	}
+
+	@JsonProperty
+	public void setId(String projectId) {
+		this.projectId = projectId;
+	}
+
+	@JsonProperty
 	public String getProjectId() {
 		return projectId;
 	}

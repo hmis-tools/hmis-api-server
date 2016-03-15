@@ -26,6 +26,16 @@ public class ContactDTO {
 	public ContactDTO() {}
 
 	@JsonProperty
+	public String getId() {
+		return contactId;
+	}
+
+	@JsonProperty
+	public void setId(String contactId) {
+		this.contactId = contactId;
+	}
+
+	@JsonProperty
 	public String getContactId() {
 		return contactId;
 	}

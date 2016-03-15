@@ -30,6 +30,16 @@ public class DevelopmentalDisabilityDTO {
 	public DevelopmentalDisabilityDTO() {}
 
 	@JsonProperty
+	public String getId() {
+		return developmentalDisabilityId;
+	}
+
+	@JsonProperty
+	public void setId(String developmentalDisabilityId) {
+		this.developmentalDisabilityId = developmentalDisabilityId;
+	}
+	
+	@JsonProperty
 	public String getDevelopmentalDisabilityId() {
 		return developmentalDisabilityId;
 	}

@@ -34,6 +34,15 @@ public class OrganizationDTO {
 
 	// Getters / Setters
 	@JsonProperty
+	public String getId() {
+		return organizationId;
+	}
+	@JsonProperty
+	public void setId(String organizationId) {
+		this.organizationId = organizationId;
+	}
+	
+	@JsonProperty
 	public String getOrganizationId() {
 		return organizationId;
 	}

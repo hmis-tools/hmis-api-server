@@ -41,6 +41,16 @@ public class CoCDTO {
 	}
 
 	@JsonProperty
+	public String getId() {
+		return projectCoCId;
+	}
+
+	@JsonProperty
+	public void setId(String projectCoCId) {
+		this.projectCoCId = projectCoCId;
+	}
+
+	@JsonProperty
 	public String getProjectCoCId() {
 		return projectCoCId;
 	}

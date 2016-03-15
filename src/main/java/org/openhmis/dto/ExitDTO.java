@@ -98,6 +98,16 @@ public class ExitDTO {
 	public ExitDTO() {}
 
 	@JsonProperty
+	public String getId() {
+		return exitId;
+	}
+
+	@JsonProperty
+	public void setId(String exitId) {
+		this.exitId = exitId;
+	}
+
+	@JsonProperty
 	public String getExitId() {
 		return exitId;
 	}

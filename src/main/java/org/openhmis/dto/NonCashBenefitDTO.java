@@ -34,6 +34,16 @@ public class NonCashBenefitDTO {
 	private Date dateUpdated;
 
 	public NonCashBenefitDTO() {}
+	
+	@JsonProperty
+	public String getId() {
+		return nonCashBenefitId;
+	}
+
+	@JsonProperty
+	public void setId(String nonCashBenefitId) {
+		this.nonCashBenefitId = nonCashBenefitId;
+	}
 
 	@JsonProperty
 	public String getNonCashBenefitId() {

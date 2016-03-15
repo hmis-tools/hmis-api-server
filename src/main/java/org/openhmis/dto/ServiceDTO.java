@@ -46,6 +46,16 @@ public class ServiceDTO {
 	public ServiceDTO() {}
 	
 	@JsonProperty
+	public String getId() {
+		return serviceId;
+	}
+
+	@JsonProperty
+	public void setId(String serviceId) {
+		this.serviceId = serviceId;
+	}
+	
+	@JsonProperty
 	public String getServiceId() {
 		return serviceId;
 	}

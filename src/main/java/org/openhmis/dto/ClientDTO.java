@@ -93,6 +93,15 @@ public class ClientDTO {
 
 	// Getters / Setters
 	@JsonProperty
+	public String getId() {
+		return this.personalId;
+	}
+	@JsonProperty
+	public void setId(String personalId) {
+		this.personalId = personalId;
+	}
+	
+	@JsonProperty
 	public String getPersonalId() {
 		return this.personalId;
 	}

@@ -39,6 +39,16 @@ public class FunderDTO {
 	}
 
 	@JsonProperty
+	public String getId() {
+		return funderId;
+	}
+
+	@JsonProperty
+	public void setId(String funderId) {
+		this.funderId = funderId;
+	}
+
+	@JsonProperty
 	public String getFunderId() {
 		return funderId;
 	}

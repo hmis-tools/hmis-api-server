@@ -32,6 +32,16 @@ public class MentalHealthProblemDTO {
 	private Date dateUpdated;
 
 	public MentalHealthProblemDTO() {}
+	
+	@JsonProperty
+	public String getId() {
+		return mentalHealthProblemId;
+	}
+
+	@JsonProperty
+	public void setId(String mentalHealthProblemId) {
+		this.mentalHealthProblemId = mentalHealthProblemId;
+	}
 
 	@JsonProperty
 	public String getMentalHealthProblemId() {

@@ -41,6 +41,16 @@ public class SiteDTO {
 	}
 
 	@JsonProperty
+	public String getId() {
+		return siteId;
+	}
+
+	@JsonProperty
+	public void setId(String siteId) {
+		this.siteId = siteId;
+	}
+	
+	@JsonProperty
 	public String getSiteId() {
 		return siteId;
 	}

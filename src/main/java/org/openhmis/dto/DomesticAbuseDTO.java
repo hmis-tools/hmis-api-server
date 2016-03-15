@@ -27,6 +27,16 @@ public class DomesticAbuseDTO {
 	private Date dateUpdated;
 
 	public DomesticAbuseDTO() {}
+	
+	@JsonProperty
+	public String getId() {
+		return domesticAbuseId;
+	}
+
+	@JsonProperty
+	public void setId(String domesticAbuseId) {
+		this.domesticAbuseId = domesticAbuseId;
+	}
 
 	@JsonProperty
 	public String getDomesticAbuseId() {

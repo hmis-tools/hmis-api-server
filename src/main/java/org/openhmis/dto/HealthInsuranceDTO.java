@@ -42,6 +42,16 @@ public class HealthInsuranceDTO {
 	private Date dateUpdated;
 
 	public HealthInsuranceDTO() {}
+	
+	@JsonProperty
+	public String getId() {
+		return healthInsuranceId;
+	}
+
+	@JsonProperty
+	public void setId(String healthInsuranceId) {
+		this.healthInsuranceId = healthInsuranceId;
+	}
 
 	@JsonProperty
 	public String getHealthInsuranceId() {

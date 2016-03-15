@@ -30,6 +30,16 @@ public class SubstanceAbuseDTO {
 	private Date dateUpdated;
 	
 	public SubstanceAbuseDTO() {}
+	
+	@JsonProperty
+	public String getId() {
+		return substanceAbuseId;
+	}
+
+	@JsonProperty
+	public void setId(String substanceAbuseId) {
+		this.substanceAbuseId = substanceAbuseId;
+	}
 
 	@JsonProperty
 	public String getSubstanceAbuseId() {

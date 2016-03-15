@@ -36,6 +36,16 @@ public class ReferralDTO {
 	public ReferralDTO() {}
 	
 	@JsonProperty
+	public String getId() {
+		return referralId;
+	}
+
+	@JsonProperty
+	public void setId(String referralId) {
+		this.referralId = referralId;
+	}
+	
+	@JsonProperty
 	public String getReferralId() {
 		return referralId;
 	}

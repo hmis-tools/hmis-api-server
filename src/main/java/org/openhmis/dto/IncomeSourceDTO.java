@@ -56,6 +56,16 @@ public class IncomeSourceDTO {
 	private Date dateUpdated;
 
 	public IncomeSourceDTO() {}
+	
+	@JsonProperty
+	public String getId() {
+		return incomeSourceId;
+	}
+
+	@JsonProperty
+	public void setId(String incomeSourceId) {
+		this.incomeSourceId = incomeSourceId;
+	}
 
 	@JsonProperty
 	public String getIncomeSourceId() {

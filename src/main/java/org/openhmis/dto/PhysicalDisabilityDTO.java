@@ -32,10 +32,19 @@ public class PhysicalDisabilityDTO {
 	
 
 	@JsonProperty
-	public String getPhysicalDisabilityId() {
+	public String getId() {
 		return physicalDisabilityId;
 	}
 
+	@JsonProperty
+	public void setId(String physicalDisabilityId) {
+		this.physicalDisabilityId = physicalDisabilityId;
+	}
+	
+	@JsonProperty
+	public String getPhysicalDisabilityId() {
+		return physicalDisabilityId;
+	}
 
 	@JsonProperty
 	public void setPhysicalDisabilityId(String physicalDisabilityId) {

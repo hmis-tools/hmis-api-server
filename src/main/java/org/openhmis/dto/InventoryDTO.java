@@ -53,6 +53,16 @@ public class InventoryDTO {
 	}
 
 	@JsonProperty
+	public String getId() {
+		return inventoryId;
+	}
+
+	@JsonProperty
+	public void setId(String inventoryId) {
+		this.inventoryId = inventoryId;
+	}
+
+	@JsonProperty
 	public String getInventoryId() {
 		return inventoryId;
 	}

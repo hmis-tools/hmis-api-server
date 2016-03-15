@@ -289,6 +289,16 @@ public class EnrollmentDTO {
 	private Date dateUpdated;
 
 	public EnrollmentDTO() {}
+	
+	@JsonProperty
+	public String getId() {
+		return enrollmentId;
+	}
+
+	@JsonProperty
+	public void setId(String enrollmentId) {
+		this.enrollmentId = enrollmentId;
+	}
 
 	@JsonProperty
 	public String getEnrollmentId() {

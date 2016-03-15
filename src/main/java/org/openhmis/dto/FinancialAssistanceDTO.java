@@ -35,6 +35,16 @@ public class FinancialAssistanceDTO {
 	public FinancialAssistanceDTO() {}
 
 	@JsonProperty
+	public String getId() {
+		return financialAssistanceId;
+	}
+
+	@JsonProperty
+	public void setId(String financialAssistanceId) {
+		this.financialAssistanceId = financialAssistanceId;
+	}
+	
+	@JsonProperty
 	public String getFinancialAssistanceId() {
 		return financialAssistanceId;
 	}
