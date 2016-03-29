@@ -1,5 +1,7 @@
 package org.openhmis.dao;
 
+
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -31,6 +33,32 @@ public class TmpProjectSiteDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<TmpProjectSite> getTmpProjectSites() {
+		String queryString = "select projectSite " + 
+				"from TmpProjectSite as projectSite";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<TmpProjectSite> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpProjectSite> getTmpProjectSites(Date updateDate) {
+		String queryString = "select projectSite " + 
+				"from TmpProjectSite as projectSite " + 
+				"where projectSite.dateUpdated >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
+		List<TmpProjectSite> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<TmpProjectSite> getTmpProjectSitesByProjectCoCId(Integer projectCoCid) {
 		String queryString = "select projectSite " + 
 				"from TmpProjectSite as projectSite " + 
@@ -39,6 +67,22 @@ public class TmpProjectSiteDAO extends BaseDAO {
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
 		queryObject.setParameter("projectCoCid", projectCoCid);
+		List<TmpProjectSite> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpProjectSite> getTmpProjectSitesByProjectCoCId(Integer projectCoCid, Date updateDate) {
+		String queryString = "select projectSite " + 
+				"from TmpProjectSite as projectSite " + 
+				"where projectSite.projectCoCid =:projectCoCid " + 
+				"  and projectSite.dateUpdated >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("projectCoCid", projectCoCid);
+		queryObject.setParameter("updatedSince", updateDate);
 		List<TmpProjectSite> results = queryObject.list();
 		session.close();
 		return results;

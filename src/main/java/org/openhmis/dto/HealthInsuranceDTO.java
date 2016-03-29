@@ -1,7 +1,10 @@
 package org.openhmis.dto;
 
+
 import java.util.Date;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openhmis.code.ClientReasonNotInsured;
 import org.openhmis.code.YesNo;
@@ -9,6 +12,7 @@ import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@XmlRootElement
 public class HealthInsuranceDTO {
 	private String healthInsuranceId;
 	private String enrollmentId;
@@ -38,6 +42,16 @@ public class HealthInsuranceDTO {
 	private Date dateUpdated;
 
 	public HealthInsuranceDTO() {}
+	
+	@JsonProperty
+	public String getId() {
+		return healthInsuranceId;
+	}
+
+	@JsonProperty
+	public void setId(String healthInsuranceId) {
+		this.healthInsuranceId = healthInsuranceId;
+	}
 
 	@JsonProperty
 	public String getHealthInsuranceId() {

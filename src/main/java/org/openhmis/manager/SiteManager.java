@@ -22,9 +22,41 @@ public class SiteManager {
 
 	public SiteManager() {}
 
-	public static SiteDTO getSiteBySiteId(String siteId) {
+	public static SiteDTO getSiteById(String siteId) {
 		SiteDTO siteDTO = SiteManager.generateSiteDTO(tmpProjectSiteDAO.getTmpProjectSiteById(Integer.parseInt(siteId)));
 		return siteDTO;
+	}
+
+	public static List<SiteDTO> getSites() {
+		List<SiteDTO> siteDTOs = new ArrayList<SiteDTO>();
+
+		// Collect the sites
+		List<TmpProjectSite> tmpProjectSites = tmpProjectSiteDAO.getTmpProjectSites();
+
+		// For each site, collect and map the data
+		for (Iterator<TmpProjectSite> iterator = tmpProjectSites.iterator(); iterator.hasNext();) {
+			TmpProjectSite tmpProjectSite = iterator.next();
+			SiteDTO siteDTO = SiteManager.generateSiteDTO(tmpProjectSite);
+			siteDTOs.add(siteDTO);
+		}
+		return siteDTOs;
+
+	}
+
+	public static List<SiteDTO> getSites(Date updateDate) {
+		List<SiteDTO> siteDTOs = new ArrayList<SiteDTO>();
+
+		// Collect the sites
+		List<TmpProjectSite> tmpProjectSites = tmpProjectSiteDAO.getTmpProjectSites(updateDate);
+
+		// For each site, collect and map the data
+		for (Iterator<TmpProjectSite> iterator = tmpProjectSites.iterator(); iterator.hasNext();) {
+			TmpProjectSite tmpProjectSite = iterator.next();
+			SiteDTO siteDTO = SiteManager.generateSiteDTO(tmpProjectSite);
+			siteDTOs.add(siteDTO);
+		}
+		return siteDTOs;
+
 	}
 
 	public static List<SiteDTO> getSitesByProjectCoCId(String projectCoCId) {
@@ -32,6 +64,22 @@ public class SiteManager {
 
 		// Collect the sites
 		List<TmpProjectSite> tmpProjectSites = tmpProjectSiteDAO.getTmpProjectSitesByProjectCoCId(Integer.parseInt(projectCoCId));
+
+		// For each site, collect and map the data
+		for (Iterator<TmpProjectSite> iterator = tmpProjectSites.iterator(); iterator.hasNext();) {
+			TmpProjectSite tmpProjectSite = iterator.next();
+			SiteDTO siteDTO = SiteManager.generateSiteDTO(tmpProjectSite);
+			siteDTOs.add(siteDTO);
+		}
+		return siteDTOs;
+
+	}
+
+	public static List<SiteDTO> getSitesByProjectCoCId(String projectCoCId, Date updateDate) {
+		List<SiteDTO> siteDTOs = new ArrayList<SiteDTO>();
+
+		// Collect the sites
+		List<TmpProjectSite> tmpProjectSites = tmpProjectSiteDAO.getTmpProjectSitesByProjectCoCId(Integer.parseInt(projectCoCId), updateDate);
 
 		// For each site, collect and map the data
 		for (Iterator<TmpProjectSite> iterator = tmpProjectSites.iterator(); iterator.hasNext();) {

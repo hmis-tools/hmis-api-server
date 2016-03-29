@@ -1,7 +1,10 @@
 package org.openhmis.dto;
 
+
 import java.util.Date;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openhmis.code.ClientAddressDataQuality;
 import org.openhmis.code.ClientCountExchangeForSex;
@@ -28,6 +31,7 @@ import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@XmlRootElement
 public class EnrollmentDTO {
 	/**
 	 * The client object represents a client enrollment record
@@ -285,6 +289,16 @@ public class EnrollmentDTO {
 	private Date dateUpdated;
 
 	public EnrollmentDTO() {}
+	
+	@JsonProperty
+	public String getId() {
+		return enrollmentId;
+	}
+
+	@JsonProperty
+	public void setId(String enrollmentId) {
+		this.enrollmentId = enrollmentId;
+	}
 
 	@JsonProperty
 	public String getEnrollmentId() {

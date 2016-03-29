@@ -29,11 +29,59 @@ public class HealthInsuranceManager {
 		return healthInsuranceDTO;
 	}
 
+	public static List<HealthInsuranceDTO> getHealthInsurances() {
+		List<HealthInsuranceDTO> healthInsuranceDTOs = new ArrayList<HealthInsuranceDTO>();
+
+		// Collect the healthInsurances
+		List<TmpHealthInsurance> tmpHealthInsurances = tmpHealthInsuranceDAO.getTmpHealthInsurances();
+
+		// For each healthInsurance, collect and map the data
+		for (Iterator<TmpHealthInsurance> iterator = tmpHealthInsurances.iterator(); iterator.hasNext();) {
+			TmpHealthInsurance tmpHealthInsurance = iterator.next();
+			HealthInsuranceDTO healthInsuranceDTO = HealthInsuranceManager.generateHealthInsuranceDTO(tmpHealthInsurance);
+			healthInsuranceDTOs.add(healthInsuranceDTO);
+		}
+		return healthInsuranceDTOs;
+
+	}
+
+	public static List<HealthInsuranceDTO> getHealthInsurances(Date updateDate) {
+		List<HealthInsuranceDTO> healthInsuranceDTOs = new ArrayList<HealthInsuranceDTO>();
+
+		// Collect the healthInsurances
+		List<TmpHealthInsurance> tmpHealthInsurances = tmpHealthInsuranceDAO.getTmpHealthInsurances(updateDate);
+
+		// For each healthInsurance, collect and map the data
+		for (Iterator<TmpHealthInsurance> iterator = tmpHealthInsurances.iterator(); iterator.hasNext();) {
+			TmpHealthInsurance tmpHealthInsurance = iterator.next();
+			HealthInsuranceDTO healthInsuranceDTO = HealthInsuranceManager.generateHealthInsuranceDTO(tmpHealthInsurance);
+			healthInsuranceDTOs.add(healthInsuranceDTO);
+		}
+		return healthInsuranceDTOs;
+
+	}
+
 	public static List<HealthInsuranceDTO> getHealthInsurancesByEnrollmentId(String enrollmentId) {
 		List<HealthInsuranceDTO> healthInsuranceDTOs = new ArrayList<HealthInsuranceDTO>();
 
 		// Collect the healthInsurances
 		List<TmpHealthInsurance> tmpHealthInsurances = tmpHealthInsuranceDAO.getTmpHealthInsurancesByEnrollmentId(Integer.parseInt(enrollmentId));
+
+		// For each healthInsurance, collect and map the data
+		for (Iterator<TmpHealthInsurance> iterator = tmpHealthInsurances.iterator(); iterator.hasNext();) {
+			TmpHealthInsurance tmpHealthInsurance = iterator.next();
+			HealthInsuranceDTO healthInsuranceDTO = HealthInsuranceManager.generateHealthInsuranceDTO(tmpHealthInsurance);
+			healthInsuranceDTOs.add(healthInsuranceDTO);
+		}
+		return healthInsuranceDTOs;
+
+	}
+
+	public static List<HealthInsuranceDTO> getHealthInsurancesByEnrollmentId(String enrollmentId, Date updateDate) {
+		List<HealthInsuranceDTO> healthInsuranceDTOs = new ArrayList<HealthInsuranceDTO>();
+
+		// Collect the healthInsurances
+		List<TmpHealthInsurance> tmpHealthInsurances = tmpHealthInsuranceDAO.getTmpHealthInsurancesByEnrollmentId(Integer.parseInt(enrollmentId), updateDate);
 
 		// For each healthInsurance, collect and map the data
 		for (Iterator<TmpHealthInsurance> iterator = tmpHealthInsurances.iterator(); iterator.hasNext();) {

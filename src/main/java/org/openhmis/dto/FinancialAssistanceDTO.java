@@ -1,14 +1,18 @@
 package org.openhmis.dto;
 
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openhmis.code.ClientHopwaFinancialAssistance;
 import org.openhmis.code.ClientSsvfFinancialAssistance;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@XmlRootElement
 public class FinancialAssistanceDTO {
 	private String financialAssistanceId;
 	private String enrollmentId;
@@ -30,6 +34,16 @@ public class FinancialAssistanceDTO {
 
 	public FinancialAssistanceDTO() {}
 
+	@JsonProperty
+	public String getId() {
+		return financialAssistanceId;
+	}
+
+	@JsonProperty
+	public void setId(String financialAssistanceId) {
+		this.financialAssistanceId = financialAssistanceId;
+	}
+	
 	@JsonProperty
 	public String getFinancialAssistanceId() {
 		return financialAssistanceId;

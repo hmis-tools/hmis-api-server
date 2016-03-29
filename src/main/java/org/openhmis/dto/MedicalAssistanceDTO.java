@@ -1,7 +1,10 @@
 package org.openhmis.dto;
 
+
 import java.util.Date;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openhmis.code.ClientNoAssistanceReason;
 import org.openhmis.code.YesNoReason;
@@ -9,6 +12,7 @@ import org.openhmis.code.YesNoReason;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
+@XmlRootElement
 public class MedicalAssistanceDTO {
 	private String medicalAssistanceId;
 	private String enrollmentId;
@@ -34,6 +38,16 @@ public class MedicalAssistanceDTO {
 	@JsonProperty
 	public void setMedicalAssistanceId(String medicalAssistanceId) {
 		this.medicalAssistanceId = medicalAssistanceId;
+	}
+
+	@JsonProperty
+	public String getId() {
+		return enrollmentId;
+	}
+
+	@JsonProperty
+	public void setId(String enrollmentId) {
+		this.enrollmentId = enrollmentId;
 	}
 
 	@JsonProperty

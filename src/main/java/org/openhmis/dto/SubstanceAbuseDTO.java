@@ -1,6 +1,9 @@
 package org.openhmis.dto;
 
+
 import java.util.Date;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openhmis.code.ClientDisabilityResponse;
 import org.openhmis.code.ClientPathHowConfirmed;
@@ -9,6 +12,7 @@ import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@XmlRootElement
 public class SubstanceAbuseDTO {
 	private String substanceAbuseId;
 	private String enrollmentId;
@@ -26,6 +30,16 @@ public class SubstanceAbuseDTO {
 	private Date dateUpdated;
 	
 	public SubstanceAbuseDTO() {}
+	
+	@JsonProperty
+	public String getId() {
+		return substanceAbuseId;
+	}
+
+	@JsonProperty
+	public void setId(String substanceAbuseId) {
+		this.substanceAbuseId = substanceAbuseId;
+	}
 
 	@JsonProperty
 	public String getSubstanceAbuseId() {

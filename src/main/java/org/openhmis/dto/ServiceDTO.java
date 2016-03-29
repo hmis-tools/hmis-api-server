@@ -1,5 +1,8 @@
 package org.openhmis.dto;
+
 import java.util.Date;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openhmis.code.ClientHopwaServices;
 import org.openhmis.code.ClientPathServices;
@@ -12,6 +15,7 @@ import org.openhmis.code.ClientSsvfSubType5;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
+@XmlRootElement
 public class ServiceDTO {
 	private String serviceId;
 	private String enrollmentId;
@@ -40,6 +44,16 @@ public class ServiceDTO {
 	private Date dateUpdated;
 
 	public ServiceDTO() {}
+	
+	@JsonProperty
+	public String getId() {
+		return serviceId;
+	}
+
+	@JsonProperty
+	public void setId(String serviceId) {
+		this.serviceId = serviceId;
+	}
 	
 	@JsonProperty
 	public String getServiceId() {

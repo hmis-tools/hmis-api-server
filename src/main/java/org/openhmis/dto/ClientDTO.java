@@ -2,7 +2,10 @@
 
 package org.openhmis.dto;
 
+
 import java.util.Date;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openhmis.code.ClientDischargeStatus;
 import org.openhmis.code.ClientEthnicity;
@@ -15,8 +18,10 @@ import org.openhmis.code.None;
 import org.openhmis.code.YesNo;
 import org.openhmis.code.YesNoReason;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@XmlRootElement
 public class ClientDTO {
 	
 	/**
@@ -79,12 +84,23 @@ public class ClientDTO {
 	private ClientDischargeStatus dischargeStatus;
 
 	// Export Standard Fields
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone="GMT")
 	private Date dateCreated;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone="GMT")
 	private Date dateUpdated;
 
 	public ClientDTO() {}
 
 	// Getters / Setters
+	@JsonProperty
+	public String getId() {
+		return this.personalId;
+	}
+	@JsonProperty
+	public void setId(String personalId) {
+		this.personalId = personalId;
+	}
+	
 	@JsonProperty
 	public String getPersonalId() {
 		return this.personalId;
@@ -448,6 +464,7 @@ public class ClientDTO {
 	}
 
 	@JsonProperty
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone="GMT")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -458,6 +475,7 @@ public class ClientDTO {
 	}
 
 	@JsonProperty
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone="GMT")
 	public Date getDateUpdated() {
 		return dateUpdated;
 	}

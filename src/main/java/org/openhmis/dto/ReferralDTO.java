@@ -1,7 +1,10 @@
 package org.openhmis.dto;
 
+
 import java.util.Date;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openhmis.code.ClientPathReferral;
 import org.openhmis.code.ClientPathReferralOutcome;
@@ -11,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 
+@XmlRootElement
 public class ReferralDTO {
 	private String referralId;
 	private String enrollmentId;
@@ -30,6 +34,16 @@ public class ReferralDTO {
 	private Date dateUpdated;
 
 	public ReferralDTO() {}
+	
+	@JsonProperty
+	public String getId() {
+		return referralId;
+	}
+
+	@JsonProperty
+	public void setId(String referralId) {
+		this.referralId = referralId;
+	}
 	
 	@JsonProperty
 	public String getReferralId() {

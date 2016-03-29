@@ -1,11 +1,15 @@
 package org.openhmis.dto;
 
+
 import java.util.Date;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openhmis.code.YesNo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@XmlRootElement
 public class SiteDTO {
 	
 	/**
@@ -36,6 +40,16 @@ public class SiteDTO {
 	public SiteDTO() {
 	}
 
+	@JsonProperty
+	public String getId() {
+		return siteId;
+	}
+
+	@JsonProperty
+	public void setId(String siteId) {
+		this.siteId = siteId;
+	}
+	
 	@JsonProperty
 	public String getSiteId() {
 		return siteId;

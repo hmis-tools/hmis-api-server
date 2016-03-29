@@ -1,5 +1,7 @@
 package org.openhmis.domain;
 
+
+
 // Generated Aug 4, 2015 10:59:22 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;

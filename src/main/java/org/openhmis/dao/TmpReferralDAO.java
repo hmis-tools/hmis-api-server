@@ -1,5 +1,7 @@
 package org.openhmis.dao;
 
+
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -31,6 +33,32 @@ public class TmpReferralDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<TmpReferral> getTmpReferrals() {
+		String queryString = "select referral " + 
+				"from TmpReferral as referral";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<TmpReferral> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpReferral> getTmpReferrals(Date updateDate) {
+		String queryString = "select referral " + 
+				"from TmpReferral as referral " + 
+				"where referral.dateUpdated >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
+		List<TmpReferral> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<TmpReferral> getTmpReferralsByEnrollmentId(Integer enrollmentId) {
 		String queryString = "select referral " + 
 				"from TmpReferral as referral " + 
@@ -39,6 +67,22 @@ public class TmpReferralDAO extends BaseDAO {
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
 		queryObject.setParameter("enrollmentId", enrollmentId);
+		List<TmpReferral> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpReferral> getTmpReferralsByEnrollmentId(Integer enrollmentId, Date updateDate) {
+		String queryString = "select referral " + 
+				"from TmpReferral as referral " + 
+				"where referral.enrollmentId =:enrollmentId " + 
+				"  and referral.dateUpdated >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("enrollmentId", enrollmentId);
+		queryObject.setParameter("updatedSince", updateDate);
 		List<TmpReferral> results = queryObject.list();
 		session.close();
 		return results;

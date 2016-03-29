@@ -1,5 +1,7 @@
 package org.openhmis.dao;
 
+
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -31,6 +33,32 @@ public class TmpContactDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<TmpContact> getTmpContacts() {
+		String queryString = "select contact " + 
+				"from TmpContact as contact";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<TmpContact> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpContact> getTmpContacts(Date updateDate) {
+		String queryString = "select contact " + 
+				"from TmpContact as contact " + 
+				"where contact.dateUpdated >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
+		List<TmpContact> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<TmpContact> getTmpContactsByEnrollmentId(Integer enrollmentId) {
 		String queryString = "select contact " + 
 				"from TmpContact as contact " + 
@@ -39,6 +67,22 @@ public class TmpContactDAO extends BaseDAO {
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
 		queryObject.setParameter("enrollmentId", enrollmentId);
+		List<TmpContact> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpContact> getTmpContactsByEnrollmentId(Integer enrollmentId, Date updateDate) {
+		String queryString = "select contact " + 
+				"from TmpContact as contact " + 
+				"where contact.enrollmentId =:enrollmentId " + 
+				"  and contact.dateUpdated >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("enrollmentId", enrollmentId);
+		queryObject.setParameter("updatedSince", updateDate);
 		List<TmpContact> results = queryObject.list();
 		session.close();
 		return results;

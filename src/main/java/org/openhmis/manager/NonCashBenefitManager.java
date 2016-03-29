@@ -28,11 +28,59 @@ public class NonCashBenefitManager {
 		return nonCashBenefitDTO;
 	}
 
+	public static List<NonCashBenefitDTO> getNonCashBenefits() {
+		List<NonCashBenefitDTO> nonCashBenefitDTOs = new ArrayList<NonCashBenefitDTO>();
+
+		// Collect the nonCashBenefits
+		List<TmpNonCashBenefit> tmpNonCashBenefits = tmpNonCashBenefitDAO.getTmpNonCashBenefits();
+
+		// For each nonCashBenefit, collect and map the data
+		for (Iterator<TmpNonCashBenefit> iterator = tmpNonCashBenefits.iterator(); iterator.hasNext();) {
+			TmpNonCashBenefit tmpNonCashBenefit = iterator.next();
+			NonCashBenefitDTO nonCashBenefitDTO = NonCashBenefitManager.generateNonCashBenefitDTO(tmpNonCashBenefit);
+			nonCashBenefitDTOs.add(nonCashBenefitDTO);
+		}
+		return nonCashBenefitDTOs;
+
+	}
+
+	public static List<NonCashBenefitDTO> getNonCashBenefits(Date updateDate) {
+		List<NonCashBenefitDTO> nonCashBenefitDTOs = new ArrayList<NonCashBenefitDTO>();
+
+		// Collect the nonCashBenefits
+		List<TmpNonCashBenefit> tmpNonCashBenefits = tmpNonCashBenefitDAO.getTmpNonCashBenefits(updateDate);
+
+		// For each nonCashBenefit, collect and map the data
+		for (Iterator<TmpNonCashBenefit> iterator = tmpNonCashBenefits.iterator(); iterator.hasNext();) {
+			TmpNonCashBenefit tmpNonCashBenefit = iterator.next();
+			NonCashBenefitDTO nonCashBenefitDTO = NonCashBenefitManager.generateNonCashBenefitDTO(tmpNonCashBenefit);
+			nonCashBenefitDTOs.add(nonCashBenefitDTO);
+		}
+		return nonCashBenefitDTOs;
+
+	}
+
 	public static List<NonCashBenefitDTO> getNonCashBenefitsByEnrollmentId(String enrollmentId) {
 		List<NonCashBenefitDTO> nonCashBenefitDTOs = new ArrayList<NonCashBenefitDTO>();
 
 		// Collect the nonCashBenefits
 		List<TmpNonCashBenefit> tmpNonCashBenefits = tmpNonCashBenefitDAO.getTmpNonCashBenefitsByEnrollmentId(Integer.parseInt(enrollmentId));
+
+		// For each nonCashBenefit, collect and map the data
+		for (Iterator<TmpNonCashBenefit> iterator = tmpNonCashBenefits.iterator(); iterator.hasNext();) {
+			TmpNonCashBenefit tmpNonCashBenefit = iterator.next();
+			NonCashBenefitDTO nonCashBenefitDTO = NonCashBenefitManager.generateNonCashBenefitDTO(tmpNonCashBenefit);
+			nonCashBenefitDTOs.add(nonCashBenefitDTO);
+		}
+		return nonCashBenefitDTOs;
+
+	}
+
+	public static List<NonCashBenefitDTO> getNonCashBenefitsByEnrollmentId(String enrollmentId, Date updateDate) {
+		List<NonCashBenefitDTO> nonCashBenefitDTOs = new ArrayList<NonCashBenefitDTO>();
+
+		// Collect the nonCashBenefits
+		List<TmpNonCashBenefit> tmpNonCashBenefits = tmpNonCashBenefitDAO.getTmpNonCashBenefitsByEnrollmentId(Integer.parseInt(enrollmentId), updateDate);
 
 		// For each nonCashBenefit, collect and map the data
 		for (Iterator<TmpNonCashBenefit> iterator = tmpNonCashBenefits.iterator(); iterator.hasNext();) {

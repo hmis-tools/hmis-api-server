@@ -24,9 +24,11 @@ import org.openhmis.code.YesNoReason;
 import org.openhmis.dao.TmpExitDAO;
 import org.openhmis.domain.TmpProject;
 import org.openhmis.domain.TmpExit;
+import org.openhmis.domain.TmpFinancialAssistance;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.ExitDTO;
+import org.openhmis.dto.FinancialAssistanceDTO;
 
 public class ExitManager {
 	private static final TmpExitDAO tmpExitDAO = new TmpExitDAO();
@@ -36,6 +38,38 @@ public class ExitManager {
 	public static ExitDTO getExitById(String exitId) {
 		ExitDTO exitDTO = ExitManager.generateExitDTO(tmpExitDAO.getTmpExitById(Integer.parseInt(exitId)));
 		return exitDTO;
+	}
+
+	public static List<ExitDTO> getExits() {
+		List<ExitDTO> exitDTOs = new ArrayList<ExitDTO>();
+
+		// Collect the exits
+		List<TmpExit> tmpExits = tmpExitDAO.getTmpExits();
+
+		// For each financialAssistance, collect and map the data
+		for (Iterator<TmpExit> iterator = tmpExits.iterator(); iterator.hasNext();) {
+			TmpExit tmpExit = iterator.next();
+			ExitDTO exitDTO = ExitManager.generateExitDTO(tmpExit);
+			exitDTOs.add(exitDTO);
+		}
+		return exitDTOs;
+
+	}
+
+	public static List<ExitDTO> getExits(Date updateDate) {
+		List<ExitDTO> exitDTOs = new ArrayList<ExitDTO>();
+
+		// Collect the exits
+		List<TmpExit> tmpExits = tmpExitDAO.getTmpExits(updateDate);
+
+		// For each financialAssistance, collect and map the data
+		for (Iterator<TmpExit> iterator = tmpExits.iterator(); iterator.hasNext();) {
+			TmpExit tmpExit = iterator.next();
+			ExitDTO exitDTO = ExitManager.generateExitDTO(tmpExit);
+			exitDTOs.add(exitDTO);
+		}
+		return exitDTOs;
+
 	}
 
 	public static ExitDTO getExitByEnrollmentId(String enrollmentId) {

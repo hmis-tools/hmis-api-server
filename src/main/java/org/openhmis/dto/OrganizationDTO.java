@@ -2,10 +2,14 @@
 
 package org.openhmis.dto;
 
+
 import java.util.Date;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@XmlRootElement
 public class OrganizationDTO {
 	
 	/**
@@ -29,6 +33,15 @@ public class OrganizationDTO {
 	}
 
 	// Getters / Setters
+	@JsonProperty
+	public String getId() {
+		return organizationId;
+	}
+	@JsonProperty
+	public void setId(String organizationId) {
+		this.organizationId = organizationId;
+	}
+	
 	@JsonProperty
 	public String getOrganizationId() {
 		return organizationId;

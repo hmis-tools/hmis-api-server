@@ -28,11 +28,59 @@ public class FinancialAssistanceManager {
 		return financialAssistanceDTO;
 	}
 
+	public static List<FinancialAssistanceDTO> getFinancialAssistances() {
+		List<FinancialAssistanceDTO> financialAssistanceDTOs = new ArrayList<FinancialAssistanceDTO>();
+
+		// Collect the financialAssistances
+		List<TmpFinancialAssistance> tmpFinancialAssistances = tmpFinancialAssistanceDAO.getTmpFinancialAssistances();
+
+		// For each financialAssistance, collect and map the data
+		for (Iterator<TmpFinancialAssistance> iterator = tmpFinancialAssistances.iterator(); iterator.hasNext();) {
+			TmpFinancialAssistance tmpFinancialAssistance = iterator.next();
+			FinancialAssistanceDTO financialAssistanceDTO = FinancialAssistanceManager.generateFinancialAssistanceDTO(tmpFinancialAssistance);
+			financialAssistanceDTOs.add(financialAssistanceDTO);
+		}
+		return financialAssistanceDTOs;
+
+	}
+
+	public static List<FinancialAssistanceDTO> getFinancialAssistances(Date updateDate) {
+		List<FinancialAssistanceDTO> financialAssistanceDTOs = new ArrayList<FinancialAssistanceDTO>();
+
+		// Collect the financialAssistances
+		List<TmpFinancialAssistance> tmpFinancialAssistances = tmpFinancialAssistanceDAO.getTmpFinancialAssistances(updateDate);
+
+		// For each financialAssistance, collect and map the data
+		for (Iterator<TmpFinancialAssistance> iterator = tmpFinancialAssistances.iterator(); iterator.hasNext();) {
+			TmpFinancialAssistance tmpFinancialAssistance = iterator.next();
+			FinancialAssistanceDTO financialAssistanceDTO = FinancialAssistanceManager.generateFinancialAssistanceDTO(tmpFinancialAssistance);
+			financialAssistanceDTOs.add(financialAssistanceDTO);
+		}
+		return financialAssistanceDTOs;
+
+	}
+
 	public static List<FinancialAssistanceDTO> getFinancialAssistancesByEnrollmentId(String enrollmentId) {
 		List<FinancialAssistanceDTO> financialAssistanceDTOs = new ArrayList<FinancialAssistanceDTO>();
 
 		// Collect the financialAssistances
 		List<TmpFinancialAssistance> tmpFinancialAssistances = tmpFinancialAssistanceDAO.getTmpFinancialAssistancesByEnrollmentId(Integer.parseInt(enrollmentId));
+
+		// For each financialAssistance, collect and map the data
+		for (Iterator<TmpFinancialAssistance> iterator = tmpFinancialAssistances.iterator(); iterator.hasNext();) {
+			TmpFinancialAssistance tmpFinancialAssistance = iterator.next();
+			FinancialAssistanceDTO financialAssistanceDTO = FinancialAssistanceManager.generateFinancialAssistanceDTO(tmpFinancialAssistance);
+			financialAssistanceDTOs.add(financialAssistanceDTO);
+		}
+		return financialAssistanceDTOs;
+
+	}
+
+	public static List<FinancialAssistanceDTO> getFinancialAssistancesByEnrollmentId(String enrollmentId, Date updateDate) {
+		List<FinancialAssistanceDTO> financialAssistanceDTOs = new ArrayList<FinancialAssistanceDTO>();
+
+		// Collect the financialAssistances
+		List<TmpFinancialAssistance> tmpFinancialAssistances = tmpFinancialAssistanceDAO.getTmpFinancialAssistancesByEnrollmentId(Integer.parseInt(enrollmentId), updateDate);
 
 		// For each financialAssistance, collect and map the data
 		for (Iterator<TmpFinancialAssistance> iterator = tmpFinancialAssistances.iterator(); iterator.hasNext();) {

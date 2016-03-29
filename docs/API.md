@@ -57,12 +57,29 @@ API](https://en.wikipedia.org/wiki/Representational_state_transfer)
 that works as you would expect if you are familiar with other RESTful
 APIs.
 
-Requests to URLs return JSON objects.  For intermediate URLs, these
-objects are lists, and the contents of the list are sub-objects of
-whatever type would be fetched by extending the URL with the natural
-next component.  For example, assuming that
-`http://hmis.example.com/openhmis/` is the API services base, then a
-GET request to
+Request bodies send and receive either JSON or XML representations of
+objects.  The examples in this document are all given in JSON, but the
+HTTP header `Content-Type` should be used to designate the format for
+the data carried in a request, and the `Accept` header used to designate
+the desired format of the response.  Thus, header pairs will either be
+like this:
+
+    Content-Type: application/json
+    Accept: application/json
+
+or like this:
+
+    Content-Type: application/xml
+    Accept: application/xml
+
+(Theoretically, a request could name different formats for sent and
+received data, but we assume you're not writing insane software.)
+
+For intermediate URLs, the objects being represented are lists, and
+the contents of the list are sub-objects of whatever type would be
+fetched by extending the URL with the natural next component.  For
+example, assuming that `http://hmis.example.com/openhmis/` is the API
+services base, then a GET request to
 
         http://hmis.example.com/openhmis/api/v3/clients
 

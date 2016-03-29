@@ -2,8 +2,11 @@
 
 package org.openhmis.dto;
 
+
 import java.util.Date;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openhmis.code.ProjectTargetPopulation;
 import org.openhmis.code.ProjectTrackingMethod;
@@ -12,6 +15,7 @@ import org.openhmis.code.YesNo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@XmlRootElement
 public class ProjectDTO {
 	
 	/**
@@ -50,6 +54,16 @@ public class ProjectDTO {
 	private Date dateUpdated;
 
 	public ProjectDTO() {
+	}
+
+	@JsonProperty
+	public String getId() {
+		return projectId;
+	}
+
+	@JsonProperty
+	public void setId(String projectId) {
+		this.projectId = projectId;
 	}
 
 	@JsonProperty

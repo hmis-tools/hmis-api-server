@@ -1,5 +1,7 @@
 package org.openhmis.dao;
 
+
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -31,6 +33,32 @@ public class TmpDevelopmentalDisabilityDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<TmpDevelopmentalDisability> getTmpDevelopmentalDisabilities() {
+		String queryString = "select developmentalDisability " + 
+				"from TmpDevelopmentalDisability as developmentalDisability";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<TmpDevelopmentalDisability> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpDevelopmentalDisability> getTmpDevelopmentalDisabilities(Date updateDate) {
+		String queryString = "select developmentalDisability " + 
+				"from TmpDevelopmentalDisability as developmentalDisability " + 
+				"where developmentalDisability.dateUpdated >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
+		List<TmpDevelopmentalDisability> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<TmpDevelopmentalDisability> getTmpDevelopmentalDisabilitiesByEnrollmentId(Integer enrollmentId) {
 		String queryString = "select developmentalDisability " + 
 				"from TmpDevelopmentalDisability as developmentalDisability " + 
@@ -39,6 +67,22 @@ public class TmpDevelopmentalDisabilityDAO extends BaseDAO {
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
 		queryObject.setParameter("enrollmentId", enrollmentId);
+		List<TmpDevelopmentalDisability> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpDevelopmentalDisability> getTmpDevelopmentalDisabilitiesByEnrollmentId(Integer enrollmentId, Date updateDate) {
+		String queryString = "select developmentalDisability " + 
+				"from TmpDevelopmentalDisability as developmentalDisability " + 
+				"where developmentalDisability.enrollmentId =:enrollmentId " + 
+				"  and developmentalDisability.dateUpdated >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("enrollmentId", enrollmentId);
+		queryObject.setParameter("updatedSince", updateDate);
 		List<TmpDevelopmentalDisability> results = queryObject.list();
 		session.close();
 		return results;

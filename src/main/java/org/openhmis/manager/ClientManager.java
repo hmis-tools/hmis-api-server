@@ -1,5 +1,6 @@
 package org.openhmis.manager;
 
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -50,6 +51,32 @@ public class ClientManager {
 		
 		// Collect the clients
 		List<PathClient> pathClients = pathClientDAO.getPathClients();
+		
+		// For each client, collect and map the data
+		// TODO: this should be done in a single query
+		for (Iterator<PathClient> iterator = pathClients.iterator(); iterator.hasNext();) {
+			PathClient pathClient = iterator.next();
+			Integer clientKey = pathClient.getClientKey();
+			List<PathClientRace> pathRaces = pathClientRaceDAO.getPathRacesByClientKey(clientKey);
+			PathClientVeteranInfo pathVeteranInfo = pathClientVeteranInfoDAO.getPathVeteranInfoByClientKey(clientKey);
+
+			ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, pathRaces, pathVeteranInfo);
+			clientDTOs.add(clientDTO);
+		}
+		
+		return clientDTOs;
+	}
+
+	/**
+	 * Returns a list of clients that have been updated since the specified update date
+	 * @param updateDate
+	 * @return
+	 */
+	public List<ClientDTO> getClientsByUpdateDate(Date updateDate) {
+		List<ClientDTO> clientDTOs = new ArrayList<ClientDTO>();
+		
+		// Collect the clients
+		List<PathClient> pathClients = pathClientDAO.getPathClientsByUpdateDate(updateDate);
 		
 		// For each client, collect and map the data
 		// TODO: this should be done in a single query

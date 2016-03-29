@@ -1,13 +1,17 @@
 package org.openhmis.dto;
 
+
 import java.util.Date;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openhmis.code.YesNo;
 import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@XmlRootElement
 public class HivAidsStatusDTO {
 	private String hivAidsStatusId;
 	private String enrollmentId;
@@ -33,6 +37,16 @@ public class HivAidsStatusDTO {
 	@JsonProperty
 	public void setHivAidsStatusId(String hivAidsStatusId) {
 		this.hivAidsStatusId = hivAidsStatusId;
+	}
+
+	@JsonProperty
+	public String getId() {
+		return enrollmentId;
+	}
+
+	@JsonProperty
+	public void setId(String enrollmentId) {
+		this.enrollmentId = enrollmentId;
 	}
 
 	@JsonProperty

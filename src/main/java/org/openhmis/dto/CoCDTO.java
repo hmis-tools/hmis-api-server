@@ -1,10 +1,14 @@
 package org.openhmis.dto;
 
+
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@XmlRootElement
 public class CoCDTO {
 	
 	/**
@@ -34,6 +38,16 @@ public class CoCDTO {
 	private Date dateUpdated;
 
 	public CoCDTO() {
+	}
+
+	@JsonProperty
+	public String getId() {
+		return projectCoCId;
+	}
+
+	@JsonProperty
+	public void setId(String projectCoCId) {
+		this.projectCoCId = projectCoCId;
 	}
 
 	@JsonProperty

@@ -1,11 +1,15 @@
 package org.openhmis.dto;
 
+
 import java.util.Date;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openhmis.code.ProjectFundingSource;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@XmlRootElement
 public class FunderDTO {
 	
 	/**
@@ -32,6 +36,16 @@ public class FunderDTO {
 	private Date dateUpdated;
 
 	public FunderDTO() {
+	}
+
+	@JsonProperty
+	public String getId() {
+		return funderId;
+	}
+
+	@JsonProperty
+	public void setId(String funderId) {
+		this.funderId = funderId;
 	}
 
 	@JsonProperty

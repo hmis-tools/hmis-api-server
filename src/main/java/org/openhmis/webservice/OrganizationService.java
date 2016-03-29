@@ -12,10 +12,12 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
+import org.openhmis.dto.ClientDTO;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.InventoryDTO;
@@ -27,6 +29,7 @@ import org.openhmis.manager.InventoryManager;
 import org.openhmis.manager.OrganizationManager;
 import org.openhmis.manager.SiteManager;
 import org.openhmis.util.Authentication;
+import org.openhmis.util.DateParser;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -42,53 +45,58 @@ public class OrganizationService {
 
 	@GET
 	@Path("/")
-	@Produces({MediaType.APPLICATION_JSON})
-	public String getOrganizations(@HeaderParam("Authorization") String authorization) throws JsonProcessingException {
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	public List<OrganizationDTO> getOrganizations(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		List<OrganizationDTO> organizationDTOs = OrganizationManager.getOrganizations();
-		return om.writeValueAsString(organizationDTOs);
+
+		// If the user specified no updatedSince parameter, return everything
+		if(updatedSince == null) {
+			List<OrganizationDTO> organizationDTOs = OrganizationManager.getOrganizations();
+			return organizationDTOs;
+		} else {
+			List<OrganizationDTO> organizationDTOs = OrganizationManager.getOrganizationsByUpdateDate(DateParser.parseDate(updatedSince));
+			return organizationDTOs;
+		}
 	}
 	
 	@POST
 	@Path("/")
-	@Produces({MediaType.APPLICATION_JSON})
-	public String createOrganization(@HeaderParam("Authorization") String authorization, String data) throws JsonParseException, JsonMappingException, IOException {
+	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	public OrganizationDTO createOrganization(@HeaderParam("Authorization") String authorization, OrganizationDTO inputVO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		// This endpoint takes in a raw json STRING as input.
-		// TODO: support the serialization of individual POST parameters
-		OrganizationDTO inputVO = om.readValue(data, OrganizationDTO.class);
 		OrganizationDTO outputVO = OrganizationManager.addOrganization(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@GET
 	@Path("/{organizationId}")
-	@Produces({MediaType.APPLICATION_JSON})
-	public String getOrganization(@HeaderParam("Authorization") String authorization, @PathParam("organizationId") String organizationId) throws JsonProcessingException {
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	public OrganizationDTO getOrganization(@HeaderParam("Authorization") String authorization, @PathParam("organizationId") String organizationId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
 		OrganizationDTO organizationDTO = OrganizationManager.getOrganizationByOrganizationId(organizationId);
-		return om.writeValueAsString(organizationDTO);
+		return organizationDTO;
 	}
 	
 	@PUT
 	@Path("/{organizationId}")
-	@Produces({MediaType.APPLICATION_JSON})
-	public String updateOrganization(@HeaderParam("Authorization") String authorization, @PathParam("organizationId") String organizationId, String data) throws JsonParseException, JsonMappingException, IOException {
+	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	public OrganizationDTO updateOrganization(@HeaderParam("Authorization") String authorization, @PathParam("organizationId") String organizationId, OrganizationDTO inputVO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");
-		OrganizationDTO inputVO = om.readValue(data, OrganizationDTO.class);
 		inputVO.setOrganizationId(organizationId);
 		
 		OrganizationDTO outputVO = OrganizationManager.updateOrganization(inputVO);
-		return om.writeValueAsString(outputVO);
+		return outputVO;
 	}
 	
 	@DELETE
 	@Path("/{organizationId}")
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteOrganization(@HeaderParam("Authorization") String authorization, @PathParam("organizationId") String organizationId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new Error("You are not authorized to access this content");

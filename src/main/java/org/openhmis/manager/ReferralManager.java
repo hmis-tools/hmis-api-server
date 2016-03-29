@@ -29,11 +29,59 @@ public class ReferralManager {
 		return referralDTO;
 	}
 
+	public static List<ReferralDTO> getReferrals() {
+		List<ReferralDTO> referralDTOs = new ArrayList<ReferralDTO>();
+
+		// Collect the referrals
+		List<TmpReferral> tmpReferrals = tmpReferralDAO.getTmpReferrals();
+
+		// For each referral, collect and map the data
+		for (Iterator<TmpReferral> iterator = tmpReferrals.iterator(); iterator.hasNext();) {
+			TmpReferral tmpReferral = iterator.next();
+			ReferralDTO referralDTO = ReferralManager.generateReferralDTO(tmpReferral);
+			referralDTOs.add(referralDTO);
+		}
+		return referralDTOs;
+
+	}
+
+	public static List<ReferralDTO> getReferrals(Date updateDate) {
+		List<ReferralDTO> referralDTOs = new ArrayList<ReferralDTO>();
+
+		// Collect the referrals
+		List<TmpReferral> tmpReferrals = tmpReferralDAO.getTmpReferrals(updateDate);
+
+		// For each referral, collect and map the data
+		for (Iterator<TmpReferral> iterator = tmpReferrals.iterator(); iterator.hasNext();) {
+			TmpReferral tmpReferral = iterator.next();
+			ReferralDTO referralDTO = ReferralManager.generateReferralDTO(tmpReferral);
+			referralDTOs.add(referralDTO);
+		}
+		return referralDTOs;
+
+	}
+
 	public static List<ReferralDTO> getReferralsByEnrollmentId(String enrollmentId) {
 		List<ReferralDTO> referralDTOs = new ArrayList<ReferralDTO>();
 
 		// Collect the referrals
 		List<TmpReferral> tmpReferrals = tmpReferralDAO.getTmpReferralsByEnrollmentId(Integer.parseInt(enrollmentId));
+
+		// For each referral, collect and map the data
+		for (Iterator<TmpReferral> iterator = tmpReferrals.iterator(); iterator.hasNext();) {
+			TmpReferral tmpReferral = iterator.next();
+			ReferralDTO referralDTO = ReferralManager.generateReferralDTO(tmpReferral);
+			referralDTOs.add(referralDTO);
+		}
+		return referralDTOs;
+
+	}
+
+	public static List<ReferralDTO> getReferralsByEnrollmentId(String enrollmentId, Date updateDate) {
+		List<ReferralDTO> referralDTOs = new ArrayList<ReferralDTO>();
+
+		// Collect the referrals
+		List<TmpReferral> tmpReferrals = tmpReferralDAO.getTmpReferralsByEnrollmentId(Integer.parseInt(enrollmentId), updateDate);
 
 		// For each referral, collect and map the data
 		for (Iterator<TmpReferral> iterator = tmpReferrals.iterator(); iterator.hasNext();) {

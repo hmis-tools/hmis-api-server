@@ -1,5 +1,7 @@
 package org.openhmis.dao;
 
+
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -31,6 +33,32 @@ public class TmpProjectContinuumDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<TmpProjectContinuum> getTmpProjectContinuums() {
+		String queryString = "select projectContinuum " + 
+				"from TmpProjectContinuum as projectContinuum";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<TmpProjectContinuum> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpProjectContinuum> getTmpProjectContinuums(Date updateDate) {
+		String queryString = "select projectContinuum " + 
+				"from TmpProjectContinuum as projectContinuum " + 
+				"where projectContinuum.dateUpdated >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
+		List<TmpProjectContinuum> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<TmpProjectContinuum> getTmpProjectContinuumsByProjectId(Integer projectId) {
 		String queryString = "select projectContinuum " + 
 				"from TmpProjectContinuum as projectContinuum " + 
@@ -39,6 +67,22 @@ public class TmpProjectContinuumDAO extends BaseDAO {
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
 		queryObject.setParameter("projectId", projectId);
+		List<TmpProjectContinuum> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpProjectContinuum> getTmpProjectContinuumsByProjectId(Integer projectId, Date updateDate) {
+		String queryString = "select projectContinuum " + 
+				"from TmpProjectContinuum as projectContinuum " + 
+				"where projectContinuum.projectId =:projectId " + 
+				"  and projectContinuum.dateUpdataed >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("projectId", projectId);
+		queryObject.setParameter("updatedSince", updateDate);
 		List<TmpProjectContinuum> results = queryObject.list();
 		session.close();
 		return results;

@@ -33,11 +33,59 @@ public class ServiceManager {
 		return serviceDTO;
 	}
 
+	public static List<ServiceDTO> getServices() {
+		List<ServiceDTO> serviceDTOs = new ArrayList<ServiceDTO>();
+
+		// Collect the services
+		List<TmpService> tmpServices = tmpServiceDAO.getTmpServices();
+
+		// For each service, collect and map the data
+		for (Iterator<TmpService> iterator = tmpServices.iterator(); iterator.hasNext();) {
+			TmpService tmpService = iterator.next();
+			ServiceDTO serviceDTO = ServiceManager.generateServiceDTO(tmpService);
+			serviceDTOs.add(serviceDTO);
+		}
+		return serviceDTOs;
+
+	}
+
+	public static List<ServiceDTO> getServices(Date updateDate) {
+		List<ServiceDTO> serviceDTOs = new ArrayList<ServiceDTO>();
+
+		// Collect the services
+		List<TmpService> tmpServices = tmpServiceDAO.getTmpServices(updateDate);
+
+		// For each service, collect and map the data
+		for (Iterator<TmpService> iterator = tmpServices.iterator(); iterator.hasNext();) {
+			TmpService tmpService = iterator.next();
+			ServiceDTO serviceDTO = ServiceManager.generateServiceDTO(tmpService);
+			serviceDTOs.add(serviceDTO);
+		}
+		return serviceDTOs;
+
+	}
+
 	public static List<ServiceDTO> getServicesByEnrollmentId(String enrollmentId) {
 		List<ServiceDTO> serviceDTOs = new ArrayList<ServiceDTO>();
 
 		// Collect the services
 		List<TmpService> tmpServices = tmpServiceDAO.getTmpServicesByEnrollmentId(Integer.parseInt(enrollmentId));
+
+		// For each service, collect and map the data
+		for (Iterator<TmpService> iterator = tmpServices.iterator(); iterator.hasNext();) {
+			TmpService tmpService = iterator.next();
+			ServiceDTO serviceDTO = ServiceManager.generateServiceDTO(tmpService);
+			serviceDTOs.add(serviceDTO);
+		}
+		return serviceDTOs;
+
+	}
+
+	public static List<ServiceDTO> getServicesByEnrollmentId(String enrollmentId, Date updateDate) {
+		List<ServiceDTO> serviceDTOs = new ArrayList<ServiceDTO>();
+
+		// Collect the services
+		List<TmpService> tmpServices = tmpServiceDAO.getTmpServicesByEnrollmentId(Integer.parseInt(enrollmentId), updateDate);
 
 		// For each service, collect and map the data
 		for (Iterator<TmpService> iterator = tmpServices.iterator(); iterator.hasNext();) {

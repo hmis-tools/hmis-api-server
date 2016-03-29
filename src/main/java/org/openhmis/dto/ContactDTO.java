@@ -1,12 +1,16 @@
 package org.openhmis.dto;
 
+
 import java.util.Date;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openhmis.code.ClientContactLocation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@XmlRootElement
 public class ContactDTO {
 	private String contactId;
 	private String enrollmentId;
@@ -20,6 +24,16 @@ public class ContactDTO {
 	private Date dateUpdated;
 	
 	public ContactDTO() {}
+
+	@JsonProperty
+	public String getId() {
+		return contactId;
+	}
+
+	@JsonProperty
+	public void setId(String contactId) {
+		this.contactId = contactId;
+	}
 
 	@JsonProperty
 	public String getContactId() {

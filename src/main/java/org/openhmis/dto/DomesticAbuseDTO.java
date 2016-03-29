@@ -1,7 +1,10 @@
 package org.openhmis.dto;
 
+
 import java.util.Date;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.openhmis.code.ClientWhenDvOccurred;
 import org.openhmis.code.YesNoReason;
@@ -9,6 +12,7 @@ import org.openhmis.code.YesNoReason;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
+@XmlRootElement
 public class DomesticAbuseDTO {
 	private String domesticAbuseId;
 	private String enrollmentId;
@@ -23,6 +27,16 @@ public class DomesticAbuseDTO {
 	private Date dateUpdated;
 
 	public DomesticAbuseDTO() {}
+	
+	@JsonProperty
+	public String getId() {
+		return domesticAbuseId;
+	}
+
+	@JsonProperty
+	public void setId(String domesticAbuseId) {
+		this.domesticAbuseId = domesticAbuseId;
+	}
 
 	@JsonProperty
 	public String getDomesticAbuseId() {

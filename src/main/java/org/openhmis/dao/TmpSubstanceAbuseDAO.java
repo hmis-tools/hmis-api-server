@@ -1,5 +1,7 @@
 package org.openhmis.dao;
 
+
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -31,6 +33,32 @@ public class TmpSubstanceAbuseDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<TmpSubstanceAbuse> getTmpSubstanceAbuses() {
+		String queryString = "select substanceAbuse " + 
+				"from TmpSubstanceAbuse as substanceAbuse";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		List<TmpSubstanceAbuse> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpSubstanceAbuse> getTmpSubstanceAbuses(Date updateDate) {
+		String queryString = "select substanceAbuse " + 
+				"from TmpSubstanceAbuse as substanceAbuse " + 
+				"where substanceAbuse.dateUpdated >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("updatedSince", updateDate);
+		List<TmpSubstanceAbuse> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<TmpSubstanceAbuse> getTmpSubstanceAbusesByEnrollmentId(Integer enrollmentId) {
 		String queryString = "select substanceAbuse " + 
 				"from TmpSubstanceAbuse as substanceAbuse " + 
@@ -39,6 +67,22 @@ public class TmpSubstanceAbuseDAO extends BaseDAO {
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
 		queryObject.setParameter("enrollmentId", enrollmentId);
+		List<TmpSubstanceAbuse> results = queryObject.list();
+		session.close();
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TmpSubstanceAbuse> getTmpSubstanceAbusesByEnrollmentId(Integer enrollmentId, Date updateDate) {
+		String queryString = "select substanceAbuse " + 
+				"from TmpSubstanceAbuse as substanceAbuse " + 
+				"where substanceAbuse.enrollmentId =:enrollmentId " + 
+				"  and substanceAbuse.dateUpdated >= :updatedSince";
+
+		Session session = getSession();
+		Query queryObject = session.createQuery(queryString);
+		queryObject.setParameter("enrollmentId", enrollmentId);
+		queryObject.setParameter("updatedSince", updateDate);
 		List<TmpSubstanceAbuse> results = queryObject.list();
 		session.close();
 		return results;
