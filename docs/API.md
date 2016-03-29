@@ -50,12 +50,13 @@ instead of on HUD 2014, but we list them here for reference:
 OpenHMIS API Reference Documentation
 ====================================
 
-_(Note: The latest development version of this documentation is always available [on GitHub](https://github.com/PCNI/OpenHMIS/blob/master/docs/API.md).)_
-
 The OpenHMIS API is a [RESTful
 API](https://en.wikipedia.org/wiki/Representational_state_transfer)
 that works as you would expect if you are familiar with other RESTful
-APIs.
+APIs.  (Note that authentication and authorization are considered
+separate from the API itself; implementations typically use
+OAuth-style authentication, such as Google Sign-in, and [this install
+file](../INSTALL.md) describes one such workflow in more detail.)
 
 Request bodies send and receive either JSON or XML representations of
 objects.  The examples in this document are all given in JSON, but the
