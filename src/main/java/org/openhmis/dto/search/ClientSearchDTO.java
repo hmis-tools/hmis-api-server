@@ -65,7 +65,7 @@ public class ClientSearchDTO extends BaseSearchDTO {
 		return this.dobStart;
 	}
 	@QueryParam("dobStart")
-	public void setDobStart(String ssn) {
+	public void setDobStart(String dobStart) {
 		this.dobStart = dobStart;
 	}
 	
