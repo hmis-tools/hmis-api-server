@@ -19,6 +19,7 @@ import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 import org.openhmis.code.ClientNameDataQuality;
 import org.openhmis.dto.ClientDTO;
+import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.exception.RecordNotFoundException;
 import org.openhmis.manager.ClientManager;
 import org.openhmis.util.Authentication;
@@ -41,19 +42,17 @@ public class ClientService {
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public Response getClients(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		throw new RecordNotFoundException();
+		if(!Authentication.googleAuthenticate(authorization))
+			throw new AccessDeniedException();
 		
-//		if(!Authentication.googleAuthenticate(authorization))
-//			throw new Error("You are not authorized to access this content");
-//		
-//		// If the user specified no updatedSince parameter, return everything
-//		if(updatedSince == null) {
-//			List<ClientDTO> clientDTOs = clientManager.getClients();
-//			return Response.ok(clientDTOs).build();
-//		} else {
-//			List<ClientDTO> clientDTOs = clientManager.getClientsByUpdateDate(DateParser.parseDate(updatedSince));
-//			return Response.ok(clientDTOs).build();
-//		}
+		// If the user specified no updatedSince parameter, return everything
+		if(updatedSince == null) {
+			List<ClientDTO> clientDTOs = clientManager.getClients();
+			return Response.ok(clientDTOs).build();
+		} else {
+			List<ClientDTO> clientDTOs = clientManager.getClientsByUpdateDate(DateParser.parseDate(updatedSince));
+			return Response.ok(clientDTOs).build();
+		}
 	}
 	
 	@POST

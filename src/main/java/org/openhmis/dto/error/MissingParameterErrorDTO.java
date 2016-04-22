@@ -10,13 +10,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @XmlRootElement
-public abstract class AbstractErrorDTO {
+public class MissingParameterErrorDTO extends AbstractErrorDTO {
 
-	// Base error information
-	@JsonProperty
-	public abstract String getCode();
+	public MissingParameterErrorDTO() {
+	}
 
 	@JsonProperty
-	public abstract String getMessage();
+	public String getCode() {
+		return "MISSING_PARAMETER";
+	}
+
+	@JsonProperty
+	public String getMessage() {
+		return "A required parameter was not provided.";
+	}
 }
 

@@ -3,8 +3,8 @@ package org.openhmis.exception;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
-import org.openhmis.dto.errors.RecordNotFoundErrorDTO;
-import org.openhmis.dto.errors.RootErrorDTO;
+import org.openhmis.dto.error.RecordNotFoundErrorDTO;
+import org.openhmis.dto.error.RootErrorDTO;
 
 public class RecordNotFoundException extends WebApplicationException {
      /**

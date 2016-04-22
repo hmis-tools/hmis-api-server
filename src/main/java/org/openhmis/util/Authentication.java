@@ -23,6 +23,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.net.ssl.HttpsURLConnection;
 
+import org.openhmis.exception.AuthenticationFailureException;
+
 import com.google.api.client.auth.oauth2.TokenResponseException;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
@@ -53,10 +55,13 @@ public class Authentication {
 			return tokenResponse.toString();
 
 		} catch (TokenResponseException e) {
-			return "Token Fail" + e.getMessage();
+			throw new AuthenticationFailureException();
+			// return "Token Fail" + e.getMessage();
 			// Failed to upgrade the authorization code.
 		} catch (IOException e) {
-			return "Read Google Data Fail";
+			// TODO: this should be a different exception
+			throw new AuthenticationFailureException();
+			//	return "Read Google Data Fail";
 			// Failed to read token data from Google.
 		}
 	}

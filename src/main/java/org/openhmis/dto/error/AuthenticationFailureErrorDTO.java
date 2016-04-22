@@ -10,19 +10,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @XmlRootElement
-public class InvalidParameterErrorDTO extends AbstractErrorDTO {
+public class AuthenticationFailureErrorDTO extends AbstractErrorDTO {
 
-	public InvalidParameterErrorDTO() {
+	public AuthenticationFailureErrorDTO() {
 	}
 
 	@JsonProperty
 	public String getCode() {
-		return "INVALID_PARAMETER";
+		return "AUTHENTICATION_FAILURE";
 	}
 
 	@JsonProperty
 	public String getMessage() {
-		return "A parameter value was invalid.";
+		return "You could not be authenticated in the system.";
 	}
 }
 

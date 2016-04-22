@@ -3,8 +3,9 @@ package org.openhmis.exception;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
-import org.openhmis.dto.errors.RecordNotFoundErrorDTO;
-import org.openhmis.dto.errors.RootErrorDTO;
+import org.openhmis.dto.error.InvalidParameterErrorDTO;
+import org.openhmis.dto.error.RecordNotFoundErrorDTO;
+import org.openhmis.dto.error.RootErrorDTO;
 
 public class InvalidParameterException extends WebApplicationException {
      /**
@@ -12,7 +13,7 @@ public class InvalidParameterException extends WebApplicationException {
       */
      public InvalidParameterException() {
          super(Response
-        		 .status(Response.Status.NOT_FOUND)
+        		 .status(Response.Status.BAD_REQUEST)
         		 .entity(new RootErrorDTO(new InvalidParameterErrorDTO()))
         		 .build());
      }

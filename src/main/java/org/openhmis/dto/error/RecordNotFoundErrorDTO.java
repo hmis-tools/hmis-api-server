@@ -1,4 +1,4 @@
-package org.openhmis.dto.errors;
+package org.openhmis.dto.error;
 
 import java.util.ArrayList;
 import java.util.Date;
