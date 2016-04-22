@@ -225,9 +225,9 @@ URI: `/clients`
   }
 ]```
 
-This endpoint also enables searching on the following fields via querystring parameters.  Note that for now the wildcard is %25, not %, to accommodate URL encoding.
+This endpoint also enables searching on the following fields via querystring parameters.
 
-Wildcard (%25) Enabled Strings:
+Wildcard (*) Enabled Strings:
 - firstName
 - middleName
 - lastName
@@ -238,7 +238,7 @@ Dates:
 - dobStart
 - dobEnd
 
-Example Search: `/clients?firstName=J%&dobStart=2015-05-09
+Example Search: `/clients?firstName=J%&dobEnd=2015-05-09
 
 * POST
   - Path: `/clients/`
