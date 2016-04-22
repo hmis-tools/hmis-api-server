@@ -1,12 +1,17 @@
 package org.openhmis.dao;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.openhmis.domain.PathClient;
+import org.openhmis.dto.search.ClientSearchDTO;
+import org.openhmis.util.DateParser;
 
 public class PathClientDAO extends BaseDAO {
 
@@ -31,28 +36,29 @@ public class PathClientDAO extends BaseDAO {
 		else
 			return null;
 	}
-
-	public List<PathClient> getPathClientsByUpdateDate(Date updateDate)  {
-		String queryString = "select client " + 
-			"from PathClient as client " + 
-			"where client.updateDate >= :updatedSince";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<PathClient> results = queryObject.list();
-		session.close();
-		return results;
-	}
 	
 	@SuppressWarnings("unchecked")
-	public List<PathClient> getPathClients() {
-		String queryString = "select client " + 
-				"from PathClient as client";
+	public List<PathClient> getPathClients(ClientSearchDTO searchDTO) {
 
 		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		List<PathClient> results = queryObject.list();
+		Criteria query = session.createCriteria(PathClient.class);
+		if(searchDTO.getFirstName() != null) {
+			query.add(Restrictions.like("firstName", searchDTO.getFirstName()));
+		}
+		if(searchDTO.getMiddleName() != null) {
+			query.add(Restrictions.like("middleName", searchDTO.getMiddleName()));
+		}
+		if(searchDTO.getLastName() != null) {
+			query.add(Restrictions.like("lastName", searchDTO.getLastName()));
+		}
+		if(searchDTO.getSsn() != null) {
+			query.add(Restrictions.like("identification", searchDTO.getSsn()));
+		}
+		if(searchDTO.getUpdatedSince() != null) {
+			query.add(Restrictions.gt("updateDate", DateParser.parseDate(searchDTO.getUpdatedSince())));
+		}
+		
+		List<PathClient> results = query.list();
 		session.close();
 		return results;
 	}

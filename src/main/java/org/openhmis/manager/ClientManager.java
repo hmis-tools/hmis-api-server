@@ -23,6 +23,7 @@ import org.openhmis.domain.PathClient;
 import org.openhmis.domain.PathClientRace;
 import org.openhmis.domain.PathClientVeteranInfo;
 import org.openhmis.dto.ClientDTO;
+import org.openhmis.dto.search.ClientSearchDTO;
 import org.openhmis.manager.ClientManager;
 
 public class ClientManager {
@@ -46,37 +47,11 @@ public class ClientManager {
 		return clientDTO;
 	}
 
-	public List<ClientDTO> getClients() {
+	public List<ClientDTO> getClients(ClientSearchDTO searchDTO) {
 		List<ClientDTO> clientDTOs = new ArrayList<ClientDTO>();
 		
 		// Collect the clients
-		List<PathClient> pathClients = pathClientDAO.getPathClients();
-		
-		// For each client, collect and map the data
-		// TODO: this should be done in a single query
-		for (Iterator<PathClient> iterator = pathClients.iterator(); iterator.hasNext();) {
-			PathClient pathClient = iterator.next();
-			Integer clientKey = pathClient.getClientKey();
-			List<PathClientRace> pathRaces = pathClientRaceDAO.getPathRacesByClientKey(clientKey);
-			PathClientVeteranInfo pathVeteranInfo = pathClientVeteranInfoDAO.getPathVeteranInfoByClientKey(clientKey);
-
-			ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, pathRaces, pathVeteranInfo);
-			clientDTOs.add(clientDTO);
-		}
-		
-		return clientDTOs;
-	}
-
-	/**
-	 * Returns a list of clients that have been updated since the specified update date
-	 * @param updateDate
-	 * @return
-	 */
-	public List<ClientDTO> getClientsByUpdateDate(Date updateDate) {
-		List<ClientDTO> clientDTOs = new ArrayList<ClientDTO>();
-		
-		// Collect the clients
-		List<PathClient> pathClients = pathClientDAO.getPathClientsByUpdateDate(updateDate);
+		List<PathClient> pathClients = pathClientDAO.getPathClients(searchDTO);
 		
 		// For each client, collect and map the data
 		// TODO: this should be done in a single query
