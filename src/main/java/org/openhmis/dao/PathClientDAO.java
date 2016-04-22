@@ -43,16 +43,16 @@ public class PathClientDAO extends BaseDAO {
 		Session session = getSession();
 		Criteria query = session.createCriteria(PathClient.class);
 		if(searchDTO.getFirstName() != null) {
-			query.add(Restrictions.like("firstName", searchDTO.getFirstName()));
+			query.add(Restrictions.like("firstName", searchDTO.getFirstName().replace('*', '%')));
 		}
 		if(searchDTO.getMiddleName() != null) {
-			query.add(Restrictions.like("middleName", searchDTO.getMiddleName()));
+			query.add(Restrictions.like("middleName", searchDTO.getMiddleName().replace('*', '%')));
 		}
 		if(searchDTO.getLastName() != null) {
-			query.add(Restrictions.like("lastName", searchDTO.getLastName()));
+			query.add(Restrictions.like("lastName", searchDTO.getLastName().replace('*', '%')));
 		}
 		if(searchDTO.getSsn() != null) {
-			query.add(Restrictions.like("identification", searchDTO.getSsn()));
+			query.add(Restrictions.like("identification", searchDTO.getSsn().replace('*', '%')));
 		}
 		if(searchDTO.getUpdatedSince() != null) {
 			query.add(Restrictions.gt("updateDate", DateParser.parseDate(searchDTO.getUpdatedSince())));
