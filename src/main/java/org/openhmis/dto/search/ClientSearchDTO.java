@@ -18,6 +18,8 @@ public class ClientSearchDTO extends BaseSearchDTO {
 	private String middleName;
 	private String lastName;
 	private String ssn;
+	private String dobStart;
+	private String dobEnd;
 	
 	public ClientSearchDTO() {}
 
@@ -56,5 +58,23 @@ public class ClientSearchDTO extends BaseSearchDTO {
 	@QueryParam("ssn")
 	public void setSsn(String ssn) {
 		this.ssn = ssn;
+	}
+	
+	@JsonProperty
+	public String getDobStart() {
+		return this.dobStart;
+	}
+	@QueryParam("dobStart")
+	public void setDobStart(String ssn) {
+		this.dobStart = dobStart;
+	}
+	
+	@JsonProperty
+	public String getDobEnd() {
+		return this.dobEnd;
+	}
+	@QueryParam("dobEnd")
+	public void setDobEnd(String dobEnd) {
+		this.dobEnd = dobEnd;
 	}
 }

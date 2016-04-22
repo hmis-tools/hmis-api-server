@@ -57,6 +57,12 @@ public class PathClientDAO extends BaseDAO {
 		if(searchDTO.getUpdatedSince() != null) {
 			query.add(Restrictions.gt("updateDate", DateParser.parseDate(searchDTO.getUpdatedSince())));
 		}
+		if(searchDTO.getDobStart() != null) {
+			query.add(Restrictions.ge("dateOfBirth", DateParser.parseDate(searchDTO.getDobStart())));
+		}
+		if(searchDTO.getDobEnd() != null) {
+			query.add(Restrictions.le("dateOfBirth", DateParser.parseDate(searchDTO.getDobEnd())));
+		}
 		
 		List<PathClient> results = query.list();
 		session.close();
