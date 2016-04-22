@@ -225,6 +225,21 @@ URI: `/clients`
   }
 ]```
 
+This endpoint also enables searching on the following fields via querystring parameters.
+
+Wildcard (*) Enabled Strings:
+- firstName
+- middleName
+- lastName
+- ssn
+
+Dates:
+- dateUpdated
+- dobStart
+- dobEnd
+
+Example Search: `/clients?firstName=J*&dobEnd=2015-05-09
+
 * POST
   - Path: `/clients/`
   - Method name: `createClient()`

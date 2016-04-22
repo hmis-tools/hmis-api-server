@@ -3,6 +3,7 @@ package org.openhmis.webservice;
 import java.io.IOException;
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -21,6 +22,7 @@ import org.openhmis.code.ClientNameDataQuality;
 import org.openhmis.dto.ClientDTO;
 import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.exception.RecordNotFoundException;
+import org.openhmis.dto.search.ClientSearchDTO;
 import org.openhmis.manager.ClientManager;
 import org.openhmis.util.Authentication;
 import org.openhmis.util.DateParser;
@@ -41,18 +43,13 @@ public class ClientService {
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public Response getClients(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public Response getClients(@HeaderParam("Authorization") String authorization, @BeanParam ClientSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new AccessDeniedException();
 		
-		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<ClientDTO> clientDTOs = clientManager.getClients();
-			return Response.ok(clientDTOs).build();
-		} else {
-			List<ClientDTO> clientDTOs = clientManager.getClientsByUpdateDate(DateParser.parseDate(updatedSince));
-			return Response.ok(clientDTOs).build();
-		}
+		// Return clients that match the search terms
+                List<ClientDTO> clientDTOs = clientManager.getClients(searchDTO);
+                return Response.ok(clientDTOs).build();
 	}
 	
 	@POST
