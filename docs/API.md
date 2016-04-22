@@ -959,3 +959,31 @@ URI: `/clients`
   - Parameters: enrollmentId and domesticAbuseId
   - Responses:
   - Example:
+
+
+# Errors and Exceptions
+The API returns exceptions using the following format:
+
+```json
+{
+  "error": {
+    "errors": [
+      ... 
+    ],
+    "message": "",
+    "code": ""
+  }
+}
+```
+
+The following error codes have been built into the API:
+
+- ACCESS_DENIED: when you try to access content you are not authenticated to see.
+- AUTHENTICATION_FAILURE: when you have attempted to authenticate but something went wrong (invalid token, for instance)
+- MISSING_PARAMETER: a required parameter was not provided.
+- INVALID_PARAMETER: a parameter was provided but is not of the proper format.
+
+This list will grow.
+
+Each error type, for now, only provides a code and a message.  The objects returned for each error type are expected to become richer based on the error, to include more detailed information in a structured way.  For now the intent is that the message will contain the information in a human readable format.
+
