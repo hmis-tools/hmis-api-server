@@ -12,10 +12,7 @@ public class ObjectMapperContextResolver implements ContextResolver<ObjectMapper
     final ObjectMapper mapper = new ObjectMapper();
 
     public ObjectMapperContextResolver() {
-
-    	// To see a list of all 
-        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, true);
-        mapper.configure(SerializationFeature.WRITE_ENUMS_USING_INDEX, true);
+    	mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, true);
     }
 
     @Override
