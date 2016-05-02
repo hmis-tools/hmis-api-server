@@ -16,7 +16,10 @@ import javax.naming.InitialContext;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 /**
  * Configures and provides access to Hibernate sessions, tied to the
@@ -32,37 +35,15 @@ public class HibernateSessionFactory {
      * The default classpath location of the hibernate config file is 
      * in the default package. Use #setConfigFile() to update 
      * the location of the configuration file for the current session.   
-     */ 	
- 	 private static String CONFIG_FILE_LOCATION = "/hibernate.cfg.xml";
- 	 private static final ThreadLocal<Session> threadLocal = new ThreadLocal<Session>();
-     private static Configuration configuration = new Configuration();    
-     private static org.hibernate.SessionFactory sessionFactory;
-     private static String configFile = CONFIG_FILE_LOCATION;
-     private static Properties properties = new Properties();
+     */
+    private static final ThreadLocal<Session> threadLocal = new ThreadLocal<Session>();
+    private static SessionFactory sessionFactory;
+    private static ServiceRegistry serviceRegistry;
 
- 	static {
-     	try {
-     		InitialContext context = new InitialContext();
-     		String propertyFileLocation = (String) context.lookup("java:comp/env/config");
-     		if (propertyFileLocation!= null)
-     		{
-     			File propertyFile = new File(propertyFileLocation  +"//hibernate.properties");
-   			    InputStream is = new FileInputStream(propertyFile);
-  		        properties.load(is);
-  		        configuration.setProperties(properties);
-     		}
- 			configuration.configure();
- 			sessionFactory = configuration.buildSessionFactory();
- 		} catch (Exception e) {
- 			System.err
- 					.println("%%%% Error Creating SessionFactory %%%%");
- 			e.printStackTrace();
- 		}
-     }
     private HibernateSessionFactory() {
     }
-	
-	/**
+
+    /**
      * Returns the ThreadLocal Session instance.  Lazy initialize
      * the <code>SessionFactory</code> if needed.
      *
@@ -72,14 +53,15 @@ public class HibernateSessionFactory {
     public static Session getSession() throws HibernateException {
         Session session = (Session) threadLocal.get();
 
-		if (session == null || !session.isOpen()) {
-			if (sessionFactory == null) {
-				rebuildSessionFactory();
-			}
-			session = (sessionFactory != null) ? sessionFactory.openSession()
-					: null;
-			threadLocal.set(session);
-		}
+        // If an open session doesn't already exist, create one
+        if (session == null || !session.isOpen()) {
+            if (sessionFactory == null) {
+                rebuildSessionFactory();
+            }
+            session = (sessionFactory != null) ? sessionFactory.openSession()
+                : null;
+            threadLocal.set(session);
+        }
 
         return session;
     }
@@ -90,12 +72,28 @@ public class HibernateSessionFactory {
      */
 	public static void rebuildSessionFactory() {
 		try {
-			configuration.configure(configFile);
-			sessionFactory = configuration.buildSessionFactory();
-		} catch (Exception e) {
-			System.err
-					.println("%%%% Error Creating SessionFactory %%%%");
-			e.printStackTrace();
+	        Configuration configuration = new Configuration();
+	
+	        // Define the class mappings
+	        configuration.addResource("hibernate.cfg.xml");
+
+	        // Load the application properties based on the current context
+	        ApplicationPropertyUtil propertyUtil = new ApplicationPropertyUtil();
+			Properties properties = propertyUtil.getProperties();
+
+			// Define the connection settings from the properties
+	        configuration.setProperty("hibernate.dialect", properties.getProperty("hibernate.dialect"));
+	        configuration.setProperty("hibernate.connection.url", properties.getProperty("hibernate.connection.url"));
+	        configuration.setProperty("hibernate.connection.username", properties.getProperty("hibernate.connection.username"));
+	        configuration.setProperty("hibernate.connection.password", properties.getProperty("hibernate.connection.password"));
+	        configuration.setProperty("hibernate.connection.driver_class", properties.getProperty("hibernate.connection.driver_class"));
+	
+	        serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
+	                configuration.getProperties()).build();
+			sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -117,26 +115,8 @@ public class HibernateSessionFactory {
      *  return session factory
      *
      */
-	public static org.hibernate.SessionFactory getSessionFactory() {
+	public static SessionFactory getSessionFactory() {
 		return sessionFactory;
-	}
-
-	/**
-     *  return session factory
-     *
-     *	session factory will be rebuilded in the next call
-     */
-	public static void setConfigFile(String configFile) {
-		HibernateSessionFactory.configFile = configFile;
-		sessionFactory = null;
-	}
-
-	/**
-     *  return hibernate configuration
-     *
-     */
-	public static Configuration getConfiguration() {
-		return configuration;
 	}
 
 }
