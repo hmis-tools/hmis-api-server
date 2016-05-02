@@ -116,22 +116,13 @@ _Note: you do not need to install anything for this to work.  Flyway is automati
         $> mvn clean compile flyway:migrate
     ```
 
-4. Configure the code base to work with your schema by creating and populating the `src/main/resources/hibernate.cfg.xml` file.
+4. Create the `dev.properties` file.
 
    The database url, username, and password entered in this file must match those created in steps 1 and 2
 
     ```shell
-        $> cp src/main/resources/hibernate.cfg.xml.example src/main/resources/hibernate.cfg.xml
-        $> vi src/main/resources/hibernate.cfg.xml
+        $> cp src/main/resources/dev.properties.example src/main/resources/dev.properties
     ```
-
-5. Create the `application.properties` file.
-
-    ```shell
-        $> cp src/main/resources/application.properties.example src/main/resources/application.properties
-    ```
-
-   You shouldn't have to edit anything in that file.  (But some day that might change -- see https://github.com/PCNI/OpenHMIS/issues/38 for more information.)
 
 Import sample data (or real data, if you have some):
 ---------------------------------------------------
