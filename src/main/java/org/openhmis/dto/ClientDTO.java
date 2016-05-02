@@ -21,7 +21,7 @@ import org.openhmis.code.YesNoReason;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@XmlRootElement
+@XmlRootElement(name = "client")
 public class ClientDTO {
 	
 	/**
