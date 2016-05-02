@@ -20,8 +20,10 @@ import org.openhmis.code.YesNoReason;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @XmlRootElement(name = "client")
+@JsonTypeName("clients")
 public class ClientDTO {
 	
 	/**
