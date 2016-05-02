@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.openhmis.code.ClientDischargeStatus;
 import org.openhmis.code.ClientDobDataQuality;
@@ -24,6 +26,7 @@ import org.openhmis.domain.PathClientRace;
 import org.openhmis.domain.PathClientVeteranInfo;
 import org.openhmis.dto.ClientDTO;
 import org.openhmis.dto.search.ClientSearchDTO;
+import org.openhmis.exception.InvalidParameterException;
 import org.openhmis.manager.ClientManager;
 
 public class ClientManager {
@@ -110,6 +113,11 @@ public class ClientManager {
 		pathClient.setUpdateDate(new Date());
 		pathClient.setUpdateTimestamp(new Date());
 		
+		// Validate the client
+		// TODO: this should return a list of errors that get wrapped appropriately
+		if(!validateClient(inputDTO))
+			return null;
+		
 		// Update the client
 		pathClientDAO.update(pathClient);
 
@@ -153,6 +161,32 @@ public class ClientManager {
 		PathClientVeteranInfo pathClientVeteranInfo = pathClientVeteranInfoDAO.getPathVeteranInfoByClientKey(pathClient.getClientKey());
 		pathClientVeteranInfoDAO.delete(pathClientVeteranInfo);
 		
+		return true;
+	}
+	
+	public boolean validateClient(ClientDTO inputDTO) {
+		
+		// 3.2.1 SSN
+		// The letter x is the only permissible nonnumeric
+		// character and should be used to
+		// indicate the position of omitted digits
+		// ^[0-9xX]{9}$
+		Pattern validSsn = Pattern.compile("^[0-9xX]{9}$");
+		Matcher ssnMatcher = validSsn.matcher(inputDTO.getSsn());
+		if(inputDTO.getSsn() != null
+		&& !ssnMatcher.find())
+			throw new InvalidParameterException();
+
+		// 3.4.1 RaceNone
+		// Non-null only if all other Race fields = 0 or 99		
+
+		// 3.3.1 DOB
+		// Must be before today
+		Date now = new Date();
+		if(inputDTO.getDob() != null
+		&& now.compareTo(inputDTO.getDob()) < 0)
+			throw new InvalidParameterException();
+			
 		return true;
 	}
 	
