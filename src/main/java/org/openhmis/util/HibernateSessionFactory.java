@@ -75,7 +75,34 @@ public class HibernateSessionFactory {
 	        Configuration configuration = new Configuration();
 	
 	        // Define the class mappings
-	        configuration.addResource("hibernate.cfg.xml");
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpMedicalAssistance.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpProjectContinuum.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpProjectInventory.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpProjectSite.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpEnrollment.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpPhysicalDisability.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.SchemaVersion.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpExit.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpReferral.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.PathClientVeteranInfo.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpContact.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpMentalHealthProblem.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpHealthInsurance.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpProject.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpChronicHealthCondition.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpHivAidsStatus.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpService.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpOrganization.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpDomesticAbuse.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.PathClientProgram.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpProjectFunder.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.PathClient.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpFinancialAssistance.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpSubstanceAbuse.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpNonCashBenefit.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpIncomeSource.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.PathClientRace.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpDevelopmentalDisability.class);
 
 	        // Load the application properties based on the current context
 	        ApplicationPropertyUtil propertyUtil = new ApplicationPropertyUtil();
