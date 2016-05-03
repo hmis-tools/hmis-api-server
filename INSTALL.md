@@ -118,11 +118,11 @@ _Note: you do not need to install anything for this to work.  Flyway is automati
 
 4. Create the `dev.properties` file.
 
-   The database url, username, and password entered in this file must match those created in steps 1 and 2
 
     ```shell
         $> cp src/main/resources/dev.properties.example src/main/resources/dev.properties
     ```
+    Open the new file and enter the database username and password that you created in steps 1 and 2.  You'll add more entries to this file once you have information for Google authentication (see "Set up OAuth authentication" below).
 
 Import sample data (or real data, if you have some):
 ---------------------------------------------------
@@ -135,11 +135,10 @@ Set up OAuth authentication:
 ----------------------------
 This API uses [Google Sign-in](https://developers.google.com/identity/) OAuth-style authentication.  To build an application powered by this API, your application must use the Google Sign-in [server side flow](https://developers.google.com/identity/sign-in/web/server-side-flow).
 
-1. Begin the [Google sign-in tutorial](https://developers.google.com/identity/sign-in/web/server-side-flow).  Create a client ID and a client secret and store them in a local `application.properties` file, then restart your app.
+1. Begin the [Google sign-in tutorial](https://developers.google.com/identity/sign-in/web/server-side-flow).  Create a client ID and a client secret and store them in a local `dev.properties` file, then restart your app.
 
    ```shell
-        $> cp src/main/resources/application.properties.example src/main/resources/application.properties
-        $> emacs src/main/resources/application.properties
+        $> emacs src/main/resources/dev.properties
         $> mvn tomcat7:redeploy
    ```
 
@@ -147,7 +146,7 @@ This API uses [Google Sign-in](https://developers.google.com/identity/) OAuth-st
 
 3. `POST` to `http://localhost:8080/openhmis/api/v3/authenticate/google` in part 6 of [the Google tutorial](https://developers.google.com/identity/sign-in/web/server-side-flow), passing the generated authentication code as the raw POST value, as explained there.
 
-4. Extract the `id_token` component from the JSON object returned in part 7 of the tutorial.  If instead you receive an error like `Token Fail: 401 Unauthorized`, check that your origin and redirect URIs are correct, that your `client_id` and `client_secret` are in `application.properties`, and that you've run `mvn tomcat7:redeploy` whenever any of these values change.
+4. Extract the `id_token` component from the JSON object returned in part 7 of the tutorial.  If instead you receive an error like `Token Fail: 401 Unauthorized`, check that your origin and redirect URIs are correct, that your `client_id` and `client_secret` are in `dev.properties`, and that you've run `mvn tomcat7:redeploy` whenever any of these values change.
 
 5. For all API calls that require authentication include the HTTP header `Authorization` with the value of the `id_token` you collected in step 3.  To test these calls with specific headers, try the [Postman](https://www.getpostman.com/) app.
 
