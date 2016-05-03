@@ -43,13 +43,13 @@ public class ClientService {
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public Response getClients(@HeaderParam("Authorization") String authorization, @BeanParam ClientSearchDTO searchDTO) throws JsonProcessingException {
+	public List<ClientDTO> getClients(@HeaderParam("Authorization") String authorization, @BeanParam ClientSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization))
 			throw new AccessDeniedException();
 		
 		// Return clients that match the search terms
-                List<ClientDTO> clientDTOs = clientManager.getClients(searchDTO);
-                return Response.ok(clientDTOs).build();
+        List<ClientDTO> clientDTOs = clientManager.getClients(searchDTO);
+        return clientDTOs;
 	}
 	
 	@POST
