@@ -171,8 +171,6 @@ public class ClientManager {
 	}
 	
 	public boolean validateClient(ClientDTO inputDTO) {
-		
-		
 		// Universal Data Standard: Name (2014, 3.1)
 
 		// 3.1.5 Name Data Quality
