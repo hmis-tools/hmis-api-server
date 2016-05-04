@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import org.openhmis.code.serialization.CodeSerializer;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlEnumValue;
+
 import org.openhmis.code.serialization.CodeLookup;
 
 // YesNo are used in several data standard fields:
@@ -12,10 +16,15 @@ import org.openhmis.code.serialization.CodeLookup;
 
 @JsonSerialize(using = CodeSerializer.class)
 public enum YesNoReason implements BaseCode {
+	@XmlEnumValue("0")
 	NO (0, "No"),
+	@XmlEnumValue("1")
 	YES (1, "Yes"),
+	@XmlEnumValue("8")
 	UNKNOWN (8, "Client doesn't know"),
+	@XmlEnumValue("9")
 	REFUSED (9, "Client refused"),
+	@XmlEnumValue("99")
 	NOT_COLLECTED (99, "Data not collected");
 	
 	private final Integer code;
@@ -26,6 +35,7 @@ public enum YesNoReason implements BaseCode {
 		this.description = description;
 	}
 
+	@XmlElement
     public Integer getCode() {
         return code;
     }

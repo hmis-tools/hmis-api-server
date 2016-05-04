@@ -4,15 +4,26 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import org.openhmis.code.serialization.CodeSerializer;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlEnum;
+import javax.xml.bind.annotation.XmlEnumValue;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import org.openhmis.code.serialization.CodeLookup;
 
 // YesNo are used in several data standard fields:
 //  - Race (2014, 3.4)
 
 @JsonSerialize(using = CodeSerializer.class)
+@XmlEnum
 public enum YesNo implements BaseCode {
+
+	@XmlEnumValue("0")
 	NO (0, "No"),
+	@XmlEnumValue("1")
 	YES (1, "Yes"),
+	@XmlEnumValue("99")
 	NOT_COLLECTED (99, "Data not collected");
 
 	private final Integer code;
