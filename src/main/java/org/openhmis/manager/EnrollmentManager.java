@@ -104,13 +104,13 @@ public class EnrollmentManager {
 	}
 	
 	public EnrollmentDTO addEnrollment(EnrollmentDTO inputDTO) {
-		// Generate a PathClient from the input
-		TmpEnrollment tmpEnrollment = EnrollmentManager.generateTmpEnrollment(inputDTO);
-		
 		// Validate the enrollment
 		// TODO: this should return a list of errors that get wrapped appropriately
 		if(!validateEnrollment(inputDTO))
 			return null;
+		
+		// Generate a PathClient from the input
+		TmpEnrollment tmpEnrollment = EnrollmentManager.generateTmpEnrollment(inputDTO);
 		
 		// Set Export fields
 		tmpEnrollment.setDateCreated(new Date());

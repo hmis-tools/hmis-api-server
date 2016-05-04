@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.openhmis.dao.TmpProjectContinuumDAO;
 import org.openhmis.domain.TmpProjectContinuum;
+import org.openhmis.dto.ClientDTO;
 import org.openhmis.dto.CoCDTO;
 
 public class CoCManager {
@@ -95,7 +96,12 @@ public class CoCManager {
 	
 	public static CoCDTO addCoC(CoCDTO inputDTO) {
 
-		// Generate a PathClient from the input
+		// Validate the CoC
+		// TODO: this should return a list of errors that get wrapped appropriately
+		if(!validateCoC(inputDTO))
+			return null;
+
+		// Generate a CoC from the input
 		TmpProjectContinuum tmpProjectContinuum = CoCManager.generateTmpProjectContinuum(inputDTO);
 		
 		// Set Export fields
@@ -113,6 +119,12 @@ public class CoCManager {
 	public static CoCDTO updateCoC(CoCDTO inputDTO) {
 		// Generate a TmpProject from the input
 		TmpProjectContinuum tmpProjectContinuum = CoCManager.generateTmpProjectContinuum(inputDTO);
+
+		// Validate the CoC
+		// TODO: this should return a list of errors that get wrapped appropriately
+		if(!validateCoC(inputDTO))
+			return null;
+		
 		tmpProjectContinuum.setProjectCocId(Integer.parseInt(inputDTO.getProjectCoCId()));
 		tmpProjectContinuum.setDateUpdated(new Date());
 		
@@ -130,6 +142,12 @@ public class CoCManager {
 		
 		return true;
 	}
+	
+	public static boolean validateCoC(CoCDTO inputDTO) {
+		// There really aren't fields to validate right now.
+		return true;
+	}
+
 	
 	public static CoCDTO generateCoCDTO(TmpProjectContinuum tmpProjectContinuum) {
 		Integer projectCoCId = tmpProjectContinuum.getProjectCocId();

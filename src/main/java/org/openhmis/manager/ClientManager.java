@@ -72,14 +72,12 @@ public class ClientManager {
 	}
 	
 	public ClientDTO addClient(ClientDTO inputDTO) {
+		// Validate the client
+		if(!validateClient(inputDTO))
+			return null;
 		
 		// Generate a PathClient from the input
 		PathClient pathClient = ClientManager.generatePathClient(inputDTO);
-
-		// Validate the client
-		// TODO: this should return a list of errors that get wrapped appropriately
-		if(!validateClient(inputDTO))
-			return null;
 		
 		// Set Export fields
 		pathClient.setUpdateDate(new Date());
@@ -111,15 +109,12 @@ public class ClientManager {
 	}
 	
 	public ClientDTO updateClient(ClientDTO inputDTO) {
-		
-		// Generate a PathClient from the input
-		PathClient pathClient = ClientManager.generatePathClient(inputDTO);
-		
 		// Validate the client
-		// TODO: this should return a list of errors that get wrapped appropriately
 		if(!validateClient(inputDTO))
 			return null;
-		
+
+		// Generate a PathClient from the input
+		PathClient pathClient = ClientManager.generatePathClient(inputDTO);
 		pathClient.setClientKey(Integer.parseInt(inputDTO.getPersonalId()));
 		pathClient.setUpdateDate(new Date());
 		pathClient.setUpdateTimestamp(new Date());
@@ -172,13 +167,11 @@ public class ClientManager {
 	
 	public boolean validateClient(ClientDTO inputDTO) {
 		// Universal Data Standard: Name (2014, 3.1)
-
 		// 3.1.5 Name Data Quality
 		if(inputDTO.getNameDataQuality() == ClientNameDataQuality.ERR_UNKNOWN)
 			throw new InvalidParameterException("HUD 3.1.5 nameDataQuality", "nameDataQuality is set to an unknown code");
 
 		// Universal Data Standard: SSN (2014, 3.2)
-		
 		// 3.2.1 SSN
 		// The letter x is the only permissible nonnumeric character and should be used to indicate the position of omitted digits
 		// ^[0-9xX]{9}$
