@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientSchoolStatus implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	ATTENDING_REGULARLY (1, "Attending school regularly"),
 	@XmlEnumValue("2")
@@ -58,6 +60,6 @@ public enum ClientSchoolStatus implements BaseCode {
 	@JsonCreator
 	public static ClientSchoolStatus valueByCode(Integer code) {
 		ClientSchoolStatus value = enhancer.valueByCode(code); 
-		return (value == null)?ClientSchoolStatus.NOT_COLLECTED:value;
+		return (value == null)?ClientSchoolStatus.ERR_UNKNOWN:value;
 	}
 }

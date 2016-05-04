@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientResidencePriorLengthOfStay implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("2")
 	ONE_MONTH (2, "More than one week, but less than one month"),
 	@XmlEnumValue("3")
@@ -56,6 +58,6 @@ public enum ClientResidencePriorLengthOfStay implements BaseCode {
 	@JsonCreator
 	public static ClientResidencePriorLengthOfStay valueByCode(Integer code) {
 		ClientResidencePriorLengthOfStay value = enhancer.valueByCode(code); 
-		return (value == null)?ClientResidencePriorLengthOfStay.NOT_COLLECTED:value;
+		return (value == null)?ClientResidencePriorLengthOfStay.ERR_UNKNOWN:value;
 	}
 }

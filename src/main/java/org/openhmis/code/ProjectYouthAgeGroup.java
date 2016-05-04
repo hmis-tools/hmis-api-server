@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ProjectYouthAgeGroup implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	UNDER_EIGHTEEN (1, "Only under age 18"),
 	@XmlEnumValue("2")
@@ -46,6 +48,6 @@ public enum ProjectYouthAgeGroup implements BaseCode {
 	@JsonCreator
 	public static ProjectYouthAgeGroup valueByCode(Integer code) {
 		ProjectYouthAgeGroup value = enhancer.valueByCode(code); 
-		return (value == null)?ProjectYouthAgeGroup.NOT_COLLECTED:value;
+		return (value == null)?ProjectYouthAgeGroup.ERR_UNKNOWN:value;
 	}
 }

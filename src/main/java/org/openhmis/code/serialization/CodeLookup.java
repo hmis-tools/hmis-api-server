@@ -18,9 +18,6 @@ public class CodeLookup<E extends Enum<E> & BaseCode> {
     }
 
     public E valueByCode(Integer code) {
-    	E value = lookup.get(code);
-    	if(value == null)
-    		throw new InvalidParameterException();
-        return value;
+    	return lookup.get(code);
     }
 }

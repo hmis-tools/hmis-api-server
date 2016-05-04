@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientEmploymentType implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	FULL_TIME (1, "Full-time"),
 	@XmlEnumValue("2")
@@ -46,6 +48,6 @@ public enum ClientEmploymentType implements BaseCode {
 	@JsonCreator
 	public static ClientEmploymentType valueByCode(Integer code) {
 		ClientEmploymentType value = enhancer.valueByCode(code); 
-		return (value == null)?ClientEmploymentType.NOT_COLLECTED:value;
+		return (value == null)?ClientEmploymentType.ERR_UNKNOWN:value;
 	}
 }

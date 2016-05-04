@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientPathSmiInformation implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("0")
 	NO (0, "No"),
 	@XmlEnumValue("1")
@@ -52,6 +54,6 @@ public enum ClientPathSmiInformation implements BaseCode {
 	@JsonCreator
 	public static ClientPathSmiInformation valueByCode(Integer code) {
 		ClientPathSmiInformation value = enhancer.valueByCode(code); 
-		return (value == null)?ClientPathSmiInformation.NOT_COLLECTED:value;
+		return (value == null)?ClientPathSmiInformation.ERR_UNKNOWN:value;
 	}
 }

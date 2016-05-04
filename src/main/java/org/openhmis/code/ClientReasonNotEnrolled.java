@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientReasonNotEnrolled implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	INELIGIBLE (1, "Client was found ineligible for PATH"),
 	@XmlEnumValue("2")
@@ -44,6 +46,6 @@ public enum ClientReasonNotEnrolled implements BaseCode {
 	@JsonCreator
 	public static ClientReasonNotEnrolled valueByCode(Integer code) {
 		ClientReasonNotEnrolled value = enhancer.valueByCode(code); 
-		return (value == null)?ClientReasonNotEnrolled.NOT_COLLECTED:value;
+		return (value == null)?ClientReasonNotEnrolled.ERR_UNKNOWN:value;
 	}
 }

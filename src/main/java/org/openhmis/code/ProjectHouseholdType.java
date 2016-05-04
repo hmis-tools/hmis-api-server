@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ProjectHouseholdType implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("0")
 	NO_CHILDREN (0, "Households without children"),
 	@XmlEnumValue("3")
@@ -46,6 +48,6 @@ public enum ProjectHouseholdType implements BaseCode {
 	@JsonCreator
 	public static ProjectHouseholdType valueByCode(Integer code) {
 		ProjectHouseholdType value = enhancer.valueByCode(code); 
-		return (value == null)?ProjectHouseholdType.NOT_COLLECTED:value;
+		return (value == null)?ProjectHouseholdType.ERR_UNKNOWN:value;
 	}
 }

@@ -154,8 +154,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public ClientNameDataQuality getNameDataQuality() {
-		if(nameDataQuality == null)
-			return ClientNameDataQuality.NOT_COLLECTED;
 		return nameDataQuality;
 	}
 	@JsonProperty
@@ -175,8 +173,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public ClientSsnDataQuality getSsnDataQuality() {
-		if(ssnDataQuality == null)
-			return ClientSsnDataQuality.NOT_COLLECTED;
 		return ssnDataQuality;
 	}
 
@@ -197,8 +193,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public ClientDobDataQuality getDobDataQuality() {
-		if(dobDataQuality == null)
-			return ClientDobDataQuality.NOT_COLLECTED;
 		return dobDataQuality;
 	}
 
@@ -209,8 +203,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNo getAmIndAKNative() {
-		if(amIndAKNative == null)
-			return YesNo.NOT_COLLECTED;
 		return amIndAKNative;
 	}
 
@@ -221,8 +213,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNo getAsian() {
-		if(asian == null)
-			return YesNo.NOT_COLLECTED;
 		return asian;
 	}
 
@@ -233,8 +223,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNo getBlackAfAmerican() {
-		if(blackAfAmerican == null)
-			return YesNo.NOT_COLLECTED;
 		return blackAfAmerican;
 	}
 
@@ -245,8 +233,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNo getNativeHIOtherPacific() {
-		if(nativeHIOtherPacific == null)
-			return YesNo.NOT_COLLECTED;
 		return nativeHIOtherPacific;
 	}
 
@@ -257,8 +243,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNo getWhite() {
-		if(white == null)
-			return YesNo.NOT_COLLECTED;
 		return white;
 	}
 
@@ -279,8 +263,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public ClientEthnicity getEthnicity() {
-		if(ethnicity == null)
-			return ClientEthnicity.NOT_COLLECTED;
 		return ethnicity;
 	}
 
@@ -291,8 +273,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public ClientGender getGender() {
-		if(gender == null)
-			return ClientGender.NOT_COLLECTED;
 		return gender;
 	}
 
@@ -313,8 +293,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getVeteranStatus() {
-		if(veteranStatus == null)
-			return YesNoReason.NOT_COLLECTED;
 		return veteranStatus;
 	}
 
@@ -345,8 +323,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getWorldWarII() {
-		if(worldWarII == null)
-			return YesNoReason.NOT_COLLECTED;
 		return worldWarII;
 	}
 
@@ -357,8 +333,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getKoreanWar() {
-		if(koreanWar == null)
-			return YesNoReason.NOT_COLLECTED;
 		return koreanWar;
 	}
 
@@ -369,8 +343,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getVietnamWar() {
-		if(vietnamWar == null)
-			return YesNoReason.NOT_COLLECTED;
 		return vietnamWar;
 	}
 
@@ -381,8 +353,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getDesertStorm() {
-		if(desertStorm == null)
-			return YesNoReason.NOT_COLLECTED;
 		return desertStorm;
 	}
 
@@ -393,8 +363,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getAfghanistanOEF() {
-		if(afghanistanOEF == null)
-			return YesNoReason.NOT_COLLECTED;
 		return afghanistanOEF;
 	}
 
@@ -405,8 +373,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getIraqOIF() {
-		if(iraqOIF == null)
-			return YesNoReason.NOT_COLLECTED;
 		return iraqOIF;
 	}
 
@@ -417,8 +383,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getIraqOND() {
-		if(iraqOND == null)
-			return YesNoReason.NOT_COLLECTED;
 		return iraqOND;
 	}
 
@@ -429,8 +393,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getOtherTheater() {
-		if(otherTheater == null)
-			return YesNoReason.NOT_COLLECTED;
 		return otherTheater;
 	}
 
@@ -441,10 +403,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public ClientMilitaryBranch getMilitaryBranch() {
-		if(militaryBranch == null)
-			return ClientMilitaryBranch.NOT_COLLECTED;
-		else
-			return militaryBranch;
+		return militaryBranch;
 	}
 
 	@JsonProperty
@@ -454,10 +413,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public ClientDischargeStatus getDischargeStatus() {
-		if(dischargeStatus == null)
-			return ClientDischargeStatus.NOT_COLLECTED;
-		else
-			return dischargeStatus;
+		return dischargeStatus;
 	}
 
 	@JsonProperty

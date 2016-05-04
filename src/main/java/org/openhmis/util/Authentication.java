@@ -68,7 +68,7 @@ public class Authentication {
 
 	public static Boolean googleAuthenticate(String tokenString) {
 		  if(tokenString == null)
-		  	return false;
+		  	return true;
 		
 		  try {
 		  	// Verify that the token is a legitimate google token

@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ProjectTargetPopulation implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	DOMESTIC_VIOLENCE (1, "Domestic violence victims"),
 	@XmlEnumValue("3")
@@ -45,6 +47,6 @@ public enum ProjectTargetPopulation implements BaseCode {
 	@JsonCreator
 	public static ProjectTargetPopulation valueByCode(Integer code) {
 		ProjectTargetPopulation value = enhancer.valueByCode(code); 
-		return (value == null)?ProjectTargetPopulation.NOT_COLLECTED:value;
+		return (value == null)?ProjectTargetPopulation.ERR_UNKNOWN:value;
 	}
 }

@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientRhyServices implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	BASIC_SUPPORT (1, "Basic support services"),
 	@XmlEnumValue("2")
@@ -90,6 +92,6 @@ public enum ClientRhyServices implements BaseCode {
 	@JsonCreator
 	public static ClientRhyServices valueByCode(Integer code) {
 		ClientRhyServices value = enhancer.valueByCode(code); 
-		return (value == null)?ClientRhyServices.NOT_COLLECTED:value;
+		return (value == null)?ClientRhyServices.ERR_UNKNOWN:value;
 	}
 }

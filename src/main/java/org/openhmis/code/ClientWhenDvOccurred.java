@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientWhenDvOccurred implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	THREE_MONTHS (1, "Within the past three months"),
 	@XmlEnumValue("2")
@@ -52,6 +54,6 @@ public enum ClientWhenDvOccurred implements BaseCode {
 	@JsonCreator
 	public static ClientWhenDvOccurred valueByCode(Integer code) {
 		ClientWhenDvOccurred value = enhancer.valueByCode(code); 
-		return (value == null)?ClientWhenDvOccurred.NOT_COLLECTED:value;
+		return (value == null)?ClientWhenDvOccurred.ERR_UNKNOWN:value;
 	}
 }

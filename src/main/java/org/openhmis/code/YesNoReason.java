@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 
 @JsonSerialize(using = CodeSerializer.class)
 public enum YesNoReason implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("0")
 	NO (0, "No"),
 	@XmlEnumValue("1")
@@ -49,6 +51,6 @@ public enum YesNoReason implements BaseCode {
 	@JsonCreator
 	public static YesNoReason valueByCode(Integer code) {
 		YesNoReason value = enhancer.valueByCode(code); 
-		return (value == null)?YesNoReason.NOT_COLLECTED:value;
+		return (value == null)?YesNoReason.ERR_UNKNOWN:value;
 	}
 }

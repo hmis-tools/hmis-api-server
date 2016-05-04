@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientPathHowConfirmed implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	UNCONFIRMED (1, "Unconfirmed; presumptive or self-report"),
 	@XmlEnumValue("2")
@@ -46,6 +48,6 @@ public enum ClientPathHowConfirmed implements BaseCode {
 	@JsonCreator
 	public static ClientPathHowConfirmed valueByCode(Integer code) {
 		ClientPathHowConfirmed value = enhancer.valueByCode(code); 
-		return (value == null)?ClientPathHowConfirmed.NOT_COLLECTED:value;
+		return (value == null)?ClientPathHowConfirmed.ERR_UNKNOWN:value;
 	}
 }
