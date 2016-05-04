@@ -176,11 +176,14 @@ public class ClientManager {
 		// The letter x is the only permissible nonnumeric character and should be used to indicate the position of omitted digits
 		// ^[0-9xX]{9}$
 		Pattern validSsn = Pattern.compile("^[0-9xX]{9}$");
-		Matcher ssnMatcher = validSsn.matcher(inputDTO.getSsn());
-		if(inputDTO.getSsn() != null
-		&& !ssnMatcher.find())
+                // need to check whether SSN is in input first
+                String ssn = inputDTO.getSsn();
+                if (ssn != null) {
+                    Matcher ssnMatcher = validSsn.matcher(ssn);
+                    if(ssn != null
+                       && !ssnMatcher.find())
 			throw new InvalidParameterException("HUD 3.2.1 (SSN)", "SSN must match the pattern ^[0-9xX]{9}$");
-
+                }
 		// 3.2.2 SSN Data Quality
 		if(inputDTO.getSsnDataQuality() == ClientSsnDataQuality.ERR_UNKNOWN)
 			throw new InvalidParameterException("HUD 3.2.2 ssnDataQuality", "ssnDataQuality is set to an unknown code");
