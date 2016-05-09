@@ -44,6 +44,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 	org.openhmis.dto.ServiceDTO.class,
 	org.openhmis.dto.SiteDTO.class,
 	org.openhmis.dto.SubstanceAbuseDTO.class,
+	org.openhmis.dto.UserDTO.class
 })
 public class DataResultDTO {
 

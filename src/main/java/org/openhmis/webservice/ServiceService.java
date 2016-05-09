@@ -39,7 +39,7 @@ public class ServiceService {
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<ServiceDTO> getServices(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 		
 		// If the user specified no updatedSince parameter, return everything
@@ -58,7 +58,7 @@ public class ServiceService {
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ServiceDTO createService(@HeaderParam("Authorization") String authorization, ServiceDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
 			throw new Error("You are not authorized to access this content");
 		ServiceDTO outputDTO = ServiceManager.addService(inputDTO);
 		return outputDTO;
@@ -68,7 +68,7 @@ public class ServiceService {
 	@Path("/{serviceId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ServiceDTO getService(@HeaderParam("Authorization") String authorization, @PathParam("serviceId") String serviceId) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 		ServiceDTO outputDTO = ServiceManager.getServiceById(serviceId);
 		return outputDTO;
@@ -79,7 +79,7 @@ public class ServiceService {
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ServiceDTO updateService(@HeaderParam("Authorization") String authorization, @PathParam("serviceId") String serviceId, ServiceDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
 			throw new Error("You are not authorized to access this content");
 		inputDTO.setServiceId(serviceId);
 		
@@ -91,7 +91,7 @@ public class ServiceService {
 	@Path("/{serviceId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteService(@HeaderParam("Authorization") String authorization, @PathParam("serviceId") String serviceId) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
 			throw new Error("You are not authorized to access this content");
 		ServiceManager.deleteService(serviceId);
 		return "true";
