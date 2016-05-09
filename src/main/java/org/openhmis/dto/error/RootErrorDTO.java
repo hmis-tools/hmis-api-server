@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 
 
 @JsonRootName("error")
+@XmlRootElement(name = "error")
 public class RootErrorDTO {
 
 	// Base error information
@@ -25,6 +28,7 @@ public class RootErrorDTO {
 	}
 
 	@JsonProperty
+	@XmlElement
 	public String getCode() {
 		if(this.errors.size() > 0)
 			return this.errors.get(0).getCode();
@@ -32,6 +36,7 @@ public class RootErrorDTO {
 	}
 
 	@JsonProperty
+	@XmlElement
 	public String getMessage() {
 		if(this.errors.size() > 0)
 			return this.errors.get(0).getMessage();
@@ -39,7 +44,8 @@ public class RootErrorDTO {
 	}
 
 	@JsonProperty
-	public ArrayList<AbstractErrorDTO> getErrors() {
+	@XmlElement
+	public List<AbstractErrorDTO> getErrors() {
 		return this.errors;
 	}
 	

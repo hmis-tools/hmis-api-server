@@ -47,7 +47,7 @@ public class ProjectService {
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<ProjectDTO> getProjects(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 
 		// If the user specified no updatedSince parameter, return everything
@@ -65,7 +65,7 @@ public class ProjectService {
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ProjectDTO createProject(@HeaderParam("Authorization") String authorization, ProjectDTO inputVO) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
 			throw new Error("You are not authorized to access this content");
 		ProjectDTO outputVO = ProjectManager.addProject(inputVO);
 		return outputVO;
@@ -75,7 +75,7 @@ public class ProjectService {
 	@Path("/{projectId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ProjectDTO getProject(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 		ProjectDTO projectDTO = ProjectManager.getProjectById(projectId);
 		return projectDTO;
@@ -86,7 +86,7 @@ public class ProjectService {
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ProjectDTO updateProject(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, ProjectDTO inputVO) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
 			throw new Error("You are not authorized to access this content");
 		inputVO.setProjectId(projectId);
 		
@@ -98,7 +98,7 @@ public class ProjectService {
 	@Path("/{projectId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteProject(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
 			throw new Error("You are not authorized to access this content");
 		ProjectManager.deleteProject(projectId);
 		return "true";
@@ -109,7 +109,7 @@ public class ProjectService {
 	@Path("/{projectId}/cocs")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<CoCDTO> getCoCs(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 
 		// If the user specified no updatedSince parameter, return everything
@@ -127,7 +127,7 @@ public class ProjectService {
 	@Path("/{projectId}/funders")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<FunderDTO> getFunders(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 
 		// If the user specified no updatedSince parameter, return everything

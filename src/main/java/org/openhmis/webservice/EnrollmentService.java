@@ -77,7 +77,7 @@ public class EnrollmentService {
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<EnrollmentDTO> getEnrollments(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 
 		// If the user specified no updatedSince parameter, return everything
@@ -94,7 +94,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public EnrollmentDTO getClient(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 		EnrollmentDTO enrollmentDTO = enrollmentManager.getEnrollmentById(enrollmentId);
 		return enrollmentDTO;
@@ -105,7 +105,7 @@ public class EnrollmentService {
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public EnrollmentDTO createEnrollment(@HeaderParam("Authorization") String authorization, EnrollmentDTO inputVO) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
 			throw new Error("You are not authorized to access this content");
 		EnrollmentDTO outputVO = enrollmentManager.addEnrollment(inputVO);
 		return outputVO;
@@ -116,7 +116,7 @@ public class EnrollmentService {
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public EnrollmentDTO updateEnrollment(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, EnrollmentDTO inputVO) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
 			throw new Error("You are not authorized to access this content");
 		inputVO.setEnrollmentId(enrollmentId);
 		
@@ -128,7 +128,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteEnrollment(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
 			throw new Error("You are not authorized to access this content");
 		enrollmentManager.deleteEnrollment(enrollmentId);
 		return "true";
@@ -140,7 +140,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/exits")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<ExitDTO> getExits(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 		// Exits are weird because right now only one can exist but they are still separate...
 		// TODO: figure out whether or not we want exists to have history
@@ -155,7 +155,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/chronic-health-conditions")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<ChronicHealthConditionDTO> getChronicHealthConditions(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 		
 		// If the user specified no updatedSince parameter, return everything
@@ -174,7 +174,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/contacts")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<ContactDTO> getContacts(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 
 		// If the user specified no updatedSince parameter, return everything
@@ -193,7 +193,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/developmental-disabilities")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilities(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 		
 		// If the user specified no updatedSince parameter, return everything
@@ -212,7 +212,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/domestic-abuses")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<DomesticAbuseDTO> getDomesticAbuses(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 		
 		// If the user specified no updatedSince parameter, return everything
@@ -231,7 +231,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/financial-assitances")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<FinancialAssistanceDTO> getFinancialAssistances(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 
 		// If the user specified no updatedSince parameter, return everything
@@ -250,7 +250,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/health-insurances")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<HealthInsuranceDTO> getHealthInsurances(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 
 		// If the user specified no updatedSince parameter, return everything
@@ -269,7 +269,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/hiv-aids-statuses")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<HivAidsStatusDTO> getHivAidsStatuses(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 
 		// If the user specified no updatedSince parameter, return everything
@@ -288,7 +288,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/medical-assistances")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<MedicalAssistanceDTO> getMedicalAssistances(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 
 		// If the user specified no updatedSince parameter, return everything
@@ -307,7 +307,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/income-sources")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<IncomeSourceDTO> getIncomeSources(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 
 		// If the user specified no updatedSince parameter, return everything
@@ -326,7 +326,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/noncash-benefits")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<NonCashBenefitDTO> getNonCashBenefits(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 
 		// If the user specified no updatedSince parameter, return everything
@@ -345,7 +345,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/physical-disabilities")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<PhysicalDisabilityDTO> getPhysicalDisabilities(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 
 		// If the user specified no updatedSince parameter, return everything
@@ -364,7 +364,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/referrals")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<ReferralDTO> getReferrals(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 
 		// If the user specified no updatedSince parameter, return everything
@@ -383,7 +383,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/services")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<ServiceDTO> getServices(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 
 		// If the user specified no updatedSince parameter, return everything
@@ -402,7 +402,7 @@ public class EnrollmentService {
 	@Path("/{enrollmentId}/substance-abuses")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<SubstanceAbuseDTO> getSubstanceAbuses(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 
 		// If the user specified no updatedSince parameter, return everything

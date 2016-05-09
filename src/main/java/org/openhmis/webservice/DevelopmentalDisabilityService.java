@@ -39,7 +39,7 @@ public class DevelopmentalDisabilityService {
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilities(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 		
 		// If the user specified no updatedSince parameter, return everything
@@ -58,7 +58,7 @@ public class DevelopmentalDisabilityService {
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public DevelopmentalDisabilityDTO createDevelopmentalDisability(@HeaderParam("Authorization") String authorization, DevelopmentalDisabilityDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
 			throw new Error("You are not authorized to access this content");
 		DevelopmentalDisabilityDTO outputDTO = DevelopmentalDisabilityManager.addDevelopmentalDisability(inputDTO);
 		return outputDTO;
@@ -68,7 +68,7 @@ public class DevelopmentalDisabilityService {
 	@Path("/{developmentalDisabilityId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public DevelopmentalDisabilityDTO getDevelopmentalDisability(@HeaderParam("Authorization") String authorization, @PathParam("developmentalDisabilityId") String developmentalDisabilityId) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 		DevelopmentalDisabilityDTO outputDTO = DevelopmentalDisabilityManager.getDevelopmentalDisabilityById(developmentalDisabilityId);
 		return outputDTO;
@@ -79,7 +79,7 @@ public class DevelopmentalDisabilityService {
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public DevelopmentalDisabilityDTO updateDevelopmentalDisability(@HeaderParam("Authorization") String authorization, @PathParam("developmentalDisabilityId") String developmentalDisabilityId, DevelopmentalDisabilityDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
 			throw new Error("You are not authorized to access this content");
 		inputDTO.setDevelopmentalDisabilityId(developmentalDisabilityId);
 		
@@ -91,7 +91,7 @@ public class DevelopmentalDisabilityService {
 	@Path("/{developmentalDisabilityId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteDevelopmentalDisability(@HeaderParam("Authorization") String authorization, @PathParam("developmentalDisabilityId") String developmentalDisabilityId) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
 			throw new Error("You are not authorized to access this content");
 		DevelopmentalDisabilityManager.deleteDevelopmentalDisability(developmentalDisabilityId);
 		return "true";

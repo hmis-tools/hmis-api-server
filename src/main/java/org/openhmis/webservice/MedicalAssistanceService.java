@@ -39,7 +39,7 @@ public class MedicalAssistanceService {
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<MedicalAssistanceDTO> getMedicalAssistances(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 		
 		// If the user specified no updatedSince parameter, return everything
@@ -58,7 +58,7 @@ public class MedicalAssistanceService {
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public MedicalAssistanceDTO createMedicalAssistance(@HeaderParam("Authorization") String authorization, MedicalAssistanceDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
 			throw new Error("You are not authorized to access this content");
 		MedicalAssistanceDTO outputDTO = MedicalAssistanceManager.addMedicalAssistance(inputDTO);
 		return outputDTO;
@@ -68,7 +68,7 @@ public class MedicalAssistanceService {
 	@Path("/{medicalAssistanceId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public MedicalAssistanceDTO getMedicalAssistance(@HeaderParam("Authorization") String authorization, @PathParam("medicalAssistanceId") String medicalAssistanceId) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 		MedicalAssistanceDTO outputDTO = MedicalAssistanceManager.getMedicalAssistanceById(medicalAssistanceId);
 		return outputDTO;
@@ -79,7 +79,7 @@ public class MedicalAssistanceService {
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public MedicalAssistanceDTO updateMedicalAssistance(@HeaderParam("Authorization") String authorization, @PathParam("medicalAssistanceId") String medicalAssistanceId, MedicalAssistanceDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
 			throw new Error("You are not authorized to access this content");
 		inputDTO.setMedicalAssistanceId(medicalAssistanceId);
 		
@@ -91,7 +91,7 @@ public class MedicalAssistanceService {
 	@Path("/{medicalAssistanceId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteMedicalAssistance(@HeaderParam("Authorization") String authorization, @PathParam("medicalAssistanceId") String medicalAssistanceId) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
 			throw new Error("You are not authorized to access this content");
 		MedicalAssistanceManager.deleteMedicalAssistance(medicalAssistanceId);
 		return "true";

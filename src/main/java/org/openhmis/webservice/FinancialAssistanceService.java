@@ -39,7 +39,7 @@ public class FinancialAssistanceService {
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<FinancialAssistanceDTO> getFinancialAssistances(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 		
 		// If the user specified no updatedSince parameter, return everything
@@ -58,7 +58,7 @@ public class FinancialAssistanceService {
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public FinancialAssistanceDTO createFinancialAssistance(@HeaderParam("Authorization") String authorization, FinancialAssistanceDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
 			throw new Error("You are not authorized to access this content");
 		FinancialAssistanceDTO outputDTO = FinancialAssistanceManager.addFinancialAssistance(inputDTO);
 		return outputDTO;
@@ -68,7 +68,7 @@ public class FinancialAssistanceService {
 	@Path("/{financialAssistanceId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public FinancialAssistanceDTO getFinancialAssistance(@HeaderParam("Authorization") String authorization, @PathParam("financialAssistanceId") String financialAssistanceId) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new Error("You are not authorized to access this content");
 		FinancialAssistanceDTO outputDTO = FinancialAssistanceManager.getFinancialAssistanceById(financialAssistanceId);
 		return outputDTO;
@@ -79,7 +79,7 @@ public class FinancialAssistanceService {
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public FinancialAssistanceDTO updateFinancialAssistance(@HeaderParam("Authorization") String authorization, @PathParam("financialAssistanceId") String financialAssistanceId, FinancialAssistanceDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
 			throw new Error("You are not authorized to access this content");
 		inputDTO.setFinancialAssistanceId(financialAssistanceId);
 		
@@ -91,7 +91,7 @@ public class FinancialAssistanceService {
 	@Path("/{financialAssistanceId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteFinancialAssistance(@HeaderParam("Authorization") String authorization, @PathParam("financialAssistanceId") String financialAssistanceId) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
 			throw new Error("You are not authorized to access this content");
 		FinancialAssistanceManager.deleteFinancialAssistance(financialAssistanceId);
 		return "true";

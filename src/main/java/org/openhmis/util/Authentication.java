@@ -23,6 +23,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.net.ssl.HttpsURLConnection;
 
+import org.apache.log4j.Logger;
+import org.openhmis.dao.TmpUserDAO;
+import org.openhmis.domain.TmpUser;
 import org.openhmis.exception.AuthenticationFailureException;
 
 import com.google.api.client.auth.oauth2.TokenResponseException;
@@ -36,12 +39,18 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
 public class Authentication {
+	public static final String EXISTS = "EXISTS";
+	public static final String READ = "READ";
+	public static final String WRITE = "WRITE";
+	public static final String ADMIN = "ADMIN";
 
 	private static final HttpTransport TRANSPORT = new NetHttpTransport();
 	private static final JacksonFactory JSON_FACTORY = new JacksonFactory();
 	private static final ApplicationPropertyUtil applicationPropertyUtil = new ApplicationPropertyUtil();
 	private static final String CLIENT_ID = applicationPropertyUtil.getGoogleClientId();
 	private static final String CLIENT_SECRET = applicationPropertyUtil.getGoogleSecret();
+	
+	private static final Logger log = Logger.getLogger(Authentication.class);
 	
 	private Authentication() {}
 
@@ -55,32 +64,63 @@ public class Authentication {
 			return tokenResponse.toString();
 
 		} catch (TokenResponseException e) {
+			log.error(e);
 			throw new AuthenticationFailureException();
-			// return "Token Fail" + e.getMessage();
-			// Failed to upgrade the authorization code.
 		} catch (IOException e) {
 			// TODO: this should be a different exception
+			log.error(e);
 			throw new AuthenticationFailureException();
-			//	return "Read Google Data Fail";
-			// Failed to read token data from Google.
 		}
 	}
 
 	public static Boolean googleAuthenticate(String tokenString) {
-		  if(tokenString == null)
-		  	return false;
-		
-		  try {
-		  	// Verify that the token is a legitimate google token
-		  	GoogleIdToken token = GoogleIdToken.parse(JSON_FACTORY, tokenString);
-		  	GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier(TRANSPORT, JSON_FACTORY);
-		  	verifier.verify(token);
-		  	return true;
-		  } catch (IOException e) {
-		  	return false;
-		  } catch (GeneralSecurityException e) {
-		  	return false;
-		  }
+		return googleAuthenticate(tokenString, Authentication.EXISTS);	
+	}
+	
+	public static Boolean googleAuthenticate(String tokenString, String authType) {
+		if(tokenString == null)
+			return false;
+		try {
+			// Verify that the token is a legitimate google token
+			GoogleIdToken token = GoogleIdToken.parse(JSON_FACTORY, tokenString);
+			GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier(TRANSPORT, JSON_FACTORY);
+			verifier.verify(token);
+			
+			// If we get here then this is a valid google item
+			String externalId = token.getPayload().getEmail();
+			
+			log.debug("Login attempt:" + token.getPayload().getEmail());
+			
+			// Make sure this user has the requested credentials
+			TmpUserDAO tmpUserDAO = new TmpUserDAO();
+			TmpUser tmpUser = tmpUserDAO.getTmpUserByExternalId(externalId);
+			
+			// If the user doesn't exist in our system, they aren't authorized
+			if(tmpUser == null)
+				return false;
+			
+			switch(authType) {
+				case Authentication.EXISTS:
+					return true;
+				case Authentication.READ:
+					if(tmpUser.getCanRead() == 1)
+						return true;
+					break;
+				case Authentication.WRITE:
+					if(tmpUser.getCanWrite() == 1)
+						return true;
+					break;
+				case Authentication.ADMIN:
+					if(tmpUser.getCanAdmin() == 1)
+						return true;
+					break;
+			}
+			return false;
+		} catch (IOException e) {
+			return false;
+		} catch (GeneralSecurityException e) {
+			return false;
+		}
 	}
 
 }
