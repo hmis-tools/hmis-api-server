@@ -41,10 +41,24 @@ function signInCallback(authResult) {
 			"dataType": "json"
 		}).success(function(data) {
 			var idToken = data["id_token"];
-			console.log(idToken);
+			renderAdmin(idToken);
+
 		});
 	} else {
 		// There was an error.
 		$("body").html("There was a problem logging in, please refresh and try again.");
 	}
+}
+
+function renderAdmin(idToken) {
+		$.ajax({
+			"type": "GET",
+			"url": "../api/v3/users",
+			beforeSend: function (request) {
+                request.setRequestHeader("Authorization", idToken);
+            },
+			"dataType": "json"
+		}).success(function(data) {
+			console.log(data);
+		});
 }
