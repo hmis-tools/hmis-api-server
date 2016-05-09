@@ -42,4 +42,10 @@ public class ApplicationPropertyUtil {
 		loadPropertiesFile();
 		return properties.getProperty("google.secret");
 	}
+
+    public Boolean getAuthEnabled() {
+        loadPropertiesFile();
+        Boolean authEnabled = Boolean.parseBoolean(properties.getProperty("authEnabled"));
+        return authEnabled;
+    }
 }

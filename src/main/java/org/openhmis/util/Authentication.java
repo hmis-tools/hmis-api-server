@@ -42,6 +42,7 @@ public class Authentication {
 	private static final ApplicationPropertyUtil applicationPropertyUtil = new ApplicationPropertyUtil();
 	private static final String CLIENT_ID = applicationPropertyUtil.getGoogleClientId();
 	private static final String CLIENT_SECRET = applicationPropertyUtil.getGoogleSecret();
+        private static final Boolean AUTH_ENABLED = applicationPropertyUtil.getAuthEnabled();
 	
 	private Authentication() {}
 
@@ -67,6 +68,9 @@ public class Authentication {
 	}
 
 	public static Boolean googleAuthenticate(String tokenString) {
+                  if (getAuthEnabled() == false)
+                        return true;
+                  
 		  if(tokenString == null)
 		  	return false;
 		
@@ -82,5 +86,9 @@ public class Authentication {
 		  	return false;
 		  }
 	}
+
+        public static Boolean getAuthEnabled() {
+            return AUTH_ENABLED;
+        }
 
 }

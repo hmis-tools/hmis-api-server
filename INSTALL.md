@@ -150,7 +150,7 @@ This API uses [Google Sign-in](https://developers.google.com/identity/) OAuth-st
 
 5. For all API calls that require authentication include the HTTP header `Authorization` with the value of the `id_token` you collected in step 3.  To test these calls with specific headers, try the [Postman](https://www.getpostman.com/) app.
 
-You can test that you are passing your `id_token` correctly by using the `api/v3/healthcheck/authentication` endpoint
+You can test that you are passing your `id_token` correctly by using the `api/v3/healthcheck/authentication` endpoint.  You can turn off authentication for local development by changing the "authEnabled" entry in the dev.properties file to false and running `mvn tomcat7:redeploy`.  Turn authentication back on at any time by changing authEnabled to true and running `mvn tomcat7:redeploy`.
 
 
 Run the web service:
