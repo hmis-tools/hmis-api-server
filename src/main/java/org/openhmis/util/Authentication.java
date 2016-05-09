@@ -36,6 +36,11 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
 public class Authentication {
+	public static final String EXISTS = "EXISTS";
+	public static final String READ = "READ";
+	public static final String WRITE = "WRITE";
+	
+	
 
 	private static final HttpTransport TRANSPORT = new NetHttpTransport();
 	private static final JacksonFactory JSON_FACTORY = new JacksonFactory();
@@ -67,20 +72,28 @@ public class Authentication {
 	}
 
 	public static Boolean googleAuthenticate(String tokenString) {
-		  if(tokenString == null)
-		  	return false;
+		return googleAuthenticate(tokenString, Authentication.EXISTS);
 		
-		  try {
-		  	// Verify that the token is a legitimate google token
-		  	GoogleIdToken token = GoogleIdToken.parse(JSON_FACTORY, tokenString);
-		  	GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier(TRANSPORT, JSON_FACTORY);
-		  	verifier.verify(token);
-		  	return true;
-		  } catch (IOException e) {
-		  	return false;
-		  } catch (GeneralSecurityException e) {
-		  	return false;
-		  }
+	}
+	
+	public static Boolean googleAuthenticate(String tokenString, String authType) {
+		if(tokenString == null)
+			return false;
+		try {
+			// Verify that the token is a legitimate google token
+			GoogleIdToken token = GoogleIdToken.parse(JSON_FACTORY, tokenString);
+			GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier(TRANSPORT, JSON_FACTORY);
+			verifier.verify(token);
+			
+			// If we get here then this is a valid google item
+			String userId = token.getPayload().getSubject();
+			
+			return true;
+		} catch (IOException e) {
+			return false;
+		} catch (GeneralSecurityException e) {
+			return false;
+		}
 	}
 
 }
