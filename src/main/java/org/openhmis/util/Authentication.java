@@ -23,6 +23,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.net.ssl.HttpsURLConnection;
 
+import org.openhmis.dao.TmpUserDAO;
+import org.openhmis.domain.TmpUser;
 import org.openhmis.exception.AuthenticationFailureException;
 
 import com.google.api.client.auth.oauth2.TokenResponseException;
@@ -39,8 +41,7 @@ public class Authentication {
 	public static final String EXISTS = "EXISTS";
 	public static final String READ = "READ";
 	public static final String WRITE = "WRITE";
-	
-	
+	public static final String ADMIN = "ADMIN";
 
 	private static final HttpTransport TRANSPORT = new NetHttpTransport();
 	private static final JacksonFactory JSON_FACTORY = new JacksonFactory();
@@ -86,9 +87,33 @@ public class Authentication {
 			verifier.verify(token);
 			
 			// If we get here then this is a valid google item
-			String userId = token.getPayload().getSubject();
+			String externalId = token.getPayload().getSubject();
 			
-			return true;
+			// Make sure this user has the requested credentials
+			TmpUserDAO tmpUserDAO = new TmpUserDAO();
+			TmpUser tmpUser = tmpUserDAO.getTmpUserByExternalId(externalId);
+			
+			// If the user doesn't exist in our system, they aren't authorized
+			if(tmpUser == null)
+				return false;
+			
+			switch(authType) {
+				case Authentication.EXISTS:
+					return true;
+				case Authentication.READ:
+					if(tmpUser.getCanRead() == 1)
+						return true;
+					break;
+				case Authentication.WRITE:
+					if(tmpUser.getCanWrite() == 1)
+						return true;
+					break;
+				case Authentication.ADMIN:
+					if(tmpUser.getCanAdmin() == 1)
+						return true;
+					break;
+			}
+			return false;
 		} catch (IOException e) {
 			return false;
 		} catch (GeneralSecurityException e) {
