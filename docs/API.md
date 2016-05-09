@@ -86,7 +86,40 @@ services base, then a GET request to
 
 would fetch a list of clients like this:
 
-        [
+      {
+        "data": {
+          "items":
+          [
+          {"personalId":"336788",
+          "firstName":"Renee",
+          "middleName":null,
+          "lastName":"Mover",
+          "nameSuffix":null,
+          "nameDataQuality":99,
+          "ssn":"459834818",
+          ... }
+          {"personalId":"336823",
+          "firstName":"Tommy",
+          "middleName":null,
+          "lastName":"Harbison",
+          "nameSuffix":null,
+          "nameDataQuality":99,
+          "ssn":"106533370"," 
+          ... }
+          ...
+          ]
+        }
+      }
+
+Extending that with the appropriate personalId value ...
+
+        http://hmis.example.com/openhmis/api/v3/clients/336788
+    
+...would fetch the corresponding individual Client:
+
+      {
+        "data": {
+          "item":
             {"personalId":"336788",
              "firstName":"Renee",
              "middleName":null,
@@ -95,31 +128,17 @@ would fetch a list of clients like this:
              "nameDataQuality":99,
              "ssn":"459834818",
              ... }
-            {"personalId":"336823",
-             "firstName":"Tommy",
-             "middleName":null,
-             "lastName":"Harbison",
-             "nameSuffix":null,
-             "nameDataQuality":99,
-             "ssn":"106533370"," 
-             ... }
-            ...
-        ]
+          }
+        }
+      }
 
-Extending that with the appropriate personalId value ...
-
-        http://hmis.example.com/openhmis/api/v3/clients/336788
-    
-...would fetch the corresponding individual Client:
-
-        {"personalId":"336788",
-         "firstName":"Renee",
-         "middleName":null,
-         "lastName":"Mover",
-         "nameSuffix":null,
-         "nameDataQuality":99,
-         "ssn":"459834818",
-         ... }
+Note that the "data" wrapper has been added to correspond to the
+"errors" wrapper for responses to failed requests.  This is in part to
+correspond with this [Google style
+guide](https://google.github.io/styleguide/jsoncstyleguide.xml#error)
+and the [HMIS
+API](https://github.com/servinglynk/hmis-lynk-open-source).  As you can
+see above, "data" will contain either one "item" or a list of "items."
 
 POST, PUT, and DELETE work as expected.
 
@@ -127,8 +146,8 @@ Note that you cannot edit fields inside nested objects.  For example,
 if you PUT an Enrollment object (containing `income sources` nested
 within it) to `services/enrollments/3/`, you should not expect changes
 in nested income sources to take effect.  Instead, to change or add
-those income sources, you must use the appropriate nested endpoint,
-e.g., `services/enrollments/3/income-sources/1`.
+those income sources, you must use the appropriate top-level endpoint,
+e.g., `services/income-sources/1`.
 
 # Top-level resources:
 
@@ -136,6 +155,9 @@ e.g., `services/enrollments/3/income-sources/1`.
 * Enrollments
 * Organizations
 * Projects
+
+TODO: All endpoints are now top-level.  This section may need more
+changes to reflect that.
 
 # Clients
 
@@ -150,7 +172,10 @@ URI: `/clients`
   - Responses: Returns all clients found.
   - Example:
     Call: `$ curl http://localhost:8080/openhmis/api/v3/clients/`
-    Response: ```[
+    Response: ```
+{ "data":
+  { "items":
+[
   {
     "dateUpdated": "2015-05-08",
     "dateCreated": "2003-03-03",
@@ -223,7 +248,10 @@ URI: `/clients`
     "firstName": "Sheis",
     "personalId": "518207"
   }
-]```
+]
+}
+}
+```
 
 This endpoint also enables searching on the following fields via querystring parameters.
 
@@ -294,6 +322,8 @@ Example Search: `/clients?firstName=J*&dobEnd=2015-05-09
   - Example:
     - Call: `$ curl http://localhost:8080/openhmis/api/v3/clients/336788`
     - Response: ```{
+"data":
+{ "item": {
   "dateUpdated": "2015-05-08",
   "dateCreated": "2003-03-03",
   "dischargeStatus": 99,
@@ -328,6 +358,8 @@ Example Search: `/clients?firstName=J*&dobEnd=2015-05-09
   "middleName": null,
   "firstName": "Renee",
   "personalId": "336788"
+}
+}
 }```
 
 
