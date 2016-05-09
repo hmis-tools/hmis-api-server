@@ -154,7 +154,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public ClientNameDataQuality getNameDataQuality() {
-		return nameDataQuality;
+                return (nameDataQuality == null) ? ClientNameDataQuality.NOT_COLLECTED : nameDataQuality;
 	}
 	@JsonProperty
 	public void setNameDataQuality(ClientNameDataQuality nameDataQuality) {
@@ -173,7 +173,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public ClientSsnDataQuality getSsnDataQuality() {
-		return ssnDataQuality;
+                return (ssnDataQuality == null) ? ClientSsnDataQuality.NOT_COLLECTED : ssnDataQuality;
 	}
 
 	@JsonProperty
@@ -193,7 +193,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public ClientDobDataQuality getDobDataQuality() {
-		return dobDataQuality;
+                return (dobDataQuality == null) ? ClientDobDataQuality.NOT_COLLECTED : dobDataQuality;
 	}
 
 	@JsonProperty
@@ -263,7 +263,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public ClientEthnicity getEthnicity() {
-		return ethnicity;
+                return (ethnicity == null) ? ClientEthnicity.NOT_COLLECTED : ethnicity;
 	}
 
 	@JsonProperty
@@ -273,7 +273,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public ClientGender getGender() {
-		return gender;
+                return (gender == null) ? ClientGender.NOT_COLLECTED : gender;
 	}
 
 	@JsonProperty
@@ -293,7 +293,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getVeteranStatus() {
-		return veteranStatus;
+                return (veteranStatus == null) ? YesNoReason.NOT_COLLECTED : veteranStatus;
 	}
 
 	@JsonProperty
