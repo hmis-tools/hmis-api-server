@@ -323,7 +323,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getWorldWarII() {
-		return worldWarII;
+                return (worldWarII == null) ? YesNoReason.NOT_COLLECTED: worldWarII;
 	}
 
 	@JsonProperty
@@ -333,7 +333,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getKoreanWar() {
-		return koreanWar;
+                return (koreanWar == null) ? YesNoReason.NOT_COLLECTED: koreanWar;
 	}
 
 	@JsonProperty
@@ -343,7 +343,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getVietnamWar() {
-		return vietnamWar;
+                return (vietnamWar == null) ? YesNoReason.NOT_COLLECTED : vietnamWar;
 	}
 
 	@JsonProperty
@@ -353,7 +353,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getDesertStorm() {
-		return desertStorm;
+                return (desertStorm == null) ? YesNoReason.NOT_COLLECTED : desertStorm;
 	}
 
 	@JsonProperty
@@ -363,7 +363,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getAfghanistanOEF() {
-		return afghanistanOEF;
+                return (afghanistanOEF == null) ? YesNoReason.NOT_COLLECTED : afghanistanOEF;
 	}
 
 	@JsonProperty
@@ -373,7 +373,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getIraqOIF() {
-		return iraqOIF;
+                return (iraqOIF == null) ? YesNoReason.NOT_COLLECTED : iraqOIF;
 	}
 
 	@JsonProperty
@@ -383,7 +383,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getIraqOND() {
-		return iraqOND;
+                return (iraqOND == null) ? YesNoReason.NOT_COLLECTED : iraqOND;
 	}
 
 	@JsonProperty
@@ -393,7 +393,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getOtherTheater() {
-		return otherTheater;
+                return (otherTheater == null) ? YesNoReason.NOT_COLLECTED : otherTheater;
 	}
 
 	@JsonProperty
@@ -403,7 +403,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public ClientMilitaryBranch getMilitaryBranch() {
-		return militaryBranch;
+                return (militaryBranch == null) ? ClientMilitaryBranch.NOT_COLLECTED : militaryBranch;
 	}
 
 	@JsonProperty
@@ -413,7 +413,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public ClientDischargeStatus getDischargeStatus() {
-		return dischargeStatus;
+                return (dischargeStatus == null) ? ClientDischargeStatus.NOT_COLLECTED : dischargeStatus;
 	}
 
 	@JsonProperty
