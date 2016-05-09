@@ -12,7 +12,7 @@ public class ObjectMapperContextResolver implements ContextResolver<ObjectMapper
     final ObjectMapper mapper = new ObjectMapper();
 
     public ObjectMapperContextResolver() {
-        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, true);
+    	mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, true);
     }
 
     @Override
