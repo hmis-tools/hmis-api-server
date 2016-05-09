@@ -29,12 +29,13 @@ public class WrappingWriterInterceptor implements WriterInterceptor {
             context.setEntity(resultDTO);
             context.setGenericType(ListResultDTO.class);
             context.setType(ListResultDTO.class);           
-        } else if(!(currentEntity instanceof RootErrorDTO)) {
+        } else if(!(currentEntity instanceof RootErrorDTO)
+        	&& !(currentEntity instanceof String)) {
             DataResultDTO resultDTO = new DataResultDTO(currentEntity);
             context.setEntity(resultDTO);
             context.setGenericType(DataResultDTO.class);
             context.setType(DataResultDTO.class);
-        } 
+        }
         
         context.proceed();
     }

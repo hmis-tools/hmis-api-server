@@ -23,6 +23,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.net.ssl.HttpsURLConnection;
 
+import org.apache.log4j.Logger;
 import org.openhmis.dao.TmpUserDAO;
 import org.openhmis.domain.TmpUser;
 import org.openhmis.exception.AuthenticationFailureException;
@@ -49,6 +50,8 @@ public class Authentication {
 	private static final String CLIENT_ID = applicationPropertyUtil.getGoogleClientId();
 	private static final String CLIENT_SECRET = applicationPropertyUtil.getGoogleSecret();
 	
+	private static final Logger log = Logger.getLogger(Authentication.class);
+	
 	private Authentication() {}
 
 	public static String getGoogleToken(String code) {
@@ -61,20 +64,17 @@ public class Authentication {
 			return tokenResponse.toString();
 
 		} catch (TokenResponseException e) {
+			log.error(e);
 			throw new AuthenticationFailureException();
-			// return "Token Fail" + e.getMessage();
-			// Failed to upgrade the authorization code.
 		} catch (IOException e) {
 			// TODO: this should be a different exception
+			log.error(e);
 			throw new AuthenticationFailureException();
-			//	return "Read Google Data Fail";
-			// Failed to read token data from Google.
 		}
 	}
 
 	public static Boolean googleAuthenticate(String tokenString) {
-		return googleAuthenticate(tokenString, Authentication.EXISTS);
-		
+		return googleAuthenticate(tokenString, Authentication.EXISTS);	
 	}
 	
 	public static Boolean googleAuthenticate(String tokenString, String authType) {
@@ -87,7 +87,9 @@ public class Authentication {
 			verifier.verify(token);
 			
 			// If we get here then this is a valid google item
-			String externalId = token.getPayload().getSubject();
+			String externalId = token.getPayload().getEmail();
+			
+			log.debug("Login attempt:" + token.getPayload().getEmail());
 			
 			// Make sure this user has the requested credentials
 			TmpUserDAO tmpUserDAO = new TmpUserDAO();

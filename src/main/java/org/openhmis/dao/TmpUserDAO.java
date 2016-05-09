@@ -36,7 +36,7 @@ public class TmpUserDAO extends BaseDAO {
 		String queryString = "select user " + 
 			"from TmpUser as user " + 
 			"where user.externalId =:externalId";
-
+		
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
 		queryObject.setParameter("externalId", externalId);
