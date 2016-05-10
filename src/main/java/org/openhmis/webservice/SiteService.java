@@ -40,7 +40,7 @@ public class SiteService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<SiteDTO> getSites(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
@@ -59,7 +59,7 @@ public class SiteService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public SiteDTO createSite(@HeaderParam("Authorization") String authorization, SiteDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		SiteDTO outputDTO = SiteManager.addSite(inputDTO);
 		return outputDTO;
 	}
@@ -69,7 +69,7 @@ public class SiteService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public SiteDTO getSite(@HeaderParam("Authorization") String authorization, @PathParam("siteId") String siteId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		SiteDTO outputDTO = SiteManager.getSiteById(siteId);
 		return outputDTO;
 	}
@@ -80,7 +80,7 @@ public class SiteService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public SiteDTO updateSite(@HeaderParam("Authorization") String authorization, @PathParam("siteId") String siteId, SiteDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		inputDTO.setSiteId(siteId);
 		
 		SiteDTO outputDTO = SiteManager.updateSite(inputDTO);
@@ -92,7 +92,7 @@ public class SiteService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteSite(@HeaderParam("Authorization") String authorization, @PathParam("siteId") String siteId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		SiteManager.deleteSite(siteId);
 		return "true";
 	}

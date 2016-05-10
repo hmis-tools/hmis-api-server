@@ -40,7 +40,7 @@ public class ExitService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<ExitDTO> getExits(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
@@ -59,7 +59,7 @@ public class ExitService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ExitDTO createExit(@HeaderParam("Authorization") String authorization, ExitDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		ExitDTO outputDTO = ExitManager.addExit(inputDTO);
 		return outputDTO;
 	}
@@ -69,7 +69,7 @@ public class ExitService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ExitDTO getExit(@HeaderParam("Authorization") String authorization, @PathParam("exitId") String exitId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		ExitDTO outputDTO = ExitManager.getExitById(exitId);
 		return outputDTO;
 	}
@@ -80,7 +80,7 @@ public class ExitService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ExitDTO updateExit(@HeaderParam("Authorization") String authorization, @PathParam("exitId") String exitId, ExitDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		inputDTO.setExitId(exitId);
 		
 		ExitDTO outputDTO = ExitManager.updateExit(inputDTO);
@@ -92,7 +92,7 @@ public class ExitService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteExit(@HeaderParam("Authorization") String authorization, @PathParam("exitId") String exitId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		ExitManager.deleteExit(exitId);
 		return "true";
 	}

@@ -40,7 +40,7 @@ public class UserService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<UserDTO> getUsers(@HeaderParam("Authorization") String authorization) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.ADMIN))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		
 		List<UserDTO> userDTOs = UserManager.getUsers();
 		return userDTOs;
@@ -52,7 +52,7 @@ public class UserService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public UserDTO createUser(@HeaderParam("Authorization") String authorization, UserDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.ADMIN))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		UserDTO outputDTO = UserManager.addUser(inputDTO);
 		return outputDTO;
 	}
@@ -62,7 +62,7 @@ public class UserService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public UserDTO getUser(@HeaderParam("Authorization") String authorization, @PathParam("userId") String userId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.ADMIN))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		UserDTO outputDTO = UserManager.getUserById(userId);
 		return outputDTO;
 	}
@@ -73,7 +73,7 @@ public class UserService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public UserDTO updateUser(@HeaderParam("Authorization") String authorization, @PathParam("userId") String userId, UserDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.ADMIN))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		inputDTO.setUserId(userId);
 		
 		UserDTO outputDTO = UserManager.updateUser(inputDTO);
@@ -85,7 +85,7 @@ public class UserService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteUser(@HeaderParam("Authorization") String authorization, @PathParam("userId") String userId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.ADMIN))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		UserManager.deleteUser(userId);
 		return "true";
 	}

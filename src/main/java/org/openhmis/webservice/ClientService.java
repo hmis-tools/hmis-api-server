@@ -58,7 +58,7 @@ public class ClientService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ClientDTO createClient(@HeaderParam("Authorization") String authorization, ClientDTO inputVO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		ClientDTO outputVO = clientManager.addClient(inputVO);
 		return outputVO;
 	}
@@ -68,7 +68,7 @@ public class ClientService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ClientDTO getClient(@HeaderParam("Authorization") String authorization, @PathParam("personalId") String personalId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		ClientDTO clientDTO = clientManager.getClientByPersonalId(personalId);
 		return clientDTO;
 	}
@@ -79,7 +79,7 @@ public class ClientService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ClientDTO updateClient(@HeaderParam("Authorization") String authorization, @PathParam("personalId") String personalId, ClientDTO inputVO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		inputVO.setPersonalId(personalId);
 		
 		ClientDTO outputVO = clientManager.updateClient(inputVO);
@@ -91,7 +91,7 @@ public class ClientService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteClient(@HeaderParam("Authorization") String authorization, @PathParam("personalId") String personalId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		clientManager.deleteClient(personalId);
 		return "true";
 	}

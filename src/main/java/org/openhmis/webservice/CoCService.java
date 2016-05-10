@@ -44,7 +44,7 @@ public class CoCService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<CoCDTO> getCoCs(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
@@ -63,7 +63,7 @@ public class CoCService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public CoCDTO createCoC(@HeaderParam("Authorization") String authorization, CoCDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		CoCDTO outputDTO = CoCManager.addCoC(inputDTO);
 		return outputDTO;
 	}
@@ -73,7 +73,7 @@ public class CoCService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public CoCDTO getCoC(@HeaderParam("Authorization") String authorization, @PathParam("coCId") String coCId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		CoCDTO outputDTO = CoCManager.getCoCByProjectCoCId(coCId);
 		return outputDTO;
 	}
@@ -84,7 +84,7 @@ public class CoCService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public CoCDTO updateCoC(@HeaderParam("Authorization") String authorization, @PathParam("coCId") String coCId, CoCDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		inputDTO.setProjectCoCId(coCId);
 		
 		CoCDTO outputDTO = CoCManager.updateCoC(inputDTO);
@@ -96,7 +96,7 @@ public class CoCService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteCoC(@HeaderParam("Authorization") String authorization, @PathParam("coCId") String coCId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		CoCManager.deleteCoC(coCId);
 		return "true";
 	}
@@ -107,7 +107,7 @@ public class CoCService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<InventoryDTO> getInventories(@HeaderParam("Authorization") String authorization, @PathParam("coCId") String coCId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
@@ -125,7 +125,7 @@ public class CoCService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<SiteDTO> getSites(@HeaderParam("Authorization") String authorization, @PathParam("coCId") String coCId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {

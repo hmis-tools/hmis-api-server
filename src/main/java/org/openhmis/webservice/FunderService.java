@@ -40,7 +40,7 @@ public class FunderService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<FunderDTO> getFunders(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
@@ -59,7 +59,7 @@ public class FunderService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public FunderDTO createFunder(@HeaderParam("Authorization") String authorization, FunderDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		FunderDTO outputDTO = FunderManager.addFunder(inputDTO);
 		return outputDTO;
 	}
@@ -69,7 +69,7 @@ public class FunderService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public FunderDTO getFunder(@HeaderParam("Authorization") String authorization, @PathParam("funderId") String funderId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		FunderDTO outputDTO = FunderManager.getFunderById(funderId);
 		return outputDTO;
 	}
@@ -80,7 +80,7 @@ public class FunderService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public FunderDTO updateFunder(@HeaderParam("Authorization") String authorization, @PathParam("funderId") String funderId, FunderDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		inputDTO.setFunderId(funderId);
 		
 		FunderDTO outputDTO = FunderManager.updateFunder(inputDTO);
@@ -92,7 +92,7 @@ public class FunderService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteFunder(@HeaderParam("Authorization") String authorization, @PathParam("funderId") String funderId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		FunderManager.deleteFunder(funderId);
 		return "true";
 	}

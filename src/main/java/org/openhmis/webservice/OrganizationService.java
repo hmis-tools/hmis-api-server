@@ -48,7 +48,7 @@ public class OrganizationService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<OrganizationDTO> getOrganizations(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
@@ -66,7 +66,7 @@ public class OrganizationService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public OrganizationDTO createOrganization(@HeaderParam("Authorization") String authorization, OrganizationDTO inputVO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		OrganizationDTO outputVO = OrganizationManager.addOrganization(inputVO);
 		return outputVO;
 	}
@@ -76,7 +76,7 @@ public class OrganizationService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public OrganizationDTO getOrganization(@HeaderParam("Authorization") String authorization, @PathParam("organizationId") String organizationId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		OrganizationDTO organizationDTO = OrganizationManager.getOrganizationByOrganizationId(organizationId);
 		return organizationDTO;
 	}
@@ -87,7 +87,7 @@ public class OrganizationService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public OrganizationDTO updateOrganization(@HeaderParam("Authorization") String authorization, @PathParam("organizationId") String organizationId, OrganizationDTO inputVO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		inputVO.setOrganizationId(organizationId);
 		
 		OrganizationDTO outputVO = OrganizationManager.updateOrganization(inputVO);
@@ -99,7 +99,7 @@ public class OrganizationService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteOrganization(@HeaderParam("Authorization") String authorization, @PathParam("organizationId") String organizationId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		OrganizationManager.deleteOrganization(organizationId);
 		return "true";
 	}

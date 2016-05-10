@@ -40,7 +40,7 @@ public class PhysicalDisabilityService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<PhysicalDisabilityDTO> getPhysicalDisabilities(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
@@ -59,7 +59,7 @@ public class PhysicalDisabilityService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public PhysicalDisabilityDTO createPhysicalDisability(@HeaderParam("Authorization") String authorization, PhysicalDisabilityDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		PhysicalDisabilityDTO outputDTO = PhysicalDisabilityManager.addPhysicalDisability(inputDTO);
 		return outputDTO;
 	}
@@ -69,7 +69,7 @@ public class PhysicalDisabilityService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public PhysicalDisabilityDTO getPhysicalDisability(@HeaderParam("Authorization") String authorization, @PathParam("physicalDisabilityId") String physicalDisabilityId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		PhysicalDisabilityDTO outputDTO = PhysicalDisabilityManager.getPhysicalDisabilityById(physicalDisabilityId);
 		return outputDTO;
 	}
@@ -80,7 +80,7 @@ public class PhysicalDisabilityService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public PhysicalDisabilityDTO updatePhysicalDisability(@HeaderParam("Authorization") String authorization, @PathParam("physicalDisabilityId") String physicalDisabilityId, PhysicalDisabilityDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		inputDTO.setPhysicalDisabilityId(physicalDisabilityId);
 		
 		PhysicalDisabilityDTO outputDTO = PhysicalDisabilityManager.updatePhysicalDisability(inputDTO);
@@ -92,7 +92,7 @@ public class PhysicalDisabilityService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deletePhysicalDisability(@HeaderParam("Authorization") String authorization, @PathParam("physicalDisabilityId") String physicalDisabilityId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		PhysicalDisabilityManager.deletePhysicalDisability(physicalDisabilityId);
 		return "true";
 	}
