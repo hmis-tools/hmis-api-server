@@ -5,10 +5,12 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.openhmis.code.ClientNameDataQuality;
 import org.openhmis.code.ProjectFundingSource;
 import org.openhmis.dao.TmpProjectFunderDAO;
 import org.openhmis.domain.TmpProjectFunder;
 import org.openhmis.dto.FunderDTO;
+import org.openhmis.exception.InvalidParameterException;
 
 public class FunderManager {
 	private static final TmpProjectFunderDAO tmpProjectFunderDAO = new TmpProjectFunderDAO();
@@ -96,6 +98,9 @@ public class FunderManager {
 	
 	public static FunderDTO addFunder(FunderDTO inputDTO) {
 
+		// Make sure the fields are valid
+		validateFunder(inputDTO);
+
 		// Generate a PathClient from the input
 		TmpProjectFunder tmpProjectFunder = FunderManager.generateTmpProjectFunder(inputDTO);
 		
@@ -114,6 +119,10 @@ public class FunderManager {
 	public static FunderDTO updateFunder(FunderDTO inputDTO) {
 		// Generate a TmpProject from the input
 		TmpProjectFunder tmpProjectFunder = FunderManager.generateTmpProjectFunder(inputDTO);
+		
+		// Make sure the fields are valid
+		validateFunder(inputDTO);
+		
 		tmpProjectFunder.setFunderId(Integer.parseInt(inputDTO.getFunderId()));
 		tmpProjectFunder.setDateUpdated(new Date());
 		
@@ -128,6 +137,15 @@ public class FunderManager {
 	public static boolean deleteFunder(String projectFunderId) {
 		TmpProjectFunder tmpProjectFunder = tmpProjectFunderDAO.getTmpProjectFunderById(Integer.parseInt(projectFunderId));
 		tmpProjectFunderDAO.delete(tmpProjectFunder);
+		
+		return true;
+	}
+	
+	public static boolean validateFunder(FunderDTO inputDTO) {
+
+		// Universal Data Standard: Funder (2014, 2.6) 
+		if(inputDTO.getFunder() == ProjectFundingSource.ERR_UNKNOWN)
+			throw new InvalidParameterException("HUD 3.1.5 funder", "funder is set to an unknown code");
 		
 		return true;
 	}

@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientReasonNoServices implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	OUT_OF_RANGE (1, "Out of age range"),
 	@XmlEnumValue("2")
@@ -48,6 +50,6 @@ public enum ClientReasonNoServices implements BaseCode {
 	@JsonCreator
 	public static ClientReasonNoServices valueByCode(Integer code) {
 		ClientReasonNoServices value = enhancer.valueByCode(code); 
-		return (value == null)?ClientReasonNoServices.NOT_COLLECTED:value;
+		return (value == null)?ClientReasonNoServices.ERR_UNKNOWN:value;
 	}
 }

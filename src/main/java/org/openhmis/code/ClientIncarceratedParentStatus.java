@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientIncarceratedParentStatus implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	ONE_PARENT (1, "One parent / legal guardian is incarcerated"),
 	@XmlEnumValue("2")
@@ -46,6 +48,6 @@ public enum ClientIncarceratedParentStatus implements BaseCode {
 	@JsonCreator
 	public static ClientIncarceratedParentStatus valueByCode(Integer code) {
 		ClientIncarceratedParentStatus value = enhancer.valueByCode(code); 
-		return (value == null)?ClientIncarceratedParentStatus.NOT_COLLECTED:value;
+		return (value == null)?ClientIncarceratedParentStatus.ERR_UNKNOWN:value;
 	}
 }

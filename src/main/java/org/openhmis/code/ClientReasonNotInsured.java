@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientReasonNotInsured implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	APPLIED_PENDING (1, "Applied; decision pending"),
 	@XmlEnumValue("2")
@@ -52,6 +54,6 @@ public enum ClientReasonNotInsured implements BaseCode {
 	@JsonCreator
 	public static ClientReasonNotInsured valueByCode(Integer code) {
 		ClientReasonNotInsured value = enhancer.valueByCode(code); 
-		return (value == null)?ClientReasonNotInsured.NOT_COLLECTED:value;
+		return (value == null)?ClientReasonNotInsured.ERR_UNKNOWN:value;
 	}
 }

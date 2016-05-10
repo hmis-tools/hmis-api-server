@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientHealthStatus implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	EXCELLENT (1, "Excellent"),
 	@XmlEnumValue("2")
@@ -54,6 +56,6 @@ public enum ClientHealthStatus implements BaseCode {
 	@JsonCreator
 	public static ClientHealthStatus valueByCode(Integer code) {
 		ClientHealthStatus value = enhancer.valueByCode(code); 
-		return (value == null)?ClientHealthStatus.NOT_COLLECTED:value;
+		return (value == null)?ClientHealthStatus.ERR_UNKNOWN:value;
 	}
 }

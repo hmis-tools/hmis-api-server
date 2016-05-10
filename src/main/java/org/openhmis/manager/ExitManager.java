@@ -13,6 +13,7 @@ import org.openhmis.code.ClientExpelledReason;
 import org.openhmis.code.ClientHealthStatus;
 import org.openhmis.code.ClientHousingAssessmentAtExit;
 import org.openhmis.code.ClientHousingAssessmentDisposition;
+import org.openhmis.code.ClientNameDataQuality;
 import org.openhmis.code.ClientNotEmployedReason;
 import org.openhmis.code.ClientProjectCompletionStatus;
 import org.openhmis.code.ClientSubsidyInformation;
@@ -27,6 +28,7 @@ import org.openhmis.domain.TmpExit;
 import org.openhmis.domain.TmpFinancialAssistance;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
+import org.openhmis.exception.InvalidParameterException;
 import org.openhmis.dto.ExitDTO;
 import org.openhmis.dto.FinancialAssistanceDTO;
 
@@ -84,6 +86,11 @@ public class ExitManager {
 	}
 	
 	public static ExitDTO addExit(ExitDTO inputDTO) {
+		// Validate the exit
+		// TODO: this should return a list of errors that get wrapped appropriately
+		if(!validateExit(inputDTO))
+			return null;
+		
 		// Generate a PathClient from the input
 		TmpExit tmpExit = ExitManager.generateTmpExit(inputDTO);
 		
@@ -102,6 +109,12 @@ public class ExitManager {
 	public static ExitDTO updateExit(ExitDTO inputDTO) {
 		// Generate a Exit from the input
 		TmpExit tmpExit = ExitManager.generateTmpExit(inputDTO);
+
+		// Validate the exit
+		// TODO: this should return a list of errors that get wrapped appropriately
+		if(!validateExit(inputDTO))
+			return null;
+		
 		tmpExit.setExitId(Integer.parseInt(inputDTO.getExitId()));
 		tmpExit.setDateUpdated(new Date());
 		
@@ -116,6 +129,19 @@ public class ExitManager {
 	public static boolean deleteExit(String exitId) {
 		TmpExit tmpExit = tmpExitDAO.getTmpExitById(Integer.parseInt(exitId));
 		tmpExitDAO.delete(tmpExit);
+		return true;
+	}
+	
+	public static boolean validateExit(ExitDTO inputDTO) {
+		
+		// Universal Data Standard: Project Entry Date (2014, 3.11)
+		// TODO: Check for undocumented requirements
+		
+		// Universal Data Standard: Destination (2014, 3.12)
+		// Collection: Project Exit
+		if(inputDTO.getDestinationTypeCode() == ClientDestination.ERR_UNKNOWN)
+			throw new InvalidParameterException("HUD 3.12.1 destinationType", "destinationType is set to an unknown code");
+
 		return true;
 	}
 	

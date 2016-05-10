@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ProjectFundingSource implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	HOMELESSNESS_PREVENTION_COC (1, "HUD CoC - Homelessness Prevention (High Performing Comm. Only)"),
 	@XmlEnumValue("2")
@@ -100,6 +102,6 @@ public enum ProjectFundingSource implements BaseCode {
 	@JsonCreator
 	public static ProjectFundingSource valueByCode(Integer code) {
 		ProjectFundingSource value = enhancer.valueByCode(code); 
-		return (value == null)?ProjectFundingSource.NOT_COLLECTED:value;
+		return (value == null)?ProjectFundingSource.ERR_UNKNOWN:value;
 	}
 }

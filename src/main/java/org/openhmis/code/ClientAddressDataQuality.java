@@ -17,6 +17,9 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientAddressDataQuality implements BaseCode {
+	
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	FULL_ADDRESS (1, "Full address"),
 	@XmlEnumValue("2")
@@ -50,6 +53,6 @@ public enum ClientAddressDataQuality implements BaseCode {
 	@JsonCreator
 	public static ClientAddressDataQuality valueByCode(Integer code) {
 		ClientAddressDataQuality value = enhancer.valueByCode(code); 
-		return (value == null)?ClientAddressDataQuality.NOT_COLLECTED:value;
+		return (value == null)?ClientAddressDataQuality.ERR_UNKNOWN:value;
 	}
 }

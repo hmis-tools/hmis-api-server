@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientDisabilityResponse implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("0")
 	NO (0, "No"),
 	@XmlEnumValue("1")
@@ -52,6 +54,6 @@ public enum ClientDisabilityResponse implements BaseCode {
 	@JsonCreator
 	public static ClientDisabilityResponse valueByCode(Integer code) {
 		ClientDisabilityResponse value = enhancer.valueByCode(code); 
-		return (value == null)?ClientDisabilityResponse.NOT_COLLECTED:value;
+		return (value == null)?ClientDisabilityResponse.ERR_UNKNOWN:value;
 	}
 }

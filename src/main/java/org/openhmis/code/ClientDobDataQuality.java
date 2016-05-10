@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientDobDataQuality implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	FULL (1, "Full DOB reported"),
 	@XmlEnumValue("2")
@@ -48,6 +50,6 @@ public enum ClientDobDataQuality implements BaseCode {
 	@JsonCreator
 	public static ClientDobDataQuality valueByCode(Integer code) {
 		ClientDobDataQuality value = enhancer.valueByCode(code); 
-		return (value == null)?ClientDobDataQuality.NOT_COLLECTED:value;
+		return (value == null)?ClientDobDataQuality.ERR_UNKNOWN:value;
 	}
 }

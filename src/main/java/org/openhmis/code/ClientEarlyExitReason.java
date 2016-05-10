@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientEarlyExitReason implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	INDEPENDENT_LIVING (1, "Left for other opportunities - independent living"),
 	@XmlEnumValue("2")
@@ -54,6 +56,6 @@ public enum ClientEarlyExitReason implements BaseCode {
 	@JsonCreator
 	public static ClientEarlyExitReason valueByCode(Integer code) {
 		ClientEarlyExitReason value = enhancer.valueByCode(code); 
-		return (value == null)?ClientEarlyExitReason.NOT_COLLECTED:value;
+		return (value == null)?ClientEarlyExitReason.ERR_UNKNOWN:value;
 	}
 }

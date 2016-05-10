@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientReferralSource implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	SELF (1, "Self-referral"),
 	@XmlEnumValue("2")
@@ -118,6 +120,6 @@ public enum ClientReferralSource implements BaseCode {
 	@JsonCreator
 	public static ClientReferralSource valueByCode(Integer code) {
 		ClientReferralSource value = enhancer.valueByCode(code); 
-		return (value == null)?ClientReferralSource.NOT_COLLECTED:value;
+		return (value == null)?ClientReferralSource.ERR_UNKNOWN:value;
 	}
 }

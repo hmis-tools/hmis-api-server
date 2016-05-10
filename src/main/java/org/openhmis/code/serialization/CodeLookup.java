@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.openhmis.code.BaseCode;
+import org.openhmis.exception.InvalidParameterException;
 
 
 public class CodeLookup<E extends Enum<E> & BaseCode> {
@@ -17,6 +18,6 @@ public class CodeLookup<E extends Enum<E> & BaseCode> {
     }
 
     public E valueByCode(Integer code) {
-        return lookup.get(code);
+    	return lookup.get(code);
     }
 }

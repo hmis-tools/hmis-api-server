@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientProjectCompletionStatus implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	COMPLETED (1, "Completed project"),
 	@XmlEnumValue("2")
@@ -50,6 +52,6 @@ public enum ClientProjectCompletionStatus implements BaseCode {
 	@JsonCreator
 	public static ClientProjectCompletionStatus valueByCode(Integer code) {
 		ClientProjectCompletionStatus value = enhancer.valueByCode(code); 
-		return (value == null)?ClientProjectCompletionStatus.NOT_COLLECTED:value;
+		return (value == null)?ClientProjectCompletionStatus.ERR_UNKNOWN:value;
 	}
 }

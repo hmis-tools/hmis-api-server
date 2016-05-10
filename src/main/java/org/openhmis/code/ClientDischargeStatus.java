@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientDischargeStatus implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	HONORABLE (1, "Honorable"),
 	@XmlEnumValue("2")
@@ -56,6 +58,6 @@ public enum ClientDischargeStatus implements BaseCode {
 	@JsonCreator
 	public static ClientDischargeStatus valueByCode(Integer code) {
 		ClientDischargeStatus value = enhancer.valueByCode(code); 
-		return (value == null)?ClientDischargeStatus.NOT_COLLECTED:value;
+		return (value == null)?ClientDischargeStatus.ERR_UNKNOWN:value;
 	}
 }

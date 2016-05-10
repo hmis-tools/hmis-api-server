@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientRhyNumberOfYears implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	ONE_YEAR (1, "Less than one year"),
 	@XmlEnumValue("2")
@@ -46,6 +48,6 @@ public enum ClientRhyNumberOfYears implements BaseCode {
 	@JsonCreator
 	public static ClientRhyNumberOfYears valueByCode(Integer code) {
 		ClientRhyNumberOfYears value = enhancer.valueByCode(code); 
-		return (value == null)?ClientRhyNumberOfYears.NOT_COLLECTED:value;
+		return (value == null)?ClientRhyNumberOfYears.ERR_UNKNOWN:value;
 	}
 }

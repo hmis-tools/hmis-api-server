@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientTimesHomelessPastThreeYears implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("0")
 	ZERO (0, "0 (not homeless - Prevention only)"),
 	@XmlEnumValue("1")
@@ -54,6 +56,6 @@ public enum ClientTimesHomelessPastThreeYears implements BaseCode {
 	@JsonCreator
 	public static ClientTimesHomelessPastThreeYears valueByCode(Integer code) {
 		ClientTimesHomelessPastThreeYears value = enhancer.valueByCode(code); 
-		return (value == null)?ClientTimesHomelessPastThreeYears.NOT_COLLECTED:value;
+		return (value == null)?ClientTimesHomelessPastThreeYears.ERR_UNKNOWN:value;
 	}
 }

@@ -154,9 +154,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public ClientNameDataQuality getNameDataQuality() {
-		if(nameDataQuality == null)
-			return ClientNameDataQuality.NOT_COLLECTED;
-		return nameDataQuality;
+                return (nameDataQuality == null) ? ClientNameDataQuality.NOT_COLLECTED : nameDataQuality;
 	}
 	@JsonProperty
 	public void setNameDataQuality(ClientNameDataQuality nameDataQuality) {
@@ -175,9 +173,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public ClientSsnDataQuality getSsnDataQuality() {
-		if(ssnDataQuality == null)
-			return ClientSsnDataQuality.NOT_COLLECTED;
-		return ssnDataQuality;
+                return (ssnDataQuality == null) ? ClientSsnDataQuality.NOT_COLLECTED : ssnDataQuality;
 	}
 
 	@JsonProperty
@@ -197,9 +193,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public ClientDobDataQuality getDobDataQuality() {
-		if(dobDataQuality == null)
-			return ClientDobDataQuality.NOT_COLLECTED;
-		return dobDataQuality;
+                return (dobDataQuality == null) ? ClientDobDataQuality.NOT_COLLECTED : dobDataQuality;
 	}
 
 	@JsonProperty
@@ -209,8 +203,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNo getAmIndAKNative() {
-		if(amIndAKNative == null)
-			return YesNo.NOT_COLLECTED;
 		return amIndAKNative;
 	}
 
@@ -221,8 +213,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNo getAsian() {
-		if(asian == null)
-			return YesNo.NOT_COLLECTED;
 		return asian;
 	}
 
@@ -233,8 +223,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNo getBlackAfAmerican() {
-		if(blackAfAmerican == null)
-			return YesNo.NOT_COLLECTED;
 		return blackAfAmerican;
 	}
 
@@ -245,8 +233,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNo getNativeHIOtherPacific() {
-		if(nativeHIOtherPacific == null)
-			return YesNo.NOT_COLLECTED;
 		return nativeHIOtherPacific;
 	}
 
@@ -257,8 +243,6 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNo getWhite() {
-		if(white == null)
-			return YesNo.NOT_COLLECTED;
 		return white;
 	}
 
@@ -279,9 +263,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public ClientEthnicity getEthnicity() {
-		if(ethnicity == null)
-			return ClientEthnicity.NOT_COLLECTED;
-		return ethnicity;
+                return (ethnicity == null) ? ClientEthnicity.NOT_COLLECTED : ethnicity;
 	}
 
 	@JsonProperty
@@ -291,9 +273,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public ClientGender getGender() {
-		if(gender == null)
-			return ClientGender.NOT_COLLECTED;
-		return gender;
+                return (gender == null) ? ClientGender.NOT_COLLECTED : gender;
 	}
 
 	@JsonProperty
@@ -313,9 +293,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getVeteranStatus() {
-		if(veteranStatus == null)
-			return YesNoReason.NOT_COLLECTED;
-		return veteranStatus;
+                return (veteranStatus == null) ? YesNoReason.NOT_COLLECTED : veteranStatus;
 	}
 
 	@JsonProperty
@@ -345,9 +323,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getWorldWarII() {
-		if(worldWarII == null)
-			return YesNoReason.NOT_COLLECTED;
-		return worldWarII;
+                return (worldWarII == null) ? YesNoReason.NOT_COLLECTED: worldWarII;
 	}
 
 	@JsonProperty
@@ -357,9 +333,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getKoreanWar() {
-		if(koreanWar == null)
-			return YesNoReason.NOT_COLLECTED;
-		return koreanWar;
+                return (koreanWar == null) ? YesNoReason.NOT_COLLECTED: koreanWar;
 	}
 
 	@JsonProperty
@@ -369,9 +343,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getVietnamWar() {
-		if(vietnamWar == null)
-			return YesNoReason.NOT_COLLECTED;
-		return vietnamWar;
+                return (vietnamWar == null) ? YesNoReason.NOT_COLLECTED : vietnamWar;
 	}
 
 	@JsonProperty
@@ -381,9 +353,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getDesertStorm() {
-		if(desertStorm == null)
-			return YesNoReason.NOT_COLLECTED;
-		return desertStorm;
+                return (desertStorm == null) ? YesNoReason.NOT_COLLECTED : desertStorm;
 	}
 
 	@JsonProperty
@@ -393,9 +363,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getAfghanistanOEF() {
-		if(afghanistanOEF == null)
-			return YesNoReason.NOT_COLLECTED;
-		return afghanistanOEF;
+                return (afghanistanOEF == null) ? YesNoReason.NOT_COLLECTED : afghanistanOEF;
 	}
 
 	@JsonProperty
@@ -405,9 +373,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getIraqOIF() {
-		if(iraqOIF == null)
-			return YesNoReason.NOT_COLLECTED;
-		return iraqOIF;
+                return (iraqOIF == null) ? YesNoReason.NOT_COLLECTED : iraqOIF;
 	}
 
 	@JsonProperty
@@ -417,9 +383,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getIraqOND() {
-		if(iraqOND == null)
-			return YesNoReason.NOT_COLLECTED;
-		return iraqOND;
+                return (iraqOND == null) ? YesNoReason.NOT_COLLECTED : iraqOND;
 	}
 
 	@JsonProperty
@@ -429,9 +393,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public YesNoReason getOtherTheater() {
-		if(otherTheater == null)
-			return YesNoReason.NOT_COLLECTED;
-		return otherTheater;
+                return (otherTheater == null) ? YesNoReason.NOT_COLLECTED : otherTheater;
 	}
 
 	@JsonProperty
@@ -441,10 +403,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public ClientMilitaryBranch getMilitaryBranch() {
-		if(militaryBranch == null)
-			return ClientMilitaryBranch.NOT_COLLECTED;
-		else
-			return militaryBranch;
+                return (militaryBranch == null) ? ClientMilitaryBranch.NOT_COLLECTED : militaryBranch;
 	}
 
 	@JsonProperty
@@ -454,10 +413,7 @@ public class ClientDTO {
 
 	@JsonProperty
 	public ClientDischargeStatus getDischargeStatus() {
-		if(dischargeStatus == null)
-			return ClientDischargeStatus.NOT_COLLECTED;
-		else
-			return dischargeStatus;
+                return (dischargeStatus == null) ? ClientDischargeStatus.NOT_COLLECTED : dischargeStatus;
 	}
 
 	@JsonProperty

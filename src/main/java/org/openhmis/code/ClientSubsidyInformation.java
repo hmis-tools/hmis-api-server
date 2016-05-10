@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientSubsidyInformation implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	NO_SUBSIDY (1, "Without a subsidy"),
 	@XmlEnumValue("2")
@@ -56,6 +58,6 @@ public enum ClientSubsidyInformation implements BaseCode {
 	@JsonCreator
 	public static ClientSubsidyInformation valueByCode(Integer code) {
 		ClientSubsidyInformation value = enhancer.valueByCode(code); 
-		return (value == null)?ClientSubsidyInformation.NOT_COLLECTED:value;
+		return (value == null)?ClientSubsidyInformation.ERR_UNKNOWN:value;
 	}
 }

@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientLastGradeCompleted implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	GRADE_5 (1, "Less than grade 5"),
 	@XmlEnumValue("2")
@@ -60,6 +62,6 @@ public enum ClientLastGradeCompleted implements BaseCode {
 	@JsonCreator
 	public static ClientLastGradeCompleted valueByCode(Integer code) {
 		ClientLastGradeCompleted value = enhancer.valueByCode(code); 
-		return (value == null)?ClientLastGradeCompleted.NOT_COLLECTED:value;
+		return (value == null)?ClientLastGradeCompleted.ERR_UNKNOWN:value;
 	}
 }

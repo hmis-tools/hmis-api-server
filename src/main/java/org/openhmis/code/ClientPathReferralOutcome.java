@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientPathReferralOutcome implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	ATTAINED (1, "Attained"),
 	@XmlEnumValue("2")
@@ -46,6 +48,6 @@ public enum ClientPathReferralOutcome implements BaseCode {
 	@JsonCreator
 	public static ClientPathReferralOutcome valueByCode(Integer code) {
 		ClientPathReferralOutcome value = enhancer.valueByCode(code); 
-		return (value == null)?ClientPathReferralOutcome.NOT_COLLECTED:value;
+		return (value == null)?ClientPathReferralOutcome.ERR_UNKNOWN:value;
 	}
 }

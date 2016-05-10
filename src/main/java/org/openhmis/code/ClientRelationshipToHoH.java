@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientRelationshipToHoH implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	SELF (1, "Self (head of household)"),
 	@XmlEnumValue("2")
@@ -54,6 +56,6 @@ public enum ClientRelationshipToHoH implements BaseCode {
 	@JsonCreator
 	public static ClientRelationshipToHoH valueByCode(Integer code) {
 		ClientRelationshipToHoH value = enhancer.valueByCode(code); 
-		return (value == null)?ClientRelationshipToHoH.NOT_COLLECTED:value;
+		return (value == null)?ClientRelationshipToHoH.ERR_UNKNOWN:value;
 	}
 }
