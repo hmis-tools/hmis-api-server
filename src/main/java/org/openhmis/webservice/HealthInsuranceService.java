@@ -39,8 +39,8 @@ public class HealthInsuranceService {
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<HealthInsuranceDTO> getHealthInsurances(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
-			throw new Error("You are not authorized to access this content");
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
+                        throw new AccessDeniedException();
 		
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
@@ -58,8 +58,8 @@ public class HealthInsuranceService {
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public HealthInsuranceDTO createHealthInsurance(@HeaderParam("Authorization") String authorization, HealthInsuranceDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
-			throw new Error("You are not authorized to access this content");
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
+                        throw new AccessDeniedException();
 		HealthInsuranceDTO outputDTO = HealthInsuranceManager.addHealthInsurance(inputDTO);
 		return outputDTO;
 	}
@@ -68,8 +68,8 @@ public class HealthInsuranceService {
 	@Path("/{healthInsuranceId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public HealthInsuranceDTO getHealthInsurance(@HeaderParam("Authorization") String authorization, @PathParam("healthInsuranceId") String healthInsuranceId) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
-			throw new Error("You are not authorized to access this content");
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
+                        throw new AccessDeniedException();
 		HealthInsuranceDTO outputDTO = HealthInsuranceManager.getHealthInsuranceById(healthInsuranceId);
 		return outputDTO;
 	}
@@ -79,8 +79,8 @@ public class HealthInsuranceService {
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public HealthInsuranceDTO updateHealthInsurance(@HeaderParam("Authorization") String authorization, @PathParam("healthInsuranceId") String healthInsuranceId, HealthInsuranceDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
-			throw new Error("You are not authorized to access this content");
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
+                        throw new AccessDeniedException();
 		inputDTO.setHealthInsuranceId(healthInsuranceId);
 		
 		HealthInsuranceDTO outputDTO = HealthInsuranceManager.updateHealthInsurance(inputDTO);
@@ -91,8 +91,8 @@ public class HealthInsuranceService {
 	@Path("/{healthInsuranceId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteHealthInsurance(@HeaderParam("Authorization") String authorization, @PathParam("healthInsuranceId") String healthInsuranceId) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
-			throw new Error("You are not authorized to access this content");
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
+                        throw new AccessDeniedException();
 		HealthInsuranceManager.deleteHealthInsurance(healthInsuranceId);
 		return "true";
 	}

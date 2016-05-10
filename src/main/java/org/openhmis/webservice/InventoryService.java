@@ -39,8 +39,8 @@ public class InventoryService {
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<InventoryDTO> getInventories(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
-			throw new Error("You are not authorized to access this content");
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
+                        throw new AccessDeniedException();
 		
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
@@ -58,8 +58,8 @@ public class InventoryService {
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public InventoryDTO createInventory(@HeaderParam("Authorization") String authorization, InventoryDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
-			throw new Error("You are not authorized to access this content");
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
+                        throw new AccessDeniedException();
 		InventoryDTO outputDTO = InventoryManager.addInventory(inputDTO);
 		return outputDTO;
 	}
@@ -68,8 +68,8 @@ public class InventoryService {
 	@Path("/{inventoryId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public InventoryDTO getInventory(@HeaderParam("Authorization") String authorization, @PathParam("inventoryId") String inventoryId) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
-			throw new Error("You are not authorized to access this content");
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
+                        throw new AccessDeniedException();
 		InventoryDTO outputDTO = InventoryManager.getInventoryById(inventoryId);
 		return outputDTO;
 	}
@@ -79,8 +79,8 @@ public class InventoryService {
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public InventoryDTO updateInventory(@HeaderParam("Authorization") String authorization, @PathParam("inventoryId") String inventoryId, InventoryDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
-			throw new Error("You are not authorized to access this content");
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
+                        throw new AccessDeniedException();
 		inputDTO.setInventoryId(inventoryId);
 		
 		InventoryDTO outputDTO = InventoryManager.updateInventory(inputDTO);
@@ -91,8 +91,8 @@ public class InventoryService {
 	@Path("/{inventoryId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteInventory(@HeaderParam("Authorization") String authorization, @PathParam("inventoryId") String inventoryId) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
-			throw new Error("You are not authorized to access this content");
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
+                        throw new AccessDeniedException();
 		InventoryManager.deleteInventory(inventoryId);
 		return "true";
 	}

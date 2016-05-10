@@ -39,8 +39,8 @@ public class ReferralService {
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<ReferralDTO> getReferrals(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
-			throw new Error("You are not authorized to access this content");
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
+                        throw new AccessDeniedException();
 		
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
@@ -58,8 +58,8 @@ public class ReferralService {
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ReferralDTO createReferral(@HeaderParam("Authorization") String authorization, ReferralDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
-			throw new Error("You are not authorized to access this content");
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
+                        throw new AccessDeniedException();
 		ReferralDTO outputDTO = ReferralManager.addReferral(inputDTO);
 		return outputDTO;
 	}
@@ -68,8 +68,8 @@ public class ReferralService {
 	@Path("/{referralId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ReferralDTO getReferral(@HeaderParam("Authorization") String authorization, @PathParam("referralId") String referralId) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
-			throw new Error("You are not authorized to access this content");
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
+                        throw new AccessDeniedException();
 		ReferralDTO outputDTO = ReferralManager.getReferralById(referralId);
 		return outputDTO;
 	}
@@ -79,8 +79,8 @@ public class ReferralService {
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ReferralDTO updateReferral(@HeaderParam("Authorization") String authorization, @PathParam("referralId") String referralId, ReferralDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
-			throw new Error("You are not authorized to access this content");
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
+                        throw new AccessDeniedException();
 		inputDTO.setReferralId(referralId);
 		
 		ReferralDTO outputDTO = ReferralManager.updateReferral(inputDTO);
@@ -91,8 +91,8 @@ public class ReferralService {
 	@Path("/{referralId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteReferral(@HeaderParam("Authorization") String authorization, @PathParam("referralId") String referralId) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
-			throw new Error("You are not authorized to access this content");
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
+                        throw new AccessDeniedException();
 		ReferralManager.deleteReferral(referralId);
 		return "true";
 	}

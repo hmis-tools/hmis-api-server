@@ -39,8 +39,8 @@ public class SubstanceAbuseService {
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<SubstanceAbuseDTO> getSubstanceAbuses(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
-			throw new Error("You are not authorized to access this content");
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
+                        throw new AccessDeniedException();
 		
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
@@ -58,8 +58,8 @@ public class SubstanceAbuseService {
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public SubstanceAbuseDTO createSubstanceAbuse(@HeaderParam("Authorization") String authorization, SubstanceAbuseDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
-			throw new Error("You are not authorized to access this content");
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
+                        throw new AccessDeniedException();
 		SubstanceAbuseDTO outputDTO = SubstanceAbuseManager.addSubstanceAbuse(inputDTO);
 		return outputDTO;
 	}
@@ -68,8 +68,8 @@ public class SubstanceAbuseService {
 	@Path("/{substanceAbuseId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public SubstanceAbuseDTO getSubstanceAbuse(@HeaderParam("Authorization") String authorization, @PathParam("substanceAbuseId") String substanceAbuseId) throws JsonProcessingException {
-		if(!Authentication.googleAuthenticate(authorization))
-			throw new Error("You are not authorized to access this content");
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
+                        throw new AccessDeniedException();
 		SubstanceAbuseDTO outputDTO = SubstanceAbuseManager.getSubstanceAbuseById(substanceAbuseId);
 		return outputDTO;
 	}
@@ -79,8 +79,8 @@ public class SubstanceAbuseService {
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public SubstanceAbuseDTO updateSubstanceAbuse(@HeaderParam("Authorization") String authorization, @PathParam("substanceAbuseId") String substanceAbuseId, SubstanceAbuseDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
-			throw new Error("You are not authorized to access this content");
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
+                        throw new AccessDeniedException();
 		inputDTO.setSubstanceAbuseId(substanceAbuseId);
 		
 		SubstanceAbuseDTO outputDTO = SubstanceAbuseManager.updateSubstanceAbuse(inputDTO);
@@ -91,8 +91,8 @@ public class SubstanceAbuseService {
 	@Path("/{substanceAbuseId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteSubstanceAbuse(@HeaderParam("Authorization") String authorization, @PathParam("substanceAbuseId") String substanceAbuseId) throws JsonParseException, JsonMappingException, IOException {
-		if(!Authentication.googleAuthenticate(authorization))
-			throw new Error("You are not authorized to access this content");
+		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
+                        throw new AccessDeniedException();
 		SubstanceAbuseManager.deleteSubstanceAbuse(substanceAbuseId);
 		return "true";
 	}
