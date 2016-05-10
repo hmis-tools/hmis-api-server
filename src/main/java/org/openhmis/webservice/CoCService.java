@@ -23,6 +23,7 @@ import org.apache.log4j.Logger;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.InventoryDTO;
 import org.openhmis.dto.SiteDTO;
+import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.manager.CoCManager;
 import org.openhmis.manager.InventoryManager;
 import org.openhmis.manager.SiteManager;

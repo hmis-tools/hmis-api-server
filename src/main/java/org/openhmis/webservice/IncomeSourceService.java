@@ -21,6 +21,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 import org.openhmis.dto.IncomeSourceDTO;
+import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.manager.IncomeSourceManager;
 import org.openhmis.util.Authentication;
 import org.openhmis.util.DateParser;

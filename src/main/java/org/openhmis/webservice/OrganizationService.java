@@ -23,6 +23,7 @@ import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.InventoryDTO;
 import org.openhmis.dto.OrganizationDTO;
 import org.openhmis.dto.SiteDTO;
+import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.manager.CoCManager;
 import org.openhmis.manager.FunderManager;
 import org.openhmis.manager.InventoryManager;
