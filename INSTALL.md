@@ -153,6 +153,35 @@ This API uses [Google Sign-in](https://developers.google.com/identity/) OAuth-st
 You can test that you are passing your `id_token` correctly by using the `api/v3/healthcheck/authentication` endpoint
 
 
+Create your first admin user:
+-----------------------------
+
+If you are setting up the OpenHMIS server for the first time, you'll see
+that you have a TMP_USER table in your database.  If you don't, then do
+the following:
+
+```
+    $ mysql -u __YOUR_USER__ -p
+    Enter password: __YOUR_PASSWORD__
+    
+    mysql> \. src/main/resources/db/migration/V028__CREATE_TMP_USER.sql
+```
+
+Then, create an admin user with all permissions:
+```
+    mysql> insert into TMP_USER (externalID, canRead, canWrite, canAdmin, dateCreated, dateUpdated) values ('__YOUR_GMAIL_EMAIL__', 1, 1, 1, NOW(), NOW());
+```
+
+Note that the `externalID` column expects some identification from
+another external account.  We generally expect this API to be set up
+with Google as the external authenticating party, in which case you
+would use a Google email address for the `externalID`, but you could set
+up OAuth with any other external auth, too.
+
+Each request to the API should include an authorization header with an
+id_token corresponding to an email address in this user table.
+
+
 Run the web service:
 --------------------
 

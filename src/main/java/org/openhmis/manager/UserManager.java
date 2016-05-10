@@ -25,7 +25,7 @@ public class UserManager {
 		// Collect the users
 		List<TmpUser> tmpUsers = tmpUserDAO.getTmpUsers();
 
-		// For each financialAssistance, collect and map the data
+		// For each TmpUser, collect and map the data
 		for (Iterator<TmpUser> iterator = tmpUsers.iterator(); iterator.hasNext();) {
 			TmpUser tmpUser = iterator.next();
 			UserDTO userDTO = UserManager.generateUserDTO(tmpUser);
@@ -45,14 +45,14 @@ public class UserManager {
 	}
 	
 	public static UserDTO addUser(UserDTO inputDTO) {
-		// Generate a PathClient from the input
+		// Generate a TmpUser from the input
 		TmpUser tmpUser = UserManager.generateTmpUser(inputDTO);
 		
-		// Set Export fields
+		// Set Export fields (TBD: is Export right here?)
 		tmpUser.setDateCreated(new Date());
 		tmpUser.setDateUpdated(new Date());
 		
-		// Save the client to allow secondary object generation
+		// Save the user to allow secondary object generation
 		tmpUserDAO.save(tmpUser);
 		inputDTO.setUserId(tmpUser.getUserId().toString());
 		
@@ -61,7 +61,7 @@ public class UserManager {
 	}
 	
 	public static UserDTO updateUser(UserDTO inputDTO) {
-		// Generate a Exit from the input
+		// Generate a user from the input
 		TmpUser tmpUser = UserManager.generateTmpUser(inputDTO);
 		tmpUser.setUserId(Integer.parseInt(inputDTO.getUserId()));
 		tmpUser.setDateUpdated(new Date());
@@ -89,7 +89,7 @@ public class UserManager {
 		userDTO.setCanWrite(tmpUser.getCanWrite());
 		userDTO.setCanAdmin(tmpUser.getCanAdmin());
 		
-		// Export Standard Fields
+		// Export Standard Fields (TBD: what are "Standard Fields"?)
 		userDTO.setDateCreated(tmpUser.getDateCreated());
 		userDTO.setDateUpdated(tmpUser.getDateUpdated());
 		
@@ -104,7 +104,7 @@ public class UserManager {
 		tmpUser.setCanWrite(inputDTO.getCanWrite());
 		tmpUser.setCanAdmin(inputDTO.getCanAdmin());
 		
-		// Export Standard Fields
+		// Export Standard Fields (TBD: what are "Standard Fields"?)
 		tmpUser.setDateCreated(inputDTO.getDateCreated());
 		tmpUser.setDateUpdated(inputDTO.getDateUpdated());
 		
