@@ -36,6 +36,7 @@ import org.openhmis.dto.PhysicalDisabilityDTO;
 import org.openhmis.dto.ReferralDTO;
 import org.openhmis.dto.ServiceDTO;
 import org.openhmis.dto.SubstanceAbuseDTO;
+import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.manager.ChronicHealthConditionManager;
 import org.openhmis.manager.ClientManager;
 import org.openhmis.manager.ContactManager;
