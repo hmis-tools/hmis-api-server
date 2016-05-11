@@ -1,0 +1,4 @@
+"OrganizationID","PersonalIdentificationNumber","LegalFirstName","LegalMiddleName","LegalLastName","LegalSuffix","NameDataQuality","SocialSecurityNumber","SocialSecNumberQualityCode","DateOfBirth","DateOfBirthQualityCode","RaceAmericanIndianOrAlaskaNative","RaceAsian","RaceBlackOrAfricanAmerican","RaceNativeHawaiianOrOtherPacificIslander","RaceWhite","RaceNone","Ethnicity","Gender","VeteranStatus","DateAdded","DateUpdated","UpdateOrDelete","UserID","IdentityVerification","ReleaseOfInformation","ExportID"
+1729,"338623","Eileen","","Zucken","",99,"153036371","1","1968-02-02","1",0,0,1,0,0,,1,1,0,2003-03-03,2015-05-08,"",,,,"20150805-062524.6696"
+1729,"382594","Shemust","Bea","Test","",99,"462238171","1","1979-05-26","1",0,0,0,0,1,8,0,2,0,2005-10-04,2015-05-08,"",,,,"20150805-062524.6696"
+1729,"178359","Robert","","Mover","",1,"711111114","1","1982-11-14","1",0,1,0,1,0,9,0,2,1,2008-02-06,2015-05-08,"",,,,"20150805-062524.6696"
