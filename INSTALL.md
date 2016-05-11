@@ -135,6 +135,13 @@ Set up OAuth authentication:
 ----------------------------
 This API uses [Google Sign-in](https://developers.google.com/identity/) OAuth-style authentication.  To build an application powered by this API, your application must use the Google Sign-in [server side flow](https://developers.google.com/identity/sign-in/web/server-side-flow).
 
+NOTE: If you simply want to make requests to an HMIS server based on a
+Google identity, you can find your id token by using the Google OAuth
+2.0 Playground as described
+[here](https://www.tbray.org/ongoing/When/201x/2013/04/04/ID-Tokens#p-5).
+Then, pass that id token as the value of the Authorization header in
+your requests, as described in step 5 below.
+
 1. Begin the [Google sign-in tutorial](https://developers.google.com/identity/sign-in/web/server-side-flow).  Create a client ID and a client secret and store them in a local `dev.properties` file, then restart your app.
 
    ```shell
