@@ -255,8 +255,10 @@ public class ClientManager {
 	
 	public static ClientDTO generateClientDTO(PathClient pathClient, List<PathClientRace> pathRaces, PathClientVeteranInfo pathVeteranInfo) {
 		ClientDTO clientDTO = new ClientDTO();
+
 		// Universal Data Standard: Personal ID (2014, 3.13) 
-		clientDTO.setPersonalId(pathClient.getClientKey().toString());
+		if(pathClient.getClientKey() != null)
+			clientDTO.setPersonalId(pathClient.getClientKey().toString());
 
 		// Universal Data Standard: Name (2014, 3.1)
 		clientDTO.setFirstName(pathClient.getFirstName());
@@ -276,6 +278,10 @@ public class ClientManager {
 		// Universal Data Standard: Race (2014, 3.4)
 		// Pathways stores races as individual records
 		// if no records exist, that is "None", otherwise set the fields 
+		if(pathRaces == null) {
+			pathRaces = new ArrayList<PathClientRace>();
+		}
+
 		if(pathRaces.size() == 0) {
 			clientDTO.setRaceNone(None.NOT_COLLECTED);
 		}

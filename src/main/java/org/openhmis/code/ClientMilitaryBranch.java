@@ -55,7 +55,7 @@ public enum ClientMilitaryBranch implements BaseCode {
 
 	@JsonCreator
 	public static ClientMilitaryBranch valueByCode(Integer code) {
-		ClientMilitaryBranch value = enhancer.valueByCode(code); 
+		ClientMilitaryBranch value = enhancer.valueByCode(code);
 		return (value == null)?ClientMilitaryBranch.ERR_UNKNOWN:value;
 	}
 }

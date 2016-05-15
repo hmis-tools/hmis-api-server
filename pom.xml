@@ -115,6 +115,20 @@
 	      <version>4.12</version>
 	      <scope>test</scope>
 	    </dependency>
+	    
+	    <dependency>
+		    <groupId>org.dbunit</groupId>
+		    <artifactId>dbunit</artifactId>
+		    <version>2.5.2</version>
+		    <scope>test</scope>
+		</dependency>
+
+	    <dependency>
+		    <groupId>org.flywaydb.flyway-test-extensions</groupId>
+		    <artifactId>flyway-dbunit-test</artifactId>
+		    <version>4.0</version>
+		    <scope>test</scope>
+		</dependency>
 
 	</dependencies>
 	
@@ -144,7 +158,7 @@
 				<artifactId>flyway-maven-plugin</artifactId>
 				<version>3.2.1</version>
 				<configuration>
-					<configFile>src/config/flyway.properties</configFile>
+					<configFile>src/main/resources/flyway.properties</configFile>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -153,6 +167,7 @@
 			    <version>2.19.1</version>
 			    <configuration>
 				    <excludedGroups>org.openhmis.test.IntegrationTest</excludedGroups>
+        			<trimStackTrace>false</trimStackTrace>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -163,6 +178,10 @@
 						<include>**/*.java</include>
 					</includes>
 					<groups>org.openhmis.test.IntegrationTest</groups>
+			        <systemPropertyVariables>
+			            <flyway.configFile>src/test/resources/flyway.properties</flyway.configFile>
+			            <ENV>test</ENV>
+			        </systemPropertyVariables>
 				</configuration>
 				<executions>
 					<execution>
@@ -170,12 +189,6 @@
 							<goal>integration-test</goal>
 							<goal>verify</goal>
 						</goals>
-		                <systemProperties>
-		                    <systemProperty>
-		                        <name>ENV</name>
-		                        <value>test</value>
-		                    </systemProperty>
-		                </systemProperties>
 					</execution>
 				</executions>
 			</plugin>

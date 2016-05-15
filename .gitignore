@@ -16,9 +16,8 @@ target/*
 !*.gitkeep
 
 # Configuration
-src/config/*
-!src/config/*.example
 src/main/resources/*.properties
+src/test/resources/*.properties
 
 # Eclipse
 *.pydevproject
