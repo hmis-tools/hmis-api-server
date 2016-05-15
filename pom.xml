@@ -109,6 +109,13 @@
 			<version>v2-rev93-1.20.0</version>
 		</dependency>
 
+		<dependency>
+	      <groupId>junit</groupId>
+	      <artifactId>junit</artifactId>
+	      <version>4.12</version>
+	      <scope>test</scope>
+	    </dependency>
+
 	</dependencies>
 	
 	<build>
@@ -139,6 +146,38 @@
 				<configuration>
 					<configFile>src/config/flyway.properties</configFile>
 				</configuration>
+			</plugin>
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-surefire-plugin</artifactId>
+			    <version>2.19.1</version>
+			    <configuration>
+				    <excludedGroups>org.openhmis.test.IntegrationTest</excludedGroups>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.19.1</version>
+				<configuration>
+					<includes>
+						<include>**/*.java</include>
+					</includes>
+					<groups>org.openhmis.test.IntegrationTest</groups>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+		                <systemProperties>
+		                    <systemProperty>
+		                        <name>ENV</name>
+		                        <value>test</value>
+		                    </systemProperty>
+		                </systemProperties>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
