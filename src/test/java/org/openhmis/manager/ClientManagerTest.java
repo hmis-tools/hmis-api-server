@@ -2,6 +2,7 @@ package org.openhmis.manager;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -11,6 +12,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.rules.ExpectedException;
+import org.mockito.Mockito;
+
 import org.openhmis.code.ClientDobDataQuality;
 import org.openhmis.code.ClientEthnicity;
 import org.openhmis.code.ClientGender;
@@ -19,9 +22,13 @@ import org.openhmis.code.ClientSsnDataQuality;
 import org.openhmis.code.None;
 import org.openhmis.code.YesNo;
 import org.openhmis.code.YesNoReason;
+import org.openhmis.dao.PathClientDAO;
+import org.openhmis.dao.PathClientRaceDAO;
+import org.openhmis.dao.PathClientVeteranInfoDAO;
 import org.openhmis.domain.PathClient;
 import org.openhmis.domain.PathClientRace;
 import org.openhmis.dto.ClientDTO;
+import org.openhmis.dto.search.ClientSearchDTO;
 import org.openhmis.exception.InvalidParameterException;
 import org.openhmis.test.UnitTest;
 
@@ -30,19 +37,54 @@ public class ClientManagerTest {
 
 	private ClientManager clientManager;
 	
-	@Before
-	public void setUp() {
-		this.clientManager = new ClientManager();
+	/**********
+	 * Data Access Tests
+	 */
+
+	@Test
+	public void aClientCanBeRetrievedByPersonalId() {
+		// Set up mocked objects
+		PathClientDAO mockPathClientDAO = Mockito.mock(PathClientDAO.class);
+		PathClientRaceDAO mockPathClientRaceDAO = Mockito.mock(PathClientRaceDAO.class);
+		PathClientVeteranInfoDAO mockPathClientVeteranInfoDAO = Mockito.mock(PathClientVeteranInfoDAO.class);
+		
+		PathClient pathClient = new PathClient();
+		pathClient.setFirstName("John");
+		Mockito.when(mockPathClientDAO.getPathClientByClientKey(1)).thenReturn(pathClient);
+		
+		// Run the test
+		ClientManager clientManager = new ClientManager(mockPathClientDAO, mockPathClientRaceDAO, mockPathClientVeteranInfoDAO);
+		ClientDTO clientDTO = clientManager.getClientByPersonalId("1");
+		assertEquals("John", clientDTO.getFirstName());
 	}
 
-	@After
-	public void tearDown() {
-		this.clientManager = null;
+	@Test
+	public void aListOfAllClientsCanBeRetrieved() {
+		// Set up mocked objects
+		PathClientDAO mockPathClientDAO = Mockito.mock(PathClientDAO.class);
+		PathClientRaceDAO mockPathClientRaceDAO = Mockito.mock(PathClientRaceDAO.class);
+		PathClientVeteranInfoDAO mockPathClientVeteranInfoDAO = Mockito.mock(PathClientVeteranInfoDAO.class);
+		ClientSearchDTO mockSearchDTO = Mockito.mock(ClientSearchDTO.class);
+
+		PathClient pathClient1 = new PathClient();
+		pathClient1.setFirstName("John");
+		PathClient pathClient2 = new PathClient();
+		pathClient2.setFirstName("Jane");
+		ArrayList<PathClient> mockClientList = new ArrayList<PathClient>();
+		mockClientList.add(pathClient1);
+		mockClientList.add(pathClient2);
+		
+		Mockito.when(mockPathClientDAO.getPathClients(mockSearchDTO)).thenReturn(mockClientList);
+		
+		// Run the test
+		ClientManager clientManager = new ClientManager(mockPathClientDAO, mockPathClientRaceDAO, mockPathClientVeteranInfoDAO);
+		List<ClientDTO> clientDTOs = clientManager.getClients(mockSearchDTO);
+		assertEquals(2, clientDTOs.size());
 	}
 	
 	/**********
 	 * DTO Generation Tests
-	 **********/
+	 */
 	
 	// Primary Key
 	@Test
@@ -50,7 +92,7 @@ public class ClientManagerTest {
 		PathClient pathClient = new PathClient();
 		pathClient.setClientKey(42);
 		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, null, null);
-		assertEquals(clientDTO.getPersonalId(), pathClient.getClientKey().toString());
+		assertEquals(pathClient.getClientKey().toString(), clientDTO.getPersonalId());
 	}
 	
 	// 3.1: Name
@@ -59,7 +101,7 @@ public class ClientManagerTest {
 		PathClient pathClient = new PathClient();
 		pathClient.setFirstName("John");
 		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, null, null);
-		assertEquals(clientDTO.getFirstName(), pathClient.getFirstName());
+		assertEquals("John", clientDTO.getFirstName());
 	}
 	
 	@Test
@@ -67,7 +109,7 @@ public class ClientManagerTest {
 		PathClient pathClient = new PathClient();
 		pathClient.setMiddleName("Johnny");
 		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, null, null);
-		assertEquals(clientDTO.getMiddleName(), pathClient.getMiddleName());
+		assertEquals("Johnny", clientDTO.getMiddleName());
 	}
 	
 	@Test
@@ -75,7 +117,7 @@ public class ClientManagerTest {
 		PathClient pathClient = new PathClient();
 		pathClient.setLastName("Johnson");
 		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, null, null);
-		assertEquals(clientDTO.getLastName(), pathClient.getLastName());
+		assertEquals("Johnson", clientDTO.getLastName());
 	}
 	
 	@Test
@@ -83,7 +125,7 @@ public class ClientManagerTest {
 		PathClient pathClient = new PathClient();
 		pathClient.setSuffix("Jhn");
 		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, null, null);
-		assertEquals(clientDTO.getNameSuffix(), pathClient.getSuffix());
+		assertEquals("Jhn", clientDTO.getNameSuffix());
 	}
 	
 	@Test
@@ -91,7 +133,7 @@ public class ClientManagerTest {
 		PathClient pathClient = new PathClient();
 		pathClient.setNameType(ClientNameDataQuality.FULL.getCode());
 		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, null, null);
-		assertEquals(clientDTO.getNameDataQuality().getCode(), pathClient.getNameType());
+		assertEquals(ClientNameDataQuality.FULL, clientDTO.getNameDataQuality());
 	}
 	
 	// 3.2 Ssn
@@ -100,23 +142,24 @@ public class ClientManagerTest {
 		PathClient pathClient = new PathClient();
 		pathClient.setIdentification("123456789");
 		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, null, null);
-		assertEquals(clientDTO.getSsn(), pathClient.getIdentification());
+		assertEquals("123456789", clientDTO.getSsn());
 	}
 	@Test
 	public void generateClientDTOPreservesSsnDataQuality() {
 		PathClient pathClient = new PathClient();
 		pathClient.setIdType(ClientSsnDataQuality.FULL.getCode());
 		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, null, null);
-		assertEquals(clientDTO.getSsnDataQuality().getCode(), pathClient.getIdType());
+		assertEquals(ClientSsnDataQuality.FULL, clientDTO.getSsnDataQuality());
 	}
 	
 	// 3.3 Date of Birth
 	@Test
 	public void generateClientDTOPreservesDoB() {
 		PathClient pathClient = new PathClient();
-		pathClient.setDateOfBirth(new Date());
+		Date birthday = new Date();
+		pathClient.setDateOfBirth(birthday);
 		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, null, null);
-		assertEquals(clientDTO.getDob(), pathClient.getDateOfBirth());
+		assertEquals(birthday, clientDTO.getDob());
 	}
 	
 	@Test
@@ -124,7 +167,7 @@ public class ClientManagerTest {
 		PathClient pathClient = new PathClient();
 		pathClient.setDobType(ClientDobDataQuality.FULL.getCode());
 		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, null, null);
-		assertEquals(clientDTO.getDobDataQuality().getCode(), pathClient.getDobType());
+		assertEquals(ClientDobDataQuality.FULL, clientDTO.getDobDataQuality());
 	}
 	
 	// 3.4 Races
@@ -132,7 +175,7 @@ public class ClientManagerTest {
 	public void generateClientDTOSetsRaceNoneToNotCollectedWithNullRacesList() {
 		PathClient pathClient = new PathClient();
 		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, null, null);
-		assertEquals(clientDTO.getRaceNone(), None.NOT_COLLECTED);
+		assertEquals(None.NOT_COLLECTED, clientDTO.getRaceNone());
 	}
 
 	@Test
@@ -140,7 +183,7 @@ public class ClientManagerTest {
 		PathClient pathClient = new PathClient();
 		ArrayList<PathClientRace> pathClientRaces = new ArrayList<PathClientRace>();
 		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, pathClientRaces, null);
-		assertEquals(clientDTO.getRaceNone(), None.NOT_COLLECTED);
+		assertEquals(None.NOT_COLLECTED, clientDTO.getRaceNone());
 	}
 	
 	@Test
@@ -151,7 +194,7 @@ public class ClientManagerTest {
 		pathClientRace.setRaceKey(5); // Compass stores races as special codes, currently hardcoded.
 		pathClientRaces.add(pathClientRace);
 		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, pathClientRaces, null);
-		assertEquals(clientDTO.getAsian(), YesNo.YES);
+		assertEquals(YesNo.YES, clientDTO.getAsian());
 	}
 	
 	@Test
@@ -162,7 +205,7 @@ public class ClientManagerTest {
 		pathClientRace.setRaceKey(6); // Compass stores races as special codes, currently hardcoded.
 		pathClientRaces.add(pathClientRace);
 		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, pathClientRaces, null);
-		assertEquals(clientDTO.getBlackAfAmerican(), YesNo.YES);
+		assertEquals(YesNo.YES, clientDTO.getBlackAfAmerican());
 	}
 
 	@Test
@@ -173,7 +216,7 @@ public class ClientManagerTest {
 		pathClientRace.setRaceKey(7); // Compass stores races as special codes, currently hardcoded.
 		pathClientRaces.add(pathClientRace);
 		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, pathClientRaces, null);
-		assertEquals(clientDTO.getAmIndAKNative(), YesNo.YES);
+		assertEquals(YesNo.YES, clientDTO.getAmIndAKNative());
 	}
 
 	@Test
@@ -184,7 +227,7 @@ public class ClientManagerTest {
 		pathClientRace.setRaceKey(8); // Compass stores races as special codes, currently hardcoded.
 		pathClientRaces.add(pathClientRace);
 		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, pathClientRaces, null);
-		assertEquals(clientDTO.getWhite(), YesNo.YES);
+		assertEquals(YesNo.YES, clientDTO.getWhite());
 	}
 	
 	@Test
@@ -196,7 +239,7 @@ public class ClientManagerTest {
 		pathClientRaces.add(pathClientRace);
 		
 		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, pathClientRaces, null);
-		assertEquals(clientDTO.getNativeHIOtherPacific(), YesNo.YES);
+		assertEquals(YesNo.YES, clientDTO.getNativeHIOtherPacific());
 	}
 	
 	@Test
@@ -211,11 +254,11 @@ public class ClientManagerTest {
 		pathClientRaces.add(pathClientBlackAfAmericanRace);
 		
 		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, pathClientRaces, null);
-		assertEquals(clientDTO.getAsian(), YesNo.YES);
-		assertEquals(clientDTO.getBlackAfAmerican(), YesNo.YES);
-		assertEquals(clientDTO.getAmIndAKNative(), YesNo.NO);
-		assertEquals(clientDTO.getWhite(), YesNo.NO);
-		assertEquals(clientDTO.getNativeHIOtherPacific(), YesNo.NO);
+		assertEquals(YesNo.YES, clientDTO.getAsian());
+		assertEquals(YesNo.YES, clientDTO.getBlackAfAmerican());
+		assertEquals(YesNo.NO, clientDTO.getAmIndAKNative());
+		assertEquals(YesNo.NO, clientDTO.getWhite());
+		assertEquals(YesNo.NO, clientDTO.getNativeHIOtherPacific());
 	}
 
 	@Test
@@ -227,7 +270,7 @@ public class ClientManagerTest {
 		pathClientRaces.add(pathClientRace);
 		
 		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, pathClientRaces, null);
-		assertEquals(clientDTO.getRaceNone(), null);
+		assertEquals(null, clientDTO.getRaceNone());
 	}
 	
 	// 3.5 Ethnicity
@@ -236,7 +279,7 @@ public class ClientManagerTest {
 		PathClient pathClient = new PathClient();
 		pathClient.setEthnicityKey(ClientEthnicity.REFUSED.getCode());
 		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, null, null);
-		assertEquals(clientDTO.getEthnicity().getCode(), pathClient.getEthnicityKey());
+		assertEquals(ClientEthnicity.REFUSED, clientDTO.getEthnicity());
 	}
 	
 	// 3.6 Gender
@@ -245,7 +288,7 @@ public class ClientManagerTest {
 		PathClient pathClient = new PathClient();
 		pathClient.setGenderKey(ClientGender.MALE.getCode());
 		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, null, null);
-		assertEquals(clientDTO.getGender().getCode(), pathClient.getGenderKey());
+		assertEquals(ClientGender.MALE, clientDTO.getGender());
 	}
 
 	@Test
@@ -253,7 +296,7 @@ public class ClientManagerTest {
 		PathClient pathClient = new PathClient();
 		pathClient.setGenderDesc("Other Description");
 		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, null, null);
-		assertEquals(clientDTO.getOtherGender(), pathClient.getGenderDesc());
+		assertEquals("Other Description", clientDTO.getOtherGender());
 	}
 	
 	// 3.7 Veteran Status
@@ -262,13 +305,13 @@ public class ClientManagerTest {
 		PathClient pathClient = new PathClient();
 		pathClient.setVeteran(YesNoReason.YES.getCode());
 		ClientDTO clientDTO = ClientManager.generateClientDTO(pathClient, null, null);
-		assertEquals(clientDTO.getVeteranStatus().getCode(), pathClient.getVeteran());
+		assertEquals(YesNoReason.YES, clientDTO.getVeteranStatus());
 	}	
 	
 
 	/**********
 	 * Validation Tests
-	 **********/
+	 */
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 
@@ -279,7 +322,7 @@ public class ClientManagerTest {
 		clientDTO.setNameDataQuality(ClientNameDataQuality.ERR_UNKNOWN);
 		
 		thrown.expect(InvalidParameterException.class);
-		clientManager.validateClient(clientDTO);
+		ClientManager.validateClient(clientDTO);
 	}
 	
 	// 3.2 (SSN)
@@ -289,7 +332,7 @@ public class ClientManagerTest {
 		clientDTO.setSsnDataQuality(ClientSsnDataQuality.ERR_UNKNOWN);
 		
 		thrown.expect(InvalidParameterException.class);
-		clientManager.validateClient(clientDTO);
+		ClientManager.validateClient(clientDTO);
 	}
 
 	@Test
@@ -298,7 +341,7 @@ public class ClientManagerTest {
 		clientDTO.setSsn("12345678a");
 
 		thrown.expect(InvalidParameterException.class);
-		clientManager.validateClient(clientDTO);
+		ClientManager.validateClient(clientDTO);
 	}
 	
 	@Test
@@ -307,7 +350,7 @@ public class ClientManagerTest {
 		clientDTO.setSsn("1234567891");
 
 		thrown.expect(InvalidParameterException.class);
-		clientManager.validateClient(clientDTO);
+		ClientManager.validateClient(clientDTO);
 	}
 
 	@Test
@@ -316,23 +359,23 @@ public class ClientManagerTest {
 		clientDTO.setSsn("12345678");
 
 		thrown.expect(InvalidParameterException.class);
-		clientManager.validateClient(clientDTO);
+		ClientManager.validateClient(clientDTO);
 	}
 
 	@Test
 	public void validationAcceptsSsnContainingXs() {
 		ClientDTO clientDTO = new ClientDTO();
 		clientDTO.setSsn("xxXxx3xx3");
-		Boolean result = clientManager.validateClient(clientDTO);
-		assertEquals(result, true);
+		Boolean result = ClientManager.validateClient(clientDTO);
+		assertEquals(true, result);
 	}
 	
 	@Test
 	public void validationAcceptsSsnContainingNineCharacters() {
 		ClientDTO clientDTO = new ClientDTO();
 		clientDTO.setSsn("123456789");
-		Boolean result = clientManager.validateClient(clientDTO);
-		assertEquals(result, true);
+		Boolean result = ClientManager.validateClient(clientDTO);
+		assertEquals(true, result);
 	}
 	
 	// 3.3 DoB
@@ -346,7 +389,7 @@ public class ClientManagerTest {
 		clientDTO.setDob(tomorrow);
 		
 		thrown.expect(InvalidParameterException.class);
-		clientManager.validateClient(clientDTO);
+		ClientManager.validateClient(clientDTO);
 	}	
 	
 	@Test
@@ -355,7 +398,7 @@ public class ClientManagerTest {
 		clientDTO.setDobDataQuality(ClientDobDataQuality.ERR_UNKNOWN);
 		
 		thrown.expect(InvalidParameterException.class);
-		clientManager.validateClient(clientDTO);
+		ClientManager.validateClient(clientDTO);
 	}
 	
 	// 3.4 Race
@@ -365,7 +408,7 @@ public class ClientManagerTest {
 		clientDTO.setAsian(YesNo.ERR_UNKNOWN);
 		
 		thrown.expect(InvalidParameterException.class);
-		clientManager.validateClient(clientDTO);
+		ClientManager.validateClient(clientDTO);
 	}
 
 	@Test
@@ -374,7 +417,7 @@ public class ClientManagerTest {
 		clientDTO.setBlackAfAmerican(YesNo.ERR_UNKNOWN);
 		
 		thrown.expect(InvalidParameterException.class);
-		clientManager.validateClient(clientDTO);
+		ClientManager.validateClient(clientDTO);
 	}
 
 	@Test
@@ -383,7 +426,7 @@ public class ClientManagerTest {
 		clientDTO.setNativeHIOtherPacific(YesNo.ERR_UNKNOWN);
 		
 		thrown.expect(InvalidParameterException.class);
-		clientManager.validateClient(clientDTO);
+		ClientManager.validateClient(clientDTO);
 	}
 
 	@Test
@@ -392,7 +435,7 @@ public class ClientManagerTest {
 		clientDTO.setAmIndAKNative(YesNo.ERR_UNKNOWN);
 		
 		thrown.expect(InvalidParameterException.class);
-		clientManager.validateClient(clientDTO);
+		ClientManager.validateClient(clientDTO);
 	}
 
 	@Test
@@ -401,7 +444,7 @@ public class ClientManagerTest {
 		clientDTO.setWhite(YesNo.ERR_UNKNOWN);
 		
 		thrown.expect(InvalidParameterException.class);
-		clientManager.validateClient(clientDTO);
+		ClientManager.validateClient(clientDTO);
 	}
 
 	@Test
@@ -411,7 +454,7 @@ public class ClientManagerTest {
 		clientDTO.setRaceNone(None.REFUSED);
 		
 		thrown.expect(InvalidParameterException.class);
-		clientManager.validateClient(clientDTO);
+		ClientManager.validateClient(clientDTO);
 	}
 
 	@Test
@@ -420,7 +463,7 @@ public class ClientManagerTest {
 		clientDTO.setRaceNone(None.ERR_UNKNOWN);
 		
 		thrown.expect(InvalidParameterException.class);
-		clientManager.validateClient(clientDTO);
+		ClientManager.validateClient(clientDTO);
 	}
 
 	// 3.5 Ethnicity
@@ -430,7 +473,7 @@ public class ClientManagerTest {
 		clientDTO.setEthnicity(ClientEthnicity.ERR_UNKNOWN);
 		
 		thrown.expect(InvalidParameterException.class);
-		clientManager.validateClient(clientDTO);
+		ClientManager.validateClient(clientDTO);
 	}
 
 	// 3.6 Gender
@@ -440,7 +483,7 @@ public class ClientManagerTest {
 		clientDTO.setGender(ClientGender.ERR_UNKNOWN);
 		
 		thrown.expect(InvalidParameterException.class);
-		clientManager.validateClient(clientDTO);
+		ClientManager.validateClient(clientDTO);
 	}
 
 	// 3.7 Veteran Status
@@ -450,6 +493,6 @@ public class ClientManagerTest {
 		clientDTO.setVeteranStatus(YesNoReason.ERR_UNKNOWN);
 		
 		thrown.expect(InvalidParameterException.class);
-		clientManager.validateClient(clientDTO);
+		ClientManager.validateClient(clientDTO);
 	}	
 }

@@ -31,11 +31,21 @@ import org.openhmis.manager.ClientManager;
 
 public class ClientManager {
 
-	private static final PathClientDAO pathClientDAO = new PathClientDAO();
-	private static final PathClientRaceDAO pathClientRaceDAO = new PathClientRaceDAO();
-	private static final PathClientVeteranInfoDAO pathClientVeteranInfoDAO = new PathClientVeteranInfoDAO();
+	private PathClientDAO pathClientDAO;
+	private PathClientRaceDAO pathClientRaceDAO;
+	private PathClientVeteranInfoDAO pathClientVeteranInfoDAO;
 	
-	public ClientManager() {}
+	public ClientManager() {
+		this.pathClientDAO = new PathClientDAO();
+		this.pathClientRaceDAO = new PathClientRaceDAO();
+		this.pathClientVeteranInfoDAO = new PathClientVeteranInfoDAO();
+	}
+
+	public ClientManager(PathClientDAO pathClientDAO, PathClientRaceDAO pathClientRaceDAO, PathClientVeteranInfoDAO pathClientVeteranInfoDAO) {
+		this.pathClientDAO = pathClientDAO;
+		this.pathClientRaceDAO = pathClientRaceDAO;
+		this.pathClientVeteranInfoDAO = pathClientVeteranInfoDAO;
+	}
 
 	public ClientDTO getClientByPersonalId(String personalId) {
 		Integer clientKey = Integer.parseInt(personalId);
@@ -73,7 +83,7 @@ public class ClientManager {
 	
 	public ClientDTO addClient(ClientDTO inputDTO) {
 		// Validate the client
-		if(!validateClient(inputDTO))
+		if(!ClientManager.validateClient(inputDTO))
 			return null;
 		
 		// Generate a PathClient from the input
@@ -110,7 +120,7 @@ public class ClientManager {
 	
 	public ClientDTO updateClient(ClientDTO inputDTO) {
 		// Validate the client
-		if(!validateClient(inputDTO))
+		if(!ClientManager.validateClient(inputDTO))
 			return null;
 
 		// Generate a PathClient from the input
@@ -165,7 +175,7 @@ public class ClientManager {
 		return true;
 	}
 	
-	public boolean validateClient(ClientDTO inputDTO) {
+	public static boolean validateClient(ClientDTO inputDTO) {
 		// Universal Data Standard: Name (2014, 3.1)
 		// 3.1.5 Name Data Quality
 		if(inputDTO.getNameDataQuality() == ClientNameDataQuality.ERR_UNKNOWN)
@@ -256,24 +266,52 @@ public class ClientManager {
 	public static ClientDTO generateClientDTO(PathClient pathClient, List<PathClientRace> pathRaces, PathClientVeteranInfo pathVeteranInfo) {
 		ClientDTO clientDTO = new ClientDTO();
 
-		// Universal Data Standard: Personal ID (2014, 3.13) 
-		if(pathClient.getClientKey() != null)
-			clientDTO.setPersonalId(pathClient.getClientKey().toString());
+		if(pathClient != null) {
+			// Universal Data Standard: Personal ID (2014, 3.13) 
+			if(pathClient.getClientKey() != null)
+				clientDTO.setPersonalId(pathClient.getClientKey().toString());
 
-		// Universal Data Standard: Name (2014, 3.1)
-		clientDTO.setFirstName(pathClient.getFirstName());
-		clientDTO.setMiddleName(pathClient.getMiddleName());
-		clientDTO.setLastName(pathClient.getLastName());
-		clientDTO.setNameSuffix(pathClient.getSuffix());
-		clientDTO.setNameDataQuality(ClientNameDataQuality.valueByCode(pathClient.getNameType()));
+			// Universal Data Standard: Name (2014, 3.1)
+			clientDTO.setFirstName(pathClient.getFirstName());
+			clientDTO.setMiddleName(pathClient.getMiddleName());
+			clientDTO.setLastName(pathClient.getLastName());
+			clientDTO.setNameSuffix(pathClient.getSuffix());
+			clientDTO.setNameDataQuality(ClientNameDataQuality.valueByCode(pathClient.getNameType()));
 
-		// Universal Data Standard: SSN (2014, 3.2)
-		clientDTO.setSsn(pathClient.getIdentification());
-		clientDTO.setSsnDataQuality(ClientSsnDataQuality.valueByCode(pathClient.getIdType()));
-		
-		// Universal Data Standard: Date of Birth  (2014, 3.3)
-		clientDTO.setDob(pathClient.getDateOfBirth());
-		clientDTO.setDobDataQuality(ClientDobDataQuality.valueByCode(pathClient.getDobType()));
+			// Universal Data Standard: SSN (2014, 3.2)
+			clientDTO.setSsn(pathClient.getIdentification());
+			clientDTO.setSsnDataQuality(ClientSsnDataQuality.valueByCode(pathClient.getIdType()));
+			
+			// Universal Data Standard: Date of Birth  (2014, 3.3)
+			clientDTO.setDob(pathClient.getDateOfBirth());
+			clientDTO.setDobDataQuality(ClientDobDataQuality.valueByCode(pathClient.getDobType()));
+
+			// Universal Data Standard: Gender (2014, 3.6)
+			clientDTO.setGender(ClientGender.valueByCode(pathClient.getGenderKey()));
+			clientDTO.setOtherGender(pathClient.getGenderDesc());
+
+			// Universal Data Standard: Veteran Status (2014, 3.7)
+			clientDTO.setVeteranStatus(YesNoReason.valueByCode(pathClient.getVeteran()));
+
+			// Universal Data Standard: Ethnicity (2014, 3.5)
+			if(pathClient.getEthnicityKey() != null) {
+				switch(pathClient.getEthnicityKey()) {
+					case 104: 
+						clientDTO.setEthnicity(ClientEthnicity.NON_HISPANIC);
+						break;
+					case 105:
+						clientDTO.setEthnicity(ClientEthnicity.HISPANIC);
+						break;
+					default:
+						clientDTO.setEthnicity(ClientEthnicity.valueByCode(pathClient.getEthnicityKey()));
+						break;
+				}
+			}
+			
+			// Export Standard Fields
+			clientDTO.setDateCreated(pathClient.getCreateDate());
+			clientDTO.setDateUpdated(pathClient.getUpdateDate());
+		}
 
 		// Universal Data Standard: Race (2014, 3.4)
 		// Pathways stores races as individual records
@@ -333,29 +371,7 @@ public class ClientManager {
 				}
 			}
 		}
-
-		// Universal Data Standard: Ethnicity (2014, 3.5)
-		if(pathClient.getEthnicityKey() != null) {
-			switch(pathClient.getEthnicityKey()) {
-				case 104: 
-					clientDTO.setEthnicity(ClientEthnicity.NON_HISPANIC);
-					break;
-				case 105:
-					clientDTO.setEthnicity(ClientEthnicity.HISPANIC);
-					break;
-				default:
-					clientDTO.setEthnicity(ClientEthnicity.valueByCode(pathClient.getEthnicityKey()));
-					break;
-			}
-		}
 		
-		// Universal Data Standard: Gender (2014, 3.6)
-		clientDTO.setGender(ClientGender.valueByCode(pathClient.getGenderKey()));
-		clientDTO.setOtherGender(pathClient.getGenderDesc());
-
-		// Universal Data Standard: Veteran Status (2014, 3.7)
-		clientDTO.setVeteranStatus(YesNoReason.valueByCode(pathClient.getVeteran()));
-
 		// VA Specific Data Standards: Veteran's Information (2014, 4.41)
 		if(pathVeteranInfo != null) {
 			clientDTO.setYearEnteredService(pathVeteranInfo.getYrEnterMilitary());
@@ -371,10 +387,6 @@ public class ClientManager {
 			clientDTO.setMilitaryBranch(ClientMilitaryBranch.valueByCode(pathVeteranInfo.getMilitaryBranch()));
 			clientDTO.setDischargeStatus(ClientDischargeStatus.valueByCode(pathVeteranInfo.getDischargeStatus()));
 		}
-		
-		// Export Standard Fields
-		clientDTO.setDateCreated(pathClient.getCreateDate());
-		clientDTO.setDateUpdated(pathClient.getUpdateDate());
 
 		return clientDTO;
 	}
