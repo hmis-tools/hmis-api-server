@@ -4,9 +4,13 @@ package org.openhmis.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.openhmis.domain.TmpProjectFunder;
+import org.openhmis.dto.search.FunderSearchDTO;
+import org.openhmis.util.DateParser;
 
 public class TmpProjectFunderDAO extends BaseDAO {
 
@@ -33,13 +37,14 @@ public class TmpProjectFunderDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpProjectFunder> getTmpProjectFunders() {
-		String queryString = "select projectFunder " + 
-				"from TmpProjectFunder as projectFunder";
+	public List<TmpProjectFunder> getTmpProjectFunders(FunderSearchDTO searchDTO) {
 
 		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		List<TmpProjectFunder> results = queryObject.list();
+                Criteria query =  session.createCriteria(TmpProjectFunder.class);
+                if(searchDTO.getUpdatedSince() != null) {
+                    query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
+		}
+		List<TmpProjectFunder> results = query.list();
 		session.close();
 		return results;
 	}

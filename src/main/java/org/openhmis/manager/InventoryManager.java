@@ -15,6 +15,7 @@ import org.openhmis.domain.TmpProjectInventory;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.InventoryDTO;
+import org.openhmis.dto.search.InventorySearchDTO;
 import org.openhmis.exception.InvalidParameterException;
 
 public class InventoryManager {
@@ -27,11 +28,11 @@ public class InventoryManager {
 		return inventoryDTO;
 	}
 
-	public static List<InventoryDTO> getInventories() {
+	public static List<InventoryDTO> getInventories(InventorySearchDTO searchDTO) {
 		List<InventoryDTO> inventoryDTOs = new ArrayList<InventoryDTO>();
 
 		// Collect the inventories
-		List<TmpProjectInventory> tmpProjectInventories = tmpProjectInventoryDAO.getTmpProjectInventories();
+		List<TmpProjectInventory> tmpProjectInventories = tmpProjectInventoryDAO.getTmpProjectInventories(searchDTO);
 
 		// For each inventory, collect and map the data
 		for (Iterator<TmpProjectInventory> iterator = tmpProjectInventories.iterator(); iterator.hasNext();) {

@@ -3,9 +3,13 @@ package org.openhmis.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.openhmis.domain.TmpProjectInventory;
+import org.openhmis.dto.search.InventorySearchDTO;
+import org.openhmis.util.DateParser;
 
 public class TmpProjectInventoryDAO extends BaseDAO {
 
@@ -32,13 +36,14 @@ public class TmpProjectInventoryDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpProjectInventory> getTmpProjectInventories() {
-		String queryString = "select projectInventory " + 
-				"from TmpProjectInventory as projectInventory";
+	public List<TmpProjectInventory> getTmpProjectInventories(InventorySearchDTO searchDTO) {
 
 		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		List<TmpProjectInventory> results = queryObject.list();
+                Criteria query =  session.createCriteria(TmpProjectInventory.class);
+                if(searchDTO.getUpdatedSince() != null) {
+                    query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
+		}
+		List<TmpProjectInventory> results = query.list();
 		session.close();
 		return results;
 	}

@@ -17,6 +17,7 @@ import org.openhmis.domain.TmpNonCashBenefit;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.NonCashBenefitDTO;
+import org.openhmis.dto.search.NonCashBenefitSearchDTO;
 
 public class NonCashBenefitManager {
 	private static final TmpNonCashBenefitDAO tmpNonCashBenefitDAO = new TmpNonCashBenefitDAO();
@@ -28,11 +29,11 @@ public class NonCashBenefitManager {
 		return nonCashBenefitDTO;
 	}
 
-	public static List<NonCashBenefitDTO> getNonCashBenefits() {
+	public static List<NonCashBenefitDTO> getNonCashBenefits(NonCashBenefitSearchDTO searchDTO) {
 		List<NonCashBenefitDTO> nonCashBenefitDTOs = new ArrayList<NonCashBenefitDTO>();
 
 		// Collect the nonCashBenefits
-		List<TmpNonCashBenefit> tmpNonCashBenefits = tmpNonCashBenefitDAO.getTmpNonCashBenefits();
+		List<TmpNonCashBenefit> tmpNonCashBenefits = tmpNonCashBenefitDAO.getTmpNonCashBenefits(searchDTO);
 
 		// For each nonCashBenefit, collect and map the data
 		for (Iterator<TmpNonCashBenefit> iterator = tmpNonCashBenefits.iterator(); iterator.hasNext();) {

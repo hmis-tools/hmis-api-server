@@ -7,6 +7,7 @@ package org.openhmis.webservice;
 import java.io.IOException;
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -21,6 +22,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 import org.openhmis.dto.IncomeSourceDTO;
+import org.openhmis.dto.search.IncomeSourceSearchDTO;
 import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.manager.IncomeSourceManager;
 import org.openhmis.util.Authentication;
@@ -39,19 +41,14 @@ public class IncomeSourceService {
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<IncomeSourceDTO> getIncomeSources(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<IncomeSourceDTO> getIncomeSources(@HeaderParam("Authorization") String authorization, @BeanParam IncomeSourceSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		
 		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<IncomeSourceDTO> incomeSourceDTOs = IncomeSourceManager.getIncomeSources();
-			return incomeSourceDTOs;
-		} else {
-			List<IncomeSourceDTO> incomeSourceDTOs = IncomeSourceManager.getIncomeSources(DateParser.parseDate(updatedSince));
-			return incomeSourceDTOs;			
-		}
-		
+                List<IncomeSourceDTO> incomeSourceDTOs = IncomeSourceManager.getIncomeSources(searchDTO);
+                return incomeSourceDTOs;
+				
 	}
 	
 	@POST

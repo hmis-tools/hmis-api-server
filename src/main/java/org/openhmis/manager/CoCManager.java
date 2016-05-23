@@ -9,6 +9,7 @@ import org.openhmis.dao.TmpProjectContinuumDAO;
 import org.openhmis.domain.TmpProjectContinuum;
 import org.openhmis.dto.ClientDTO;
 import org.openhmis.dto.CoCDTO;
+import org.openhmis.dto.search.CoCSearchDTO;
 
 public class CoCManager {
 	private static final TmpProjectContinuumDAO tmpProjectContinuumDAO = new TmpProjectContinuumDAO();
@@ -22,11 +23,11 @@ public class CoCManager {
 		return CoCDTO;
 	}
 
-	public static List<CoCDTO> getCoCs() {
+	public static List<CoCDTO> getCoCs(CoCSearchDTO searchDTO) {
 		List<CoCDTO> coCDTOs = new ArrayList<CoCDTO>();
 
 		// Collect the projects
-		List<TmpProjectContinuum> tmpProjectContinuums = tmpProjectContinuumDAO.getTmpProjectContinuums();
+		List<TmpProjectContinuum> tmpProjectContinuums = tmpProjectContinuumDAO.getTmpProjectContinuums(searchDTO);
 
 		// For each project, collect and map the data
 		// TODO: this should be done in a single query

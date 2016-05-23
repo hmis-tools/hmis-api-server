@@ -17,6 +17,7 @@ import org.openhmis.domain.TmpFinancialAssistance;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.FinancialAssistanceDTO;
+import org.openhmis.dto.search.FinancialAssistanceSearchDTO;
 
 public class FinancialAssistanceManager {
 	private static final TmpFinancialAssistanceDAO tmpFinancialAssistanceDAO = new TmpFinancialAssistanceDAO();
@@ -28,11 +29,11 @@ public class FinancialAssistanceManager {
 		return financialAssistanceDTO;
 	}
 
-	public static List<FinancialAssistanceDTO> getFinancialAssistances() {
+	public static List<FinancialAssistanceDTO> getFinancialAssistances(FinancialAssistanceSearchDTO searchDTO) {
 		List<FinancialAssistanceDTO> financialAssistanceDTOs = new ArrayList<FinancialAssistanceDTO>();
 
 		// Collect the financialAssistances
-		List<TmpFinancialAssistance> tmpFinancialAssistances = tmpFinancialAssistanceDAO.getTmpFinancialAssistances();
+		List<TmpFinancialAssistance> tmpFinancialAssistances = tmpFinancialAssistanceDAO.getTmpFinancialAssistances(searchDTO);
 
 		// For each financialAssistance, collect and map the data
 		for (Iterator<TmpFinancialAssistance> iterator = tmpFinancialAssistances.iterator(); iterator.hasNext();) {

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -55,6 +56,8 @@ import org.openhmis.manager.PhysicalDisabilityManager;
 import org.openhmis.manager.ReferralManager;
 import org.openhmis.manager.ServiceManager;
 import org.openhmis.manager.SubstanceAbuseManager;
+import org.openhmis.dto.search.EnrollmentSearchDTO;
+import org.openhmis.dto.search.ChronicHealthConditionSearchDTO;
 import org.openhmis.util.Authentication;
 import org.openhmis.util.DateParser;
 
@@ -77,18 +80,12 @@ public class EnrollmentService {
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<EnrollmentDTO> getEnrollments(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<EnrollmentDTO> getEnrollments(@HeaderParam("Authorization") String authorization, @BeanParam EnrollmentSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<EnrollmentDTO> enrollmentDTOs = enrollmentManager.getEnrollments();
-			return enrollmentDTOs;
-		} else {
-			List<EnrollmentDTO> enrollmentDTOs = enrollmentManager.getEnrollmentsByUpdateDate(DateParser.parseDate(updatedSince));
-			return enrollmentDTOs;			
-		}
+                List<EnrollmentDTO> enrollmentDTOs = enrollmentManager.getEnrollments(searchDTO);
+                return enrollmentDTOs;
 	}
 	
 	@GET
@@ -155,18 +152,13 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/chronic-health-conditions")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<ChronicHealthConditionDTO> getChronicHealthConditions(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<ChronicHealthConditionDTO> getChronicHealthConditions(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @BeanParam ChronicHealthConditionSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
-		
-		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = ChronicHealthConditionManager.getChronicHealthConditionsByEnrollmentId(enrollmentId);
-			return chronicHealthConditionDTOs;
-		} else {
-			List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = ChronicHealthConditionManager.getChronicHealthConditionsByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return chronicHealthConditionDTOs;
-		}
+
+                // we want to add the enrollment id from the path to the BeanParam for searching
+                List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = ChronicHealthConditionManager.getChronicHealthConditions(searchDTO);
+                return chronicHealthConditionDTOs;
 	}
 	
 

@@ -7,6 +7,7 @@ package org.openhmis.webservice;
 import java.io.IOException;
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -22,6 +23,7 @@ import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 import org.openhmis.dto.ContactDTO;
 import org.openhmis.exception.AccessDeniedException;
+import org.openhmis.dto.search.ContactSearchDTO;
 import org.openhmis.manager.ContactManager;
 import org.openhmis.util.Authentication;
 import org.openhmis.util.DateParser;
@@ -39,18 +41,13 @@ public class ContactService {
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<ContactDTO> getContacts(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<ContactDTO> getContacts(@HeaderParam("Authorization") String authorization, @BeanParam ContactSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		
 		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<ContactDTO> contactDTOs = ContactManager.getContacts();
-			return contactDTOs;
-		} else {
-			List<ContactDTO> contactDTOs = ContactManager.getContacts(DateParser.parseDate(updatedSince));
-			return contactDTOs;			
-		}
+                List<ContactDTO> contactDTOs = ContactManager.getContacts(searchDTO);
+                return contactDTOs;
 		
 	}
 	

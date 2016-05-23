@@ -59,6 +59,7 @@ import org.openhmis.dto.PhysicalDisabilityDTO;
 import org.openhmis.dto.ReferralDTO;
 import org.openhmis.dto.ServiceDTO;
 import org.openhmis.dto.SubstanceAbuseDTO;
+import org.openhmis.dto.search.EnrollmentSearchDTO;
 import org.openhmis.exception.InvalidParameterException;
 
 public class EnrollmentManager {
@@ -72,11 +73,11 @@ public class EnrollmentManager {
 		return enrollmentDTO;
 	}
 
-	public List<EnrollmentDTO> getEnrollments() {
+	public List<EnrollmentDTO> getEnrollments(EnrollmentSearchDTO searchDTO) {
 		List<EnrollmentDTO> enrollmentDTOs = new ArrayList<EnrollmentDTO>();
 
 		// Collect the inventories
-		List<TmpEnrollment> tempEnrollments = tmpEnrollmentDAO.getTmpEnrollments();
+		List<TmpEnrollment> tempEnrollments = tmpEnrollmentDAO.getTmpEnrollments(searchDTO);
 
 		// For each inventory, collect and map the data
 		for (Iterator<TmpEnrollment> iterator = tempEnrollments.iterator(); iterator.hasNext();) {

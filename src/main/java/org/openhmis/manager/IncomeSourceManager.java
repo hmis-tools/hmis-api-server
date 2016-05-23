@@ -17,6 +17,7 @@ import org.openhmis.domain.TmpIncomeSource;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.IncomeSourceDTO;
+import org.openhmis.dto.search.IncomeSourceSearchDTO;
 
 public class IncomeSourceManager {
 	private static final TmpIncomeSourceDAO tmpIncomeSourceDAO = new TmpIncomeSourceDAO();
@@ -28,11 +29,11 @@ public class IncomeSourceManager {
 		return incomeSourceDTO;
 	}
 
-	public static List<IncomeSourceDTO> getIncomeSources() {
+	public static List<IncomeSourceDTO> getIncomeSources(IncomeSourceSearchDTO searchDTO) {
 		List<IncomeSourceDTO> incomeSourceDTOs = new ArrayList<IncomeSourceDTO>();
 
 		// Collect the incomeSources
-		List<TmpIncomeSource> tmpIncomeSources = tmpIncomeSourceDAO.getTmpIncomeSources();
+		List<TmpIncomeSource> tmpIncomeSources = tmpIncomeSourceDAO.getTmpIncomeSources(searchDTO);
 
 		// For each incomeSource, collect and map the data
 		for (Iterator<TmpIncomeSource> iterator = tmpIncomeSources.iterator(); iterator.hasNext();) {

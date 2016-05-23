@@ -12,6 +12,7 @@ import org.openhmis.code.YesNo;
 import org.openhmis.dao.TmpProjectDAO;
 import org.openhmis.domain.TmpProject;
 import org.openhmis.dto.ProjectDTO;
+import org.openhmis.dto.search.ProjectSearchDTO;
 import org.openhmis.exception.InvalidParameterException;
 
 public class ProjectManager {
@@ -24,11 +25,11 @@ public class ProjectManager {
 		return projectDTO;
 	}
 
-	public static List<ProjectDTO> getProjects() {
+	public static List<ProjectDTO> getProjects(ProjectSearchDTO searchDTO) {
 		List<ProjectDTO> projectDTOs = new ArrayList<ProjectDTO>();
 
 		// Collect the projects
-		List<TmpProject> tmpProjects = tmpProjectDAO.getTmpProjects();
+		List<TmpProject> tmpProjects = tmpProjectDAO.getTmpProjects(searchDTO);
 
 		// For each project, collect and map the data
 		// TODO: this should be done in a single query

@@ -18,6 +18,7 @@ import org.openhmis.domain.TmpReferral;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.ReferralDTO;
+import org.openhmis.dto.search.ReferralSearchDTO;
 
 public class ReferralManager {
 	private static final TmpReferralDAO tmpReferralDAO = new TmpReferralDAO();
@@ -29,11 +30,11 @@ public class ReferralManager {
 		return referralDTO;
 	}
 
-	public static List<ReferralDTO> getReferrals() {
+	public static List<ReferralDTO> getReferrals(ReferralSearchDTO searchDTO) {
 		List<ReferralDTO> referralDTOs = new ArrayList<ReferralDTO>();
 
 		// Collect the referrals
-		List<TmpReferral> tmpReferrals = tmpReferralDAO.getTmpReferrals();
+		List<TmpReferral> tmpReferrals = tmpReferralDAO.getTmpReferrals(searchDTO);
 
 		// For each referral, collect and map the data
 		for (Iterator<TmpReferral> iterator = tmpReferrals.iterator(); iterator.hasNext();) {

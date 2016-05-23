@@ -4,9 +4,13 @@ package org.openhmis.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.openhmis.domain.TmpProjectSite;
+import org.openhmis.dto.search.SiteSearchDTO;
+import org.openhmis.util.DateParser;
 
 public class TmpProjectSiteDAO extends BaseDAO {
 
@@ -33,13 +37,14 @@ public class TmpProjectSiteDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpProjectSite> getTmpProjectSites() {
-		String queryString = "select projectSite " + 
-				"from TmpProjectSite as projectSite";
+	public List<TmpProjectSite> getTmpProjectSites(SiteSearchDTO searchDTO) {
 
 		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		List<TmpProjectSite> results = queryObject.list();
+                Criteria query =  session.createCriteria(TmpProjectSite.class);
+                if(searchDTO.getUpdatedSince() != null) {
+                    query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
+		}
+		List<TmpProjectSite> results = query.list();
 		session.close();
 		return results;
 	}

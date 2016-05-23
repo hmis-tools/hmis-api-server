@@ -22,6 +22,7 @@ import org.openhmis.domain.TmpService;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.ServiceDTO;
+import org.openhmis.dto.search.ServiceSearchDTO;
 
 public class ServiceManager {
 	private static final TmpServiceDAO tmpServiceDAO = new TmpServiceDAO();
@@ -33,11 +34,11 @@ public class ServiceManager {
 		return serviceDTO;
 	}
 
-	public static List<ServiceDTO> getServices() {
+	public static List<ServiceDTO> getServices(ServiceSearchDTO searchDTO) {
 		List<ServiceDTO> serviceDTOs = new ArrayList<ServiceDTO>();
 
 		// Collect the services
-		List<TmpService> tmpServices = tmpServiceDAO.getTmpServices();
+		List<TmpService> tmpServices = tmpServiceDAO.getTmpServices(searchDTO);
 
 		// For each service, collect and map the data
 		for (Iterator<TmpService> iterator = tmpServices.iterator(); iterator.hasNext();) {

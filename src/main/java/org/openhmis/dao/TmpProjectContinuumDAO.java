@@ -4,9 +4,13 @@ package org.openhmis.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.openhmis.domain.TmpProjectContinuum;
+import org.openhmis.dto.search.CoCSearchDTO;
+import org.openhmis.util.DateParser;
 
 public class TmpProjectContinuumDAO extends BaseDAO {
 
@@ -33,13 +37,14 @@ public class TmpProjectContinuumDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpProjectContinuum> getTmpProjectContinuums() {
-		String queryString = "select projectContinuum " + 
-				"from TmpProjectContinuum as projectContinuum";
+	public List<TmpProjectContinuum> getTmpProjectContinuums(CoCSearchDTO searchDTO) {
 
 		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		List<TmpProjectContinuum> results = queryObject.list();
+                Criteria query =  session.createCriteria(TmpProjectContinuum.class);
+                if(searchDTO.getUpdatedSince() != null) {
+                    query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
+		}
+		List<TmpProjectContinuum> results = query.list();
 		session.close();
 		return results;
 	}

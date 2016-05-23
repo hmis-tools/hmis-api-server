@@ -18,6 +18,7 @@ import org.openhmis.domain.TmpHealthInsurance;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.HealthInsuranceDTO;
+import org.openhmis.dto.search.HealthInsuranceSearchDTO;
 
 public class HealthInsuranceManager {
 	private static final TmpHealthInsuranceDAO tmpHealthInsuranceDAO = new TmpHealthInsuranceDAO();
@@ -29,11 +30,11 @@ public class HealthInsuranceManager {
 		return healthInsuranceDTO;
 	}
 
-	public static List<HealthInsuranceDTO> getHealthInsurances() {
+	public static List<HealthInsuranceDTO> getHealthInsurances(HealthInsuranceSearchDTO searchDTO) {
 		List<HealthInsuranceDTO> healthInsuranceDTOs = new ArrayList<HealthInsuranceDTO>();
 
 		// Collect the healthInsurances
-		List<TmpHealthInsurance> tmpHealthInsurances = tmpHealthInsuranceDAO.getTmpHealthInsurances();
+		List<TmpHealthInsurance> tmpHealthInsurances = tmpHealthInsuranceDAO.getTmpHealthInsurances(searchDTO);
 
 		// For each healthInsurance, collect and map the data
 		for (Iterator<TmpHealthInsurance> iterator = tmpHealthInsurances.iterator(); iterator.hasNext();) {

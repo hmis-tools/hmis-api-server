@@ -19,6 +19,7 @@ import org.openhmis.domain.TmpProjectSite;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.SiteDTO;
+import org.openhmis.dto.search.SiteSearchDTO;
 import org.openhmis.exception.InvalidParameterException;
 
 public class SiteManager {
@@ -31,11 +32,11 @@ public class SiteManager {
 		return siteDTO;
 	}
 
-	public static List<SiteDTO> getSites() {
+	public static List<SiteDTO> getSites(SiteSearchDTO searchDTO) {
 		List<SiteDTO> siteDTOs = new ArrayList<SiteDTO>();
 
 		// Collect the sites
-		List<TmpProjectSite> tmpProjectSites = tmpProjectSiteDAO.getTmpProjectSites();
+		List<TmpProjectSite> tmpProjectSites = tmpProjectSiteDAO.getTmpProjectSites(searchDTO);
 
 		// For each site, collect and map the data
 		for (Iterator<TmpProjectSite> iterator = tmpProjectSites.iterator(); iterator.hasNext();) {

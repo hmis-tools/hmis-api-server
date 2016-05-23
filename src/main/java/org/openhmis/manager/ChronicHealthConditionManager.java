@@ -17,6 +17,7 @@ import org.openhmis.domain.TmpChronicHealthCondition;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.ChronicHealthConditionDTO;
+import org.openhmis.dto.search.ChronicHealthConditionSearchDTO;
 
 public class ChronicHealthConditionManager {
 	private static final TmpChronicHealthConditionDAO tmpChronicHealthConditionDAO = new TmpChronicHealthConditionDAO();
@@ -28,11 +29,11 @@ public class ChronicHealthConditionManager {
 		return chronicHealthConditionDTO;
 	}
 
-	public static List<ChronicHealthConditionDTO> getChronicHealthConditions() {
+	public static List<ChronicHealthConditionDTO> getChronicHealthConditions(ChronicHealthConditionSearchDTO searchDTO) {
 		List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = new ArrayList<ChronicHealthConditionDTO>();
 
 		// Collect the chronicHealthConditions
-		List<TmpChronicHealthCondition> tmpChronicHealthConditions = tmpChronicHealthConditionDAO.getTmpChronicHealthConditions();
+		List<TmpChronicHealthCondition> tmpChronicHealthConditions = tmpChronicHealthConditionDAO.getTmpChronicHealthConditions(searchDTO);
 
 		// For each chronicHealthCondition, collect and map the data
 		for (Iterator<TmpChronicHealthCondition> iterator = tmpChronicHealthConditions.iterator(); iterator.hasNext();) {

@@ -4,9 +4,13 @@ package org.openhmis.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.openhmis.domain.TmpIncomeSource;
+import org.openhmis.dto.search.IncomeSourceSearchDTO;
+import org.openhmis.util.DateParser;
 
 public class TmpIncomeSourceDAO extends BaseDAO {
 
@@ -33,13 +37,14 @@ public class TmpIncomeSourceDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpIncomeSource> getTmpIncomeSources() {
-		String queryString = "select incomeSource " + 
-				"from TmpIncomeSource as incomeSource";
+	public List<TmpIncomeSource> getTmpIncomeSources(IncomeSourceSearchDTO searchDTO) {
 
 		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		List<TmpIncomeSource> results = queryObject.list();
+                Criteria query =  session.createCriteria(TmpIncomeSource.class);
+                if(searchDTO.getUpdatedSince() != null) {
+                    query.add(Restrictions.gt("updateDate", DateParser.parseDate(searchDTO.getUpdatedSince())));
+		}
+		List<TmpIncomeSource> results = query.list();
 		session.close();
 		return results;
 	}

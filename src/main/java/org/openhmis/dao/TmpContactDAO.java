@@ -4,9 +4,13 @@ package org.openhmis.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.openhmis.domain.TmpContact;
+import org.openhmis.dto.search.ContactSearchDTO;
+import org.openhmis.util.DateParser;
 
 public class TmpContactDAO extends BaseDAO {
 
@@ -33,13 +37,14 @@ public class TmpContactDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpContact> getTmpContacts() {
-		String queryString = "select contact " + 
-				"from TmpContact as contact";
+	public List<TmpContact> getTmpContacts(ContactSearchDTO searchDTO) {
 
 		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		List<TmpContact> results = queryObject.list();
+		Criteria query = session.createCriteria(TmpContact.class);
+                if(searchDTO.getUpdatedSince() != null) {
+                    query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
+		}
+		List<TmpContact> results = query.list();
 		session.close();
 		return results;
 	}

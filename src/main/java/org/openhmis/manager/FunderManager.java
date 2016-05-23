@@ -10,6 +10,7 @@ import org.openhmis.code.ProjectFundingSource;
 import org.openhmis.dao.TmpProjectFunderDAO;
 import org.openhmis.domain.TmpProjectFunder;
 import org.openhmis.dto.FunderDTO;
+import org.openhmis.dto.search.FunderSearchDTO;
 import org.openhmis.exception.InvalidParameterException;
 
 public class FunderManager {
@@ -24,11 +25,11 @@ public class FunderManager {
 		return FunderDTO;
 	}
 
-	public static List<FunderDTO> getFunders() {
+	public static List<FunderDTO> getFunders(FunderSearchDTO searchDTO) {
 		List<FunderDTO> funderDTOs = new ArrayList<FunderDTO>();
 
 		// Collect the projects
-		List<TmpProjectFunder> tmpProjectFunders = tmpProjectFunderDAO.getTmpProjectFunders();
+		List<TmpProjectFunder> tmpProjectFunders = tmpProjectFunderDAO.getTmpProjectFunders(searchDTO);
 
 		// For each project, collect and map the data
 		// TODO: this should be done in a single query

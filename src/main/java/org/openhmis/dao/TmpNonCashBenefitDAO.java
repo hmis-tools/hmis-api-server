@@ -4,9 +4,13 @@ package org.openhmis.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.openhmis.domain.TmpNonCashBenefit;
+import org.openhmis.dto.search.NonCashBenefitSearchDTO;
+import org.openhmis.util.DateParser;
 
 public class TmpNonCashBenefitDAO extends BaseDAO {
 
@@ -33,13 +37,14 @@ public class TmpNonCashBenefitDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpNonCashBenefit> getTmpNonCashBenefits() {
-		String queryString = "select nonCashBenefit " + 
-				"from TmpNonCashBenefit as nonCashBenefit";
+	public List<TmpNonCashBenefit> getTmpNonCashBenefits(NonCashBenefitSearchDTO searchDTO) {
 
 		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		List<TmpNonCashBenefit> results = queryObject.list();
+                Criteria query = session.createCriteria(TmpNonCashBenefit.class);
+                if(searchDTO.getUpdatedSince() != null) {
+                    query.add(Restrictions.gt("updatedDate", DateParser.parseDate(searchDTO.getUpdatedSince())));
+		}
+		List<TmpNonCashBenefit> results = query.list();
 		session.close();
 		return results;
 	}

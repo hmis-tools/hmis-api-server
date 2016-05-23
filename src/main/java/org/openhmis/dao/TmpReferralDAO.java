@@ -4,9 +4,13 @@ package org.openhmis.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.openhmis.domain.TmpReferral;
+import org.openhmis.dto.search.ReferralSearchDTO;
+import org.openhmis.util.DateParser;
 
 public class TmpReferralDAO extends BaseDAO {
 
@@ -33,13 +37,14 @@ public class TmpReferralDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpReferral> getTmpReferrals() {
-		String queryString = "select referral " + 
-				"from TmpReferral as referral";
+	public List<TmpReferral> getTmpReferrals(ReferralSearchDTO searchDTO) {
 
 		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		List<TmpReferral> results = queryObject.list();
+                Criteria query =  session.createCriteria(TmpReferral.class);
+                if(searchDTO.getUpdatedSince() != null) {
+                    query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
+		}
+		List<TmpReferral> results = query.list();
 		session.close();
 		return results;
 	}

@@ -16,6 +16,8 @@ import org.openhmis.domain.TmpContact;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.ContactDTO;
+import org.openhmis.dto.search.ContactSearchDTO;
+
 
 public class ContactManager {
 	private static final TmpContactDAO tmpContactDAO = new TmpContactDAO();
@@ -27,11 +29,11 @@ public class ContactManager {
 		return contactDTO;
 	}
 
-	public static List<ContactDTO> getContacts() {
+	public static List<ContactDTO> getContacts(ContactSearchDTO searchDTO) {
 		List<ContactDTO> contactDTOs = new ArrayList<ContactDTO>();
 
 		// Collect the contacts
-		List<TmpContact> tmpContacts = tmpContactDAO.getTmpContacts();
+		List<TmpContact> tmpContacts = tmpContactDAO.getTmpContacts(searchDTO);
 
 		// For each contact, collect and map the data
 		for (Iterator<TmpContact> iterator = tmpContacts.iterator(); iterator.hasNext();) {

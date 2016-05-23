@@ -4,9 +4,13 @@ package org.openhmis.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.openhmis.domain.TmpHealthInsurance;
+import org.openhmis.dto.search.HealthInsuranceSearchDTO;
+import org.openhmis.util.DateParser;
 
 public class TmpHealthInsuranceDAO extends BaseDAO {
 
@@ -33,13 +37,14 @@ public class TmpHealthInsuranceDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpHealthInsurance> getTmpHealthInsurances() {
-		String queryString = "select healthInsurance " + 
-				"from TmpHealthInsurance as healthInsurance";
+	public List<TmpHealthInsurance> getTmpHealthInsurances(HealthInsuranceSearchDTO searchDTO) {
 
 		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		List<TmpHealthInsurance> results = queryObject.list();
+                Criteria query = session.createCriteria(TmpHealthInsurance.class);
+                if(searchDTO.getUpdatedSince() != null) {
+                    query.add(Restrictions.gt("updateDate", DateParser.parseDate(searchDTO.getUpdatedSince())));
+		}
+		List<TmpHealthInsurance> results = query.list();
 		session.close();
 		return results;
 	}

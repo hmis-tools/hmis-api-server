@@ -7,6 +7,7 @@ package org.openhmis.webservice;
 import java.io.IOException;
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -21,6 +22,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 import org.openhmis.dto.CoCDTO;
+import org.openhmis.dto.search.CoCSearchDTO;
 import org.openhmis.dto.InventoryDTO;
 import org.openhmis.dto.SiteDTO;
 import org.openhmis.exception.AccessDeniedException;
@@ -43,18 +45,13 @@ public class CoCService {
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<CoCDTO> getCoCs(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<CoCDTO> getCoCs(@HeaderParam("Authorization") String authorization, @BeanParam CoCSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		
 		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<CoCDTO> coCDTOs = CoCManager.getCoCs();
-			return coCDTOs;
-		} else {
-			List<CoCDTO> coCDTOs = CoCManager.getCoCs(DateParser.parseDate(updatedSince));
-			return coCDTOs;			
-		}
+                List<CoCDTO> coCDTOs = CoCManager.getCoCs(searchDTO);
+                return coCDTOs;
 		
 	}
 	

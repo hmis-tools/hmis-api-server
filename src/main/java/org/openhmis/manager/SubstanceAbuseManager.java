@@ -19,6 +19,7 @@ import org.openhmis.domain.TmpSubstanceAbuse;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.SubstanceAbuseDTO;
+import org.openhmis.dto.search.SubstanceAbuseSearchDTO;
 
 public class SubstanceAbuseManager {
 	private static final TmpSubstanceAbuseDAO tmpSubstanceAbuseDAO = new TmpSubstanceAbuseDAO();
@@ -30,11 +31,11 @@ public class SubstanceAbuseManager {
 		return substanceAbuseDTO;
 	}
 
-	public static List<SubstanceAbuseDTO> getSubstanceAbuses() {
+	public static List<SubstanceAbuseDTO> getSubstanceAbuses(SubstanceAbuseSearchDTO searchDTO) {
 		List<SubstanceAbuseDTO> substanceAbuseDTOs = new ArrayList<SubstanceAbuseDTO>();
 
 		// Collect the substanceAbuses
-		List<TmpSubstanceAbuse> tmpSubstanceAbuses = tmpSubstanceAbuseDAO.getTmpSubstanceAbuses();
+		List<TmpSubstanceAbuse> tmpSubstanceAbuses = tmpSubstanceAbuseDAO.getTmpSubstanceAbuses(searchDTO);
 
 		// For each substanceAbuse, collect and map the data
 		for (Iterator<TmpSubstanceAbuse> iterator = tmpSubstanceAbuses.iterator(); iterator.hasNext();) {

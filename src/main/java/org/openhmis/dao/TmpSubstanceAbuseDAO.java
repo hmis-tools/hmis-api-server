@@ -4,9 +4,13 @@ package org.openhmis.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.openhmis.domain.TmpSubstanceAbuse;
+import org.openhmis.dto.search.SubstanceAbuseSearchDTO;
+import org.openhmis.util.DateParser;
 
 public class TmpSubstanceAbuseDAO extends BaseDAO {
 
@@ -33,13 +37,14 @@ public class TmpSubstanceAbuseDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpSubstanceAbuse> getTmpSubstanceAbuses() {
-		String queryString = "select substanceAbuse " + 
-				"from TmpSubstanceAbuse as substanceAbuse";
+	public List<TmpSubstanceAbuse> getTmpSubstanceAbuses(SubstanceAbuseSearchDTO searchDTO) {
 
 		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		List<TmpSubstanceAbuse> results = queryObject.list();
+                Criteria query =  session.createCriteria(TmpSubstanceAbuse.class);
+                if(searchDTO.getUpdatedSince() != null) {
+                    query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
+		}
+		List<TmpSubstanceAbuse> results = query.list();
 		session.close();
 		return results;
 	}

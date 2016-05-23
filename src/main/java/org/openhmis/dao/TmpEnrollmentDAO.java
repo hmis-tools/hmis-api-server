@@ -4,9 +4,15 @@ package org.openhmis.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Restrictions;
 import org.openhmis.domain.TmpEnrollment;
+import org.openhmis.dto.search.EnrollmentSearchDTO;
+import org.openhmis.util.DateParser;
 
 public class TmpEnrollmentDAO extends BaseDAO {
 
@@ -33,13 +39,15 @@ public class TmpEnrollmentDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpEnrollment> getTmpEnrollments() {
-		String queryString = "select enrollment " + 
-				"from TmpEnrollment as enrollment";
+	public List<TmpEnrollment> getTmpEnrollments(EnrollmentSearchDTO searchDTO) {
 
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		List<TmpEnrollment> results = queryObject.list();
+                Session session = getSession();
+		Criteria query = session.createCriteria(TmpEnrollment.class);
+                if(searchDTO.getUpdatedSince() != null) {
+                    query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
+		}
+
+		List<TmpEnrollment> results = query.list();
 		session.close();
 		return results;
 	}
