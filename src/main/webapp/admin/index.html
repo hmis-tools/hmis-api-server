@@ -10,6 +10,9 @@
 
 		<link rel="stylesheet" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
 
+		<link rel="stylesheet" href="css/vendor/jquery.modal.min.css" type="text/css" media="screen" />
+
+
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
@@ -19,6 +22,7 @@
 
 		<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
 		
+		<script src="js/vendor/jquery.modal.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/admin.js"></script>
 
 	</head>
@@ -27,7 +31,16 @@
 		<h1>OpenHMIS Admin</h1>
 		<button type="button" class="btn btn-primary" id="login">Log In</button>
 
-		<div id="datatable"></div>
+
+		<div id="adminInterface">
+			<table id="dataTable"></table>
+
+			<form id="editForm" class="modal">
+				YOLO
+			</form>
+
+			<button type="button" class="btn" id="addUser">Add User</button>
+		</div>
 
 	</body>
 </html>
