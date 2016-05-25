@@ -79,8 +79,12 @@ public class Authentication {
 	}
 	
 	public static Boolean googleAuthenticate(String tokenString, String authType) {
-		if(tokenString == null)
-			return false;
+                if (getAuthEnabled() == false)
+                        return true;
+
+                if(tokenString == null)
+                        return false;
+                
 		try {
 			// Verify that the token is a legitimate google token
 			GoogleIdToken token = GoogleIdToken.parse(JSON_FACTORY, tokenString);
