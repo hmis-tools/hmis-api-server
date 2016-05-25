@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientHousingAssessmentDisposition implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	EMERGENCY_SHELTER (1, "Referred to emergency shelter/safe haven"),
 	@XmlEnumValue("2")
@@ -68,6 +70,6 @@ public enum ClientHousingAssessmentDisposition implements BaseCode {
 	@JsonCreator
 	public static ClientHousingAssessmentDisposition valueByCode(Integer code) {
 		ClientHousingAssessmentDisposition value = enhancer.valueByCode(code); 
-		return (value == null)?ClientHousingAssessmentDisposition.NOT_COLLECTED:value;
+		return (value == null)?ClientHousingAssessmentDisposition.ERR_UNKNOWN:value;
 	}
 }

@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientDestination implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	EMERGENCY_SHELTER (1, "Emergency shelter, including hotel or motel paid for with emergency shelter voucher"),
 	@XmlEnumValue("2")
@@ -100,6 +102,6 @@ public enum ClientDestination implements BaseCode {
 	@JsonCreator
 	public static ClientDestination valueByCode(Integer code) {
 		ClientDestination value = enhancer.valueByCode(code); 
-		return (value == null)?ClientDestination.NOT_COLLECTED:value;
+		return (value == null)?ClientDestination.ERR_UNKNOWN:value;
 	}
 }

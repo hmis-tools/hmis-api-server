@@ -21,6 +21,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 import org.openhmis.dto.HivAidsStatusDTO;
+import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.manager.HivAidsStatusManager;
 import org.openhmis.util.Authentication;
 import org.openhmis.util.DateParser;
@@ -40,7 +41,7 @@ public class HivAidsStatusService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<HivAidsStatusDTO> getHivAidsStatuses(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
@@ -59,7 +60,7 @@ public class HivAidsStatusService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public HivAidsStatusDTO createHivAidsStatus(@HeaderParam("Authorization") String authorization, HivAidsStatusDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		HivAidsStatusDTO outputDTO = HivAidsStatusManager.addHivAidsStatus(inputDTO);
 		return outputDTO;
 	}
@@ -69,7 +70,7 @@ public class HivAidsStatusService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public HivAidsStatusDTO getHivAidsStatus(@HeaderParam("Authorization") String authorization, @PathParam("hivAidsStatusId") String hivAidsStatusId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		HivAidsStatusDTO outputDTO = HivAidsStatusManager.getHivAidsStatusById(hivAidsStatusId);
 		return outputDTO;
 	}
@@ -80,7 +81,7 @@ public class HivAidsStatusService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public HivAidsStatusDTO updateHivAidsStatus(@HeaderParam("Authorization") String authorization, @PathParam("hivAidsStatusId") String hivAidsStatusId, HivAidsStatusDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		inputDTO.setHivAidsStatusId(hivAidsStatusId);
 		
 		HivAidsStatusDTO outputDTO = HivAidsStatusManager.updateHivAidsStatus(inputDTO);
@@ -92,7 +93,7 @@ public class HivAidsStatusService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteHivAidsStatus(@HeaderParam("Authorization") String authorization, @PathParam("hivAidsStatusId") String hivAidsStatusId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		HivAidsStatusManager.deleteHivAidsStatus(hivAidsStatusId);
 		return "true";
 	}

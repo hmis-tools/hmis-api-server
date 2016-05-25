@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientNameDataQuality implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	FULL (1, "Full name reported"),
 	@XmlEnumValue("2")
@@ -27,8 +29,8 @@ public enum ClientNameDataQuality implements BaseCode {
 	@XmlEnumValue("99")
 	NOT_COLLECTED (99, "Data not collected");
 	
-	public final Integer code;
-	public final String description;
+	private final Integer code;
+	private final String description;
 
 	ClientNameDataQuality(final Integer code, final String description) {
 		this.code = code;
@@ -50,6 +52,6 @@ public enum ClientNameDataQuality implements BaseCode {
 	@JsonCreator
 	public static ClientNameDataQuality valueByCode(Integer code) {
 		ClientNameDataQuality value = enhancer.valueByCode(code); 
-		return (value == null)?ClientNameDataQuality.NOT_COLLECTED:value;
+		return (value == null)?ClientNameDataQuality.ERR_UNKNOWN:value;
 	}
 }

@@ -21,6 +21,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 import org.openhmis.dto.ContactDTO;
+import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.manager.ContactManager;
 import org.openhmis.util.Authentication;
 import org.openhmis.util.DateParser;
@@ -40,7 +41,7 @@ public class ContactService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<ContactDTO> getContacts(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
@@ -59,7 +60,7 @@ public class ContactService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ContactDTO createContact(@HeaderParam("Authorization") String authorization, ContactDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		ContactDTO outputDTO = ContactManager.addContact(inputDTO);
 		return outputDTO;
 	}
@@ -69,7 +70,7 @@ public class ContactService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ContactDTO getContact(@HeaderParam("Authorization") String authorization, @PathParam("contactId") String contactId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		ContactDTO outputDTO = ContactManager.getContactById(contactId);
 		return outputDTO;
 	}
@@ -80,7 +81,7 @@ public class ContactService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ContactDTO updateContact(@HeaderParam("Authorization") String authorization, @PathParam("contactId") String contactId, ContactDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		inputDTO.setContactId(contactId);
 		
 		ContactDTO outputDTO = ContactManager.updateContact(inputDTO);
@@ -92,7 +93,7 @@ public class ContactService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteContact(@HeaderParam("Authorization") String authorization, @PathParam("contactId") String contactId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		ContactManager.deleteContact(contactId);
 		return "true";
 	}

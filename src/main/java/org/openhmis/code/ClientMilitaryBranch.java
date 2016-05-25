@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientMilitaryBranch implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	ARMY (1, "Army"),
 	@XmlEnumValue("2")
@@ -53,7 +55,7 @@ public enum ClientMilitaryBranch implements BaseCode {
 
 	@JsonCreator
 	public static ClientMilitaryBranch valueByCode(Integer code) {
-		ClientMilitaryBranch value = enhancer.valueByCode(code); 
-		return (value == null)?ClientMilitaryBranch.NOT_COLLECTED:value;
+		ClientMilitaryBranch value = enhancer.valueByCode(code);
+		return (value == null)?ClientMilitaryBranch.ERR_UNKNOWN:value;
 	}
 }

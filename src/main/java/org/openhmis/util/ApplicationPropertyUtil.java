@@ -12,7 +12,7 @@ public class ApplicationPropertyUtil {
 
 	private void loadPropertiesFile() {
 		try {
-            String environment = System.getProperty("env", "dev");
+            String environment = System.getProperty("ENV", "dev");
 	    	String configFileName = environment + ".properties";
 	    	
     		InputStream is = getClass().getClassLoader().getResourceAsStream(configFileName);
@@ -42,4 +42,10 @@ public class ApplicationPropertyUtil {
 		loadPropertiesFile();
 		return properties.getProperty("google.secret");
 	}
+
+    public Boolean getAuthEnabled() {
+        loadPropertiesFile();
+        Boolean authEnabled = Boolean.parseBoolean(properties.getProperty("authEnabled"));
+        return authEnabled;
+    }
 }

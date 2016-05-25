@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientCountExchangeForSex implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	THREE (1, "1-3"),
 	@XmlEnumValue("2")
@@ -52,6 +54,6 @@ public enum ClientCountExchangeForSex implements BaseCode {
 	@JsonCreator
 	public static ClientCountExchangeForSex valueByCode(Integer code) {
 		ClientCountExchangeForSex value = enhancer.valueByCode(code); 
-		return (value == null)?ClientCountExchangeForSex.NOT_COLLECTED:value;
+		return (value == null)?ClientCountExchangeForSex.ERR_UNKNOWN:value;
 	}
 }

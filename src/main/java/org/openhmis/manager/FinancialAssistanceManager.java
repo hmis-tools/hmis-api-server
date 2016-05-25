@@ -128,6 +128,10 @@ public class FinancialAssistanceManager {
 		return true;
 	}
 	
+	public static boolean validateFinancialAssistance(FinancialAssistanceDTO inputDTO) {
+		return true;
+	}
+	
 	public static FinancialAssistanceDTO generateFinancialAssistanceDTO(TmpFinancialAssistance tmpFinancialAssistance) {
 		FinancialAssistanceDTO financialAssistanceDTO = new FinancialAssistanceDTO();
 

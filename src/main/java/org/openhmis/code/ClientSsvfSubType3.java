@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientSsvfSubType3 implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	VOCATIONAL_COUNSELING (1, "VA vocational and rehabilitation counseling"),
 	@XmlEnumValue("2")
@@ -48,6 +50,6 @@ public enum ClientSsvfSubType3 implements BaseCode {
 	@JsonCreator
 	public static ClientSsvfSubType3 valueByCode(Integer code) {
 		ClientSsvfSubType3 value = enhancer.valueByCode(code); 
-		return (value == null)?ClientSsvfSubType3.NOT_COLLECTED:value;
+		return (value == null)?ClientSsvfSubType3.ERR_UNKNOWN:value;
 	}
 }

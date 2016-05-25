@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ProjectAvailability implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	YEAR_ROUND (1, "Year-round"),
 	@XmlEnumValue("2")
@@ -46,6 +48,6 @@ public enum ProjectAvailability implements BaseCode {
 	@JsonCreator
 	public static ProjectAvailability valueByCode(Integer code) {
 		ProjectAvailability value = enhancer.valueByCode(code); 
-		return (value == null)?ProjectAvailability.NOT_COLLECTED:value;
+		return (value == null)?ProjectAvailability.ERR_UNKNOWN:value;
 	}
 }

@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientContactLocation implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	NONHABITABLE (1, "Place not meant for habitation"),
 	@XmlEnumValue("2")
@@ -50,6 +52,6 @@ public enum ClientContactLocation implements BaseCode {
 	@JsonCreator
 	public static ClientContactLocation valueByCode(Integer code) {
 		ClientContactLocation value = enhancer.valueByCode(code); 
-		return (value == null)?ClientContactLocation.NOT_COLLECTED:value;
+		return (value == null)?ClientContactLocation.ERR_UNKNOWN:value;
 	}
 }

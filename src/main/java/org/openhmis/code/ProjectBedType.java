@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ProjectBedType implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	NO_CHILDREN (1, "Facility-based"),
 	@XmlEnumValue("2")
@@ -46,6 +48,6 @@ public enum ProjectBedType implements BaseCode {
 	@JsonCreator
 	public static ProjectBedType valueByCode(Integer code) {
 		ProjectBedType value = enhancer.valueByCode(code); 
-		return (value == null)?ProjectBedType.NOT_COLLECTED:value;
+		return (value == null)?ProjectBedType.ERR_UNKNOWN:value;
 	}
 }

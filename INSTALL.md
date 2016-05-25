@@ -135,6 +135,13 @@ Set up OAuth authentication:
 ----------------------------
 This API uses [Google Sign-in](https://developers.google.com/identity/) OAuth-style authentication.  To build an application powered by this API, your application must use the Google Sign-in [server side flow](https://developers.google.com/identity/sign-in/web/server-side-flow).
 
+NOTE: If you simply want to make requests to an HMIS server based on a
+Google identity, you can find your id token by using the Google OAuth
+2.0 Playground as described
+[here](https://www.tbray.org/ongoing/When/201x/2013/04/04/ID-Tokens#p-5).
+Then, pass that id token as the value of the Authorization header in
+your requests, as described in step 5 below.
+
 1. Begin the [Google sign-in tutorial](https://developers.google.com/identity/sign-in/web/server-side-flow).  Create a client ID and a client secret and store them in a local `dev.properties` file, then restart your app.
 
    ```shell
@@ -150,7 +157,36 @@ This API uses [Google Sign-in](https://developers.google.com/identity/) OAuth-st
 
 5. For all API calls that require authentication include the HTTP header `Authorization` with the value of the `id_token` you collected in step 3.  To test these calls with specific headers, try the [Postman](https://www.getpostman.com/) app.
 
-You can test that you are passing your `id_token` correctly by using the `api/v3/healthcheck/authentication` endpoint
+You can test that you are passing your `id_token` correctly by using the `api/v3/healthcheck/authentication` endpoint.  You can turn off authentication for local development by changing the "authEnabled" entry in the dev.properties file to false and running `mvn tomcat7:redeploy`.  Turn authentication back on at any time by changing authEnabled to true and running `mvn tomcat7:redeploy`.
+
+
+Create your first admin user:
+-----------------------------
+
+If you are setting up the OpenHMIS server for the first time, you'll see
+that you have a TMP_USER table in your database.  If you don't, then do
+the following:
+
+```
+    $ mysql -u __YOUR_USER__ -p
+    Enter password: __YOUR_PASSWORD__
+    
+    mysql> \. src/main/resources/db/migration/V028__CREATE_TMP_USER.sql
+```
+
+Then, create an admin user with all permissions:
+```
+    mysql> insert into TMP_USER (externalID, canRead, canWrite, canAdmin, dateCreated, dateUpdated) values ('__YOUR_GMAIL_EMAIL__', 1, 1, 1, NOW(), NOW());
+```
+
+Note that the `externalID` column expects some identification from
+another external account.  We generally expect this API to be set up
+with Google as the external authenticating party, in which case you
+would use a Google email address for the `externalID`, but you could set
+up OAuth with any other external auth, too.
+
+Each request to the API should include an authorization header with an
+id_token corresponding to an email address in this user table.
 
 
 Run the web service:

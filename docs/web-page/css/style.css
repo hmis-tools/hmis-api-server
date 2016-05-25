@@ -1,0 +1,619 @@
+/*GENERAL STYLES*/
+
+body {
+  padding-top: 0px;
+/*  position: relative;*/
+  -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+header .navbar {
+  border-radius: 0;
+  border: 0;
+  background-color: white !important;
+  padding: 20px;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+header .navbar-default {
+  background-color: white !important;
+  border-bottom:2px dotted #42935a;
+}
+
+header .navbar-default .navbar-nav a {
+  color: #333;
+  margin-bottom: -10px;
+  background-color: white !important;
+
+}
+
+header .navbar-default .navbar-nav a:hover {
+  color: #42935a;
+  background-color: white !important;
+}
+
+header .navbar-default .navbar-nav .active a {
+  color: #42935a !important;
+  background-color: white !important;
+  text-shadow: none;
+}
+
+header .navbar-default .navbar-nav .active a:hover {
+  color: #42935a;
+  background-color: white !important;
+  text-shadow: none;
+}
+
+header .navbar-brand {
+  background: url(../images/ots-logo-name-256x49.png);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: 49px;
+  width: 256px;
+  margin-right: 20px;
+}
+
+header .navbar-brand h1 {
+  display: none;
+}
+
+.styled-btn, .styled-btn:visited, .styled-btn:active, .styled-btn:focus {
+  color: #42935a;
+  background-color: white;
+  border:2px dotted #42935a;
+  font-family: 'Source Sans Pro Bold', sans-serif;
+  font-variant: small-caps;
+  -webkit-transition: background .15s cubic-bezier(.33,.66,.66,1);
+  transition: background .15s cubic-bezier(.33,.66,.66,1);
+}
+
+.styled-btn:hover {
+  color: white;
+  background-color: #42935a;
+  -webkit-transition: background .15s cubic-bezier(.33,.66,.66,1);
+  transition: background .15s cubic-bezier(.33,.66,.66,1);
+}
+
+.section {
+  padding: 70px 0;
+}
+
+@media only screen
+and (max-width: 768px) {
+
+    .section {
+    padding: 70px 40px;
+  }
+    .green-section {
+    padding: 70px 40px !important;
+  }
+
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+  header .navbar-brand {
+    background: url(../images/ots-logo-name-256x49-2x.png);
+    background-size: 256px 49px;
+  }
+}
+
+/*TEXT STYLES*/
+
+@font-face {
+  font-family: 'lora';
+    src: url('fonts/Lora/lora-regular-webfont.eot');
+    src: url('lora-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('lora-regular-webfont.woff2') format('woff2'),
+         url('lora-regular-webfont.woff') format('woff'),
+         url('fonts/Lora/lora-regular-webfont.ttf') format('truetype'),
+         url('lora-regular-webfont.svg#loraregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+  font-family: 'lorabold';
+    src: url('fonts/Lora/lora-bold-webfont.eot');
+    src: url('fonts/Lora/lora-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/Lora/lora-bold-webfont.woff2') format('woff2'),
+         url('fonts/Lora/lora-bold-webfont.woff') format('woff'),
+         url('fonts/Lora/lora-bold-webfont.ttf') format('truetype'),
+         url('fonts/Lora/lora-bold-webfont.svg#lorabold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'Source Sans Pro';
+    src: url('fonts/Source_Sans_Pro/sourcesanspro-regular-webfont.eot');
+    src: url('fonts/Source_Sans_Pro/sourcesanspro-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/Source_Sans_Pro/sourcesanspro-regular-webfont.woff2') format('woff2'),
+         url('fonts/Source_Sans_Pro/sourcesanspro-regular-webfont.woff') format('woff'),
+         url('fonts/Source_Sans_Pro/sourcesanspro-regular-webfont.ttf') format('truetype'),
+         url('fonts/Source_Sans_Pro/sourcesanspro-regular-webfont.svg#source_sans_proregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+  font-family: 'Source Sans Pro Bold';
+    src: url('fonts/Source_Sans_Pro/sourcesanspro-bold-webfont.eot');
+    src: url('fonts/Source_Sans_Pro/sourcesanspro-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/Source_Sans_Pro/sourcesanspro-bold-webfont.woff2') format('woff2'),
+         url('fonts/Source_Sans_Pro/sourcesanspro-bold-webfont.woff') format('woff'),
+         url('fonts/Source_Sans_Pro/sourcesanspro-bold-webfont.ttf') format('truetype'),
+         url('fonts/Source_Sans_Pro/sourcesanspro-bold-webfont.svg#source_sans_probold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+h2 {
+  font-family: 'lorabold', serif;
+  font-size: 3.6em;
+  color: #42935a;
+}
+
+p {
+  font-size: 1.1em;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.subtitle {
+  font-size: 1.1em;
+  max-width: 430px;
+  margin-bottom: 40px;
+}
+
+.link a {
+  border-bottom: 3px solid #42935a;
+  -webkit-transition: background .15s cubic-bezier(.33,.66,.66,1);
+  transition: background .15s cubic-bezier(.33,.66,.66,1);
+  color: inherit;
+  padding: 2px;
+} 
+
+.link a:hover {
+  color: white;
+  background: #42935a;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 2px;
+  -webkit-transition: background .15s cubic-bezier(.33,.66,.66,1);
+  transition: background .15s cubic-bezier(.33,.66,.66,1);
+}
+
+span.emphasis {
+  font-family: monospace;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+
+.lead {
+  color: white;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+@media only screen
+and (max-width: 768px) {
+  .lead {
+    font-size: 18px;
+  }
+}
+
+/*GREEN SECTIONS*/
+
+.green-section {
+  background-color: #42935a;
+  padding: 70px 0;
+}
+
+.green-section p {
+  color: white;
+}
+
+.green-section h2 {
+  color: white !important;;
+}
+.green-section h3 {
+  color: white !important;;
+  font-family: 'Source Sans Pro', sans-serif;
+  margin-bottom: 20px;
+}
+
+/*OTS-WWWTOP SECTION*/
+
+.ots-wwwtop {
+  background: url(../images/ots-wwwtop-background.png);
+  background-size: cover;
+  background-repeat: repeat-x;
+  background-position-y: 20%;
+  background-position-x: 50%;
+  height: 100vh;
+  width: 100%;
+}
+
+#ots-wwwtop-text {
+  bottom: 0;
+  position: absolute;
+  width: 350px;
+  margin-bottom: 100px;
+}
+
+#top-title-container {
+  margin-bottom: 5px;
+}
+
+#top-title {
+  display: inline;
+  background: white;
+  box-shadow: 10px 0 0 white, -10px 0 0 white;
+  line-height: 66px;
+}
+
+#top-text-container {
+  margin-bottom: 6px;
+}
+
+#top-text {
+  display: inline;
+  background: white;
+  box-shadow: 10px 0 0 white, -10px 0 0 white;
+}
+
+@media only screen
+and (max-width: 768px) {
+    .ots-wwwtop {
+    background: url(../images/ots-wwwtop-background-mobile.png);
+    background-size: cover;
+    background-repeat: repeat-x;
+    background-position: center;
+    height: 100vh;
+    width: 100%;
+  }
+}
+
+/*SERVICES SECTION*/
+
+.left-title {
+  height: 225px;
+}
+
+.service {
+
+  color: white;
+  text-align: center;
+  margin-top: 15px;
+  border: 2px dotted white;
+  padding: 29px;
+  margin-left: -2px;
+  height: 225px;
+  -webkit-transition: background .15s cubic-bezier(.33,.66,.66,1);
+  transition: background .15s cubic-bezier(.33,.66,.66,1);
+
+}
+
+#service-container {
+  position: relative;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  top: 50%;
+}
+
+.service:hover {
+
+  color: white;
+  text-align: center;
+  margin-top: 15px;
+  border: 2px dotted white;
+  padding: 29px;
+  margin-left: -2px;
+  background: rgba(0,0,0,0.3);
+  height: 225px;
+  cursor: default;
+  -webkit-transition: background .15s cubic-bezier(.33,.66,.66,1);
+  transition: background .15s cubic-bezier(.33,.66,.66,1);
+}
+
+.service-icon {
+  display: block;
+  margin-bottom: 9px;
+}
+
+.service-title {
+  font-family: 'Source Sans Pro', serif;
+  font-size: 15px;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.service-cta {
+  color: #42935a;
+  text-align: center;
+  margin-top: 15px;
+  border: 2px dotted white;
+  padding: 29px;
+  margin-left: -2px;
+  background: white;
+  height: 225px;
+}
+
+/*CLIENTS SECTION*/
+
+#client-name {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+#clients a {
+  color: #333;
+} 
+
+#clients img {
+  max-width: 200px;
+  margin-bottom: 10px;
+  padding: 6px 8px 6px 8px;
+  background-color: white !important;
+}
+
+.client {
+  text-align: center;
+  height: 248px;
+  -webkit-transition: opacity .15s cubic-bezier(.33,.66,.66,1);
+  transition: opacity .15s cubic-bezier(.33,.66,.66,1);
+}
+
+.client:hover {
+  opacity: 0.5;
+  -webkit-transition: opacity .15s cubic-bezier(.33,.66,.66,1);
+  transition: opacity .15s cubic-bezier(.33,.66,.66,1);
+}
+
+/*TEAM SECTION*/
+
+#team h3 {
+  font-family: 'lorabold', serif;
+  margin-bottom: 0px;
+  color: #42935a;
+}
+
+#team h4 {
+
+  font-family: monospace, sans-serif;
+  color: black;
+  padding-bottom: 14px;
+  border-bottom: 2px dotted white;
+  margin-bottom: 17px;
+}
+
+#team a {
+  border-bottom: 1px dotted #42935a;
+  -webkit-transition: background .15s cubic-bezier(.33,.66,.66,1);
+  transition: background .15s cubic-bezier(.33,.66,.66,1);
+  color: inherit;
+  font-weight: bold;
+} 
+
+#team a:hover {
+  color: white;
+  background: #42935a;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: bold;
+  -webkit-transition: background .15s cubic-bezier(.33,.66,.66,1);
+  transition: background .15s cubic-bezier(.33,.66,.66,1);
+}
+
+#team img {
+    max-width: 58%;
+    margin-left: 15%;
+    border-left: 5px dotted white;
+    border-right: 5px dotted white;
+}
+
+/*RESOURCES SECTION*/
+
+#resources a {
+  color: #333;
+  -webkit-transition: color .15s cubic-bezier(.33,.66,.66,1);
+  transition: color .15s cubic-bezier(.33,.66,.66,1);
+} 
+
+#resources a:hover {
+  color: grey;
+  -webkit-transition: color .15s cubic-bezier(.33,.66,.66,1);
+  transition: color .15s cubic-bezier(.33,.66,.66,1);
+
+}
+
+#resource-container {
+  border-left: 2px dotted white;
+  padding-left: 10px;
+  -webkit-transition: border .15s cubic-bezier(.33,.66,.66,1);
+  transition: border .15s cubic-bezier(.33,.66,.66,1);
+}
+
+#resource-container:hover {
+  border-left: 2px dotted green;
+  padding-left: 10px;
+  -webkit-transition: border .15s cubic-bezier(.33,.66,.66,1);
+  transition: border .15s cubic-bezier(.33,.66,.66,1);
+}
+
+
+.resource {
+
+  margin-bottom: 40px;
+  cursor: pointer;
+
+}
+
+.resource:hover {
+/*  border-left: 3px dotted #42935a;*/
+}
+
+.resource-title-container {
+  display: block;
+  height: 65px;
+
+}
+
+#big-r-title {
+  font-size: 13px;
+}
+
+.resource-icon {
+  float: left;
+}
+
+.resource-title {
+  font-family: 'Source Sans Pro Bold', sans-serif;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  position: relative;
+  padding-left: 57px;
+}
+
+.resource-text {
+  display: block;
+}
+
+
+#clear-md {
+  display: block;
+}
+
+#clear-sm {
+  display: none;
+}
+
+#resources-oss-licensing {
+
+}
+
+@media only screen
+and (max-width: 990px) {
+
+#clear-md {
+  display: none;
+}
+
+#clear-sm {
+  display: block;
+}
+
+}
+
+@media only screen
+and (max-width: 768px) {
+
+  .resource {
+  height: 5%;
+  margin-bottom: 20px;
+  cursor: pointer;
+  padding: 0% 8% !important;
+
+  }
+
+}
+
+/*JOBS SECTION*/
+
+#jobs h2 {
+  font-family: 'lorabold', serif;
+}
+
+#jobs h3 {
+  font-family: 'Source Sans Pro Bold', sans-serif;
+}
+
+.job-icon-container {
+  height: 40px;
+  width: 40px;
+  position: relative;
+  margin-bottom: -7px;
+  margin-left: -25px;
+  color: white;
+  z-index: 1;
+}
+
+.job-icon:hover {
+
+}
+
+.job-description {
+  border-left: 2px dotted white;
+}
+ 
+.job-note {
+  font-style: italic;
+  font-size: 13px;
+}
+
+.job-title {
+  background-color: rgba(0,0,0,0.1);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.job-subtitle {
+  display: block;
+  font-size: 0.8em;
+}
+
+/*CONTACT SECTION*/
+
+.contact-icon {
+  text-align: center;
+  margin-top: 40px;
+  height: 105px;
+}
+
+.contact-emphasis {
+  font-family: monospace;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.contact-regular {
+  font-family: 'Source Sans Pro Bold', sans-serif;
+  text-decoration: none;
+  font-variant: small-caps;
+}
+
+#contact a {
+  border-bottom: 2px dotted #42935a;
+  -webkit-transition: background .15s cubic-bezier(.33,.66,.66,1);
+  transition: background .15s cubic-bezier(.33,.66,.66,1);
+  color: inherit;
+  padding: 2px;
+} 
+
+#contact a:hover {
+  color: white;
+  background: #42935a;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 2px;
+  -webkit-transition: background .15s cubic-bezier(.33,.66,.66,1);
+  transition: background .15s cubic-bezier(.33,.66,.66,1);
+}
+
+/*FOOTER*/
+
+footer {
+  height: auto;
+  border-top: 10px dotted #42935a;
+}
+
+:target { 
+  border: 2px solid #42935a;
+  color: #42935a;
+}

@@ -3,6 +3,8 @@ application.version=3.1.0
 google.clientId=
 google.secret=
 
+authEnabled=true
+
 hibernate.dialect=org.hibernate.dialect.MySQLDialect
 hibernate.connection.url=jdbc:mysql://localhost/openhmis
 hibernate.connection.username=

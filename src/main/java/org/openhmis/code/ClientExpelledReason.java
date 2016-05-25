@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientExpelledReason implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	CRIME (1, "Criminal activity/destruction of property/violence"),
 	@XmlEnumValue("2")
@@ -52,6 +54,6 @@ public enum ClientExpelledReason implements BaseCode {
 	@JsonCreator
 	public static ClientExpelledReason valueByCode(Integer code) {
 		ClientExpelledReason value = enhancer.valueByCode(code); 
-		return (value == null)?ClientExpelledReason.NOT_COLLECTED:value;
+		return (value == null)?ClientExpelledReason.ERR_UNKNOWN:value;
 	}
 }

@@ -21,6 +21,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 import org.openhmis.dto.ChronicHealthConditionDTO;
+import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.manager.ChronicHealthConditionManager;
 import org.openhmis.util.Authentication;
 import org.openhmis.util.DateParser;
@@ -40,7 +41,7 @@ public class ChronicHealthConditionService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<ChronicHealthConditionDTO> getChronicHealthConditions(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
@@ -59,7 +60,7 @@ public class ChronicHealthConditionService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ChronicHealthConditionDTO createChronicHealthCondition(@HeaderParam("Authorization") String authorization, ChronicHealthConditionDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		ChronicHealthConditionDTO outputDTO = ChronicHealthConditionManager.addChronicHealthCondition(inputDTO);
 		return outputDTO;
 	}
@@ -69,7 +70,7 @@ public class ChronicHealthConditionService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ChronicHealthConditionDTO getChronicHealthConditiion(@HeaderParam("Authorization") String authorization, @PathParam("chronicHealthConditionId") String chronicHealthConditionId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		ChronicHealthConditionDTO outputDTO = ChronicHealthConditionManager.getChronicHealthConditionById(chronicHealthConditionId);
 		return outputDTO;
 	}
@@ -80,7 +81,7 @@ public class ChronicHealthConditionService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ChronicHealthConditionDTO updateChronicHealthCondition(@HeaderParam("Authorization") String authorization, @PathParam("chronicHealthConditionId") String chronicHealthConditionId, ChronicHealthConditionDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		inputDTO.setChronicHealthConditionId(chronicHealthConditionId);
 		
 		ChronicHealthConditionDTO outputDTO = ChronicHealthConditionManager.updateChronicHealthCondition(inputDTO);
@@ -92,7 +93,7 @@ public class ChronicHealthConditionService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteChronicHealthCondition(@HeaderParam("Authorization") String authorization, @PathParam("chronicHealthConditionId") String chronicHealthConditionId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		ChronicHealthConditionManager.deleteChronicHealthCondition(chronicHealthConditionId);
 		return "true";
 	}

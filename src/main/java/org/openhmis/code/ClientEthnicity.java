@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientEthnicity implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("0")
 	NON_HISPANIC (0, "Non-Hispanic/Non-Latino"),
 	@XmlEnumValue("1")
@@ -48,6 +50,6 @@ public enum ClientEthnicity implements BaseCode {
 	@JsonCreator
 	public static ClientEthnicity valueByCode(Integer code) {
 		ClientEthnicity value = enhancer.valueByCode(code); 
-		return (value == null)?ClientEthnicity.NOT_COLLECTED:value;
+		return (value == null)?ClientEthnicity.ERR_UNKNOWN:value;
 	}
 }

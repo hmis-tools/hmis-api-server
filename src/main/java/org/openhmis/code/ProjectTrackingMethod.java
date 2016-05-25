@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ProjectTrackingMethod implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("0")
 	ENTRY_EXIT (0, "Entry/Exit Date"),
 	@XmlEnumValue("3")
@@ -44,6 +46,6 @@ public enum ProjectTrackingMethod implements BaseCode {
 	@JsonCreator
 	public static ProjectTrackingMethod valueByCode(Integer code) {
 		ProjectTrackingMethod value = enhancer.valueByCode(code); 
-		return (value == null)?ProjectTrackingMethod.NOT_COLLECTED:value;
+		return (value == null)?ProjectTrackingMethod.ERR_UNKNOWN:value;
 	}
 }

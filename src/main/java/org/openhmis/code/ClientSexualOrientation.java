@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientSexualOrientation implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	HETEROSEXUAL (1, "Heterosexual"),
 	@XmlEnumValue("2")
@@ -54,6 +56,6 @@ public enum ClientSexualOrientation implements BaseCode {
 	@JsonCreator
 	public static ClientSexualOrientation valueByCode(Integer code) {
 		ClientSexualOrientation value = enhancer.valueByCode(code); 
-		return (value == null)?ClientSexualOrientation.NOT_COLLECTED:value;
+		return (value == null)?ClientSexualOrientation.ERR_UNKNOWN:value;
 	}
 }

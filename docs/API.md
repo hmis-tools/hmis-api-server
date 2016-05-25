@@ -86,7 +86,40 @@ services base, then a GET request to
 
 would fetch a list of clients like this:
 
-        [
+      {
+        "data": {
+          "items":
+          [
+          {"personalId":"336788",
+          "firstName":"Renee",
+          "middleName":null,
+          "lastName":"Mover",
+          "nameSuffix":null,
+          "nameDataQuality":99,
+          "ssn":"459834818",
+          ... }
+          {"personalId":"336823",
+          "firstName":"Tommy",
+          "middleName":null,
+          "lastName":"Harbison",
+          "nameSuffix":null,
+          "nameDataQuality":99,
+          "ssn":"106533370"," 
+          ... }
+          ...
+          ]
+        }
+      }
+
+Extending that with the appropriate personalId value ...
+
+        http://hmis.example.com/openhmis/api/v3/clients/336788
+    
+...would fetch the corresponding individual Client:
+
+      {
+        "data": {
+          "item":
             {"personalId":"336788",
              "firstName":"Renee",
              "middleName":null,
@@ -95,31 +128,17 @@ would fetch a list of clients like this:
              "nameDataQuality":99,
              "ssn":"459834818",
              ... }
-            {"personalId":"336823",
-             "firstName":"Tommy",
-             "middleName":null,
-             "lastName":"Harbison",
-             "nameSuffix":null,
-             "nameDataQuality":99,
-             "ssn":"106533370"," 
-             ... }
-            ...
-        ]
+          }
+        }
+      }
 
-Extending that with the appropriate personalId value ...
-
-        http://hmis.example.com/openhmis/api/v3/clients/336788
-    
-...would fetch the corresponding individual Client:
-
-        {"personalId":"336788",
-         "firstName":"Renee",
-         "middleName":null,
-         "lastName":"Mover",
-         "nameSuffix":null,
-         "nameDataQuality":99,
-         "ssn":"459834818",
-         ... }
+Note that the "data" wrapper has been added to correspond to the
+"errors" wrapper for responses to failed requests.  This is in part to
+correspond with this [Google style
+guide](https://google.github.io/styleguide/jsoncstyleguide.xml#error)
+and the [HMIS
+API](https://github.com/servinglynk/hmis-lynk-open-source).  As you can
+see above, "data" will contain either one "item" or a list of "items."
 
 POST, PUT, and DELETE work as expected.
 
@@ -127,8 +146,8 @@ Note that you cannot edit fields inside nested objects.  For example,
 if you PUT an Enrollment object (containing `income sources` nested
 within it) to `services/enrollments/3/`, you should not expect changes
 in nested income sources to take effect.  Instead, to change or add
-those income sources, you must use the appropriate nested endpoint,
-e.g., `services/enrollments/3/income-sources/1`.
+those income sources, you must use the appropriate top-level endpoint,
+e.g., `services/income-sources/1`.
 
 # Top-level resources:
 
@@ -136,6 +155,9 @@ e.g., `services/enrollments/3/income-sources/1`.
 * Enrollments
 * Organizations
 * Projects
+
+TODO: All endpoints are now top-level.  This section may need more
+changes to reflect that.
 
 # Clients
 
@@ -150,80 +172,86 @@ URI: `/clients`
   - Responses: Returns all clients found.
   - Example:
     Call: `$ curl http://localhost:8080/openhmis/api/v3/clients/`
-    Response: ```[
-  {
-    "dateUpdated": "2015-05-08",
-    "dateCreated": "2003-03-03",
-    "dischargeStatus": 99,
-    "militaryBranch": 99,
-    "otherTheater": 99,
-    "iraqOND": 99,
-    "iraqOIF": 99,
-    "afghanistanOEF": 99,
-    "desertStorm": 99,
-    "vietnamWar": 99,
-    "koreanWar": 99,
-    "worldWarII": 99,
-    "yearSeparated": null,
-    "yearEnteredService": null,
-    "veteranStatus": 0,
-    "otherGender": null,
-    "gender": 2,
-    "ethnicity": 0,
-    "raceNone": 8,
-    "white": 1,
-    "nativeHIOtherPacific": 0,
-    "blackAfAmerican": 0,
-    "asian": 0,
-    "amIndAKNative": 0,
-    "dobDataQuality": 1,
-    "dob": "2045-01-24",
-    "ssnDataQuality": 1,
-    "ssn": "459834818",
-    "nameDataQuality": 99,
-    "nameSuffix": null,
-    "lastName": "Mover",
-    "middleName": null,
-    "firstName": "Renee",
-    "personalId": "336788"
-  },
-  {
-    "dateUpdated": "2015-05-08",
-    "dateCreated": "2005-06-28",
-    "dischargeStatus": 99,
-    "militaryBranch": 99,
-    "otherTheater": 99,
-    "iraqOND": 99,
-    "iraqOIF": 99,
-    "afghanistanOEF": 99,
-    "desertStorm": 99,
-    "vietnamWar": 99,
-    "koreanWar": 99,
-    "worldWarII": 99,
-    "yearSeparated": null,
-    "yearEnteredService": null,
-    "veteranStatus": 0,
-    "otherGender": null,
-    "gender": 2,
-    "ethnicity": 0,
-    "raceNone": 8,
-    "white": 1,
-    "nativeHIOtherPacific": 0,
-    "blackAfAmerican": 0,
-    "asian": 0,
-    "amIndAKNative": 0,
-    "dobDataQuality": 1,
-    "dob": "2049-12-31",
-    "ssnDataQuality": 99,
-    "ssn": "927754675",
-    "nameDataQuality": 99,
-    "nameSuffix": "Ms",
-    "lastName": "Test",
-    "middleName": "A",
-    "firstName": "Sheis",
-    "personalId": "518207"
-  }
-]```
+    Response: ```
+{ "data":
+  {  "items":
+     [
+       {
+           "dateUpdated": "2015-05-08",
+           "dateCreated": "2003-03-03",
+           "dischargeStatus": 99,
+           "militaryBranch": 99,
+           "otherTheater": 99,
+           "iraqOND": 99,
+           "iraqOIF": 99,
+           "afghanistanOEF": 99,
+           "desertStorm": 99,
+           "vietnamWar": 99,
+           "koreanWar": 99,
+           "worldWarII": 99,
+           "yearSeparated": null,
+           "yearEnteredService": null,
+           "veteranStatus": 0,
+           "otherGender": null,
+           "gender": 2,
+           "ethnicity": 0,
+           "raceNone": 8,
+           "white": 1,
+           "nativeHIOtherPacific": 0,
+           "blackAfAmerican": 0,
+           "asian": 0,
+           "amIndAKNative": 0,
+           "dobDataQuality": 1,
+           "dob": "2045-01-24",
+           "ssnDataQuality": 1,
+           "ssn": "459834818",
+           "nameDataQuality": 99,
+           "nameSuffix": null,
+           "lastName": "Mover",
+           "middleName": null,
+           "firstName": "Renee",
+           "personalId": "336788"
+       },
+       {
+           "dateUpdated": "2015-05-08",
+           "dateCreated": "2005-06-28",
+           "dischargeStatus": 99,
+           "militaryBranch": 99,
+           "otherTheater": 99,
+           "iraqOND": 99,
+           "iraqOIF": 99,
+           "afghanistanOEF": 99,
+           "desertStorm": 99,
+           "vietnamWar": 99,
+           "koreanWar": 99,
+           "worldWarII": 99,
+           "yearSeparated": null,
+           "yearEnteredService": null,
+           "veteranStatus": 0,
+           "otherGender": null,
+           "gender": 2,
+           "ethnicity": 0,
+           "raceNone": 8,
+           "white": 1,
+           "nativeHIOtherPacific": 0,
+           "blackAfAmerican": 0,
+           "asian": 0,
+           "amIndAKNative": 0,
+           "dobDataQuality": 1,
+           "dob": "2049-12-31",
+           "ssnDataQuality": 99,
+           "ssn": "927754675",
+           "nameDataQuality": 99,
+           "nameSuffix": "Ms",
+           "lastName": "Test",
+           "middleName": "A",
+           "firstName": "Sheis",
+           "personalId": "518207"
+       }
+     ]
+   }
+}
+```
 
 This endpoint also enables searching on the following fields via querystring parameters.
 
@@ -247,43 +275,46 @@ Example Search: `/clients?firstName=J*&dobEnd=2015-05-09
     - This should be a JSON-formatted string with data element names matching those in the example above.
   - Responses: Returns the newly created client as a JSON-formatted string.
   - Example:
-    Call: `curl -X POST -d '{"firstName":"secondRenee","middleName":null,"lastName":"Mover","nameSuffix":null,"nameDataQuality":99,"ssn":"459834818","ssnDataQuality":1,"dob":"2045-01-24","dobDataQuality":1,"amIndAKNative":0,"asian":0,"blackAfAmerican":0,"nativeHIOtherPacific":0,"white":1,"raceNone":8,"ethnicity":0,"gender":2,"otherGender":null,"veteranStatus":0,"yearEnteredService":null,"yearSeparated":null,"worldWarII":99,"koreanWar":99,"vietnamWar":99,"desertStorm":99,"afghanistanOEF":99,"iraqOIF":99,"iraqOND":99,"otherTheater":99,"militaryBranch":99,"dischargeStatus":99,"dateCreated":"2003-03-03","dateUpdated":"2015-05-08"}' 'http://localhost:8080/openhmis/api/v3/clients/'`
-    Response: ```{
-  "dateUpdated": 1438811623501,
-  "dateCreated": 1438811623501,
-  "dischargeStatus": 99,
-  "militaryBranch": 99,
-  "otherTheater": 99,
-  "iraqOND": 99,
-  "iraqOIF": 99,
-  "afghanistanOEF": 99,
-  "desertStorm": 99,
-  "vietnamWar": 99,
-  "koreanWar": 99,
-  "worldWarII": 99,
-  "yearSeparated": null,
-  "yearEnteredService": null,
-  "veteranStatus": 0,
-  "otherGender": null,
-  "gender": 2,
-  "ethnicity": 0,
-  "raceNone": 8,
-  "white": 1,
-  "nativeHIOtherPacific": 0,
-  "blackAfAmerican": 0,
-  "asian": 0,
-  "amIndAKNative": 0,
-  "dobDataQuality": 1,
-  "dob": 2368828800000,
-  "ssnDataQuality": 1,
-  "ssn": "459834818",
-  "nameDataQuality": 99,
-  "nameSuffix": null,
-  "lastName": "Mover",
-  "middleName": null,
-  "firstName": "secondRenee",
-  "personalId": "715944"
-}```
+    Create a file `sample-call.json` with contents like:
+    ```
+    {
+    "firstName":"Sample",
+    "middleName":null,
+    "lastName":"Mover",
+    "nameSuffix":null,
+    "nameDataQuality":99,
+    "ssn":"459834818",
+    "ssnDataQuality":1,
+    "dob":"2010-01-24",
+    "dobDataQuality":1,
+    "amIndAKNative":0,
+    "asian":0,
+    "blackAfAmerican":0,
+    "nativeHIOtherPacific":0,
+    "white":1,
+    "raceNone":8,
+    "ethnicity":0,
+    "gender":2,
+    "otherGender":null,
+    "veteranStatus":0,
+    "yearEnteredService":null,
+    "yearSeparated":null,
+    "worldWarII":99,
+    "koreanWar":99,
+    "vietnamWar":99,
+    "desertStorm":99,
+    "afghanistanOEF":99,
+    "iraqOIF":99,
+    "iraqOND":99,
+    "otherTheater":99,
+    "militaryBranch":99,
+    "dischargeStatus":99
+    }
+    ```
+
+    Call: `curl -H "Authorization: __YOUR_GOOGLE_KEY_HERE__" -H "Content-Type:application/json" -H "Accept: application/json" -X POST -data @sample-call.json 'http://localhost:8080/openhmis/api/v3/clients/'`
+
+    The response will be the newly created client object.
 
 
 * GET:
@@ -294,6 +325,8 @@ Example Search: `/clients?firstName=J*&dobEnd=2015-05-09
   - Example:
     - Call: `$ curl http://localhost:8080/openhmis/api/v3/clients/336788`
     - Response: ```{
+"data":
+{ "item": {
   "dateUpdated": "2015-05-08",
   "dateCreated": "2003-03-03",
   "dischargeStatus": 99,
@@ -328,6 +361,8 @@ Example Search: `/clients?firstName=J*&dobEnd=2015-05-09
   "middleName": null,
   "firstName": "Renee",
   "personalId": "336788"
+}
+}
 }```
 
 

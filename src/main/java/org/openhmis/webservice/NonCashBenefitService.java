@@ -21,6 +21,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 import org.openhmis.dto.NonCashBenefitDTO;
+import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.manager.NonCashBenefitManager;
 import org.openhmis.util.Authentication;
 import org.openhmis.util.DateParser;
@@ -40,7 +41,7 @@ public class NonCashBenefitService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<NonCashBenefitDTO> getNonCashBenefits(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
@@ -59,7 +60,7 @@ public class NonCashBenefitService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public NonCashBenefitDTO createNonCashBenefit(@HeaderParam("Authorization") String authorization, NonCashBenefitDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		NonCashBenefitDTO outputDTO = NonCashBenefitManager.addNonCashBenefit(inputDTO);
 		return outputDTO;
 	}
@@ -69,7 +70,7 @@ public class NonCashBenefitService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public NonCashBenefitDTO getNonCashBenefit(@HeaderParam("Authorization") String authorization, @PathParam("nonCashBenefitId") String nonCashBenefitId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		NonCashBenefitDTO outputDTO = NonCashBenefitManager.getNonCashBenefitById(nonCashBenefitId);
 		return outputDTO;
 	}
@@ -80,7 +81,7 @@ public class NonCashBenefitService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public NonCashBenefitDTO updateNonCashBenefit(@HeaderParam("Authorization") String authorization, @PathParam("nonCashBenefitId") String nonCashBenefitId, NonCashBenefitDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		inputDTO.setNonCashBenefitId(nonCashBenefitId);
 		
 		NonCashBenefitDTO outputDTO = NonCashBenefitManager.updateNonCashBenefit(inputDTO);
@@ -92,7 +93,7 @@ public class NonCashBenefitService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteNonCashBenefit(@HeaderParam("Authorization") String authorization, @PathParam("nonCashBenefitId") String nonCashBenefitId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		NonCashBenefitManager.deleteNonCashBenefit(nonCashBenefitId);
 		return "true";
 	}

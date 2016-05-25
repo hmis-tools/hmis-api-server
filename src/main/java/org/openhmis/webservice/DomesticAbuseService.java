@@ -21,6 +21,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 import org.openhmis.dto.DomesticAbuseDTO;
+import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.manager.DomesticAbuseManager;
 import org.openhmis.util.Authentication;
 import org.openhmis.util.DateParser;
@@ -40,7 +41,7 @@ public class DomesticAbuseService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<DomesticAbuseDTO> getDomesticAbuses(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
@@ -59,7 +60,7 @@ public class DomesticAbuseService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public DomesticAbuseDTO createDomesticAbuse(@HeaderParam("Authorization") String authorization, DomesticAbuseDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		DomesticAbuseDTO outputDTO = DomesticAbuseManager.addDomesticAbuse(inputDTO);
 		return outputDTO;
 	}
@@ -69,7 +70,7 @@ public class DomesticAbuseService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public DomesticAbuseDTO getDomesticAbuse(@HeaderParam("Authorization") String authorization, @PathParam("domesticAbuseId") String domesticAbuseId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		DomesticAbuseDTO outputDTO = DomesticAbuseManager.getDomesticAbuseById(domesticAbuseId);
 		return outputDTO;
 	}
@@ -80,7 +81,7 @@ public class DomesticAbuseService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public DomesticAbuseDTO updateDomesticAbuse(@HeaderParam("Authorization") String authorization, @PathParam("domesticAbuseId") String domesticAbuseId, DomesticAbuseDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		inputDTO.setDomesticAbuseId(domesticAbuseId);
 		
 		DomesticAbuseDTO outputDTO = DomesticAbuseManager.updateDomesticAbuse(inputDTO);
@@ -92,7 +93,7 @@ public class DomesticAbuseService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteDomesticAbuse(@HeaderParam("Authorization") String authorization, @PathParam("domesticAbuseId") String domesticAbuseId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		DomesticAbuseManager.deleteDomesticAbuse(domesticAbuseId);
 		return "true";
 	}

@@ -21,6 +21,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 import org.openhmis.dto.IncomeSourceDTO;
+import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.manager.IncomeSourceManager;
 import org.openhmis.util.Authentication;
 import org.openhmis.util.DateParser;
@@ -40,7 +41,7 @@ public class IncomeSourceService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<IncomeSourceDTO> getIncomeSources(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
@@ -59,7 +60,7 @@ public class IncomeSourceService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public IncomeSourceDTO createIncomeSource(@HeaderParam("Authorization") String authorization, IncomeSourceDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		IncomeSourceDTO outputDTO = IncomeSourceManager.addIncomeSource(inputDTO);
 		return outputDTO;
 	}
@@ -69,7 +70,7 @@ public class IncomeSourceService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public IncomeSourceDTO getIncomeSource(@HeaderParam("Authorization") String authorization, @PathParam("incomeSourceId") String incomeSourceId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		IncomeSourceDTO outputDTO = IncomeSourceManager.getIncomeSourceById(incomeSourceId);
 		return outputDTO;
 	}
@@ -80,7 +81,7 @@ public class IncomeSourceService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public IncomeSourceDTO updateIncomeSource(@HeaderParam("Authorization") String authorization, @PathParam("incomeSourceId") String incomeSourceId, IncomeSourceDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		inputDTO.setIncomeSourceId(incomeSourceId);
 		
 		IncomeSourceDTO outputDTO = IncomeSourceManager.updateIncomeSource(inputDTO);
@@ -92,7 +93,7 @@ public class IncomeSourceService {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public String deleteIncomeSource(@HeaderParam("Authorization") String authorization, @PathParam("incomeSourceId") String incomeSourceId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
-			throw new Error("You are not authorized to access this content");
+                        throw new AccessDeniedException();
 		IncomeSourceManager.deleteIncomeSource(incomeSourceId);
 		return "true";
 	}

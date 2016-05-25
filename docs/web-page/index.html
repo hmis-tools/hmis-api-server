@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Open Tech Strategies: OpenHMIS</title>
+    <script src="js/vunit.js"></script>
+    <script>
+      new vUnit({
+          CSSMap: {
+              // The selector (VUnit will create rules ranging from .selector1 to .selector100)
+              '.vh_height': {
+                  // The CSS property (any CSS property that accepts px as units)
+                  property: 'height',
+                  // What to base the value on (vh, vw, vmin or vmax)
+                  reference: 'vh'
+              },
+              // Wanted to have a font-size based on the viewport width? You got it.
+              '.vw_font-size': {
+                  property: 'font-size',
+                  reference: 'vw'
+              },
+              // vmin and vmax can be used as well.
+              '.vmin_margin-top': {
+                  property: 'margin-top',
+                  reference: 'vmin'
+              }
+          }
+      }).init(); // call the public init() method
+    </script>
+    <link href="css/bootstrap/css/bootstrap.min.css"
+    rel="stylesheet" />
+    <link rel="stylesheet"
+    href="css/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1" />
+    <meta property='og:site_name'
+    content='Open Tech Strategies: OpenHMIS' />
+    <meta property='og:title'
+    content='Open Tech Strategies: OpenHMIS' />
+    <meta property='og:type' content='article' />
+  </head>
+  <body data-spy="scroll" data-target=".navbar-fixed-top">
+    <div class="section" id="openhmis">
+
+      
+      <div class="container">
+        <h2>OpenHMIS</h2>
+        <p>&nbsp;</p>
+
+              <!-- Current status -->
+        <div style="border-top: 2px dotted #42935a; border-bottom: 2px dotted #42935a;" >
+          <p>&nbsp;</p>
+          <div style="text-align: center;" >
+            <ul style="list-style-type: none;" >
+          <li><p><a
+                  href="https://github.com/PCNI/OpenHMIS/blob/master/docs/API.md"
+                    >API documentation</a></p></li>
+          <li><p>&nbsp</p></li>
+          <li><p>The OpenHMIS project is an open source,
+              standards-based HMIS (Homeless Management Information
+              System).</p></li>
+          <li><p> The current test server for this API is:
+          hmis.opentechstrategies.com:8080.  Try an endpoint
+          like <a href="http://hmis.opentechstrategies.com:8080/openhmis/api/v3/clients">http://hmis.opentechstrategies.com:8080/openhmis/api/v3/clients</a>.
+          You'll need to pass an authorization header to get actual
+          results.  Please post to
+          <a href="https://groups.google.com/a/openhmis.org/forum/#!forum/openhmis-discuss">the
+          list</a> if you would like authorization to make test API
+          calls to this server (of course, you can also always set up
+          your own).
+          See <a href="https://www.tbray.org/ongoing/When/201x/2013/04/04/ID-Tokens">this
+          guide</a> to getting an id token from Google
+          and <a href="https://github.com/PCNI/OpenHMIS/blob/master/INSTALL.md#set-up-oauth-authentication">our
+          OAuth flow documentation</a> for more detail about
+          authentication and authorization with the OpenHMIS
+          API.</p></li>
+          <li><p><a href="https://github.com/PCNI/OpenHMIS/" >API server
+          source code </a>
+          and <a href="https://github.com/OpenTechStrategies/openhmis-intake/"
+          >source code for an out-of-date demo client</a> are also
+              available.</p></li>
+          <li><p> For more information about HMIS,
+          see <a href="http://openhmis.pcni.org/">PCNI</a> and
+          our <a href="https://groups.google.com/a/openhmis.org/forum/#!forum/openhmis-discuss">Google
+          group</a>.
+          </ul>
+          </div>
+            <p>&nbsp;</p>
+        </div>
+      </div>
+      <!-- container -->
+    </div>
+    <!-- main -->
+    <!-- scripts -->
+    <!--[if lt IE 9]>
+  <script src="js/jquery.js"></script>
+  <script src="css/bootstrap/js/bootstrap.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/target.js"></script>
+  <script src="js/prefixfree.js"></script>
+<![endif]-->
+    <script src="js/jquery.min.js"></script>
+    <script src="css/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/script.min.js"></script>
+    <script src="js/target.js"></script>
+    <script src="js/prefixfree.min.js"></script>
+  </body>
+</html>

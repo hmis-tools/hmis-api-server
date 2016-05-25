@@ -16,6 +16,8 @@ import org.openhmis.code.serialization.CodeLookup;
 @JsonSerialize(using = CodeSerializer.class)
 @XmlEnum
 public enum ClientPercentAmi implements BaseCode {
+	@XmlEnumValue("-1")
+	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("1")
 	THIRTY_PCT (1, "Less than 30%"),
 	@XmlEnumValue("2")
@@ -46,6 +48,6 @@ public enum ClientPercentAmi implements BaseCode {
 	@JsonCreator
 	public static ClientPercentAmi valueByCode(Integer code) {
 		ClientPercentAmi value = enhancer.valueByCode(code); 
-		return (value == null)?ClientPercentAmi.NOT_COLLECTED:value;
+		return (value == null)?ClientPercentAmi.ERR_UNKNOWN:value;
 	}
 }
