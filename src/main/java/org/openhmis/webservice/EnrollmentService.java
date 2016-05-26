@@ -156,7 +156,8 @@ public class EnrollmentService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-                // we want to add the enrollment id from the path to the BeanParam for searching
+                // we add the enrollment id from the path to the BeanParam for searching
+                searchDTO.setEnrollmentId(enrollmentId);
                 List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = ChronicHealthConditionManager.getChronicHealthConditions(searchDTO);
                 return chronicHealthConditionDTOs;
 	}

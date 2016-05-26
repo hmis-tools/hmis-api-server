@@ -45,52 +45,14 @@ public class TmpChronicHealthConditionDAO extends BaseDAO {
                 if (searchDTO.getUpdatedSince() != null) {
                     query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
                 }
+                if (searchDTO.getEnrollmentId() != null) {
+                    query.add(Restrictions.eq("enrollmentId", Integer.parseInt(searchDTO.getEnrollmentId())));
+                }
                 List<TmpChronicHealthCondition> results = query.list();
 		session.close();
 		return results;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<TmpChronicHealthCondition> getTmpChronicHealthConditions(Date updateDate) {
-		String queryString = "select chronicHealthCondition " + 
-				"from TmpChronicHealthCondition as chronicHealthCondition " + 
-				"where chronicHealthCondition.dateUpdated >= :updatedSince";
 
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpChronicHealthCondition> results = queryObject.list();
-		session.close();
-		return results;
-	}
 	
-	@SuppressWarnings("unchecked")
-	public List<TmpChronicHealthCondition> getTmpChronicHealthConditionsByEnrollmentId(Integer enrollmentId) {
-		String queryString = "select chronicHealthCondition " + 
-				"from TmpChronicHealthCondition as chronicHealthCondition " + 
-				"where chronicHealthCondition.enrollmentId =:enrollmentId";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		List<TmpChronicHealthCondition> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpChronicHealthCondition> getTmpChronicHealthConditionsByEnrollmentId(Integer enrollmentId, Date updateDate) {
-		String queryString = "select chronicHealthCondition " + 
-				"from TmpChronicHealthCondition as chronicHealthCondition " + 
-				"where chronicHealthCondition.enrollmentId =:enrollmentId " +
-				"  and chronicHealthCondition.dateUpdated >= :updatedSince";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpChronicHealthCondition> results = queryObject.list();
-		session.close();
-		return results;
-	}
 }

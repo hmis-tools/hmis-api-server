@@ -41,6 +41,7 @@ import org.openhmis.domain.PathClientProgram;
 import org.openhmis.domain.TmpEnrollment;
 import org.openhmis.domain.TmpProjectInventory;
 import org.openhmis.dto.ChronicHealthConditionDTO;
+import org.openhmis.dto.search.ChronicHealthConditionSearchDTO;
 import org.openhmis.dto.ClientDTO;
 import org.openhmis.dto.ContactDTO;
 import org.openhmis.dto.DevelopmentalDisabilityDTO;
@@ -83,7 +84,7 @@ public class EnrollmentManager {
 		for (Iterator<TmpEnrollment> iterator = tempEnrollments.iterator(); iterator.hasNext();) {
 			TmpEnrollment tempEnrollment = iterator.next();
 			EnrollmentDTO enrollmentDTO = EnrollmentManager.generateEnrollmentDTO(tempEnrollment);
-			enrollmentDTOs.add(enrollmentDTO);
+                        enrollmentDTOs.add(enrollmentDTO);
 		}
 		return enrollmentDTOs;
 	}
@@ -205,9 +206,11 @@ public class EnrollmentManager {
 	
 	public static EnrollmentDTO generateEnrollmentDTO(TmpEnrollment tmpEnrollment) {
 		EnrollmentDTO enrollmentDTO = new EnrollmentDTO();
-
+                ChronicHealthConditionSearchDTO chcSearchDTO = new ChronicHealthConditionSearchDTO();
+                    
 		String enrollmentId = tmpEnrollment.getEnrollmentId().toString();
 		enrollmentDTO.setEnrollmentId(enrollmentId);
+                chcSearchDTO.setEnrollmentId(enrollmentId);
 
 		// The client object associated with this enrollment
 		enrollmentDTO.setPersonalId(tmpEnrollment.getPersonalId().toString());
@@ -263,7 +266,7 @@ public class EnrollmentManager {
 		enrollmentDTO.setDevelopmentalDisabilities(DevelopmentalDisabilityManager.getDevelopmentalDisabilitiesByEnrollmentId(enrollmentId));
 		
 		// Program Specific Data Standards: Chronic Health Condition (2014, 4.7)
-		enrollmentDTO.setChronicHealthConditions(ChronicHealthConditionManager.getChronicHealthConditionsByEnrollmentId(enrollmentId));
+		enrollmentDTO.setChronicHealthConditions(ChronicHealthConditionManager.getChronicHealthConditions(chcSearchDTO));
 
 		// Program Specific Data Standards: HIV/AIDS (2014, 4.8)
 		enrollmentDTO.setHivAidsStatuses(HivAidsStatusManager.getHivAidsStatusesByEnrollmentId(enrollmentId));

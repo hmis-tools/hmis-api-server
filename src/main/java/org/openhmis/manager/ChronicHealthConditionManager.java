@@ -45,53 +45,6 @@ public class ChronicHealthConditionManager {
 
 	}
 
-	public static List<ChronicHealthConditionDTO> getChronicHealthConditions(Date updateDate) {
-		List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = new ArrayList<ChronicHealthConditionDTO>();
-
-		// Collect the chronicHealthConditions
-		List<TmpChronicHealthCondition> tmpChronicHealthConditions = tmpChronicHealthConditionDAO.getTmpChronicHealthConditions(updateDate);
-
-		// For each chronicHealthCondition, collect and map the data
-		for (Iterator<TmpChronicHealthCondition> iterator = tmpChronicHealthConditions.iterator(); iterator.hasNext();) {
-			TmpChronicHealthCondition tmpChronicHealthCondition = iterator.next();
-			ChronicHealthConditionDTO chronicHealthConditionDTO = ChronicHealthConditionManager.generateChronicHealthConditionDTO(tmpChronicHealthCondition);
-			chronicHealthConditionDTOs.add(chronicHealthConditionDTO);
-		}
-		return chronicHealthConditionDTOs;
-
-	}
-
-	public static List<ChronicHealthConditionDTO> getChronicHealthConditionsByEnrollmentId(String enrollmentId) {
-		List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = new ArrayList<ChronicHealthConditionDTO>();
-
-		// Collect the chronicHealthConditions
-		List<TmpChronicHealthCondition> tmpChronicHealthConditions = tmpChronicHealthConditionDAO.getTmpChronicHealthConditionsByEnrollmentId(Integer.parseInt(enrollmentId));
-
-		// For each chronicHealthCondition, collect and map the data
-		for (Iterator<TmpChronicHealthCondition> iterator = tmpChronicHealthConditions.iterator(); iterator.hasNext();) {
-			TmpChronicHealthCondition tmpChronicHealthCondition = iterator.next();
-			ChronicHealthConditionDTO chronicHealthConditionDTO = ChronicHealthConditionManager.generateChronicHealthConditionDTO(tmpChronicHealthCondition);
-			chronicHealthConditionDTOs.add(chronicHealthConditionDTO);
-		}
-		return chronicHealthConditionDTOs;
-
-	}
-
-	public static List<ChronicHealthConditionDTO> getChronicHealthConditionsByEnrollmentId(String enrollmentId, Date updateDate) {
-		List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = new ArrayList<ChronicHealthConditionDTO>();
-
-		// Collect the chronicHealthConditions
-		List<TmpChronicHealthCondition> tmpChronicHealthConditions = tmpChronicHealthConditionDAO.getTmpChronicHealthConditionsByEnrollmentId(Integer.parseInt(enrollmentId), updateDate);
-
-		// For each chronicHealthCondition, collect and map the data
-		for (Iterator<TmpChronicHealthCondition> iterator = tmpChronicHealthConditions.iterator(); iterator.hasNext();) {
-			TmpChronicHealthCondition tmpChronicHealthCondition = iterator.next();
-			ChronicHealthConditionDTO chronicHealthConditionDTO = ChronicHealthConditionManager.generateChronicHealthConditionDTO(tmpChronicHealthCondition);
-			chronicHealthConditionDTOs.add(chronicHealthConditionDTO);
-		}
-		return chronicHealthConditionDTOs;
-
-	}
 
 	
 	public static ChronicHealthConditionDTO addChronicHealthCondition(ChronicHealthConditionDTO inputDTO) {
