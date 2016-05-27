@@ -13,6 +13,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @XmlRootElement
 public class InventorySearchDTO extends BaseSearchDTO {
+        private String projectCocId;
+        
+        public InventorySearchDTO() {}
+
+	// Getters / Setters
+	@JsonProperty
+	public String getProjectCocId() {
+		return this.projectCocId;
+	}
+	@QueryParam("projectCocId")
+	public void setProjectCocId(String projectCocId) {
+		this.projectCocId = projectCocId;
+	}
+
 }
 
 

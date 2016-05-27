@@ -44,21 +44,6 @@ public class OrganizationManager {
 
 	}
 
-	public static List<OrganizationDTO> getOrganizationsByUpdateDate(Date updateDate) {
-		List<OrganizationDTO> organizationDTOs = new ArrayList<OrganizationDTO>();
-
-		// Collect the organizations
-		List<TmpOrganization> tmpOrganizations = tmpOrganizationDAO.getTmpOrganizationsByUpdateDate(updateDate);
-
-		// For each organization, collect and map the data
-		for (Iterator<TmpOrganization> iterator = tmpOrganizations.iterator(); iterator.hasNext();) {
-			TmpOrganization tmpOrganization = iterator.next();
-			OrganizationDTO organizationDTO = OrganizationManager.generateOrganizationDTO(tmpOrganization);
-			organizationDTOs.add(organizationDTO);
-		}
-		return organizationDTOs;
-
-	}
 	
 	public static OrganizationDTO addOrganization(OrganizationDTO inputDTO) {
 		// Generate a PathClient from the input

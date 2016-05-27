@@ -44,52 +44,12 @@ public class TmpProjectFunderDAO extends BaseDAO {
                 if(searchDTO.getUpdatedSince() != null) {
                     query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
 		}
+                if(searchDTO.getProjectId() != null) {
+                    query.add(Restrictions.eq("projectId", Integer.parseInt(searchDTO.getProjectId())));
+		}
 		List<TmpProjectFunder> results = query.list();
 		session.close();
 		return results;
 	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpProjectFunder> getTmpProjectFunders(Date updateDate) {
-		String queryString = "select projectFunder " + 
-				"from TmpProjectFunder as projectFunder " + 
-				"where projectFunder.dateUpdated >= :updatedSince";
 
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpProjectFunder> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpProjectFunder> getTmpProjectFundersByProjectId(Integer projectId) {
-		String queryString = "select projectFunder " + 
-				"from TmpProjectFunder as projectFunder " + 
-				"where projectFunder.projectId =:projectId";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("projectId", projectId);
-		List<TmpProjectFunder> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpProjectFunder> getTmpProjectFundersByProjectId(Integer projectId, Date updateDate) {
-		String queryString = "select projectFunder " + 
-				"from TmpProjectFunder as projectFunder " + 
-				"where projectFunder.projectId =:projectId " + 
-				"  and projectFunder.dateUpdated >= :updatedSince";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("projectId", projectId);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpProjectFunder> results = queryObject.list();
-		session.close();
-		return results;
-	}
 }

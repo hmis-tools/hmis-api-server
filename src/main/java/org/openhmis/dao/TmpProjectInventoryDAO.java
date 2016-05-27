@@ -40,55 +40,17 @@ public class TmpProjectInventoryDAO extends BaseDAO {
 
 		Session session = getSession();
                 Criteria query =  session.createCriteria(TmpProjectInventory.class);
+
                 if(searchDTO.getUpdatedSince() != null) {
                     query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
 		}
+                if(searchDTO.getProjectCocId() != null) {
+                    query.add(Restrictions.eq("projectCoCid", Integer.parseInt(searchDTO.getProjectCocId())));
+		}
+
 		List<TmpProjectInventory> results = query.list();
 		session.close();
 		return results;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<TmpProjectInventory> getTmpProjectInventories(Date updateDate) {
-		String queryString = "select projectInventory " + 
-				"from TmpProjectInventory as projectInventory " + 
-				"where projectInventory.updateDate >= :updatedSince";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpProjectInventory> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpProjectInventory> getTmpProjectInventoriesByProjectCoCId(Integer projectCoCid) {
-		String queryString = "select projectInventory " + 
-				"from TmpProjectInventory as projectInventory " + 
-				"where projectInventory.projectCoCid =:projectCoCid";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("projectCoCid", projectCoCid);
-		List<TmpProjectInventory> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpProjectInventory> getTmpProjectInventoriesByProjectCoCId(Integer projectCoCid, Date updateDate) {
-		String queryString = "select projectInventory " + 
-				"from TmpProjectInventory as projectInventory " + 
-				"where projectInventory.projectCoCid =:projectCoCid " + 
-				"  and projectInventory.updateDate >= :updatedSince";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("projectCoCid", projectCoCid);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpProjectInventory> results = queryObject.list();
-		session.close();
-		return results;
-	}
 }

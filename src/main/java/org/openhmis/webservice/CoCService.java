@@ -24,7 +24,9 @@ import org.apache.log4j.Logger;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.search.CoCSearchDTO;
 import org.openhmis.dto.InventoryDTO;
+import org.openhmis.dto.search.InventorySearchDTO;
 import org.openhmis.dto.SiteDTO;
+import org.openhmis.dto.search.SiteSearchDTO;
 import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.manager.CoCManager;
 import org.openhmis.manager.InventoryManager;
@@ -103,36 +105,26 @@ public class CoCService {
 	@GET
 	@Path("/{coCId}/inventories")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<InventoryDTO> getInventories(@HeaderParam("Authorization") String authorization, @PathParam("coCId") String coCId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<InventoryDTO> getInventories(@HeaderParam("Authorization") String authorization, @PathParam("coCId") String coCId, @BeanParam InventorySearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<InventoryDTO> inventoryDTOs = InventoryManager.getInventoriesByProjectCoCId(coCId);
-			return inventoryDTOs;
-		} else {
-			List<InventoryDTO> inventoryDTOs = InventoryManager.getInventoriesByProjectCoCId(coCId, DateParser.parseDate(updatedSince));
-			return inventoryDTOs;
-		}
+                searchDTO.setProjectCocId(coCId);
+                List<InventoryDTO> inventoryDTOs = InventoryManager.getInventories(searchDTO);
+                return inventoryDTOs;
 	}
 
 	/* Site Endpoints */
 	@GET
 	@Path("/{coCId}/sites")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<SiteDTO> getSites(@HeaderParam("Authorization") String authorization, @PathParam("coCId") String coCId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<SiteDTO> getSites(@HeaderParam("Authorization") String authorization, @PathParam("coCId") String coCId, @BeanParam SiteSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<SiteDTO> siteDTOs = SiteManager.getSitesByProjectCoCId(coCId);
-			return siteDTOs;
-		} else {
-			List<SiteDTO> siteDTOs = SiteManager.getSitesByProjectCoCId(coCId, DateParser.parseDate(updatedSince));
-			return siteDTOs;
-		}
+                searchDTO.setProjectCocId(coCId);
+                List<SiteDTO> siteDTOs = SiteManager.getSites(searchDTO);
+                return siteDTOs;
 	}
 
 }

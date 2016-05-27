@@ -44,52 +44,13 @@ public class TmpProjectContinuumDAO extends BaseDAO {
                 if(searchDTO.getUpdatedSince() != null) {
                     query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
 		}
+                if(searchDTO.getProjectId() != null) {
+                    query.add(Restrictions.eq("projectId", Integer.parseInt(searchDTO.getProjectId())));
+		}
+
 		List<TmpProjectContinuum> results = query.list();
 		session.close();
 		return results;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<TmpProjectContinuum> getTmpProjectContinuums(Date updateDate) {
-		String queryString = "select projectContinuum " + 
-				"from TmpProjectContinuum as projectContinuum " + 
-				"where projectContinuum.dateUpdated >= :updatedSince";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpProjectContinuum> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpProjectContinuum> getTmpProjectContinuumsByProjectId(Integer projectId) {
-		String queryString = "select projectContinuum " + 
-				"from TmpProjectContinuum as projectContinuum " + 
-				"where projectContinuum.projectId =:projectId";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("projectId", projectId);
-		List<TmpProjectContinuum> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpProjectContinuum> getTmpProjectContinuumsByProjectId(Integer projectId, Date updateDate) {
-		String queryString = "select projectContinuum " + 
-				"from TmpProjectContinuum as projectContinuum " + 
-				"where projectContinuum.projectId =:projectId " + 
-				"  and projectContinuum.dateUpdataed >= :updatedSince";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("projectId", projectId);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpProjectContinuum> results = queryObject.list();
-		session.close();
-		return results;
-	}
 }

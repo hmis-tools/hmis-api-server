@@ -48,18 +48,5 @@ public class TmpProjectDAO extends BaseDAO {
 		session.close();
 		return results;
 	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpProject> getTmpProjectsByUpdateDate(Date updateDate) {
-		String queryString = "select project " + 
-				"from TmpProject as project " + 
-				"where project.dateUpdated >= :updatedSince";
 
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpProject> results = queryObject.list();
-		session.close();
-		return results;
-	}
 }

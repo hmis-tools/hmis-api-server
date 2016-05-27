@@ -49,17 +49,5 @@ public class TmpOrganizationDAO extends BaseDAO {
 		return results;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<TmpOrganization> getTmpOrganizationsByUpdateDate(Date updateDate) {
-		String queryString = "select organization " + 
-				"from TmpOrganization as organization " + 
-				"where organization.dateUpdated >= :updatedSince";
 
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpOrganization> results = queryObject.list();
-		session.close();
-		return results;
-	}
 }

@@ -43,60 +43,6 @@ public class FunderManager {
 
 	}
 
-	public static List<FunderDTO> getFunders(Date updateDate) {
-		List<FunderDTO> funderDTOs = new ArrayList<FunderDTO>();
-
-		// Collect the projects
-		List<TmpProjectFunder> tmpProjectFunders = tmpProjectFunderDAO.getTmpProjectFunders(updateDate);
-
-		// For each project, collect and map the data
-		// TODO: this should be done in a single query
-		for (Iterator<TmpProjectFunder> iterator = tmpProjectFunders.iterator(); iterator.hasNext();) {
-			TmpProjectFunder tmpProjectFunder = iterator.next();
-
-			FunderDTO funderDTO = FunderManager.generateFunderDTO(tmpProjectFunder);
-			funderDTOs.add(funderDTO);
-		}
-		return funderDTOs;
-
-	}
-
-	public static List<FunderDTO> getFundersByProjectId(String projectId) {
-		List<FunderDTO> funderDTOs = new ArrayList<FunderDTO>();
-
-		// Collect the projects
-		List<TmpProjectFunder> tmpProjectFunders = tmpProjectFunderDAO.getTmpProjectFundersByProjectId(Integer.parseInt(projectId));
-
-		// For each project, collect and map the data
-		// TODO: this should be done in a single query
-		for (Iterator<TmpProjectFunder> iterator = tmpProjectFunders.iterator(); iterator.hasNext();) {
-			TmpProjectFunder tmpProjectFunder = iterator.next();
-
-			FunderDTO funderDTO = FunderManager.generateFunderDTO(tmpProjectFunder);
-			funderDTOs.add(funderDTO);
-		}
-		return funderDTOs;
-
-	}
-
-	public static List<FunderDTO> getFundersByProjectId(String projectId, Date updateDate) {
-		List<FunderDTO> funderDTOs = new ArrayList<FunderDTO>();
-
-		// Collect the projects
-		List<TmpProjectFunder> tmpProjectFunders = tmpProjectFunderDAO.getTmpProjectFundersByProjectId(Integer.parseInt(projectId), updateDate);
-
-		// For each project, collect and map the data
-		// TODO: this should be done in a single query
-		for (Iterator<TmpProjectFunder> iterator = tmpProjectFunders.iterator(); iterator.hasNext();) {
-			TmpProjectFunder tmpProjectFunder = iterator.next();
-
-			FunderDTO funderDTO = FunderManager.generateFunderDTO(tmpProjectFunder);
-			funderDTOs.add(funderDTO);
-		}
-		return funderDTOs;
-
-	}
-	
 	public static FunderDTO addFunder(FunderDTO inputDTO) {
 
 		// Make sure the fields are valid
