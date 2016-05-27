@@ -58,6 +58,20 @@ import org.openhmis.manager.ServiceManager;
 import org.openhmis.manager.SubstanceAbuseManager;
 import org.openhmis.dto.search.EnrollmentSearchDTO;
 import org.openhmis.dto.search.ChronicHealthConditionSearchDTO;
+import org.openhmis.dto.search.ContactSearchDTO;
+import org.openhmis.dto.search.DevelopmentalDisabilitySearchDTO;
+import org.openhmis.dto.search.DomesticAbuseSearchDTO;
+import org.openhmis.dto.search.FinancialAssistanceSearchDTO;
+import org.openhmis.dto.search.HealthInsuranceSearchDTO;
+import org.openhmis.dto.search.HivAidsStatusSearchDTO;
+import org.openhmis.dto.search.IncomeSourceSearchDTO;
+import org.openhmis.dto.search.MedicalAssistanceSearchDTO;
+import org.openhmis.dto.search.NonCashBenefitSearchDTO;
+import org.openhmis.dto.search.PhysicalDisabilitySearchDTO;
+import org.openhmis.dto.search.ReferralSearchDTO;
+import org.openhmis.dto.search.ServiceSearchDTO;
+import org.openhmis.dto.search.SubstanceAbuseSearchDTO;
+
 import org.openhmis.util.Authentication;
 import org.openhmis.util.DateParser;
 
@@ -167,18 +181,14 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/contacts")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<ContactDTO> getContacts(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<ContactDTO> getContacts(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @BeanParam ContactSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<ContactDTO> contactDTOs = ContactManager.getContactsByEnrollmentId(enrollmentId);
-			return contactDTOs;
-		} else {
-			List<ContactDTO> contactDTOs = ContactManager.getContactsByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return contactDTOs;			
-		}
+                searchDTO.setEnrollmentId(enrollmentId);
+                List<ContactDTO> contactDTOs = ContactManager.getContacts(searchDTO);
+                return contactDTOs;
+		
 	}
 
 
@@ -186,18 +196,13 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/developmental-disabilities")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilities(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilities(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @BeanParam DevelopmentalDisabilitySearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
-		
-		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = DevelopmentalDisabilityManager.getDevelopmentalDisabilitiesByEnrollmentId(enrollmentId);
-			return developmentalDisabilityDTOs;
-		} else {
-			List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = DevelopmentalDisabilityManager.getDevelopmentalDisabilitiesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return developmentalDisabilityDTOs;
-		}
+
+                 searchDTO.setEnrollmentId(enrollmentId);
+                 List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = DevelopmentalDisabilityManager.getDevelopmentalDisabilities(searchDTO);
+                 return developmentalDisabilityDTOs;
 	}
 
 
@@ -205,37 +210,28 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/domestic-abuses")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<DomesticAbuseDTO> getDomesticAbuses(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<DomesticAbuseDTO> getDomesticAbuses(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @BeanParam DomesticAbuseSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
-		
-		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<DomesticAbuseDTO> domesticAbuseDTOs = DomesticAbuseManager.getDomesticAbusesByEnrollmentId(enrollmentId);
-			return domesticAbuseDTOs;
-		} else {
-			List<DomesticAbuseDTO> domesticAbuseDTOs = DomesticAbuseManager.getDomesticAbusesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return domesticAbuseDTOs;
-		}
+
+                searchDTO.setEnrollmentId(enrollmentId);
+                List<DomesticAbuseDTO> domesticAbuseDTOs = DomesticAbuseManager.getDomesticAbuses(searchDTO);
+                return domesticAbuseDTOs;
 	}
 
 
 	/* Financial Assistance Endpoints */
 	@GET
-	@Path("/{enrollmentId}/financial-assitances")
+	@Path("/{enrollmentId}/financial-assistances")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<FinancialAssistanceDTO> getFinancialAssistances(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<FinancialAssistanceDTO> getFinancialAssistances(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @BeanParam FinancialAssistanceSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<FinancialAssistanceDTO> financialAssistanceDTOs = FinancialAssistanceManager.getFinancialAssistancesByEnrollmentId(enrollmentId);
-			return financialAssistanceDTOs;
-		} else {
-			List<FinancialAssistanceDTO> financialAssistanceDTOs = FinancialAssistanceManager.getFinancialAssistancesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return financialAssistanceDTOs;
-		}
+                searchDTO.setEnrollmentId(enrollmentId);
+                List<FinancialAssistanceDTO> financialAssistanceDTOs = FinancialAssistanceManager.getFinancialAssistances(searchDTO);
+                return financialAssistanceDTOs;
+		
 	}
 	
 
@@ -243,18 +239,14 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/health-insurances")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<HealthInsuranceDTO> getHealthInsurances(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<HealthInsuranceDTO> getHealthInsurances(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @BeanParam HealthInsuranceSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<HealthInsuranceDTO> healthInsuranceDTOs = HealthInsuranceManager.getHealthInsurancesByEnrollmentId(enrollmentId);
-			return healthInsuranceDTOs;
-		} else {
-			List<HealthInsuranceDTO> healthInsuranceDTOs = HealthInsuranceManager.getHealthInsurancesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return healthInsuranceDTOs;
-		}
+                searchDTO.setEnrollmentId(enrollmentId);
+                List<HealthInsuranceDTO> healthInsuranceDTOs = HealthInsuranceManager.getHealthInsurances(searchDTO);
+                return healthInsuranceDTOs;
+		
 	}
 	
 
@@ -262,18 +254,13 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/hiv-aids-statuses")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<HivAidsStatusDTO> getHivAidsStatuses(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<HivAidsStatusDTO> getHivAidsStatuses(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @BeanParam HivAidsStatusSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<HivAidsStatusDTO> hivAidsStatusDTOs = HivAidsStatusManager.getHivAidsStatusesByEnrollmentId(enrollmentId);
-			return hivAidsStatusDTOs;
-		} else {
-			List<HivAidsStatusDTO> hivAidsStatusDTOs = HivAidsStatusManager.getHivAidsStatusesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return hivAidsStatusDTOs;
-		}
+                searchDTO.setEnrollmentId(enrollmentId);
+                List<HivAidsStatusDTO> hivAidsStatusDTOs = HivAidsStatusManager.getHivAidsStatuses(searchDTO);
+                return hivAidsStatusDTOs;
 	}
 	
 
@@ -281,18 +268,14 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/medical-assistances")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<MedicalAssistanceDTO> getMedicalAssistances(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<MedicalAssistanceDTO> getMedicalAssistances(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @BeanParam MedicalAssistanceSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<MedicalAssistanceDTO> medicalAssistanceDTOs = MedicalAssistanceManager.getMedicalAssistancesByEnrollmentId(enrollmentId);
-			return medicalAssistanceDTOs;
-		} else {
-			List<MedicalAssistanceDTO> medicalAssistanceDTOs = MedicalAssistanceManager.getMedicalAssistancesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return medicalAssistanceDTOs;
-		}
+                searchDTO.setEnrollmentId(enrollmentId);
+                List<MedicalAssistanceDTO> medicalAssistanceDTOs = MedicalAssistanceManager.getMedicalAssistances(searchDTO);
+                return medicalAssistanceDTOs;
+
 	}
 	
 
@@ -300,37 +283,28 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/income-sources")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<IncomeSourceDTO> getIncomeSources(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<IncomeSourceDTO> getIncomeSources(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @BeanParam IncomeSourceSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<IncomeSourceDTO> incomeSourceDTOs = IncomeSourceManager.getIncomeSourcesByEnrollmentId(enrollmentId);
-			return incomeSourceDTOs;
-		} else {
-			List<IncomeSourceDTO> incomeSourceDTOs = IncomeSourceManager.getIncomeSourcesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return incomeSourceDTOs;
-		}
+                searchDTO.setEnrollmentId(enrollmentId);
+                List<IncomeSourceDTO> incomeSourceDTOs = IncomeSourceManager.getIncomeSources(searchDTO);
+                return incomeSourceDTOs;
+		
 	}
 	
 
 	/* NonCash Benefit Endpoints */
 	@GET
-	@Path("/{enrollmentId}/noncash-benefits")
+	@Path("/{enrollmentId}/non-cash-benefits")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<NonCashBenefitDTO> getNonCashBenefits(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<NonCashBenefitDTO> getNonCashBenefits(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @BeanParam NonCashBenefitSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<NonCashBenefitDTO> nonCashBenefitDTOs = NonCashBenefitManager.getNonCashBenefitsByEnrollmentId(enrollmentId);
-			return nonCashBenefitDTOs;
-		} else {
-			List<NonCashBenefitDTO> nonCashBenefitDTOs = NonCashBenefitManager.getNonCashBenefitsByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return nonCashBenefitDTOs;
-		}
+                searchDTO.setEnrollmentId(enrollmentId);
+                List<NonCashBenefitDTO> nonCashBenefitDTOs = NonCashBenefitManager.getNonCashBenefits(searchDTO);
+                return nonCashBenefitDTOs;
 	}
 	
 
@@ -338,18 +312,13 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/physical-disabilities")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<PhysicalDisabilityDTO> getPhysicalDisabilities(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<PhysicalDisabilityDTO> getPhysicalDisabilities(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @BeanParam PhysicalDisabilitySearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<PhysicalDisabilityDTO> physicalDisabilityDTOs = PhysicalDisabilityManager.getPhysicalDisabilitiesByEnrollmentId(enrollmentId);
-			return physicalDisabilityDTOs;
-		} else {
-			List<PhysicalDisabilityDTO> physicalDisabilityDTOs = PhysicalDisabilityManager.getPhysicalDisabilitiesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return physicalDisabilityDTOs;
-		}
+                searchDTO.setEnrollmentId(enrollmentId);
+                List<PhysicalDisabilityDTO> physicalDisabilityDTOs = PhysicalDisabilityManager.getPhysicalDisabilities(searchDTO);
+                return physicalDisabilityDTOs;
 	}
 	
 
@@ -357,18 +326,13 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/referrals")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<ReferralDTO> getReferrals(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<ReferralDTO> getReferrals(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @BeanParam ReferralSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<ReferralDTO> referralDTOs = ReferralManager.getReferralsByEnrollmentId(enrollmentId);
-			return referralDTOs;
-		} else {
-			List<ReferralDTO> referralDTOs = ReferralManager.getReferralsByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return referralDTOs;
-		}
+                searchDTO.setEnrollmentId(enrollmentId);
+                List<ReferralDTO> referralDTOs = ReferralManager.getReferrals(searchDTO);
+                return referralDTOs;
 	}
 	
 
@@ -376,18 +340,13 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/services")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<ServiceDTO> getServices(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<ServiceDTO> getServices(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @BeanParam ServiceSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<ServiceDTO> serviceDTOs = ServiceManager.getServicesByEnrollmentId(enrollmentId);
-			return serviceDTOs;
-		} else {
-			List<ServiceDTO> serviceDTOs = ServiceManager.getServicesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return serviceDTOs;
-		}
+                searchDTO.setEnrollmentId(enrollmentId);
+                List<ServiceDTO> serviceDTOs = ServiceManager.getServices(searchDTO);
+                return serviceDTOs;
 	}
 	
 
@@ -395,17 +354,12 @@ public class EnrollmentService {
 	@GET
 	@Path("/{enrollmentId}/substance-abuses")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<SubstanceAbuseDTO> getSubstanceAbuses(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<SubstanceAbuseDTO> getSubstanceAbuses(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @BeanParam SubstanceAbuseSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<SubstanceAbuseDTO> substanceAbuseDTOs = SubstanceAbuseManager.getSubstanceAbusesByEnrollmentId(enrollmentId);
-			return substanceAbuseDTOs;
-		} else {
-			List<SubstanceAbuseDTO> substanceAbuseDTOs = SubstanceAbuseManager.getSubstanceAbusesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return substanceAbuseDTOs;
-		}
+                searchDTO.setEnrollmentId(enrollmentId);
+                List<SubstanceAbuseDTO> substanceAbuseDTOs = SubstanceAbuseManager.getSubstanceAbuses(searchDTO);
+                return substanceAbuseDTOs;
 	}
 }

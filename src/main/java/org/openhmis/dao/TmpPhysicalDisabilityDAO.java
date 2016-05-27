@@ -44,52 +44,12 @@ public class TmpPhysicalDisabilityDAO extends BaseDAO {
                 if(searchDTO.getUpdatedSince() != null) {
                     query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
 		}
+                if(searchDTO.getEnrollmentId() != null) {
+                    query.add(Restrictions.eq("enrollmentId", Integer.parseInt(searchDTO.getEnrollmentId())));
+		}
 		List<TmpPhysicalDisability> results = query.list();
 		session.close();
 		return results;
 	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpPhysicalDisability> getTmpPhysicalDisabilities(Date updateDate) {
-		String queryString = "select phyiscalDisability " + 
-				"from TmpPhysicalDisability as phyiscalDisability " + 
-				"where phyiscalDisability.dateUpdated >= :updatedSince";
 
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpPhysicalDisability> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpPhysicalDisability> getTmpPhysicalDisabilitiesByEnrollmentId(Integer enrollmentId) {
-		String queryString = "select phyiscalDisability " + 
-				"from TmpPhysicalDisability as phyiscalDisability " + 
-				"where phyiscalDisability.enrollmentId =:enrollmentId";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		List<TmpPhysicalDisability> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpPhysicalDisability> getTmpPhysicalDisabilitiesByEnrollmentId(Integer enrollmentId, Date updateDate) {
-		String queryString = "select phyiscalDisability " + 
-				"from TmpPhysicalDisability as phyiscalDisability " + 
-				"where phyiscalDisability.enrollmentId =:enrollmentId " + 
-				"  and phyiscalDisability.dateUpdated >= :updatedSince";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpPhysicalDisability> results = queryObject.list();
-		session.close();
-		return results;
-	}
 }

@@ -42,54 +42,16 @@ public class TmpDomesticAbuseDAO extends BaseDAO {
 		Session session = getSession();
                 Criteria query =  session.createCriteria(TmpDomesticAbuse.class);
                 if (searchDTO.getUpdatedSince() != null) {
-                    query.add(Restrictions.like("dateUpdated", searchDTO.getUpdatedSince()));
+                    query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
                 }
+                if(searchDTO.getEnrollmentId() != null) {
+                    query.add(Restrictions.eq("enrollmentId", Integer.parseInt(searchDTO.getEnrollmentId())));
+		}
 		List<TmpDomesticAbuse> results = query.list();
 		session.close();
 		return results;
 	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpDomesticAbuse> getTmpDomesticAbuses(Date updateDate) {
-		String queryString = "select domesticAbuse " + 
-				"from TmpDomesticAbuse as domesticAbuse " + 
-				"where domesticAbuse.dateUpdated >= :updatedSince";
 
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpDomesticAbuse> results = queryObject.list();
-		session.close();
-		return results;
-	}
 	
-	@SuppressWarnings("unchecked")
-	public List<TmpDomesticAbuse> getTmpDomesticAbusesByEnrollmentId(Integer enrollmentId) {
-		String queryString = "select domesticAbuse " + 
-				"from TmpDomesticAbuse as domesticAbuse " + 
-				"where domesticAbuse.enrollmentId =:enrollmentId";
 
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		List<TmpDomesticAbuse> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpDomesticAbuse> getTmpDomesticAbusesByEnrollmentId(Integer enrollmentId, Date updateDate) {
-		String queryString = "select domesticAbuse " + 
-				"from TmpDomesticAbuse as domesticAbuse " + 
-				"where domesticAbuse.enrollmentId =:enrollmentId " + 
-				"  and domesticAbuse.dateUpdated >= :updatedSince";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpDomesticAbuse> results = queryObject.list();
-		session.close();
-		return results;
-	}
 }

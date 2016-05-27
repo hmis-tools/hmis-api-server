@@ -42,54 +42,14 @@ public class TmpNonCashBenefitDAO extends BaseDAO {
 		Session session = getSession();
                 Criteria query = session.createCriteria(TmpNonCashBenefit.class);
                 if(searchDTO.getUpdatedSince() != null) {
-                    query.add(Restrictions.gt("updatedDate", DateParser.parseDate(searchDTO.getUpdatedSince())));
+                    query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
+		}
+                if(searchDTO.getEnrollmentId() != null) {
+                    query.add(Restrictions.eq("enrollmentId", Integer.parseInt(searchDTO.getEnrollmentId())));
 		}
 		List<TmpNonCashBenefit> results = query.list();
 		session.close();
 		return results;
 	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpNonCashBenefit> getTmpNonCashBenefits(Date updateDate) {
-		String queryString = "select nonCashBenefit " + 
-				"from TmpNonCashBenefit as nonCashBenefit " + 
-				"where nonCashBenefit.dataeUpdated >= :updatedSince";
 
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpNonCashBenefit> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpNonCashBenefit> getTmpNonCashBenefitsByEnrollmentId(Integer enrollmentId) {
-		String queryString = "select nonCashBenefit " + 
-				"from TmpNonCashBenefit as nonCashBenefit " + 
-				"where nonCashBenefit.enrollmentId =:enrollmentId";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		List<TmpNonCashBenefit> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpNonCashBenefit> getTmpNonCashBenefitsByEnrollmentId(Integer enrollmentId, Date updateDate) {
-		String queryString = "select nonCashBenefit " + 
-				"from TmpNonCashBenefit as nonCashBenefit " + 
-				"where nonCashBenefit.enrollmentId =:enrollmentId " + 
-				"  and nonCashBenefit.dateUpdated >= :updatedSince";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpNonCashBenefit> results = queryObject.list();
-		session.close();
-		return results;
-	}
 }

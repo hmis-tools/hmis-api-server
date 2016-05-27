@@ -44,52 +44,12 @@ public class TmpServiceDAO extends BaseDAO {
                 if(searchDTO.getUpdatedSince() != null) {
                     query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
 		}
+                if(searchDTO.getEnrollmentId() != null) {
+                    query.add(Restrictions.eq("enrollmentId", Integer.parseInt(searchDTO.getEnrollmentId())));
+		}
 		List<TmpService> results = query.list();
 		session.close();
 		return results;
 	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpService> getTmpServices(Date updateDate) {
-		String queryString = "select service " + 
-				"from TmpService as service " + 
-				"where service.dateUpdated >= :updatedSince";
 
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpService> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpService> getTmpServicesByEnrollmentId(Integer enrollmentId) {
-		String queryString = "select service " + 
-				"from TmpService as service " + 
-				"where service.enrollmentId =:enrollmentId";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		List<TmpService> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpService> getTmpServicesByEnrollmentId(Integer enrollmentId, Date updateDate) {
-		String queryString = "select service " + 
-				"from TmpService as service " + 
-				"where service.enrollmentId =:enrollmentId " + 
-				"  and service.dateUpdated >= :updatedSince";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpService> results = queryObject.list();
-		session.close();
-		return results;
-	}
 }

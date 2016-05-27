@@ -33,7 +33,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 
-@Path("/hiv-aids-satatuses")
+@Path("/hiv-aids-statuses")
 public class HivAidsStatusService {
 	private static final Logger log = Logger.getLogger(HivAidsStatusService.class);
 	public HivAidsStatusService() {}

@@ -50,53 +50,6 @@ public class ServiceManager {
 
 	}
 
-	public static List<ServiceDTO> getServices(Date updateDate) {
-		List<ServiceDTO> serviceDTOs = new ArrayList<ServiceDTO>();
-
-		// Collect the services
-		List<TmpService> tmpServices = tmpServiceDAO.getTmpServices(updateDate);
-
-		// For each service, collect and map the data
-		for (Iterator<TmpService> iterator = tmpServices.iterator(); iterator.hasNext();) {
-			TmpService tmpService = iterator.next();
-			ServiceDTO serviceDTO = ServiceManager.generateServiceDTO(tmpService);
-			serviceDTOs.add(serviceDTO);
-		}
-		return serviceDTOs;
-
-	}
-
-	public static List<ServiceDTO> getServicesByEnrollmentId(String enrollmentId) {
-		List<ServiceDTO> serviceDTOs = new ArrayList<ServiceDTO>();
-
-		// Collect the services
-		List<TmpService> tmpServices = tmpServiceDAO.getTmpServicesByEnrollmentId(Integer.parseInt(enrollmentId));
-
-		// For each service, collect and map the data
-		for (Iterator<TmpService> iterator = tmpServices.iterator(); iterator.hasNext();) {
-			TmpService tmpService = iterator.next();
-			ServiceDTO serviceDTO = ServiceManager.generateServiceDTO(tmpService);
-			serviceDTOs.add(serviceDTO);
-		}
-		return serviceDTOs;
-
-	}
-
-	public static List<ServiceDTO> getServicesByEnrollmentId(String enrollmentId, Date updateDate) {
-		List<ServiceDTO> serviceDTOs = new ArrayList<ServiceDTO>();
-
-		// Collect the services
-		List<TmpService> tmpServices = tmpServiceDAO.getTmpServicesByEnrollmentId(Integer.parseInt(enrollmentId), updateDate);
-
-		// For each service, collect and map the data
-		for (Iterator<TmpService> iterator = tmpServices.iterator(); iterator.hasNext();) {
-			TmpService tmpService = iterator.next();
-			ServiceDTO serviceDTO = ServiceManager.generateServiceDTO(tmpService);
-			serviceDTOs.add(serviceDTO);
-		}
-		return serviceDTOs;
-
-	}
 	
 	public static ServiceDTO addService(ServiceDTO inputDTO) {
 		// Generate a PathClient from the input

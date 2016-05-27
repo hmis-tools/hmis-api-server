@@ -44,52 +44,12 @@ public class TmpReferralDAO extends BaseDAO {
                 if(searchDTO.getUpdatedSince() != null) {
                     query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
 		}
+                if(searchDTO.getEnrollmentId() != null) {
+                    query.add(Restrictions.eq("enrollmentId", Integer.parseInt(searchDTO.getEnrollmentId())));
+		}
 		List<TmpReferral> results = query.list();
 		session.close();
 		return results;
 	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpReferral> getTmpReferrals(Date updateDate) {
-		String queryString = "select referral " + 
-				"from TmpReferral as referral " + 
-				"where referral.dateUpdated >= :updatedSince";
 
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpReferral> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpReferral> getTmpReferralsByEnrollmentId(Integer enrollmentId) {
-		String queryString = "select referral " + 
-				"from TmpReferral as referral " + 
-				"where referral.enrollmentId =:enrollmentId";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		List<TmpReferral> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpReferral> getTmpReferralsByEnrollmentId(Integer enrollmentId, Date updateDate) {
-		String queryString = "select referral " + 
-				"from TmpReferral as referral " + 
-				"where referral.enrollmentId =:enrollmentId " + 
-				"  and referral.dateUpdated >= :updatedSince";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpReferral> results = queryObject.list();
-		session.close();
-		return results;
-	}
 }

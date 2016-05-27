@@ -44,52 +44,12 @@ public class TmpMedicalAssistanceDAO extends BaseDAO {
                 if(searchDTO.getUpdatedSince() != null) {
                     query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
 		}
+                if(searchDTO.getEnrollmentId() != null) {
+                    query.add(Restrictions.eq("enrollmentId", Integer.parseInt(searchDTO.getEnrollmentId())));
+		}
 		List<TmpMedicalAssistance> results = query.list();
 		session.close();
 		return results;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<TmpMedicalAssistance> getTmpMedicalAssistances(Date updateDate) {
-		String queryString = "select medicalAssistance " + 
-				"from TmpMedicalAssistance as medicalAssistance " + 
-				"where medicalAssistance.dateUpdated >= :updatedSince";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpMedicalAssistance> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpMedicalAssistance> getTmpMedicalAssistancesByEnrollmentId(Integer enrollmentId) {
-		String queryString = "select medicalAssistance " + 
-				"from TmpMedicalAssistance as medicalAssistance " + 
-				"where medicalAssistance.enrollmentId =:enrollmentId";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		List<TmpMedicalAssistance> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpMedicalAssistance> getTmpMedicalAssistancesByEnrollmentId(Integer enrollmentId, Date updateDate) {
-		String queryString = "select medicalAssistance " + 
-				"from TmpMedicalAssistance as medicalAssistance " + 
-				"where medicalAssistance.enrollmentId =:enrollmentId " + 
-				"  and medicalAssistance.dateUpdated >= :updatedSince";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpMedicalAssistance> results = queryObject.list();
-		session.close();
-		return results;
-	}
 }

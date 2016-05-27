@@ -44,52 +44,12 @@ public class TmpSubstanceAbuseDAO extends BaseDAO {
                 if(searchDTO.getUpdatedSince() != null) {
                     query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
 		}
+                if(searchDTO.getEnrollmentId() != null) {
+                    query.add(Restrictions.eq("enrollmentId", Integer.parseInt(searchDTO.getEnrollmentId())));
+		}
 		List<TmpSubstanceAbuse> results = query.list();
 		session.close();
 		return results;
 	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpSubstanceAbuse> getTmpSubstanceAbuses(Date updateDate) {
-		String queryString = "select substanceAbuse " + 
-				"from TmpSubstanceAbuse as substanceAbuse " + 
-				"where substanceAbuse.dateUpdated >= :updatedSince";
 
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpSubstanceAbuse> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpSubstanceAbuse> getTmpSubstanceAbusesByEnrollmentId(Integer enrollmentId) {
-		String queryString = "select substanceAbuse " + 
-				"from TmpSubstanceAbuse as substanceAbuse " + 
-				"where substanceAbuse.enrollmentId =:enrollmentId";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		List<TmpSubstanceAbuse> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpSubstanceAbuse> getTmpSubstanceAbusesByEnrollmentId(Integer enrollmentId, Date updateDate) {
-		String queryString = "select substanceAbuse " + 
-				"from TmpSubstanceAbuse as substanceAbuse " + 
-				"where substanceAbuse.enrollmentId =:enrollmentId " + 
-				"  and substanceAbuse.dateUpdated >= :updatedSince";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpSubstanceAbuse> results = queryObject.list();
-		session.close();
-		return results;
-	}
 }

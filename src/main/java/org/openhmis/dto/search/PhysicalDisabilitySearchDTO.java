@@ -13,6 +13,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @XmlRootElement
 public class PhysicalDisabilitySearchDTO extends BaseSearchDTO {
+        private String enrollmentId;
+        
+        public PhysicalDisabilitySearchDTO() {}
+
+	// Getters / Setters
+	@JsonProperty
+	public String getEnrollmentId() {
+		return this.enrollmentId;
+	}
+	@QueryParam("enrollmentId")
+	public void setEnrollmentId(String enrollmentId) {
+		this.enrollmentId = enrollmentId;
+	}
 }
 
 

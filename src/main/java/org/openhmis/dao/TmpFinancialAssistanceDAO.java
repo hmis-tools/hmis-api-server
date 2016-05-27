@@ -44,52 +44,13 @@ public class TmpFinancialAssistanceDAO extends BaseDAO {
                 if(searchDTO.getUpdatedSince() != null) {
                     query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
 		}
+                if(searchDTO.getEnrollmentId() != null) {
+                    query.add(Restrictions.eq("enrollmentId", Integer.parseInt(searchDTO.getEnrollmentId())));
+		}
 		List<TmpFinancialAssistance> results = query.list();
 		session.close();
 		return results;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<TmpFinancialAssistance> getTmpFinancialAssistances(Date updateDate) {
-		String queryString = "select financialAssistance " + 
-				"from TmpFinancialAssistance as financialAssistance " + 
-				"where financialAssistance.dateUpdated >= :updatedSince";
 
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpFinancialAssistance> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpFinancialAssistance> getTmpFinancialAssistancesByEnrollmentId(Integer enrollmentId) {
-		String queryString = "select financialAssistance " + 
-				"from TmpFinancialAssistance as financialAssistance " + 
-				"where financialAssistance.enrollmentId =:enrollmentId";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		List<TmpFinancialAssistance> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpFinancialAssistance> getTmpFinancialAssistancesByEnrollmentId(Integer enrollmentId, Date updateDate) {
-		String queryString = "select financialAssistance " + 
-				"from TmpFinancialAssistance as financialAssistance " + 
-				"where financialAssistance.enrollmentId =:enrollmentId " + 
-				"  and financialAssistance.dateUpdated >= :updatedSince";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpFinancialAssistance> results = queryObject.list();
-		session.close();
-		return results;
-	}
 }
