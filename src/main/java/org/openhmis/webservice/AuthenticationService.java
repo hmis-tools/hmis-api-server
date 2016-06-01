@@ -31,6 +31,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Properties;
 
 import org.openhmis.util.Authentication;
+import org.openhmis.util.ApplicationPropertyUtil;
 
 @Path("/authenticate")
 public class AuthenticationService {
@@ -41,6 +42,13 @@ public class AuthenticationService {
 	@Path("/google")
 	public String authenticate(@Context SecurityContext sc, String code) {
 		return Authentication.getGoogleToken(code);
+	}
+
+	@GET
+	@Path("/google/client_key")
+	public String googleClientKey() {
+		ApplicationPropertyUtil applicationPropertyUtil = new ApplicationPropertyUtil();
+		return applicationPropertyUtil.getGoogleClientId();
 	}
 
 }

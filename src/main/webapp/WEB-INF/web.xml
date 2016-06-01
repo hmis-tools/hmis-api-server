@@ -25,12 +25,16 @@
       <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
       <param-value>true</param-value>
     </init-param>
+    <init-param>
+      <param-name>com.sun.jersey.config.property.staticContentRegex</param-name>
+      <param-value>/admin/*</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>OpenHMIS Servlet</servlet-name>
-  	<url-pattern>/api/v3/*</url-pattern>
+    <servlet-name>OpenHMIS Servlet</servlet-name>
+    <url-pattern>/api/v3/*</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.html</welcome-file>
   </welcome-file-list>
 </web-app>
