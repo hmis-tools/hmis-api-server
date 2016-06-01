@@ -12,6 +12,8 @@
 
 		<link rel="stylesheet" href="css/vendor/jquery.modal.min.css" type="text/css" media="screen" />
 
+		<link rel="stylesheet" href="css/admin.css" type="text/css" media="screen" />
+
 
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
@@ -28,19 +30,49 @@
 	</head>
 
 	<body>
-		<h1>OpenHMIS Admin</h1>
-		<button type="button" class="btn btn-primary" id="login">Log In</button>
 
+		<div id="container">
+			<h1>OpenHMIS Admin</h1>
+			<div id="loader"><img src="img/spinner.gif" id="spinner" /></div>
+			<button type="button" class="btn btn-primary" id="login">Log In</button>
+			<div id="adminInterface">
 
-		<div id="adminInterface">
-			<table id="dataTable"></table>
+				<div id="dataTable"></div>
 
-			<form id="editForm" class="modal">
-				YOLO
-			</form>
+				<form id="editForm" class="modal">
+					<input type="hidden" id="internalId">
+					<div class="form-group">
+						<label for="email">Email:</label>
+						<input type="email" class="form-control" id="externalId" placeholder="Email">
+					</div>
+					<div class="form-group">
+						<label for="email">Permissions:</label>
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" id="canAdmin"> Admin
+							</label>
+						</div>
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" id="canRead"> Read
+							</label>
+						</div>
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" id="canWrite"> Write
+							</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<button type="button" class="btn" id="saveUser">Save User</button>
+					</div>
+					<div class="form-group">
+						<button type="button" class="btn" id="deleteUser">Delete User</button>
+					</div>
+				</form>
 
-			<button type="button" class="btn" id="addUser">Add User</button>
+				<button type="button" class="btn" id="addUser">Add User</button>
+			</div>
 		</div>
-
 	</body>
 </html>

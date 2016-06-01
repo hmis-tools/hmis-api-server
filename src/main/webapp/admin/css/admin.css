@@ -1,0 +1,16 @@
+#container {
+	width: 80%;
+	margin: auto;
+}
+
+.edit-user {
+	cursor: pointer;
+}
+
+#spinner {
+	height: 50px;
+	width: 50px;
+	margin: 50px auto;
+	display: block;
+}
+
