@@ -29,8 +29,8 @@ public enum ClientNameDataQuality implements BaseCode {
 	@XmlEnumValue("99")
 	NOT_COLLECTED (99, "Data not collected");
 	
-	public final Integer code;
-	public final String description;
+	private final Integer code;
+	private final String description;
 
 	ClientNameDataQuality(final Integer code, final String description) {
 		this.code = code;
