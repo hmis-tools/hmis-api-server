@@ -110,7 +110,7 @@ _Note: you do not need to install anything for this to work.  Flyway is automati
         $> vi src/config/flyway.properties
     ```
 
-3. To initialize and update the schema, run the following command in the top-levle directory (the one containing the `pom.xml` file):
+3. To initialize and update the schema, run the following command in the top-level directory (the one containing the `pom.xml` file):
 
     ```shell
         $> mvn clean compile flyway:migrate
