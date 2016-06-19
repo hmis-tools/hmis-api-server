@@ -86,26 +86,4 @@ public class OrganizationManager {
 		
 		return true;
 	}
-	
-	public static OrganizationDTO generateOrganizationDTO(TmpOrganization tmpOrganization) {
-		OrganizationDTO organizationDTO = new OrganizationDTO();
-		organizationDTO.setOrganizationId(tmpOrganization.getOrganizationId().toString());
-		organizationDTO.setOrganizationName(tmpOrganization.getOrganizationName());
-
-		// Export Standard Fields
-		organizationDTO.setDateCreated(tmpOrganization.getDateCreated());
-		organizationDTO.setDateUpdated(tmpOrganization.getDateUpdated());
-		
-		return organizationDTO;
-	}
-	
-	public static TmpOrganization generateTmpOrganization(OrganizationDTO inputDTO) {
-		TmpOrganization tmpOrganization = new TmpOrganization();
-		
-		tmpOrganization.setOrganizationId(Integer.parseInt(inputDTO.getOrganizationId()));
-		tmpOrganization.setOrganizationName(inputDTO.getOrganizationName());
-		
-		return tmpOrganization;
-	}
-	
 }
