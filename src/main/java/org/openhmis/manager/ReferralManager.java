@@ -18,6 +18,7 @@ import org.openhmis.domain.TmpReferral;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.ReferralDTO;
+import org.openhmis.dto.search.ReferralSearchDTO;
 
 public class ReferralManager {
 	private TmpReferralDAO tmpReferralDAO;
@@ -35,11 +36,11 @@ public class ReferralManager {
 		return referralDTO;
 	}
 
-	public List<ReferralDTO> getReferrals() {
+	public List<ReferralDTO> getReferrals(ReferralSearchDTO searchDTO) {
 		List<ReferralDTO> referralDTOs = new ArrayList<ReferralDTO>();
 
 		// Collect the referrals
-		List<TmpReferral> tmpReferrals = tmpReferralDAO.getTmpReferrals();
+		List<TmpReferral> tmpReferrals = tmpReferralDAO.getTmpReferrals(searchDTO);
 
 		// For each referral, collect and map the data
 		for (Iterator<TmpReferral> iterator = tmpReferrals.iterator(); iterator.hasNext();) {
@@ -51,54 +52,6 @@ public class ReferralManager {
 
 	}
 
-	public List<ReferralDTO> getReferrals(Date updateDate) {
-		List<ReferralDTO> referralDTOs = new ArrayList<ReferralDTO>();
-
-		// Collect the referrals
-		List<TmpReferral> tmpReferrals = tmpReferralDAO.getTmpReferrals(updateDate);
-
-		// For each referral, collect and map the data
-		for (Iterator<TmpReferral> iterator = tmpReferrals.iterator(); iterator.hasNext();) {
-			TmpReferral tmpReferral = iterator.next();
-			ReferralDTO referralDTO = ReferralManager.generateReferralDTO(tmpReferral);
-			referralDTOs.add(referralDTO);
-		}
-		return referralDTOs;
-
-	}
-
-	public List<ReferralDTO> getReferralsByEnrollmentId(String enrollmentId) {
-		List<ReferralDTO> referralDTOs = new ArrayList<ReferralDTO>();
-
-		// Collect the referrals
-		List<TmpReferral> tmpReferrals = tmpReferralDAO.getTmpReferralsByEnrollmentId(Integer.parseInt(enrollmentId));
-
-		// For each referral, collect and map the data
-		for (Iterator<TmpReferral> iterator = tmpReferrals.iterator(); iterator.hasNext();) {
-			TmpReferral tmpReferral = iterator.next();
-			ReferralDTO referralDTO = ReferralManager.generateReferralDTO(tmpReferral);
-			referralDTOs.add(referralDTO);
-		}
-		return referralDTOs;
-
-	}
-
-	public List<ReferralDTO> getReferralsByEnrollmentId(String enrollmentId, Date updateDate) {
-		List<ReferralDTO> referralDTOs = new ArrayList<ReferralDTO>();
-
-		// Collect the referrals
-		List<TmpReferral> tmpReferrals = tmpReferralDAO.getTmpReferralsByEnrollmentId(Integer.parseInt(enrollmentId), updateDate);
-
-		// For each referral, collect and map the data
-		for (Iterator<TmpReferral> iterator = tmpReferrals.iterator(); iterator.hasNext();) {
-			TmpReferral tmpReferral = iterator.next();
-			ReferralDTO referralDTO = ReferralManager.generateReferralDTO(tmpReferral);
-			referralDTOs.add(referralDTO);
-		}
-		return referralDTOs;
-
-	}
-	
 	public ReferralDTO addReferral(ReferralDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpReferral tmpReferral = ReferralManager.generateTmpReferral(inputDTO);

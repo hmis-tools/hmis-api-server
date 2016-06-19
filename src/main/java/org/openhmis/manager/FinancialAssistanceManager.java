@@ -17,6 +17,7 @@ import org.openhmis.domain.TmpFinancialAssistance;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.FinancialAssistanceDTO;
+import org.openhmis.dto.search.FinancialAssistanceSearchDTO;
 
 public class FinancialAssistanceManager {
 	private TmpFinancialAssistanceDAO tmpFinancialAssistanceDAO;
@@ -34,11 +35,11 @@ public class FinancialAssistanceManager {
 		return financialAssistanceDTO;
 	}
 
-	public List<FinancialAssistanceDTO> getFinancialAssistances() {
+	public List<FinancialAssistanceDTO> getFinancialAssistances(FinancialAssistanceSearchDTO searchDTO) {
 		List<FinancialAssistanceDTO> financialAssistanceDTOs = new ArrayList<FinancialAssistanceDTO>();
 
 		// Collect the financialAssistances
-		List<TmpFinancialAssistance> tmpFinancialAssistances = tmpFinancialAssistanceDAO.getTmpFinancialAssistances();
+		List<TmpFinancialAssistance> tmpFinancialAssistances = tmpFinancialAssistanceDAO.getTmpFinancialAssistances(searchDTO);
 
 		// For each financialAssistance, collect and map the data
 		for (Iterator<TmpFinancialAssistance> iterator = tmpFinancialAssistances.iterator(); iterator.hasNext();) {
@@ -50,54 +51,6 @@ public class FinancialAssistanceManager {
 
 	}
 
-	public List<FinancialAssistanceDTO> getFinancialAssistances(Date updateDate) {
-		List<FinancialAssistanceDTO> financialAssistanceDTOs = new ArrayList<FinancialAssistanceDTO>();
-
-		// Collect the financialAssistances
-		List<TmpFinancialAssistance> tmpFinancialAssistances = tmpFinancialAssistanceDAO.getTmpFinancialAssistances(updateDate);
-
-		// For each financialAssistance, collect and map the data
-		for (Iterator<TmpFinancialAssistance> iterator = tmpFinancialAssistances.iterator(); iterator.hasNext();) {
-			TmpFinancialAssistance tmpFinancialAssistance = iterator.next();
-			FinancialAssistanceDTO financialAssistanceDTO = FinancialAssistanceManager.generateFinancialAssistanceDTO(tmpFinancialAssistance);
-			financialAssistanceDTOs.add(financialAssistanceDTO);
-		}
-		return financialAssistanceDTOs;
-
-	}
-
-	public List<FinancialAssistanceDTO> getFinancialAssistancesByEnrollmentId(String enrollmentId) {
-		List<FinancialAssistanceDTO> financialAssistanceDTOs = new ArrayList<FinancialAssistanceDTO>();
-
-		// Collect the financialAssistances
-		List<TmpFinancialAssistance> tmpFinancialAssistances = tmpFinancialAssistanceDAO.getTmpFinancialAssistancesByEnrollmentId(Integer.parseInt(enrollmentId));
-
-		// For each financialAssistance, collect and map the data
-		for (Iterator<TmpFinancialAssistance> iterator = tmpFinancialAssistances.iterator(); iterator.hasNext();) {
-			TmpFinancialAssistance tmpFinancialAssistance = iterator.next();
-			FinancialAssistanceDTO financialAssistanceDTO = FinancialAssistanceManager.generateFinancialAssistanceDTO(tmpFinancialAssistance);
-			financialAssistanceDTOs.add(financialAssistanceDTO);
-		}
-		return financialAssistanceDTOs;
-
-	}
-
-	public List<FinancialAssistanceDTO> getFinancialAssistancesByEnrollmentId(String enrollmentId, Date updateDate) {
-		List<FinancialAssistanceDTO> financialAssistanceDTOs = new ArrayList<FinancialAssistanceDTO>();
-
-		// Collect the financialAssistances
-		List<TmpFinancialAssistance> tmpFinancialAssistances = tmpFinancialAssistanceDAO.getTmpFinancialAssistancesByEnrollmentId(Integer.parseInt(enrollmentId), updateDate);
-
-		// For each financialAssistance, collect and map the data
-		for (Iterator<TmpFinancialAssistance> iterator = tmpFinancialAssistances.iterator(); iterator.hasNext();) {
-			TmpFinancialAssistance tmpFinancialAssistance = iterator.next();
-			FinancialAssistanceDTO financialAssistanceDTO = FinancialAssistanceManager.generateFinancialAssistanceDTO(tmpFinancialAssistance);
-			financialAssistanceDTOs.add(financialAssistanceDTO);
-		}
-		return financialAssistanceDTOs;
-
-	}
-	
 	public FinancialAssistanceDTO addFinancialAssistance(FinancialAssistanceDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpFinancialAssistance tmpFinancialAssistance = FinancialAssistanceManager.generateTmpFinancialAssistance(inputDTO);

@@ -7,6 +7,7 @@ package org.openhmis.webservice;
 import java.io.IOException;
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -21,6 +22,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 import org.openhmis.dto.NonCashBenefitDTO;
+import org.openhmis.dto.search.NonCashBenefitSearchDTO;
 import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.manager.NonCashBenefitManager;
 import org.openhmis.util.Authentication;
@@ -39,19 +41,14 @@ public class NonCashBenefitService {
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<NonCashBenefitDTO> getNonCashBenefits(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<NonCashBenefitDTO> getNonCashBenefits(@HeaderParam("Authorization") String authorization, @BeanParam NonCashBenefitSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		
 		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<NonCashBenefitDTO> nonCashBenefitDTOs = NonCashBenefitManager.getNonCashBenefits();
-			return nonCashBenefitDTOs;
-		} else {
-			List<NonCashBenefitDTO> nonCashBenefitDTOs = NonCashBenefitManager.getNonCashBenefits(DateParser.parseDate(updatedSince));
-			return nonCashBenefitDTOs;			
-		}
-		
+                List<NonCashBenefitDTO> nonCashBenefitDTOs = NonCashBenefitManager.getNonCashBenefits(searchDTO);
+                return nonCashBenefitDTOs;
+				
 	}
 	
 	@POST

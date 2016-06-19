@@ -18,6 +18,7 @@ import org.openhmis.domain.TmpHealthInsurance;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.HealthInsuranceDTO;
+import org.openhmis.dto.search.HealthInsuranceSearchDTO;
 
 public class HealthInsuranceManager {
 	private TmpHealthInsuranceDAO tmpHealthInsuranceDAO;
@@ -35,11 +36,11 @@ public class HealthInsuranceManager {
 		return healthInsuranceDTO;
 	}
 
-	public List<HealthInsuranceDTO> getHealthInsurances() {
+	public List<HealthInsuranceDTO> getHealthInsurances(HealthInsuranceSearchDTO searchDTO) {
 		List<HealthInsuranceDTO> healthInsuranceDTOs = new ArrayList<HealthInsuranceDTO>();
 
 		// Collect the healthInsurances
-		List<TmpHealthInsurance> tmpHealthInsurances = tmpHealthInsuranceDAO.getTmpHealthInsurances();
+		List<TmpHealthInsurance> tmpHealthInsurances = tmpHealthInsuranceDAO.getTmpHealthInsurances(searchDTO);
 
 		// For each healthInsurance, collect and map the data
 		for (Iterator<TmpHealthInsurance> iterator = tmpHealthInsurances.iterator(); iterator.hasNext();) {
@@ -51,54 +52,6 @@ public class HealthInsuranceManager {
 
 	}
 
-	public List<HealthInsuranceDTO> getHealthInsurances(Date updateDate) {
-		List<HealthInsuranceDTO> healthInsuranceDTOs = new ArrayList<HealthInsuranceDTO>();
-
-		// Collect the healthInsurances
-		List<TmpHealthInsurance> tmpHealthInsurances = tmpHealthInsuranceDAO.getTmpHealthInsurances(updateDate);
-
-		// For each healthInsurance, collect and map the data
-		for (Iterator<TmpHealthInsurance> iterator = tmpHealthInsurances.iterator(); iterator.hasNext();) {
-			TmpHealthInsurance tmpHealthInsurance = iterator.next();
-			HealthInsuranceDTO healthInsuranceDTO = HealthInsuranceManager.generateHealthInsuranceDTO(tmpHealthInsurance);
-			healthInsuranceDTOs.add(healthInsuranceDTO);
-		}
-		return healthInsuranceDTOs;
-
-	}
-
-	public List<HealthInsuranceDTO> getHealthInsurancesByEnrollmentId(String enrollmentId) {
-		List<HealthInsuranceDTO> healthInsuranceDTOs = new ArrayList<HealthInsuranceDTO>();
-
-		// Collect the healthInsurances
-		List<TmpHealthInsurance> tmpHealthInsurances = tmpHealthInsuranceDAO.getTmpHealthInsurancesByEnrollmentId(Integer.parseInt(enrollmentId));
-
-		// For each healthInsurance, collect and map the data
-		for (Iterator<TmpHealthInsurance> iterator = tmpHealthInsurances.iterator(); iterator.hasNext();) {
-			TmpHealthInsurance tmpHealthInsurance = iterator.next();
-			HealthInsuranceDTO healthInsuranceDTO = HealthInsuranceManager.generateHealthInsuranceDTO(tmpHealthInsurance);
-			healthInsuranceDTOs.add(healthInsuranceDTO);
-		}
-		return healthInsuranceDTOs;
-
-	}
-
-	public List<HealthInsuranceDTO> getHealthInsurancesByEnrollmentId(String enrollmentId, Date updateDate) {
-		List<HealthInsuranceDTO> healthInsuranceDTOs = new ArrayList<HealthInsuranceDTO>();
-
-		// Collect the healthInsurances
-		List<TmpHealthInsurance> tmpHealthInsurances = tmpHealthInsuranceDAO.getTmpHealthInsurancesByEnrollmentId(Integer.parseInt(enrollmentId), updateDate);
-
-		// For each healthInsurance, collect and map the data
-		for (Iterator<TmpHealthInsurance> iterator = tmpHealthInsurances.iterator(); iterator.hasNext();) {
-			TmpHealthInsurance tmpHealthInsurance = iterator.next();
-			HealthInsuranceDTO healthInsuranceDTO = HealthInsuranceManager.generateHealthInsuranceDTO(tmpHealthInsurance);
-			healthInsuranceDTOs.add(healthInsuranceDTO);
-		}
-		return healthInsuranceDTOs;
-
-	}
-	
 	public HealthInsuranceDTO addHealthInsurance(HealthInsuranceDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpHealthInsurance tmpHealthInsurance = HealthInsuranceManager.generateTmpHealthInsurance(inputDTO);

@@ -4,10 +4,14 @@ package org.openhmis.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.openhmis.domain.TmpEnrollment;
 import org.openhmis.domain.TmpExit;
+import org.openhmis.dto.search.ExitSearchDTO;
+import org.openhmis.util.DateParser;
 
 public class TmpExitDAO extends BaseDAO {
 
@@ -54,13 +58,14 @@ public class TmpExitDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpExit> getTmpExits() {
-		String queryString = "select exit " + 
-				"from TmpExit as exit";
+	public List<TmpExit> getTmpExits(ExitSearchDTO searchDTO) {
 
 		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		List<TmpExit> results = queryObject.list();
+                Criteria query = session.createCriteria(TmpExit.class);
+                if(searchDTO.getUpdatedSince() != null) {
+                    query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
+		}
+		List<TmpExit> results = query.list();
 		session.close();
 		return results;
 	}

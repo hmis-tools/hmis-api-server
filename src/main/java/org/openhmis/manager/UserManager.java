@@ -8,6 +8,7 @@ import java.util.List;
 import org.openhmis.dao.TmpUserDAO;
 import org.openhmis.domain.TmpUser;
 import org.openhmis.dto.UserDTO;
+import org.openhmis.dto.search.UserSearchDTO;
 
 public class UserManager {
 	private TmpUserDAO tmpUserDAO;
@@ -24,11 +25,11 @@ public class UserManager {
 		return userDTO;
 	}
 
-	public List<UserDTO> getUsers() {
+	public List<UserDTO> getUsers(UserSearchDTO searchDTO) {
 		List<UserDTO> userDTOs = new ArrayList<UserDTO>();
 
 		// Collect the users
-		List<TmpUser> tmpUsers = tmpUserDAO.getTmpUsers();
+		List<TmpUser> tmpUsers = tmpUserDAO.getTmpUsers(searchDTO);
 
 		// For each TmpUser, collect and map the data
 		for (Iterator<TmpUser> iterator = tmpUsers.iterator(); iterator.hasNext();) {

@@ -12,6 +12,9 @@ import org.openhmis.code.YesNo;
 import org.openhmis.dao.TmpProjectDAO;
 import org.openhmis.domain.TmpProject;
 import org.openhmis.dto.ProjectDTO;
+import org.openhmis.dto.search.ProjectSearchDTO;
+import org.openhmis.dto.search.CoCSearchDTO;
+import org.openhmis.dto.search.FunderSearchDTO;
 import org.openhmis.exception.InvalidParameterException;
 
 public class ProjectManager {
@@ -30,11 +33,11 @@ public class ProjectManager {
 		return projectDTO;
 	}
 
-	public List<ProjectDTO> getProjects() {
+	public List<ProjectDTO> getProjects(ProjectSearchDTO searchDTO) {
 		List<ProjectDTO> projectDTOs = new ArrayList<ProjectDTO>();
 
 		// Collect the projects
-		List<TmpProject> tmpProjects = tmpProjectDAO.getTmpProjects();
+		List<TmpProject> tmpProjects = tmpProjectDAO.getTmpProjects(searchDTO);
 
 		// For each project, collect and map the data
 		// TODO: this should be done in a single query
@@ -46,22 +49,6 @@ public class ProjectManager {
 		return projectDTOs;
 	}
 
-	public List<ProjectDTO> getProjectsByUpdateDate(Date updateDate) {
-		List<ProjectDTO> projectDTOs = new ArrayList<ProjectDTO>();
-
-		// Collect the projects
-		List<TmpProject> tmpProjects = tmpProjectDAO.getTmpProjectsByUpdateDate(updateDate);
-
-		// For each project, collect and map the data
-		// TODO: this should be done in a single query
-		for (Iterator<TmpProject> iterator = tmpProjects.iterator(); iterator.hasNext();) {
-			TmpProject tmpProject = iterator.next();
-			ProjectDTO projectDTO = ProjectManager.generateProjectDTO(tmpProject);
-			projectDTOs.add(projectDTO);
-		}
-		return projectDTOs;
-	}
-	
 	public ProjectDTO addProject(ProjectDTO inputDTO) {
 		validateProject(inputDTO);
 		
@@ -140,13 +127,18 @@ public class ProjectManager {
 		Integer projectId = tmpProject.getProjectId();
 
 		ProjectDTO projectDTO = new ProjectDTO();
+                CoCSearchDTO cocSearchDTO = new CoCSearchDTO();
+                FunderSearchDTO funderSearchDTO = new FunderSearchDTO();
 		projectDTO.setProjectId(tmpProject.getProjectId().toString());
+                cocSearchDTO.setProjectId(tmpProject.getProjectId().toString());
+                funderSearchDTO.setProjectId(tmpProject.getProjectId().toString());
+                
 	
 		// Universal Data Standard: Project Identifiers (2014, 2.2) 
 		projectDTO.setProjectName(tmpProject.getProjectName());
 		
 		// Universal Data Standard: Project CoC (2014, 2.3)
-		projectDTO.setProjectCoCs(CoCManager.getCoCsByProjectId(projectId.toString()));
+		projectDTO.setProjectCoCs(CoCManager.getCoCs(cocSearchDTO));
 
 		// Universal Data Standard: Project Type (2014, 2.4)
 		projectDTO.setContinuumProject(YesNo.valueByCode(tmpProject.getContinuumProject()));
@@ -158,7 +150,7 @@ public class ProjectManager {
 		projectDTO.setTrackingMethod(ProjectTrackingMethod.valueByCode(tmpProject.getTrackingMethod()));
 
 		// Universal Data Standard: Funders (2014, 2.6)
-		projectDTO.setFunders(FunderManager.getFundersByProjectId(projectId.toString()));
+		projectDTO.setFunders(FunderManager.getFunders(funderSearchDTO));
 
 		// Universal Data Standard: Target Population (2014 2.9)
 		projectDTO.setTargetPopulation(ProjectTargetPopulation.valueByCode(tmpProject.getTargetPopulation()));

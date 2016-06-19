@@ -25,12 +25,11 @@ import org.openhmis.code.YesNoReason;
 import org.openhmis.dao.TmpExitDAO;
 import org.openhmis.domain.TmpProject;
 import org.openhmis.domain.TmpExit;
-import org.openhmis.domain.TmpFinancialAssistance;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.exception.InvalidParameterException;
 import org.openhmis.dto.ExitDTO;
-import org.openhmis.dto.FinancialAssistanceDTO;
+import org.openhmis.dto.search.ExitSearchDTO;
 
 public class ExitManager {
 	private TmpExitDAO tmpExitDAO;
@@ -48,13 +47,13 @@ public class ExitManager {
 		return exitDTO;
 	}
 
-	public List<ExitDTO> getExits() {
+	public List<ExitDTO> getExits(ExitSearchDTO searchDTO) {
 		List<ExitDTO> exitDTOs = new ArrayList<ExitDTO>();
 
 		// Collect the exits
-		List<TmpExit> tmpExits = tmpExitDAO.getTmpExits();
+		List<TmpExit> tmpExits = tmpExitDAO.getTmpExits(searchDTO);
 
-		// For each financialAssistance, collect and map the data
+		// For each exit, collect and map the data
 		for (Iterator<TmpExit> iterator = tmpExits.iterator(); iterator.hasNext();) {
 			TmpExit tmpExit = iterator.next();
 			ExitDTO exitDTO = ExitManager.generateExitDTO(tmpExit);
@@ -70,7 +69,7 @@ public class ExitManager {
 		// Collect the exits
 		List<TmpExit> tmpExits = tmpExitDAO.getTmpExits(updateDate);
 
-		// For each financialAssistance, collect and map the data
+		// For each exit, collect and map the data
 		for (Iterator<TmpExit> iterator = tmpExits.iterator(); iterator.hasNext();) {
 			TmpExit tmpExit = iterator.next();
 			ExitDTO exitDTO = ExitManager.generateExitDTO(tmpExit);

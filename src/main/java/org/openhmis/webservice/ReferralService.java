@@ -7,6 +7,7 @@ package org.openhmis.webservice;
 import java.io.IOException;
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -21,6 +22,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 import org.openhmis.dto.ReferralDTO;
+import org.openhmis.dto.search.ReferralSearchDTO;
 import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.manager.ReferralManager;
 import org.openhmis.util.Authentication;
@@ -39,19 +41,14 @@ public class ReferralService {
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<ReferralDTO> getReferrals(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<ReferralDTO> getReferrals(@HeaderParam("Authorization") String authorization, @BeanParam ReferralSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		
 		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<ReferralDTO> referralDTOs = ReferralManager.getReferrals();
-			return referralDTOs;
-		} else {
-			List<ReferralDTO> referralDTOs = ReferralManager.getReferrals(DateParser.parseDate(updatedSince));
-			return referralDTOs;			
-		}
-		
+                List<ReferralDTO> referralDTOs = ReferralManager.getReferrals(searchDTO);
+                return referralDTOs;
+				
 	}
 	
 	@POST

@@ -16,6 +16,8 @@ import org.openhmis.domain.TmpContact;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.ContactDTO;
+import org.openhmis.dto.search.ContactSearchDTO;
+
 
 public class ContactManager {
 	private TmpContactDAO tmpContactDAO;
@@ -33,11 +35,11 @@ public class ContactManager {
 		return contactDTO;
 	}
 
-	public List<ContactDTO> getContacts() {
+	public List<ContactDTO> getContacts(ContactSearchDTO searchDTO) {
 		List<ContactDTO> contactDTOs = new ArrayList<ContactDTO>();
 
 		// Collect the contacts
-		List<TmpContact> tmpContacts = tmpContactDAO.getTmpContacts();
+		List<TmpContact> tmpContacts = tmpContactDAO.getTmpContacts(searchDTO);
 
 		// For each contact, collect and map the data
 		for (Iterator<TmpContact> iterator = tmpContacts.iterator(); iterator.hasNext();) {
@@ -49,54 +51,6 @@ public class ContactManager {
 
 	}
 
-	public List<ContactDTO> getContacts(Date updateDate) {
-		List<ContactDTO> contactDTOs = new ArrayList<ContactDTO>();
-
-		// Collect the contacts
-		List<TmpContact> tmpContacts = tmpContactDAO.getTmpContacts(updateDate);
-
-		// For each contact, collect and map the data
-		for (Iterator<TmpContact> iterator = tmpContacts.iterator(); iterator.hasNext();) {
-			TmpContact tmpContact = iterator.next();
-			ContactDTO contactDTO = ContactManager.generateContactDTO(tmpContact);
-			contactDTOs.add(contactDTO);
-		}
-		return contactDTOs;
-
-	}
-
-	public List<ContactDTO> getContactsByEnrollmentId(String enrollmentId) {
-		List<ContactDTO> contactDTOs = new ArrayList<ContactDTO>();
-
-		// Collect the contacts
-		List<TmpContact> tmpContacts = tmpContactDAO.getTmpContactsByEnrollmentId(Integer.parseInt(enrollmentId));
-
-		// For each contact, collect and map the data
-		for (Iterator<TmpContact> iterator = tmpContacts.iterator(); iterator.hasNext();) {
-			TmpContact tmpContact = iterator.next();
-			ContactDTO contactDTO = ContactManager.generateContactDTO(tmpContact);
-			contactDTOs.add(contactDTO);
-		}
-		return contactDTOs;
-
-	}
-
-	public List<ContactDTO> getContactsByEnrollmentId(String enrollmentId, Date updateDate) {
-		List<ContactDTO> contactDTOs = new ArrayList<ContactDTO>();
-
-		// Collect the contacts
-		List<TmpContact> tmpContacts = tmpContactDAO.getTmpContactsByEnrollmentId(Integer.parseInt(enrollmentId), updateDate);
-
-		// For each contact, collect and map the data
-		for (Iterator<TmpContact> iterator = tmpContacts.iterator(); iterator.hasNext();) {
-			TmpContact tmpContact = iterator.next();
-			ContactDTO contactDTO = ContactManager.generateContactDTO(tmpContact);
-			contactDTOs.add(contactDTO);
-		}
-		return contactDTOs;
-
-	}
-	
 	public ContactDTO addContact(ContactDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpContact tmpContact = ContactManager.generateTmpContact(inputDTO);

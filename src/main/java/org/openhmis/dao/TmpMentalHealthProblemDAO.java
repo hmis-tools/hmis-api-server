@@ -4,8 +4,10 @@ package org.openhmis.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.openhmis.domain.TmpMentalHealthProblem;
 
 public class TmpMentalHealthProblemDAO extends BaseDAO {

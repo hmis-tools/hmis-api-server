@@ -4,9 +4,13 @@ package org.openhmis.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.openhmis.domain.TmpService;
+import org.openhmis.dto.search.ServiceSearchDTO;
+import org.openhmis.util.DateParser;
 
 public class TmpServiceDAO extends BaseDAO {
 
@@ -33,58 +37,19 @@ public class TmpServiceDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpService> getTmpServices() {
-		String queryString = "select service " + 
-				"from TmpService as service";
+	public List<TmpService> getTmpServices(ServiceSearchDTO searchDTO) {
 
 		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		List<TmpService> results = queryObject.list();
+                Criteria query =  session.createCriteria(TmpService.class);
+                if(searchDTO.getUpdatedSince() != null) {
+                    query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
+		}
+                if(searchDTO.getEnrollmentId() != null) {
+                    query.add(Restrictions.eq("enrollmentId", Integer.parseInt(searchDTO.getEnrollmentId())));
+		}
+		List<TmpService> results = query.list();
 		session.close();
 		return results;
 	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpService> getTmpServices(Date updateDate) {
-		String queryString = "select service " + 
-				"from TmpService as service " + 
-				"where service.dateUpdated >= :updatedSince";
 
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpService> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpService> getTmpServicesByEnrollmentId(Integer enrollmentId) {
-		String queryString = "select service " + 
-				"from TmpService as service " + 
-				"where service.enrollmentId =:enrollmentId";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		List<TmpService> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpService> getTmpServicesByEnrollmentId(Integer enrollmentId, Date updateDate) {
-		String queryString = "select service " + 
-				"from TmpService as service " + 
-				"where service.enrollmentId =:enrollmentId " + 
-				"  and service.dateUpdated >= :updatedSince";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpService> results = queryObject.list();
-		session.close();
-		return results;
-	}
 }

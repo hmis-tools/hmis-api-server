@@ -17,6 +17,7 @@ import org.openhmis.domain.TmpIncomeSource;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.IncomeSourceDTO;
+import org.openhmis.dto.search.IncomeSourceSearchDTO;
 
 public class IncomeSourceManager {
 	private TmpIncomeSourceDAO tmpIncomeSourceDAO;
@@ -34,11 +35,11 @@ public class IncomeSourceManager {
 		return incomeSourceDTO;
 	}
 
-	public List<IncomeSourceDTO> getIncomeSources() {
+	public List<IncomeSourceDTO> getIncomeSources(IncomeSourceSearchDTO searchDTO) {
 		List<IncomeSourceDTO> incomeSourceDTOs = new ArrayList<IncomeSourceDTO>();
 
 		// Collect the incomeSources
-		List<TmpIncomeSource> tmpIncomeSources = tmpIncomeSourceDAO.getTmpIncomeSources();
+		List<TmpIncomeSource> tmpIncomeSources = tmpIncomeSourceDAO.getTmpIncomeSources(searchDTO);
 
 		// For each incomeSource, collect and map the data
 		for (Iterator<TmpIncomeSource> iterator = tmpIncomeSources.iterator(); iterator.hasNext();) {
@@ -50,54 +51,6 @@ public class IncomeSourceManager {
 
 	}
 
-	public List<IncomeSourceDTO> getIncomeSources(Date updateDate) {
-		List<IncomeSourceDTO> incomeSourceDTOs = new ArrayList<IncomeSourceDTO>();
-
-		// Collect the incomeSources
-		List<TmpIncomeSource> tmpIncomeSources = tmpIncomeSourceDAO.getTmpIncomeSources(updateDate);
-
-		// For each incomeSource, collect and map the data
-		for (Iterator<TmpIncomeSource> iterator = tmpIncomeSources.iterator(); iterator.hasNext();) {
-			TmpIncomeSource tmpIncomeSource = iterator.next();
-			IncomeSourceDTO incomeSourceDTO = IncomeSourceManager.generateIncomeSourceDTO(tmpIncomeSource);
-			incomeSourceDTOs.add(incomeSourceDTO);
-		}
-		return incomeSourceDTOs;
-
-	}
-
-	public List<IncomeSourceDTO> getIncomeSourcesByEnrollmentId(String enrollmentId) {
-		List<IncomeSourceDTO> incomeSourceDTOs = new ArrayList<IncomeSourceDTO>();
-
-		// Collect the incomeSources
-		List<TmpIncomeSource> tmpIncomeSources = tmpIncomeSourceDAO.getTmpIncomeSourcesByEnrollmentId(Integer.parseInt(enrollmentId));
-
-		// For each incomeSource, collect and map the data
-		for (Iterator<TmpIncomeSource> iterator = tmpIncomeSources.iterator(); iterator.hasNext();) {
-			TmpIncomeSource tmpIncomeSource = iterator.next();
-			IncomeSourceDTO incomeSourceDTO = IncomeSourceManager.generateIncomeSourceDTO(tmpIncomeSource);
-			incomeSourceDTOs.add(incomeSourceDTO);
-		}
-		return incomeSourceDTOs;
-
-	}
-
-	public List<IncomeSourceDTO> getIncomeSourcesByEnrollmentId(String enrollmentId, Date updateDate) {
-		List<IncomeSourceDTO> incomeSourceDTOs = new ArrayList<IncomeSourceDTO>();
-
-		// Collect the incomeSources
-		List<TmpIncomeSource> tmpIncomeSources = tmpIncomeSourceDAO.getTmpIncomeSourcesByEnrollmentId(Integer.parseInt(enrollmentId), updateDate);
-
-		// For each incomeSource, collect and map the data
-		for (Iterator<TmpIncomeSource> iterator = tmpIncomeSources.iterator(); iterator.hasNext();) {
-			TmpIncomeSource tmpIncomeSource = iterator.next();
-			IncomeSourceDTO incomeSourceDTO = IncomeSourceManager.generateIncomeSourceDTO(tmpIncomeSource);
-			incomeSourceDTOs.add(incomeSourceDTO);
-		}
-		return incomeSourceDTOs;
-
-	}
-	
 	public IncomeSourceDTO addIncomeSource(IncomeSourceDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpIncomeSource tmpIncomeSource = IncomeSourceManager.generateTmpIncomeSource(inputDTO);

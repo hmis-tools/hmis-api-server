@@ -17,6 +17,7 @@ import org.openhmis.domain.TmpMedicalAssistance;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.MedicalAssistanceDTO;
+import org.openhmis.dto.search.MedicalAssistanceSearchDTO;
 
 public class MedicalAssistanceManager {
 	private TmpMedicalAssistanceDAO tmpMedicalAssistanceDAO;
@@ -34,11 +35,11 @@ public class MedicalAssistanceManager {
 		return medicalAssistanceDTO;
 	}
 
-	public List<MedicalAssistanceDTO> getMedicalAssistances() {
+	public List<MedicalAssistanceDTO> getMedicalAssistances(MedicalAssistanceSearchDTO searchDTO) {
 		List<MedicalAssistanceDTO> medicalAssistanceDTOs = new ArrayList<MedicalAssistanceDTO>();
 
 		// Collect the medicalAssistances
-		List<TmpMedicalAssistance> tmpMedicalAssistances = tmpMedicalAssistanceDAO.getTmpMedicalAssistances();
+		List<TmpMedicalAssistance> tmpMedicalAssistances = tmpMedicalAssistanceDAO.getTmpMedicalAssistances(searchDTO);
 
 		// For each medicalAssistance, collect and map the data
 		for (Iterator<TmpMedicalAssistance> iterator = tmpMedicalAssistances.iterator(); iterator.hasNext();) {
@@ -50,54 +51,6 @@ public class MedicalAssistanceManager {
 
 	}
 
-	public List<MedicalAssistanceDTO> getMedicalAssistances(Date updateDate) {
-		List<MedicalAssistanceDTO> medicalAssistanceDTOs = new ArrayList<MedicalAssistanceDTO>();
-
-		// Collect the medicalAssistances
-		List<TmpMedicalAssistance> tmpMedicalAssistances = tmpMedicalAssistanceDAO.getTmpMedicalAssistances(updateDate);
-
-		// For each medicalAssistance, collect and map the data
-		for (Iterator<TmpMedicalAssistance> iterator = tmpMedicalAssistances.iterator(); iterator.hasNext();) {
-			TmpMedicalAssistance tmpMedicalAssistance = iterator.next();
-			MedicalAssistanceDTO medicalAssistanceDTO = MedicalAssistanceManager.generateMedicalAssistanceDTO(tmpMedicalAssistance);
-			medicalAssistanceDTOs.add(medicalAssistanceDTO);
-		}
-		return medicalAssistanceDTOs;
-
-	}
-
-	public List<MedicalAssistanceDTO> getMedicalAssistancesByEnrollmentId(String enrollmentId) {
-		List<MedicalAssistanceDTO> medicalAssistanceDTOs = new ArrayList<MedicalAssistanceDTO>();
-
-		// Collect the medicalAssistances
-		List<TmpMedicalAssistance> tmpMedicalAssistances = tmpMedicalAssistanceDAO.getTmpMedicalAssistancesByEnrollmentId(Integer.parseInt(enrollmentId));
-
-		// For each medicalAssistance, collect and map the data
-		for (Iterator<TmpMedicalAssistance> iterator = tmpMedicalAssistances.iterator(); iterator.hasNext();) {
-			TmpMedicalAssistance tmpMedicalAssistance = iterator.next();
-			MedicalAssistanceDTO medicalAssistanceDTO = MedicalAssistanceManager.generateMedicalAssistanceDTO(tmpMedicalAssistance);
-			medicalAssistanceDTOs.add(medicalAssistanceDTO);
-		}
-		return medicalAssistanceDTOs;
-
-	}
-
-	public List<MedicalAssistanceDTO> getMedicalAssistancesByEnrollmentId(String enrollmentId, Date updateDate) {
-		List<MedicalAssistanceDTO> medicalAssistanceDTOs = new ArrayList<MedicalAssistanceDTO>();
-
-		// Collect the medicalAssistances
-		List<TmpMedicalAssistance> tmpMedicalAssistances = tmpMedicalAssistanceDAO.getTmpMedicalAssistancesByEnrollmentId(Integer.parseInt(enrollmentId), updateDate);
-
-		// For each medicalAssistance, collect and map the data
-		for (Iterator<TmpMedicalAssistance> iterator = tmpMedicalAssistances.iterator(); iterator.hasNext();) {
-			TmpMedicalAssistance tmpMedicalAssistance = iterator.next();
-			MedicalAssistanceDTO medicalAssistanceDTO = MedicalAssistanceManager.generateMedicalAssistanceDTO(tmpMedicalAssistance);
-			medicalAssistanceDTOs.add(medicalAssistanceDTO);
-		}
-		return medicalAssistanceDTOs;
-
-	}
-	
 	public MedicalAssistanceDTO addMedicalAssistance(MedicalAssistanceDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpMedicalAssistance tmpMedicalAssistance = MedicalAssistanceManager.generateTmpMedicalAssistance(inputDTO);

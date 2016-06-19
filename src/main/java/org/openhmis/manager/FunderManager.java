@@ -10,6 +10,7 @@ import org.openhmis.code.ProjectFundingSource;
 import org.openhmis.dao.TmpProjectFunderDAO;
 import org.openhmis.domain.TmpProjectFunder;
 import org.openhmis.dto.FunderDTO;
+import org.openhmis.dto.search.FunderSearchDTO;
 import org.openhmis.exception.InvalidParameterException;
 
 public class FunderManager {
@@ -29,11 +30,11 @@ public class FunderManager {
 		return FunderDTO;
 	}
 
-	public List<FunderDTO> getFunders() {
+	public List<FunderDTO> getFunders(FunderSearchDTO searchDTO) {
 		List<FunderDTO> funderDTOs = new ArrayList<FunderDTO>();
 
 		// Collect the projects
-		List<TmpProjectFunder> tmpProjectFunders = tmpProjectFunderDAO.getTmpProjectFunders();
+		List<TmpProjectFunder> tmpProjectFunders = tmpProjectFunderDAO.getTmpProjectFunders(searchDTO);
 
 		// For each project, collect and map the data
 		// TODO: this should be done in a single query
@@ -47,62 +48,8 @@ public class FunderManager {
 
 	}
 
-	public List<FunderDTO> getFunders(Date updateDate) {
-		List<FunderDTO> funderDTOs = new ArrayList<FunderDTO>();
 
-		// Collect the projects
-		List<TmpProjectFunder> tmpProjectFunders = tmpProjectFunderDAO.getTmpProjectFunders(updateDate);
-
-		// For each project, collect and map the data
-		// TODO: this should be done in a single query
-		for (Iterator<TmpProjectFunder> iterator = tmpProjectFunders.iterator(); iterator.hasNext();) {
-			TmpProjectFunder tmpProjectFunder = iterator.next();
-
-			FunderDTO funderDTO = FunderManager.generateFunderDTO(tmpProjectFunder);
-			funderDTOs.add(funderDTO);
-		}
-		return funderDTOs;
-
-	}
-
-	public List<FunderDTO> getFundersByProjectId(String projectId) {
-		List<FunderDTO> funderDTOs = new ArrayList<FunderDTO>();
-
-		// Collect the projects
-		List<TmpProjectFunder> tmpProjectFunders = tmpProjectFunderDAO.getTmpProjectFundersByProjectId(Integer.parseInt(projectId));
-
-		// For each project, collect and map the data
-		// TODO: this should be done in a single query
-		for (Iterator<TmpProjectFunder> iterator = tmpProjectFunders.iterator(); iterator.hasNext();) {
-			TmpProjectFunder tmpProjectFunder = iterator.next();
-
-			FunderDTO funderDTO = FunderManager.generateFunderDTO(tmpProjectFunder);
-			funderDTOs.add(funderDTO);
-		}
-		return funderDTOs;
-
-	}
-
-	public List<FunderDTO> getFundersByProjectId(String projectId, Date updateDate) {
-		List<FunderDTO> funderDTOs = new ArrayList<FunderDTO>();
-
-		// Collect the projects
-		List<TmpProjectFunder> tmpProjectFunders = tmpProjectFunderDAO.getTmpProjectFundersByProjectId(Integer.parseInt(projectId), updateDate);
-
-		// For each project, collect and map the data
-		// TODO: this should be done in a single query
-		for (Iterator<TmpProjectFunder> iterator = tmpProjectFunders.iterator(); iterator.hasNext();) {
-			TmpProjectFunder tmpProjectFunder = iterator.next();
-
-			FunderDTO funderDTO = FunderManager.generateFunderDTO(tmpProjectFunder);
-			funderDTOs.add(funderDTO);
-		}
-		return funderDTOs;
-
-	}
-	
 	public FunderDTO addFunder(FunderDTO inputDTO) {
-
 		// Make sure the fields are valid
 		validateFunder(inputDTO);
 

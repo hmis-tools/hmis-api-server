@@ -7,6 +7,7 @@ package org.openhmis.webservice;
 import java.io.IOException;
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -21,6 +22,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 import org.openhmis.dto.ServiceDTO;
+import org.openhmis.dto.search.ServiceSearchDTO;
 import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.manager.ServiceManager;
 import org.openhmis.util.Authentication;
@@ -39,19 +41,14 @@ public class ServiceService {
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<ServiceDTO> getServices(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<ServiceDTO> getServices(@HeaderParam("Authorization") String authorization, @BeanParam ServiceSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		
 		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			List<ServiceDTO> serviceDTOs = ServiceManager.getServices();
-			return serviceDTOs;
-		} else {
-			List<ServiceDTO> serviceDTOs = ServiceManager.getServices(DateParser.parseDate(updatedSince));
-			return serviceDTOs;			
-		}
-		
+                List<ServiceDTO> serviceDTOs = ServiceManager.getServices(searchDTO);
+                return serviceDTOs;
+				
 	}
 	
 	@POST

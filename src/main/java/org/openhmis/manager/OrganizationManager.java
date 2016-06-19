@@ -16,6 +16,7 @@ import org.openhmis.domain.TmpOrganization;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.OrganizationDTO;
+import org.openhmis.dto.search.OrganizationSearchDTO;
 
 public class OrganizationManager {
 	private TmpOrganizationDAO tmpOrganizationDAO;
@@ -33,11 +34,11 @@ public class OrganizationManager {
 		return organizationDTO;
 	}
 
-	public List<OrganizationDTO> getOrganizations() {
+	public List<OrganizationDTO> getOrganizations(OrganizationSearchDTO searchDTO) {
 		List<OrganizationDTO> organizationDTOs = new ArrayList<OrganizationDTO>();
 
 		// Collect the organizations
-		List<TmpOrganization> tmpOrganizations = tmpOrganizationDAO.getTmpOrganizations();
+		List<TmpOrganization> tmpOrganizations = tmpOrganizationDAO.getTmpOrganizations(searchDTO);
 
 		// For each organization, collect and map the data
 		for (Iterator<TmpOrganization> iterator = tmpOrganizations.iterator(); iterator.hasNext();) {
@@ -49,22 +50,6 @@ public class OrganizationManager {
 
 	}
 
-	public List<OrganizationDTO> getOrganizationsByUpdateDate(Date updateDate) {
-		List<OrganizationDTO> organizationDTOs = new ArrayList<OrganizationDTO>();
-
-		// Collect the organizations
-		List<TmpOrganization> tmpOrganizations = tmpOrganizationDAO.getTmpOrganizationsByUpdateDate(updateDate);
-
-		// For each organization, collect and map the data
-		for (Iterator<TmpOrganization> iterator = tmpOrganizations.iterator(); iterator.hasNext();) {
-			TmpOrganization tmpOrganization = iterator.next();
-			OrganizationDTO organizationDTO = OrganizationManager.generateOrganizationDTO(tmpOrganization);
-			organizationDTOs.add(organizationDTO);
-		}
-		return organizationDTOs;
-
-	}
-	
 	public OrganizationDTO addOrganization(OrganizationDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpOrganization tmpOrganization = OrganizationManager.generateTmpOrganization(inputDTO);
