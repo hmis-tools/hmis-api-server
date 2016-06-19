@@ -63,9 +63,15 @@ import org.openhmis.exception.InvalidParameterException;
 
 public class EnrollmentManager {
 
-	private static final TmpEnrollmentDAO tmpEnrollmentDAO = new TmpEnrollmentDAO();
+	private TmpEnrollmentDAO tmpEnrollmentDAO;
 	
-	public EnrollmentManager() {}
+	public EnrollmentManager() {
+		this.tmpEnrollmentDAO = new TmpEnrollmentDAO();
+	}
+
+	public EnrollmentManager(TmpEnrollmentDAO tmpEnrollmentDAO) {
+		this.tmpEnrollmentDAO = tmpEnrollmentDAO;
+	}
 
 	public EnrollmentDTO getEnrollmentById(String enrollmentId) {
 		EnrollmentDTO enrollmentDTO = EnrollmentManager.generateEnrollmentDTO(tmpEnrollmentDAO.getTmpEnrollmentById(Integer.parseInt(enrollmentId)));

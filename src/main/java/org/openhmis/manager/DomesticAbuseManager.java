@@ -19,16 +19,21 @@ import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.DomesticAbuseDTO;
 
 public class DomesticAbuseManager {
-	private static final TmpDomesticAbuseDAO tmpDomesticAbuseDAO = new TmpDomesticAbuseDAO();
+	private TmpDomesticAbuseDAO tmpDomesticAbuseDAO;
 
-	public DomesticAbuseManager() {}
+	public DomesticAbuseManager() {
+		this.tmpDomesticAbuseDAO = new TmpDomesticAbuseDAO();
+	}
+	public DomesticAbuseManager(TmpDomesticAbuseDAO tmpDomesticAbuseDAO) {
+		this.tmpDomesticAbuseDAO = tmpDomesticAbuseDAO;
+	}
 
-	public static DomesticAbuseDTO getDomesticAbuseById(String domesticAbuseId) {
+	public DomesticAbuseDTO getDomesticAbuseById(String domesticAbuseId) {
 		DomesticAbuseDTO domesticAbuseDTO = DomesticAbuseManager.generateDomesticAbuseDTO(tmpDomesticAbuseDAO.getTmpDomesticAbuseById(Integer.parseInt(domesticAbuseId)));
 		return domesticAbuseDTO;
 	}
 
-	public static List<DomesticAbuseDTO> getDomesticAbuses() {
+	public List<DomesticAbuseDTO> getDomesticAbuses() {
 		List<DomesticAbuseDTO> domesticAbuseDTOs = new ArrayList<DomesticAbuseDTO>();
 
 		// Collect the domesticAbuses
@@ -44,7 +49,7 @@ public class DomesticAbuseManager {
 
 	}
 
-	public static List<DomesticAbuseDTO> getDomesticAbuses(Date updateDate) {
+	public List<DomesticAbuseDTO> getDomesticAbuses(Date updateDate) {
 		List<DomesticAbuseDTO> domesticAbuseDTOs = new ArrayList<DomesticAbuseDTO>();
 
 		// Collect the domesticAbuses
@@ -60,7 +65,7 @@ public class DomesticAbuseManager {
 
 	}
 
-	public static List<DomesticAbuseDTO> getDomesticAbusesByEnrollmentId(String enrollmentId) {
+	public List<DomesticAbuseDTO> getDomesticAbusesByEnrollmentId(String enrollmentId) {
 		List<DomesticAbuseDTO> domesticAbuseDTOs = new ArrayList<DomesticAbuseDTO>();
 
 		// Collect the domesticAbuses
@@ -76,7 +81,7 @@ public class DomesticAbuseManager {
 
 	}
 
-	public static List<DomesticAbuseDTO> getDomesticAbusesByEnrollmentId(String enrollmentId, Date updateDate) {
+	public List<DomesticAbuseDTO> getDomesticAbusesByEnrollmentId(String enrollmentId, Date updateDate) {
 		List<DomesticAbuseDTO> domesticAbuseDTOs = new ArrayList<DomesticAbuseDTO>();
 
 		// Collect the domesticAbuses
@@ -92,7 +97,7 @@ public class DomesticAbuseManager {
 
 	}
 	
-	public static DomesticAbuseDTO addDomesticAbuse(DomesticAbuseDTO inputDTO) {
+	public DomesticAbuseDTO addDomesticAbuse(DomesticAbuseDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpDomesticAbuse tmpDomesticAbuse = DomesticAbuseManager.generateTmpDomesticAbuse(inputDTO);
 		
@@ -108,7 +113,7 @@ public class DomesticAbuseManager {
 		return DomesticAbuseManager.generateDomesticAbuseDTO(tmpDomesticAbuse);
 	}
 	
-	public static DomesticAbuseDTO updateDomesticAbuse(DomesticAbuseDTO inputDTO) {
+	public DomesticAbuseDTO updateDomesticAbuse(DomesticAbuseDTO inputDTO) {
 		// Generate a DomesticAbuse from the input
 		TmpDomesticAbuse tmpDomesticAbuse = DomesticAbuseManager.generateTmpDomesticAbuse(inputDTO);
 		tmpDomesticAbuse.setDomesticAbuseId(Integer.parseInt(inputDTO.getDomesticAbuseId()));
@@ -122,7 +127,7 @@ public class DomesticAbuseManager {
 
 	}
 	
-	public static boolean deleteDomesticAbuse(String domesticAbuseId) {
+	public boolean deleteDomesticAbuse(String domesticAbuseId) {
 		TmpDomesticAbuse tmpDomesticAbuse = tmpDomesticAbuseDAO.getTmpDomesticAbuseById(Integer.parseInt(domesticAbuseId));
 		tmpDomesticAbuseDAO.delete(tmpDomesticAbuse);
 		return true;

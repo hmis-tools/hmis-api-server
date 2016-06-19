@@ -18,16 +18,22 @@ import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.ContactDTO;
 
 public class ContactManager {
-	private static final TmpContactDAO tmpContactDAO = new TmpContactDAO();
+	private TmpContactDAO tmpContactDAO;
 
-	public ContactManager() {}
+	public ContactManager() {
+		this.tmpContactDAO = new TmpContactDAO();
+	}
+	
+	public ContactManager(TmpContactDAO tmpContactDAO) {
+		this.tmpContactDAO = tmpContactDAO;
+	}
 
-	public static ContactDTO getContactById(String contactId) {
+	public ContactDTO getContactById(String contactId) {
 		ContactDTO contactDTO = ContactManager.generateContactDTO(tmpContactDAO.getTmpContactById(Integer.parseInt(contactId)));
 		return contactDTO;
 	}
 
-	public static List<ContactDTO> getContacts() {
+	public List<ContactDTO> getContacts() {
 		List<ContactDTO> contactDTOs = new ArrayList<ContactDTO>();
 
 		// Collect the contacts
@@ -43,7 +49,7 @@ public class ContactManager {
 
 	}
 
-	public static List<ContactDTO> getContacts(Date updateDate) {
+	public List<ContactDTO> getContacts(Date updateDate) {
 		List<ContactDTO> contactDTOs = new ArrayList<ContactDTO>();
 
 		// Collect the contacts
@@ -59,7 +65,7 @@ public class ContactManager {
 
 	}
 
-	public static List<ContactDTO> getContactsByEnrollmentId(String enrollmentId) {
+	public List<ContactDTO> getContactsByEnrollmentId(String enrollmentId) {
 		List<ContactDTO> contactDTOs = new ArrayList<ContactDTO>();
 
 		// Collect the contacts
@@ -75,7 +81,7 @@ public class ContactManager {
 
 	}
 
-	public static List<ContactDTO> getContactsByEnrollmentId(String enrollmentId, Date updateDate) {
+	public List<ContactDTO> getContactsByEnrollmentId(String enrollmentId, Date updateDate) {
 		List<ContactDTO> contactDTOs = new ArrayList<ContactDTO>();
 
 		// Collect the contacts
@@ -91,7 +97,7 @@ public class ContactManager {
 
 	}
 	
-	public static ContactDTO addContact(ContactDTO inputDTO) {
+	public ContactDTO addContact(ContactDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpContact tmpContact = ContactManager.generateTmpContact(inputDTO);
 		
@@ -107,7 +113,7 @@ public class ContactManager {
 		return ContactManager.generateContactDTO(tmpContact);
 	}
 	
-	public static ContactDTO updateContact(ContactDTO inputDTO) {
+	public ContactDTO updateContact(ContactDTO inputDTO) {
 		// Generate a Contact from the input
 		TmpContact tmpContact = ContactManager.generateTmpContact(inputDTO);
 		tmpContact.setContactId(Integer.parseInt(inputDTO.getContactId()));
@@ -121,7 +127,7 @@ public class ContactManager {
 
 	}
 	
-	public static boolean deleteContact(String contactId) {
+	public boolean deleteContact(String contactId) {
 		TmpContact tmpContact = tmpContactDAO.getTmpContactById(Integer.parseInt(contactId));
 		tmpContactDAO.delete(tmpContact);
 		return true;

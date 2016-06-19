@@ -19,16 +19,22 @@ import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.MedicalAssistanceDTO;
 
 public class MedicalAssistanceManager {
-	private static final TmpMedicalAssistanceDAO tmpMedicalAssistanceDAO = new TmpMedicalAssistanceDAO();
+	private TmpMedicalAssistanceDAO tmpMedicalAssistanceDAO;
 
-	public MedicalAssistanceManager() {}
+	public MedicalAssistanceManager() {
+		this.tmpMedicalAssistanceDAO = new TmpMedicalAssistanceDAO();
+	}
 
-	public static MedicalAssistanceDTO getMedicalAssistanceById(String medicalAssistanceId) {
+	public MedicalAssistanceManager(TmpMedicalAssistanceDAO tmpMedicalAssistanceDAO) {
+		this.tmpMedicalAssistanceDAO = tmpMedicalAssistanceDAO;
+	}
+
+	public MedicalAssistanceDTO getMedicalAssistanceById(String medicalAssistanceId) {
 		MedicalAssistanceDTO medicalAssistanceDTO = MedicalAssistanceManager.generateMedicalAssistanceDTO(tmpMedicalAssistanceDAO.getTmpMedicalAssistanceById(Integer.parseInt(medicalAssistanceId)));
 		return medicalAssistanceDTO;
 	}
 
-	public static List<MedicalAssistanceDTO> getMedicalAssistances() {
+	public List<MedicalAssistanceDTO> getMedicalAssistances() {
 		List<MedicalAssistanceDTO> medicalAssistanceDTOs = new ArrayList<MedicalAssistanceDTO>();
 
 		// Collect the medicalAssistances
@@ -44,7 +50,7 @@ public class MedicalAssistanceManager {
 
 	}
 
-	public static List<MedicalAssistanceDTO> getMedicalAssistances(Date updateDate) {
+	public List<MedicalAssistanceDTO> getMedicalAssistances(Date updateDate) {
 		List<MedicalAssistanceDTO> medicalAssistanceDTOs = new ArrayList<MedicalAssistanceDTO>();
 
 		// Collect the medicalAssistances
@@ -60,7 +66,7 @@ public class MedicalAssistanceManager {
 
 	}
 
-	public static List<MedicalAssistanceDTO> getMedicalAssistancesByEnrollmentId(String enrollmentId) {
+	public List<MedicalAssistanceDTO> getMedicalAssistancesByEnrollmentId(String enrollmentId) {
 		List<MedicalAssistanceDTO> medicalAssistanceDTOs = new ArrayList<MedicalAssistanceDTO>();
 
 		// Collect the medicalAssistances
@@ -76,7 +82,7 @@ public class MedicalAssistanceManager {
 
 	}
 
-	public static List<MedicalAssistanceDTO> getMedicalAssistancesByEnrollmentId(String enrollmentId, Date updateDate) {
+	public List<MedicalAssistanceDTO> getMedicalAssistancesByEnrollmentId(String enrollmentId, Date updateDate) {
 		List<MedicalAssistanceDTO> medicalAssistanceDTOs = new ArrayList<MedicalAssistanceDTO>();
 
 		// Collect the medicalAssistances
@@ -92,7 +98,7 @@ public class MedicalAssistanceManager {
 
 	}
 	
-	public static MedicalAssistanceDTO addMedicalAssistance(MedicalAssistanceDTO inputDTO) {
+	public MedicalAssistanceDTO addMedicalAssistance(MedicalAssistanceDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpMedicalAssistance tmpMedicalAssistance = MedicalAssistanceManager.generateTmpMedicalAssistance(inputDTO);
 		
@@ -108,7 +114,7 @@ public class MedicalAssistanceManager {
 		return MedicalAssistanceManager.generateMedicalAssistanceDTO(tmpMedicalAssistance);
 	}
 	
-	public static MedicalAssistanceDTO updateMedicalAssistance(MedicalAssistanceDTO inputDTO) {
+	public MedicalAssistanceDTO updateMedicalAssistance(MedicalAssistanceDTO inputDTO) {
 		// Generate a MedicalAssistance from the input
 		TmpMedicalAssistance tmpMedicalAssistance = MedicalAssistanceManager.generateTmpMedicalAssistance(inputDTO);
 		tmpMedicalAssistance.setMedicalAssistanceId(Integer.parseInt(inputDTO.getMedicalAssistanceId()));
@@ -122,7 +128,7 @@ public class MedicalAssistanceManager {
 
 	}
 	
-	public static boolean deleteMedicalAssistance(String medicalAssistanceId) {
+	public boolean deleteMedicalAssistance(String medicalAssistanceId) {
 		TmpMedicalAssistance tmpMedicalAssistance = tmpMedicalAssistanceDAO.getTmpMedicalAssistanceById(Integer.parseInt(medicalAssistanceId));
 		tmpMedicalAssistanceDAO.delete(tmpMedicalAssistance);
 		return true;

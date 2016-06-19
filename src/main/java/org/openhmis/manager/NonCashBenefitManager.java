@@ -19,16 +19,22 @@ import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.NonCashBenefitDTO;
 
 public class NonCashBenefitManager {
-	private static final TmpNonCashBenefitDAO tmpNonCashBenefitDAO = new TmpNonCashBenefitDAO();
+	private TmpNonCashBenefitDAO tmpNonCashBenefitDAO;
 
-	public NonCashBenefitManager() {}
+	public NonCashBenefitManager() {
+		this.tmpNonCashBenefitDAO = new TmpNonCashBenefitDAO();
+	}
 
-	public static NonCashBenefitDTO getNonCashBenefitById(String nonCashBenefitId) {
+	public NonCashBenefitManager(TmpNonCashBenefitDAO tmpNonCashBenefitDAO) {
+		this.tmpNonCashBenefitDAO = tmpNonCashBenefitDAO;
+	}
+
+	public NonCashBenefitDTO getNonCashBenefitById(String nonCashBenefitId) {
 		NonCashBenefitDTO nonCashBenefitDTO = NonCashBenefitManager.generateNonCashBenefitDTO(tmpNonCashBenefitDAO.getTmpNonCashBenefitById(Integer.parseInt(nonCashBenefitId)));
 		return nonCashBenefitDTO;
 	}
 
-	public static List<NonCashBenefitDTO> getNonCashBenefits() {
+	public List<NonCashBenefitDTO> getNonCashBenefits() {
 		List<NonCashBenefitDTO> nonCashBenefitDTOs = new ArrayList<NonCashBenefitDTO>();
 
 		// Collect the nonCashBenefits
@@ -44,7 +50,7 @@ public class NonCashBenefitManager {
 
 	}
 
-	public static List<NonCashBenefitDTO> getNonCashBenefits(Date updateDate) {
+	public List<NonCashBenefitDTO> getNonCashBenefits(Date updateDate) {
 		List<NonCashBenefitDTO> nonCashBenefitDTOs = new ArrayList<NonCashBenefitDTO>();
 
 		// Collect the nonCashBenefits
@@ -60,7 +66,7 @@ public class NonCashBenefitManager {
 
 	}
 
-	public static List<NonCashBenefitDTO> getNonCashBenefitsByEnrollmentId(String enrollmentId) {
+	public List<NonCashBenefitDTO> getNonCashBenefitsByEnrollmentId(String enrollmentId) {
 		List<NonCashBenefitDTO> nonCashBenefitDTOs = new ArrayList<NonCashBenefitDTO>();
 
 		// Collect the nonCashBenefits
@@ -76,7 +82,7 @@ public class NonCashBenefitManager {
 
 	}
 
-	public static List<NonCashBenefitDTO> getNonCashBenefitsByEnrollmentId(String enrollmentId, Date updateDate) {
+	public List<NonCashBenefitDTO> getNonCashBenefitsByEnrollmentId(String enrollmentId, Date updateDate) {
 		List<NonCashBenefitDTO> nonCashBenefitDTOs = new ArrayList<NonCashBenefitDTO>();
 
 		// Collect the nonCashBenefits
@@ -92,7 +98,7 @@ public class NonCashBenefitManager {
 
 	}
 	
-	public static NonCashBenefitDTO addNonCashBenefit(NonCashBenefitDTO inputDTO) {
+	public NonCashBenefitDTO addNonCashBenefit(NonCashBenefitDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpNonCashBenefit tmpNonCashBenefit = NonCashBenefitManager.generateTmpNonCashBenefit(inputDTO);
 		
@@ -108,7 +114,7 @@ public class NonCashBenefitManager {
 		return NonCashBenefitManager.generateNonCashBenefitDTO(tmpNonCashBenefit);
 	}
 	
-	public static NonCashBenefitDTO updateNonCashBenefit(NonCashBenefitDTO inputDTO) {
+	public NonCashBenefitDTO updateNonCashBenefit(NonCashBenefitDTO inputDTO) {
 		// Generate a NonCashBenefit from the input
 		TmpNonCashBenefit tmpNonCashBenefit = NonCashBenefitManager.generateTmpNonCashBenefit(inputDTO);
 		tmpNonCashBenefit.setNonCashBenefitId(Integer.parseInt(inputDTO.getNonCashBenefitId()));
@@ -122,7 +128,7 @@ public class NonCashBenefitManager {
 
 	}
 	
-	public static boolean deleteNonCashBenefit(String nonCashBenefitId) {
+	public boolean deleteNonCashBenefit(String nonCashBenefitId) {
 		TmpNonCashBenefit tmpNonCashBenefit = tmpNonCashBenefitDAO.getTmpNonCashBenefitById(Integer.parseInt(nonCashBenefitId));
 		tmpNonCashBenefitDAO.delete(tmpNonCashBenefit);
 		return true;

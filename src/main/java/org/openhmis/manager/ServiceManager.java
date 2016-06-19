@@ -24,16 +24,22 @@ import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.ServiceDTO;
 
 public class ServiceManager {
-	private static final TmpServiceDAO tmpServiceDAO = new TmpServiceDAO();
+	private TmpServiceDAO tmpServiceDAO = new TmpServiceDAO();
 
-	public ServiceManager() {}
+	public ServiceManager() {
+		this.tmpServiceDAO = new TmpServiceDAO();
+	}
 
-	public static ServiceDTO getServiceById(String serviceId) {
+	public ServiceManager(TmpServiceDAO tmpServiceDAO) {
+		this.tmpServiceDAO = tmpServiceDAO;
+	}
+
+	public ServiceDTO getServiceById(String serviceId) {
 		ServiceDTO serviceDTO = ServiceManager.generateServiceDTO(tmpServiceDAO.getTmpServiceById(Integer.parseInt(serviceId)));
 		return serviceDTO;
 	}
 
-	public static List<ServiceDTO> getServices() {
+	public List<ServiceDTO> getServices() {
 		List<ServiceDTO> serviceDTOs = new ArrayList<ServiceDTO>();
 
 		// Collect the services
@@ -49,7 +55,7 @@ public class ServiceManager {
 
 	}
 
-	public static List<ServiceDTO> getServices(Date updateDate) {
+	public List<ServiceDTO> getServices(Date updateDate) {
 		List<ServiceDTO> serviceDTOs = new ArrayList<ServiceDTO>();
 
 		// Collect the services
@@ -65,7 +71,7 @@ public class ServiceManager {
 
 	}
 
-	public static List<ServiceDTO> getServicesByEnrollmentId(String enrollmentId) {
+	public List<ServiceDTO> getServicesByEnrollmentId(String enrollmentId) {
 		List<ServiceDTO> serviceDTOs = new ArrayList<ServiceDTO>();
 
 		// Collect the services
@@ -81,7 +87,7 @@ public class ServiceManager {
 
 	}
 
-	public static List<ServiceDTO> getServicesByEnrollmentId(String enrollmentId, Date updateDate) {
+	public List<ServiceDTO> getServicesByEnrollmentId(String enrollmentId, Date updateDate) {
 		List<ServiceDTO> serviceDTOs = new ArrayList<ServiceDTO>();
 
 		// Collect the services
@@ -97,7 +103,7 @@ public class ServiceManager {
 
 	}
 	
-	public static ServiceDTO addService(ServiceDTO inputDTO) {
+	public ServiceDTO addService(ServiceDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpService tmpService = ServiceManager.generateTmpService(inputDTO);
 		
@@ -113,7 +119,7 @@ public class ServiceManager {
 		return ServiceManager.generateServiceDTO(tmpService);
 	}
 	
-	public static ServiceDTO updateService(ServiceDTO inputDTO) {
+	public ServiceDTO updateService(ServiceDTO inputDTO) {
 		// Generate a Service from the input
 		TmpService tmpService = ServiceManager.generateTmpService(inputDTO);
 		tmpService.setServiceId(Integer.parseInt(inputDTO.getServiceId()));
@@ -127,7 +133,7 @@ public class ServiceManager {
 
 	}
 	
-	public static boolean deleteService(String serviceId) {
+	public boolean deleteService(String serviceId) {
 		TmpService tmpService = tmpServiceDAO.getTmpServiceById(Integer.parseInt(serviceId));
 		tmpServiceDAO.delete(tmpService);
 		return true;

@@ -22,16 +22,22 @@ import org.openhmis.dto.SiteDTO;
 import org.openhmis.exception.InvalidParameterException;
 
 public class SiteManager {
-	private static final TmpProjectSiteDAO tmpProjectSiteDAO = new TmpProjectSiteDAO();
+	private TmpProjectSiteDAO tmpProjectSiteDAO;
 
-	public SiteManager() {}
+	public SiteManager() {
+		this.tmpProjectSiteDAO = new TmpProjectSiteDAO();
+	}
+	
+	public SiteManager(TmpProjectSiteDAO tmpProjectSiteDAO) {
+		this.tmpProjectSiteDAO = tmpProjectSiteDAO;
+	}
 
-	public static SiteDTO getSiteById(String siteId) {
+	public SiteDTO getSiteById(String siteId) {
 		SiteDTO siteDTO = SiteManager.generateSiteDTO(tmpProjectSiteDAO.getTmpProjectSiteById(Integer.parseInt(siteId)));
 		return siteDTO;
 	}
 
-	public static List<SiteDTO> getSites() {
+	public List<SiteDTO> getSites() {
 		List<SiteDTO> siteDTOs = new ArrayList<SiteDTO>();
 
 		// Collect the sites
@@ -47,7 +53,7 @@ public class SiteManager {
 
 	}
 
-	public static List<SiteDTO> getSites(Date updateDate) {
+	public List<SiteDTO> getSites(Date updateDate) {
 		List<SiteDTO> siteDTOs = new ArrayList<SiteDTO>();
 
 		// Collect the sites
@@ -63,7 +69,7 @@ public class SiteManager {
 
 	}
 
-	public static List<SiteDTO> getSitesByProjectCoCId(String projectCoCId) {
+	public List<SiteDTO> getSitesByProjectCoCId(String projectCoCId) {
 		List<SiteDTO> siteDTOs = new ArrayList<SiteDTO>();
 
 		// Collect the sites
@@ -79,7 +85,7 @@ public class SiteManager {
 
 	}
 
-	public static List<SiteDTO> getSitesByProjectCoCId(String projectCoCId, Date updateDate) {
+	public List<SiteDTO> getSitesByProjectCoCId(String projectCoCId, Date updateDate) {
 		List<SiteDTO> siteDTOs = new ArrayList<SiteDTO>();
 
 		// Collect the sites
@@ -95,7 +101,7 @@ public class SiteManager {
 
 	}
 	
-	public static SiteDTO addSite(SiteDTO inputDTO) {
+	public SiteDTO addSite(SiteDTO inputDTO) {
 		
 		validateSite(inputDTO);
 		
@@ -114,7 +120,7 @@ public class SiteManager {
 		return SiteManager.generateSiteDTO(tmpProjectSite);
 	}
 	
-	public static SiteDTO updateSite(SiteDTO inputDTO) {
+	public SiteDTO updateSite(SiteDTO inputDTO) {
 		
 		validateSite(inputDTO);
 		
@@ -131,7 +137,7 @@ public class SiteManager {
 
 	}
 	
-	public static boolean deleteSite(String siteId) {
+	public boolean deleteSite(String siteId) {
 		TmpProjectSite tmpProjectSite = tmpProjectSiteDAO.getTmpProjectSiteById(Integer.parseInt(siteId));
 		tmpProjectSiteDAO.delete(tmpProjectSite);
 		

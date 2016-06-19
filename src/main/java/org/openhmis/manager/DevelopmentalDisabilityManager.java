@@ -19,16 +19,22 @@ import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.DevelopmentalDisabilityDTO;
 
 public class DevelopmentalDisabilityManager {
-	private static final TmpDevelopmentalDisabilityDAO tmpDevelopmentalDisabilityDAO = new TmpDevelopmentalDisabilityDAO();
+	private TmpDevelopmentalDisabilityDAO tmpDevelopmentalDisabilityDAO;
 
-	public DevelopmentalDisabilityManager() {}
+	public DevelopmentalDisabilityManager() {
+		this.tmpDevelopmentalDisabilityDAO = new TmpDevelopmentalDisabilityDAO();
+	}
+	
+	public DevelopmentalDisabilityManager(TmpDevelopmentalDisabilityDAO tmpDevelopmentalDisabilityDAO) {
+		this.tmpDevelopmentalDisabilityDAO = tmpDevelopmentalDisabilityDAO;
+	}
 
-	public static DevelopmentalDisabilityDTO getDevelopmentalDisabilityById(String developmentalDisabilityId) {
+	public DevelopmentalDisabilityDTO getDevelopmentalDisabilityById(String developmentalDisabilityId) {
 		DevelopmentalDisabilityDTO developmentalDisabilityDTO = DevelopmentalDisabilityManager.generateDevelopmentalDisabilityDTO(tmpDevelopmentalDisabilityDAO.getTmpDevelopmentalDisabilityById(Integer.parseInt(developmentalDisabilityId)));
 		return developmentalDisabilityDTO;
 	}
 
-	public static List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilities() {
+	public List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilities() {
 		List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = new ArrayList<DevelopmentalDisabilityDTO>();
 
 		// Collect the developmentalDisabilities
@@ -44,7 +50,7 @@ public class DevelopmentalDisabilityManager {
 
 	}
 
-	public static List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilities(Date updateDate) {
+	public List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilities(Date updateDate) {
 		List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = new ArrayList<DevelopmentalDisabilityDTO>();
 
 		// Collect the developmentalDisabilities
@@ -60,7 +66,7 @@ public class DevelopmentalDisabilityManager {
 
 	}
 
-	public static List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilitiesByEnrollmentId(String enrollmentId) {
+	public List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilitiesByEnrollmentId(String enrollmentId) {
 		List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = new ArrayList<DevelopmentalDisabilityDTO>();
 
 		// Collect the developmentalDisabilities
@@ -76,7 +82,7 @@ public class DevelopmentalDisabilityManager {
 
 	}
 
-	public static List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilitiesByEnrollmentId(String enrollmentId, Date updateDate) {
+	public List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilitiesByEnrollmentId(String enrollmentId, Date updateDate) {
 		List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = new ArrayList<DevelopmentalDisabilityDTO>();
 
 		// Collect the developmentalDisabilities
@@ -92,7 +98,7 @@ public class DevelopmentalDisabilityManager {
 
 	}
 	
-	public static DevelopmentalDisabilityDTO addDevelopmentalDisability(DevelopmentalDisabilityDTO inputDTO) {
+	public DevelopmentalDisabilityDTO addDevelopmentalDisability(DevelopmentalDisabilityDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpDevelopmentalDisability tmpDevelopmentalDisability = DevelopmentalDisabilityManager.generateTmpDevelopmentalDisability(inputDTO);
 		
@@ -108,7 +114,7 @@ public class DevelopmentalDisabilityManager {
 		return DevelopmentalDisabilityManager.generateDevelopmentalDisabilityDTO(tmpDevelopmentalDisability);
 	}
 	
-	public static DevelopmentalDisabilityDTO updateDevelopmentalDisability(DevelopmentalDisabilityDTO inputDTO) {
+	public DevelopmentalDisabilityDTO updateDevelopmentalDisability(DevelopmentalDisabilityDTO inputDTO) {
 		// Generate a DevelopmentalDisability from the input
 		TmpDevelopmentalDisability tmpDevelopmentalDisability = DevelopmentalDisabilityManager.generateTmpDevelopmentalDisability(inputDTO);
 		tmpDevelopmentalDisability.setDevelopmentalDisabilityId(Integer.parseInt(inputDTO.getDevelopmentalDisabilityId()));
@@ -122,7 +128,7 @@ public class DevelopmentalDisabilityManager {
 
 	}
 	
-	public static boolean deleteDevelopmentalDisability(String developmentalDisabilityId) {
+	public boolean deleteDevelopmentalDisability(String developmentalDisabilityId) {
 		TmpDevelopmentalDisability tmpDevelopmentalDisability = tmpDevelopmentalDisabilityDAO.getTmpDevelopmentalDisabilityById(Integer.parseInt(developmentalDisabilityId));
 		tmpDevelopmentalDisabilityDAO.delete(tmpDevelopmentalDisability);
 		return true;

@@ -33,16 +33,22 @@ import org.openhmis.dto.ExitDTO;
 import org.openhmis.dto.FinancialAssistanceDTO;
 
 public class ExitManager {
-	private static final TmpExitDAO tmpExitDAO = new TmpExitDAO();
+	private TmpExitDAO tmpExitDAO;
 
-	public ExitManager() {}
+	public ExitManager() {
+		this.tmpExitDAO = new TmpExitDAO();
+	}
+	
+	public ExitManager(TmpExitDAO tmpExitDAO) {
+		this.tmpExitDAO = tmpExitDAO;
+	}
 
-	public static ExitDTO getExitById(String exitId) {
+	public ExitDTO getExitById(String exitId) {
 		ExitDTO exitDTO = ExitManager.generateExitDTO(tmpExitDAO.getTmpExitById(Integer.parseInt(exitId)));
 		return exitDTO;
 	}
 
-	public static List<ExitDTO> getExits() {
+	public List<ExitDTO> getExits() {
 		List<ExitDTO> exitDTOs = new ArrayList<ExitDTO>();
 
 		// Collect the exits
@@ -58,7 +64,7 @@ public class ExitManager {
 
 	}
 
-	public static List<ExitDTO> getExits(Date updateDate) {
+	public List<ExitDTO> getExits(Date updateDate) {
 		List<ExitDTO> exitDTOs = new ArrayList<ExitDTO>();
 
 		// Collect the exits
@@ -74,7 +80,7 @@ public class ExitManager {
 
 	}
 
-	public static ExitDTO getExitByEnrollmentId(String enrollmentId) {
+	public ExitDTO getExitByEnrollmentId(String enrollmentId) {
 		List<ExitDTO> exitDTOs = new ArrayList<ExitDTO>();
 
 		// Collect the exits
@@ -85,7 +91,7 @@ public class ExitManager {
 
 	}
 	
-	public static ExitDTO addExit(ExitDTO inputDTO) {
+	public ExitDTO addExit(ExitDTO inputDTO) {
 		// Validate the exit
 		// TODO: this should return a list of errors that get wrapped appropriately
 		if(!validateExit(inputDTO))
@@ -106,7 +112,7 @@ public class ExitManager {
 		return ExitManager.generateExitDTO(tmpExit);
 	}
 	
-	public static ExitDTO updateExit(ExitDTO inputDTO) {
+	public ExitDTO updateExit(ExitDTO inputDTO) {
 		// Generate a Exit from the input
 		TmpExit tmpExit = ExitManager.generateTmpExit(inputDTO);
 
@@ -126,7 +132,7 @@ public class ExitManager {
 
 	}
 	
-	public static boolean deleteExit(String exitId) {
+	public boolean deleteExit(String exitId) {
 		TmpExit tmpExit = tmpExitDAO.getTmpExitById(Integer.parseInt(exitId));
 		tmpExitDAO.delete(tmpExit);
 		return true;

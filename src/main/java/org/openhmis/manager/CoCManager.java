@@ -11,18 +11,24 @@ import org.openhmis.dto.ClientDTO;
 import org.openhmis.dto.CoCDTO;
 
 public class CoCManager {
-	private static final TmpProjectContinuumDAO tmpProjectContinuumDAO = new TmpProjectContinuumDAO();
+	private TmpProjectContinuumDAO tmpProjectContinuumDAO;
 
-	public CoCManager() {}
+	public CoCManager() {
+		this.tmpProjectContinuumDAO = new TmpProjectContinuumDAO();
+	}
 
-	public static CoCDTO getCoCByProjectCoCId(String projectCoCId) {
+	public CoCManager(TmpProjectContinuumDAO tmpProjectContinuumDAO) {
+		this.tmpProjectContinuumDAO = tmpProjectContinuumDAO;
+	}
+
+	public CoCDTO getCoCByProjectCoCId(String projectCoCId) {
 		Integer projectCoCIdInt = Integer.parseInt(projectCoCId);
 		TmpProjectContinuum tmpProjectContinuum= tmpProjectContinuumDAO.getTmpProjectContinuumById(projectCoCIdInt);		
 		CoCDTO CoCDTO = CoCManager.generateCoCDTO(tmpProjectContinuum);
 		return CoCDTO;
 	}
 
-	public static List<CoCDTO> getCoCs() {
+	public List<CoCDTO> getCoCs() {
 		List<CoCDTO> coCDTOs = new ArrayList<CoCDTO>();
 
 		// Collect the projects
@@ -40,7 +46,7 @@ public class CoCManager {
 
 	}
 
-	public static List<CoCDTO> getCoCs(Date updateDate) {
+	public List<CoCDTO> getCoCs(Date updateDate) {
 		List<CoCDTO> coCDTOs = new ArrayList<CoCDTO>();
 
 		// Collect the projects
@@ -58,7 +64,7 @@ public class CoCManager {
 
 	}
 
-	public static List<CoCDTO> getCoCsByProjectId(String projectId) {
+	public List<CoCDTO> getCoCsByProjectId(String projectId) {
 		List<CoCDTO> coCDTOs = new ArrayList<CoCDTO>();
 
 		// Collect the projects
@@ -76,7 +82,7 @@ public class CoCManager {
 
 	}
 
-	public static List<CoCDTO> getCoCsByProjectId(String projectId, Date updateDate) {
+	public List<CoCDTO> getCoCsByProjectId(String projectId, Date updateDate) {
 		List<CoCDTO> coCDTOs = new ArrayList<CoCDTO>();
 
 		// Collect the projects
@@ -94,7 +100,7 @@ public class CoCManager {
 
 	}
 	
-	public static CoCDTO addCoC(CoCDTO inputDTO) {
+	public CoCDTO addCoC(CoCDTO inputDTO) {
 
 		// Validate the CoC
 		// TODO: this should return a list of errors that get wrapped appropriately
@@ -116,7 +122,7 @@ public class CoCManager {
 		return CoCManager.generateCoCDTO(tmpProjectContinuum);
 	}
 	
-	public static CoCDTO updateCoC(CoCDTO inputDTO) {
+	public CoCDTO updateCoC(CoCDTO inputDTO) {
 		// Generate a TmpProject from the input
 		TmpProjectContinuum tmpProjectContinuum = CoCManager.generateTmpProjectContinuum(inputDTO);
 
@@ -136,7 +142,7 @@ public class CoCManager {
 		
 	}
 	
-	public static boolean deleteCoC(String projectCoCId) {
+	public boolean deleteCoC(String projectCoCId) {
 		TmpProjectContinuum tmpProjectContinuum = tmpProjectContinuumDAO.getTmpProjectContinuumById(Integer.parseInt(projectCoCId));
 		tmpProjectContinuumDAO.delete(tmpProjectContinuum);
 		

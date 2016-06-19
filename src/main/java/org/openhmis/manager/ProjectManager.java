@@ -15,16 +15,22 @@ import org.openhmis.dto.ProjectDTO;
 import org.openhmis.exception.InvalidParameterException;
 
 public class ProjectManager {
-	private static final TmpProjectDAO tmpProjectDAO = new TmpProjectDAO();
+	private TmpProjectDAO tmpProjectDAO;
 
-	public ProjectManager() {}
+	public ProjectManager() {
+		this.tmpProjectDAO = new TmpProjectDAO();
+	}
+	
+	public ProjectManager(TmpProjectDAO tmpProjectDAO) {
+		this.tmpProjectDAO = tmpProjectDAO;
+	}
 
-	public static ProjectDTO getProjectById(String projectId) {
+	public ProjectDTO getProjectById(String projectId) {
 		ProjectDTO projectDTO = ProjectManager.generateProjectDTO(tmpProjectDAO.getTmpProjectById(Integer.parseInt(projectId)));
 		return projectDTO;
 	}
 
-	public static List<ProjectDTO> getProjects() {
+	public List<ProjectDTO> getProjects() {
 		List<ProjectDTO> projectDTOs = new ArrayList<ProjectDTO>();
 
 		// Collect the projects
@@ -40,7 +46,7 @@ public class ProjectManager {
 		return projectDTOs;
 	}
 
-	public static List<ProjectDTO> getProjectsByUpdateDate(Date updateDate) {
+	public List<ProjectDTO> getProjectsByUpdateDate(Date updateDate) {
 		List<ProjectDTO> projectDTOs = new ArrayList<ProjectDTO>();
 
 		// Collect the projects
@@ -56,7 +62,7 @@ public class ProjectManager {
 		return projectDTOs;
 	}
 	
-	public static ProjectDTO addProject(ProjectDTO inputDTO) {
+	public ProjectDTO addProject(ProjectDTO inputDTO) {
 		validateProject(inputDTO);
 		
 		// Generate a PathClient from the input
@@ -74,7 +80,7 @@ public class ProjectManager {
 		return ProjectManager.generateProjectDTO(tmpProject);
 	}
 	
-	public static ProjectDTO updateProject(ProjectDTO inputDTO) {
+	public ProjectDTO updateProject(ProjectDTO inputDTO) {
 		validateProject(inputDTO);
 
 		// Generate a TmpProject from the input
@@ -90,7 +96,7 @@ public class ProjectManager {
 		
 	}
 	
-	public static boolean deleteProject(String projectId) {
+	public boolean deleteProject(String projectId) {
 		TmpProject tmpProject = tmpProjectDAO.getTmpProjectById(Integer.parseInt(projectId));
 		tmpProjectDAO.delete(tmpProject);
 		

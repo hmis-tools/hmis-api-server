@@ -19,16 +19,22 @@ import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.HivAidsStatusDTO;
 
 public class HivAidsStatusManager {
-	private static final TmpHivAidsStatusDAO tmpHivAidsStatusDAO = new TmpHivAidsStatusDAO();
+	private TmpHivAidsStatusDAO tmpHivAidsStatusDAO;
 
-	public HivAidsStatusManager() {}
+	public HivAidsStatusManager() {
+		this.tmpHivAidsStatusDAO = new TmpHivAidsStatusDAO();
+	}
 
-	public static HivAidsStatusDTO getHivAidsStatusById(String hivAidsStatusId) {
+	public HivAidsStatusManager(TmpHivAidsStatusDAO tmpHivAidsStatusDAO) {
+		this.tmpHivAidsStatusDAO = tmpHivAidsStatusDAO;
+	}
+
+	public HivAidsStatusDTO getHivAidsStatusById(String hivAidsStatusId) {
 		HivAidsStatusDTO hivAidsStatusDTO = HivAidsStatusManager.generateHivAidsStatusDTO(tmpHivAidsStatusDAO.getTmpHivAidsStatusById(Integer.parseInt(hivAidsStatusId)));
 		return hivAidsStatusDTO;
 	}
 
-	public static List<HivAidsStatusDTO> getHivAidsStatuses() {
+	public List<HivAidsStatusDTO> getHivAidsStatuses() {
 		List<HivAidsStatusDTO> hivAidsStatusDTOs = new ArrayList<HivAidsStatusDTO>();
 
 		// Collect the hivAidsStatuses
@@ -44,7 +50,7 @@ public class HivAidsStatusManager {
 
 	}
 
-	public static List<HivAidsStatusDTO> getHivAidsStatuses(Date updateDate) {
+	public List<HivAidsStatusDTO> getHivAidsStatuses(Date updateDate) {
 		List<HivAidsStatusDTO> hivAidsStatusDTOs = new ArrayList<HivAidsStatusDTO>();
 
 		// Collect the hivAidsStatuses
@@ -60,7 +66,7 @@ public class HivAidsStatusManager {
 
 	}
 
-	public static List<HivAidsStatusDTO> getHivAidsStatusesByEnrollmentId(String enrollmentId) {
+	public List<HivAidsStatusDTO> getHivAidsStatusesByEnrollmentId(String enrollmentId) {
 		List<HivAidsStatusDTO> hivAidsStatusDTOs = new ArrayList<HivAidsStatusDTO>();
 
 		// Collect the hivAidsStatuses
@@ -76,7 +82,7 @@ public class HivAidsStatusManager {
 
 	}
 
-	public static List<HivAidsStatusDTO> getHivAidsStatusesByEnrollmentId(String enrollmentId, Date updateDate) {
+	public List<HivAidsStatusDTO> getHivAidsStatusesByEnrollmentId(String enrollmentId, Date updateDate) {
 		List<HivAidsStatusDTO> hivAidsStatusDTOs = new ArrayList<HivAidsStatusDTO>();
 
 		// Collect the hivAidsStatuses
@@ -92,7 +98,7 @@ public class HivAidsStatusManager {
 
 	}
 	
-	public static HivAidsStatusDTO addHivAidsStatus(HivAidsStatusDTO inputDTO) {
+	public HivAidsStatusDTO addHivAidsStatus(HivAidsStatusDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpHivAidsStatus tmpHivAidsStatus = HivAidsStatusManager.generateTmpHivAidsStatus(inputDTO);
 		
@@ -108,7 +114,7 @@ public class HivAidsStatusManager {
 		return HivAidsStatusManager.generateHivAidsStatusDTO(tmpHivAidsStatus);
 	}
 	
-	public static HivAidsStatusDTO updateHivAidsStatus(HivAidsStatusDTO inputDTO) {
+	public HivAidsStatusDTO updateHivAidsStatus(HivAidsStatusDTO inputDTO) {
 		// Generate a HivAidsStatus from the input
 		TmpHivAidsStatus tmpHivAidsStatus = HivAidsStatusManager.generateTmpHivAidsStatus(inputDTO);
 		tmpHivAidsStatus.setHivAidsStatusId(Integer.parseInt(inputDTO.getHivAidsStatusId()));
@@ -122,7 +128,7 @@ public class HivAidsStatusManager {
 
 	}
 	
-	public static boolean deleteHivAidsStatus(String hivAidsStatusId) {
+	public boolean deleteHivAidsStatus(String hivAidsStatusId) {
 		TmpHivAidsStatus tmpHivAidsStatus = tmpHivAidsStatusDAO.getTmpHivAidsStatusById(Integer.parseInt(hivAidsStatusId));
 		tmpHivAidsStatusDAO.delete(tmpHivAidsStatus);
 		return true;

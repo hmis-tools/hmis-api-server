@@ -20,16 +20,22 @@ import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.HealthInsuranceDTO;
 
 public class HealthInsuranceManager {
-	private static final TmpHealthInsuranceDAO tmpHealthInsuranceDAO = new TmpHealthInsuranceDAO();
+	private TmpHealthInsuranceDAO tmpHealthInsuranceDAO;
 
-	public HealthInsuranceManager() {}
+	public HealthInsuranceManager() {
+		this.tmpHealthInsuranceDAO = new TmpHealthInsuranceDAO();
+	}
 
-	public static HealthInsuranceDTO getHealthInsuranceById(String healthInsuranceId) {
+	public HealthInsuranceManager(TmpHealthInsuranceDAO tmpHealthInsuranceDAO) {
+		this.tmpHealthInsuranceDAO = new TmpHealthInsuranceDAO();
+	}
+
+	public HealthInsuranceDTO getHealthInsuranceById(String healthInsuranceId) {
 		HealthInsuranceDTO healthInsuranceDTO = HealthInsuranceManager.generateHealthInsuranceDTO(tmpHealthInsuranceDAO.getTmpHealthInsuranceById(Integer.parseInt(healthInsuranceId)));
 		return healthInsuranceDTO;
 	}
 
-	public static List<HealthInsuranceDTO> getHealthInsurances() {
+	public List<HealthInsuranceDTO> getHealthInsurances() {
 		List<HealthInsuranceDTO> healthInsuranceDTOs = new ArrayList<HealthInsuranceDTO>();
 
 		// Collect the healthInsurances
@@ -45,7 +51,7 @@ public class HealthInsuranceManager {
 
 	}
 
-	public static List<HealthInsuranceDTO> getHealthInsurances(Date updateDate) {
+	public List<HealthInsuranceDTO> getHealthInsurances(Date updateDate) {
 		List<HealthInsuranceDTO> healthInsuranceDTOs = new ArrayList<HealthInsuranceDTO>();
 
 		// Collect the healthInsurances
@@ -61,7 +67,7 @@ public class HealthInsuranceManager {
 
 	}
 
-	public static List<HealthInsuranceDTO> getHealthInsurancesByEnrollmentId(String enrollmentId) {
+	public List<HealthInsuranceDTO> getHealthInsurancesByEnrollmentId(String enrollmentId) {
 		List<HealthInsuranceDTO> healthInsuranceDTOs = new ArrayList<HealthInsuranceDTO>();
 
 		// Collect the healthInsurances
@@ -77,7 +83,7 @@ public class HealthInsuranceManager {
 
 	}
 
-	public static List<HealthInsuranceDTO> getHealthInsurancesByEnrollmentId(String enrollmentId, Date updateDate) {
+	public List<HealthInsuranceDTO> getHealthInsurancesByEnrollmentId(String enrollmentId, Date updateDate) {
 		List<HealthInsuranceDTO> healthInsuranceDTOs = new ArrayList<HealthInsuranceDTO>();
 
 		// Collect the healthInsurances
@@ -93,7 +99,7 @@ public class HealthInsuranceManager {
 
 	}
 	
-	public static HealthInsuranceDTO addHealthInsurance(HealthInsuranceDTO inputDTO) {
+	public HealthInsuranceDTO addHealthInsurance(HealthInsuranceDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpHealthInsurance tmpHealthInsurance = HealthInsuranceManager.generateTmpHealthInsurance(inputDTO);
 		
@@ -109,7 +115,7 @@ public class HealthInsuranceManager {
 		return HealthInsuranceManager.generateHealthInsuranceDTO(tmpHealthInsurance);
 	}
 	
-	public static HealthInsuranceDTO updateHealthInsurance(HealthInsuranceDTO inputDTO) {
+	public HealthInsuranceDTO updateHealthInsurance(HealthInsuranceDTO inputDTO) {
 		// Generate a HealthInsurance from the input
 		TmpHealthInsurance tmpHealthInsurance = HealthInsuranceManager.generateTmpHealthInsurance(inputDTO);
 		tmpHealthInsurance.setHealthInsuranceId(Integer.parseInt(inputDTO.getHealthInsuranceId()));
@@ -123,7 +129,7 @@ public class HealthInsuranceManager {
 
 	}
 	
-	public static boolean deleteHealthInsurance(String healthInsuranceId) {
+	public boolean deleteHealthInsurance(String healthInsuranceId) {
 		TmpHealthInsurance tmpHealthInsurance = tmpHealthInsuranceDAO.getTmpHealthInsuranceById(Integer.parseInt(healthInsuranceId));
 		tmpHealthInsuranceDAO.delete(tmpHealthInsurance);
 		return true;

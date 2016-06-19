@@ -11,6 +11,7 @@ import org.openhmis.code.ProjectHouseholdType;
 import org.openhmis.code.ProjectYouthAgeGroup;
 import org.openhmis.code.YesNo;
 import org.openhmis.code.YesNoReason;
+import org.openhmis.dao.PathClientDAO;
 import org.openhmis.dao.TmpChronicHealthConditionDAO;
 import org.openhmis.domain.TmpProject;
 import org.openhmis.domain.TmpChronicHealthCondition;
@@ -19,16 +20,25 @@ import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.ChronicHealthConditionDTO;
 
 public class ChronicHealthConditionManager {
-	private static final TmpChronicHealthConditionDAO tmpChronicHealthConditionDAO = new TmpChronicHealthConditionDAO();
+	private TmpChronicHealthConditionDAO tmpChronicHealthConditionDAO;
 
-	public ChronicHealthConditionManager() {}
+	private PathClientDAO pathClientDAO;
 
-	public static ChronicHealthConditionDTO getChronicHealthConditionById(String chronicHealthConditionId) {
+	
+	public ChronicHealthConditionManager() {
+		this.tmpChronicHealthConditionDAO = new TmpChronicHealthConditionDAO();
+	}
+	
+	public ChronicHealthConditionManager (TmpChronicHealthConditionDAO tmpChronicHealthConditionDAO) {
+		this.tmpChronicHealthConditionDAO = tmpChronicHealthConditionDAO;
+	}
+
+	public ChronicHealthConditionDTO getChronicHealthConditionById(String chronicHealthConditionId) {
 		ChronicHealthConditionDTO chronicHealthConditionDTO = ChronicHealthConditionManager.generateChronicHealthConditionDTO(tmpChronicHealthConditionDAO.getTmpChronicHealthConditionById(Integer.parseInt(chronicHealthConditionId)));
 		return chronicHealthConditionDTO;
 	}
 
-	public static List<ChronicHealthConditionDTO> getChronicHealthConditions() {
+	public List<ChronicHealthConditionDTO> getChronicHealthConditions() {
 		List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = new ArrayList<ChronicHealthConditionDTO>();
 
 		// Collect the chronicHealthConditions
@@ -44,7 +54,7 @@ public class ChronicHealthConditionManager {
 
 	}
 
-	public static List<ChronicHealthConditionDTO> getChronicHealthConditions(Date updateDate) {
+	public List<ChronicHealthConditionDTO> getChronicHealthConditions(Date updateDate) {
 		List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = new ArrayList<ChronicHealthConditionDTO>();
 
 		// Collect the chronicHealthConditions
@@ -60,7 +70,7 @@ public class ChronicHealthConditionManager {
 
 	}
 
-	public static List<ChronicHealthConditionDTO> getChronicHealthConditionsByEnrollmentId(String enrollmentId) {
+	public List<ChronicHealthConditionDTO> getChronicHealthConditionsByEnrollmentId(String enrollmentId) {
 		List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = new ArrayList<ChronicHealthConditionDTO>();
 
 		// Collect the chronicHealthConditions
@@ -76,7 +86,7 @@ public class ChronicHealthConditionManager {
 
 	}
 
-	public static List<ChronicHealthConditionDTO> getChronicHealthConditionsByEnrollmentId(String enrollmentId, Date updateDate) {
+	public List<ChronicHealthConditionDTO> getChronicHealthConditionsByEnrollmentId(String enrollmentId, Date updateDate) {
 		List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = new ArrayList<ChronicHealthConditionDTO>();
 
 		// Collect the chronicHealthConditions
@@ -93,7 +103,7 @@ public class ChronicHealthConditionManager {
 	}
 
 	
-	public static ChronicHealthConditionDTO addChronicHealthCondition(ChronicHealthConditionDTO inputDTO) {
+	public ChronicHealthConditionDTO addChronicHealthCondition(ChronicHealthConditionDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpChronicHealthCondition tmpChronicHealthCondition = ChronicHealthConditionManager.generateTmpChronicHealthCondition(inputDTO);
 		
@@ -109,7 +119,7 @@ public class ChronicHealthConditionManager {
 		return ChronicHealthConditionManager.generateChronicHealthConditionDTO(tmpChronicHealthCondition);
 	}
 	
-	public static ChronicHealthConditionDTO updateChronicHealthCondition(ChronicHealthConditionDTO inputDTO) {
+	public ChronicHealthConditionDTO updateChronicHealthCondition(ChronicHealthConditionDTO inputDTO) {
 		// Generate a ChronicHealthCondition from the input
 		TmpChronicHealthCondition tmpChronicHealthCondition = ChronicHealthConditionManager.generateTmpChronicHealthCondition(inputDTO);
 		tmpChronicHealthCondition.setChronicHealthConditionId(Integer.parseInt(inputDTO.getChronicHealthConditionId()));
@@ -123,7 +133,7 @@ public class ChronicHealthConditionManager {
 
 	}
 	
-	public static boolean deleteChronicHealthCondition(String chronicHealthConditionId) {
+	public boolean deleteChronicHealthCondition(String chronicHealthConditionId) {
 		TmpChronicHealthCondition tmpChronicHealthCondition = tmpChronicHealthConditionDAO.getTmpChronicHealthConditionById(Integer.parseInt(chronicHealthConditionId));
 		tmpChronicHealthConditionDAO.delete(tmpChronicHealthCondition);
 		return true;

@@ -10,16 +10,21 @@ import org.openhmis.domain.TmpUser;
 import org.openhmis.dto.UserDTO;
 
 public class UserManager {
-	private static final TmpUserDAO tmpUserDAO = new TmpUserDAO();
+	private TmpUserDAO tmpUserDAO;
 
-	public UserManager() {}
+	public UserManager() {
+		this.tmpUserDAO = new TmpUserDAO();
+	}
+	public UserManager(TmpUserDAO tmpUserDAO ) {
+		this.tmpUserDAO = tmpUserDAO;
+	}
 
-	public static UserDTO getUserById(String userId) {
+	public UserDTO getUserById(String userId) {
 		UserDTO userDTO = UserManager.generateUserDTO(tmpUserDAO.getTmpUserById(Integer.parseInt(userId)));
 		return userDTO;
 	}
 
-	public static List<UserDTO> getUsers() {
+	public List<UserDTO> getUsers() {
 		List<UserDTO> userDTOs = new ArrayList<UserDTO>();
 
 		// Collect the users
@@ -34,7 +39,7 @@ public class UserManager {
 		return userDTOs;
 	}
 
-	public static UserDTO getUserByExternalId(String externalId) {
+	public UserDTO getUserByExternalId(String externalId) {
 		
 		// Collect the users
 		TmpUser tmpUser = tmpUserDAO.getTmpUserByExternalId(externalId);
@@ -44,7 +49,7 @@ public class UserManager {
 
 	}
 	
-	public static UserDTO addUser(UserDTO inputDTO) {
+	public UserDTO addUser(UserDTO inputDTO) {
 		// Generate a TmpUser from the input
 		TmpUser tmpUser = UserManager.generateTmpUser(inputDTO);
 		
@@ -60,7 +65,7 @@ public class UserManager {
 		return UserManager.generateUserDTO(tmpUser);
 	}
 	
-	public static UserDTO updateUser(UserDTO inputDTO) {
+	public UserDTO updateUser(UserDTO inputDTO) {
 		// Generate a user from the input
 		TmpUser tmpUser = UserManager.generateTmpUser(inputDTO);
 		tmpUser.setUserId(Integer.parseInt(inputDTO.getUserId()));
@@ -74,7 +79,7 @@ public class UserManager {
 
 	}
 	
-	public static boolean deleteUser(String userId) {
+	public boolean deleteUser(String userId) {
 		TmpUser tmpUser = tmpUserDAO.getTmpUserById(Integer.parseInt(userId));
 		tmpUserDAO.delete(tmpUser);
 		return true;

@@ -18,16 +18,22 @@ import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.OrganizationDTO;
 
 public class OrganizationManager {
-	private static final TmpOrganizationDAO tmpOrganizationDAO = new TmpOrganizationDAO();
+	private TmpOrganizationDAO tmpOrganizationDAO;
 
-	public OrganizationManager() {}
+	public OrganizationManager() {
+		this.tmpOrganizationDAO = new TmpOrganizationDAO();
+	}
 
-	public static OrganizationDTO getOrganizationByOrganizationId(String organizationId) {
+	public OrganizationManager(TmpOrganizationDAO tmpOrganizationDAO) {
+		this.tmpOrganizationDAO = tmpOrganizationDAO;
+	}
+
+	public OrganizationDTO getOrganizationByOrganizationId(String organizationId) {
 		OrganizationDTO organizationDTO = OrganizationManager.generateOrganizationDTO(tmpOrganizationDAO.getTmpOrganizationById(Integer.parseInt(organizationId)));
 		return organizationDTO;
 	}
 
-	public static List<OrganizationDTO> getOrganizations() {
+	public List<OrganizationDTO> getOrganizations() {
 		List<OrganizationDTO> organizationDTOs = new ArrayList<OrganizationDTO>();
 
 		// Collect the organizations
@@ -43,7 +49,7 @@ public class OrganizationManager {
 
 	}
 
-	public static List<OrganizationDTO> getOrganizationsByUpdateDate(Date updateDate) {
+	public List<OrganizationDTO> getOrganizationsByUpdateDate(Date updateDate) {
 		List<OrganizationDTO> organizationDTOs = new ArrayList<OrganizationDTO>();
 
 		// Collect the organizations
@@ -59,7 +65,7 @@ public class OrganizationManager {
 
 	}
 	
-	public static OrganizationDTO addOrganization(OrganizationDTO inputDTO) {
+	public OrganizationDTO addOrganization(OrganizationDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpOrganization tmpOrganization = OrganizationManager.generateTmpOrganization(inputDTO);
 		
@@ -75,7 +81,7 @@ public class OrganizationManager {
 		return OrganizationManager.generateOrganizationDTO(tmpOrganization);
 	}
 	
-	public static OrganizationDTO updateOrganization(OrganizationDTO inputDTO) {
+	public OrganizationDTO updateOrganization(OrganizationDTO inputDTO) {
 		// Generate a TmpProject from the input
 		TmpOrganization tmpOrganization = OrganizationManager.generateTmpOrganization(inputDTO);
 		tmpOrganization.setOrganizationId(Integer.parseInt(inputDTO.getOrganizationId()));
@@ -89,7 +95,7 @@ public class OrganizationManager {
 
 	}
 	
-	public static boolean deleteOrganization(String organizationId) {
+	public boolean deleteOrganization(String organizationId) {
 		TmpOrganization tmpOrganization = tmpOrganizationDAO.getTmpOrganizationById(Integer.parseInt(organizationId));
 		tmpOrganizationDAO.delete(tmpOrganization);
 		

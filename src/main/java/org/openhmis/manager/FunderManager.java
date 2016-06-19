@@ -13,18 +13,23 @@ import org.openhmis.dto.FunderDTO;
 import org.openhmis.exception.InvalidParameterException;
 
 public class FunderManager {
-	private static final TmpProjectFunderDAO tmpProjectFunderDAO = new TmpProjectFunderDAO();
+	private TmpProjectFunderDAO tmpProjectFunderDAO;
 
-	public FunderManager() {}
+	public FunderManager() {
+		this.tmpProjectFunderDAO = new TmpProjectFunderDAO();
+	}
+	public FunderManager(TmpProjectFunderDAO tmpProjectFunderDAO) {
+		this.tmpProjectFunderDAO = tmpProjectFunderDAO;
+	}
 
-	public static FunderDTO getFunderById(String projectFunderId) {
+	public FunderDTO getFunderById(String projectFunderId) {
 		Integer projectFunderIdInt = Integer.parseInt(projectFunderId);
 		TmpProjectFunder tmpProjectFunder= tmpProjectFunderDAO.getTmpProjectFunderById(projectFunderIdInt);		
 		FunderDTO FunderDTO = FunderManager.generateFunderDTO(tmpProjectFunder);
 		return FunderDTO;
 	}
 
-	public static List<FunderDTO> getFunders() {
+	public List<FunderDTO> getFunders() {
 		List<FunderDTO> funderDTOs = new ArrayList<FunderDTO>();
 
 		// Collect the projects
@@ -42,7 +47,7 @@ public class FunderManager {
 
 	}
 
-	public static List<FunderDTO> getFunders(Date updateDate) {
+	public List<FunderDTO> getFunders(Date updateDate) {
 		List<FunderDTO> funderDTOs = new ArrayList<FunderDTO>();
 
 		// Collect the projects
@@ -60,7 +65,7 @@ public class FunderManager {
 
 	}
 
-	public static List<FunderDTO> getFundersByProjectId(String projectId) {
+	public List<FunderDTO> getFundersByProjectId(String projectId) {
 		List<FunderDTO> funderDTOs = new ArrayList<FunderDTO>();
 
 		// Collect the projects
@@ -78,7 +83,7 @@ public class FunderManager {
 
 	}
 
-	public static List<FunderDTO> getFundersByProjectId(String projectId, Date updateDate) {
+	public List<FunderDTO> getFundersByProjectId(String projectId, Date updateDate) {
 		List<FunderDTO> funderDTOs = new ArrayList<FunderDTO>();
 
 		// Collect the projects
@@ -96,7 +101,7 @@ public class FunderManager {
 
 	}
 	
-	public static FunderDTO addFunder(FunderDTO inputDTO) {
+	public FunderDTO addFunder(FunderDTO inputDTO) {
 
 		// Make sure the fields are valid
 		validateFunder(inputDTO);
@@ -116,7 +121,7 @@ public class FunderManager {
 		return FunderManager.generateFunderDTO(tmpProjectFunder);
 	}
 	
-	public static FunderDTO updateFunder(FunderDTO inputDTO) {
+	public FunderDTO updateFunder(FunderDTO inputDTO) {
 		// Generate a TmpProject from the input
 		TmpProjectFunder tmpProjectFunder = FunderManager.generateTmpProjectFunder(inputDTO);
 		
@@ -134,7 +139,7 @@ public class FunderManager {
 		
 	}
 	
-	public static boolean deleteFunder(String projectFunderId) {
+	public boolean deleteFunder(String projectFunderId) {
 		TmpProjectFunder tmpProjectFunder = tmpProjectFunderDAO.getTmpProjectFunderById(Integer.parseInt(projectFunderId));
 		tmpProjectFunderDAO.delete(tmpProjectFunder);
 		

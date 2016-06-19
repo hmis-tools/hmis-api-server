@@ -19,16 +19,22 @@ import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.PhysicalDisabilityDTO;
 
 public class PhysicalDisabilityManager {
-	private static final TmpPhysicalDisabilityDAO tmpPhysicalDisabilityDAO = new TmpPhysicalDisabilityDAO();
+	private TmpPhysicalDisabilityDAO tmpPhysicalDisabilityDAO;
 
-	public PhysicalDisabilityManager() {}
+	public PhysicalDisabilityManager() {
+		this.tmpPhysicalDisabilityDAO = new TmpPhysicalDisabilityDAO();
+	}
 
-	public static PhysicalDisabilityDTO getPhysicalDisabilityById(String physicalDisabilityId) {
+	public PhysicalDisabilityManager(TmpPhysicalDisabilityDAO tmpPhysicalDisabilityDAO) {
+		this.tmpPhysicalDisabilityDAO = tmpPhysicalDisabilityDAO;
+	}
+
+	public PhysicalDisabilityDTO getPhysicalDisabilityById(String physicalDisabilityId) {
 		PhysicalDisabilityDTO physicalDisabilityDTO = PhysicalDisabilityManager.generatePhysicalDisabilityDTO(tmpPhysicalDisabilityDAO.getTmpPhysicalDisabilityById(Integer.parseInt(physicalDisabilityId)));
 		return physicalDisabilityDTO;
 	}
 
-	public static List<PhysicalDisabilityDTO> getPhysicalDisabilities() {
+	public List<PhysicalDisabilityDTO> getPhysicalDisabilities() {
 		List<PhysicalDisabilityDTO> physicalDisabilityDTOs = new ArrayList<PhysicalDisabilityDTO>();
 
 		// Collect the physicalDisabilities
@@ -44,7 +50,7 @@ public class PhysicalDisabilityManager {
 
 	}
 
-	public static List<PhysicalDisabilityDTO> getPhysicalDisabilities(Date updateDate) {
+	public List<PhysicalDisabilityDTO> getPhysicalDisabilities(Date updateDate) {
 		List<PhysicalDisabilityDTO> physicalDisabilityDTOs = new ArrayList<PhysicalDisabilityDTO>();
 
 		// Collect the physicalDisabilities
@@ -60,7 +66,7 @@ public class PhysicalDisabilityManager {
 
 	}
 
-	public static List<PhysicalDisabilityDTO> getPhysicalDisabilitiesByEnrollmentId(String enrollmentId) {
+	public List<PhysicalDisabilityDTO> getPhysicalDisabilitiesByEnrollmentId(String enrollmentId) {
 		List<PhysicalDisabilityDTO> physicalDisabilityDTOs = new ArrayList<PhysicalDisabilityDTO>();
 
 		// Collect the physicalDisabilities
@@ -76,7 +82,7 @@ public class PhysicalDisabilityManager {
 
 	}
 
-	public static List<PhysicalDisabilityDTO> getPhysicalDisabilitiesByEnrollmentId(String enrollmentId, Date updateDate) {
+	public List<PhysicalDisabilityDTO> getPhysicalDisabilitiesByEnrollmentId(String enrollmentId, Date updateDate) {
 		List<PhysicalDisabilityDTO> physicalDisabilityDTOs = new ArrayList<PhysicalDisabilityDTO>();
 
 		// Collect the physicalDisabilities
@@ -92,7 +98,7 @@ public class PhysicalDisabilityManager {
 
 	}
 	
-	public static PhysicalDisabilityDTO addPhysicalDisability(PhysicalDisabilityDTO inputDTO) {
+	public PhysicalDisabilityDTO addPhysicalDisability(PhysicalDisabilityDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpPhysicalDisability tmpPhysicalDisability = PhysicalDisabilityManager.generateTmpPhysicalDisability(inputDTO);
 		
@@ -108,7 +114,7 @@ public class PhysicalDisabilityManager {
 		return PhysicalDisabilityManager.generatePhysicalDisabilityDTO(tmpPhysicalDisability);
 	}
 	
-	public static PhysicalDisabilityDTO updatePhysicalDisability(PhysicalDisabilityDTO inputDTO) {
+	public PhysicalDisabilityDTO updatePhysicalDisability(PhysicalDisabilityDTO inputDTO) {
 		// Generate a PhysicalDisability from the input
 		TmpPhysicalDisability tmpPhysicalDisability = PhysicalDisabilityManager.generateTmpPhysicalDisability(inputDTO);
 		tmpPhysicalDisability.setPhysicalDisabilityId(Integer.parseInt(inputDTO.getPhysicalDisabilityId()));
@@ -122,7 +128,7 @@ public class PhysicalDisabilityManager {
 
 	}
 	
-	public static boolean deletePhysicalDisability(String physicalDisabilityId) {
+	public boolean deletePhysicalDisability(String physicalDisabilityId) {
 		TmpPhysicalDisability tmpPhysicalDisability = tmpPhysicalDisabilityDAO.getTmpPhysicalDisabilityById(Integer.parseInt(physicalDisabilityId));
 		tmpPhysicalDisabilityDAO.delete(tmpPhysicalDisability);
 		return true;

@@ -18,16 +18,22 @@ import org.openhmis.dto.InventoryDTO;
 import org.openhmis.exception.InvalidParameterException;
 
 public class InventoryManager {
-	private static final TmpProjectInventoryDAO tmpProjectInventoryDAO = new TmpProjectInventoryDAO();
+	private TmpProjectInventoryDAO tmpProjectInventoryDAO;
 
-	public InventoryManager() {}
+	public InventoryManager() {
+		this.tmpProjectInventoryDAO = new TmpProjectInventoryDAO();
+	}
 
-	public static InventoryDTO getInventoryById(String inventoryId) {
+	public InventoryManager(TmpProjectInventoryDAO tmpProjectInventoryDAO) {
+		this.tmpProjectInventoryDAO = tmpProjectInventoryDAO;
+	}
+
+	public InventoryDTO getInventoryById(String inventoryId) {
 		InventoryDTO inventoryDTO = InventoryManager.generateInventoryDTO(tmpProjectInventoryDAO.getTmpProjectInventoryById(Integer.parseInt(inventoryId)));
 		return inventoryDTO;
 	}
 
-	public static List<InventoryDTO> getInventories() {
+	public List<InventoryDTO> getInventories() {
 		List<InventoryDTO> inventoryDTOs = new ArrayList<InventoryDTO>();
 
 		// Collect the inventories
@@ -43,7 +49,7 @@ public class InventoryManager {
 
 	}
 
-	public static List<InventoryDTO> getInventories(Date updateDate) {
+	public List<InventoryDTO> getInventories(Date updateDate) {
 		List<InventoryDTO> inventoryDTOs = new ArrayList<InventoryDTO>();
 
 		// Collect the inventories
@@ -59,7 +65,7 @@ public class InventoryManager {
 
 	}
 
-	public static List<InventoryDTO> getInventoriesByProjectCoCId(String projectCoCId) {
+	public List<InventoryDTO> getInventoriesByProjectCoCId(String projectCoCId) {
 		List<InventoryDTO> inventoryDTOs = new ArrayList<InventoryDTO>();
 
 		// Collect the inventories
@@ -75,7 +81,7 @@ public class InventoryManager {
 
 	}
 
-	public static List<InventoryDTO> getInventoriesByProjectCoCId(String projectCoCId, Date updateDate) {
+	public List<InventoryDTO> getInventoriesByProjectCoCId(String projectCoCId, Date updateDate) {
 		List<InventoryDTO> inventoryDTOs = new ArrayList<InventoryDTO>();
 
 		// Collect the inventories
@@ -91,7 +97,7 @@ public class InventoryManager {
 
 	}
 	
-	public static InventoryDTO addInventory(InventoryDTO inputDTO) {
+	public InventoryDTO addInventory(InventoryDTO inputDTO) {
 		
 		// Check the fields
 		validateInventory(inputDTO);
@@ -111,7 +117,7 @@ public class InventoryManager {
 		return InventoryManager.generateInventoryDTO(tmpProjectInventory);
 	}
 	
-	public static InventoryDTO updateInventory(InventoryDTO inputDTO) {
+	public InventoryDTO updateInventory(InventoryDTO inputDTO) {
 		
 		// Check the fields
 		validateInventory(inputDTO);
@@ -129,7 +135,7 @@ public class InventoryManager {
 
 	}
 	
-	public static boolean deleteInventory(String inventoryId) {
+	public boolean deleteInventory(String inventoryId) {
 		TmpProjectInventory tmpProjectInventory = tmpProjectInventoryDAO.getTmpProjectInventoryById(Integer.parseInt(inventoryId));
 		tmpProjectInventoryDAO.delete(tmpProjectInventory);
 		

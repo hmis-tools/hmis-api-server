@@ -21,16 +21,22 @@ import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.MentalHealthProblemDTO;
 
 public class MentalHealthProblemManager {
-	private static final TmpMentalHealthProblemDAO tmpMentalHealthProblemDAO = new TmpMentalHealthProblemDAO();
+	private TmpMentalHealthProblemDAO tmpMentalHealthProblemDAO;
 
-	public MentalHealthProblemManager() {}
+	public MentalHealthProblemManager() {
+		this.tmpMentalHealthProblemDAO = new TmpMentalHealthProblemDAO();
+	}
 
-	public static MentalHealthProblemDTO getMentalHealthProblemById(String mentalHealthProblemId) {
+	public MentalHealthProblemManager(TmpMentalHealthProblemDAO tmpMentalHealthProblemDAO) {
+		this.tmpMentalHealthProblemDAO = tmpMentalHealthProblemDAO;
+	}
+
+	public MentalHealthProblemDTO getMentalHealthProblemById(String mentalHealthProblemId) {
 		MentalHealthProblemDTO mentalHealthProblemDTO = MentalHealthProblemManager.generateMentalHealthProblemDTO(tmpMentalHealthProblemDAO.getTmpMentalHealthProblemById(Integer.parseInt(mentalHealthProblemId)));
 		return mentalHealthProblemDTO;
 	}
 
-	public static List<MentalHealthProblemDTO> getMentalHealthProblemsByEnrollmentId(String enrollmentId) {
+	public List<MentalHealthProblemDTO> getMentalHealthProblemsByEnrollmentId(String enrollmentId) {
 		List<MentalHealthProblemDTO> mentalHealthProblemDTOs = new ArrayList<MentalHealthProblemDTO>();
 
 		// Collect the mentalHealthProblems
@@ -46,7 +52,7 @@ public class MentalHealthProblemManager {
 
 	}
 
-	public static List<MentalHealthProblemDTO> getMentalHealthProblemsByEnrollmentId(String enrollmentId, Date updateDate) {
+	public List<MentalHealthProblemDTO> getMentalHealthProblemsByEnrollmentId(String enrollmentId, Date updateDate) {
 		List<MentalHealthProblemDTO> mentalHealthProblemDTOs = new ArrayList<MentalHealthProblemDTO>();
 
 		// Collect the mentalHealthProblems
@@ -62,7 +68,7 @@ public class MentalHealthProblemManager {
 
 	}
 	
-	public static MentalHealthProblemDTO addMentalHealthProblem(MentalHealthProblemDTO inputDTO) {
+	public MentalHealthProblemDTO addMentalHealthProblem(MentalHealthProblemDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpMentalHealthProblem tmpMentalHealthProblem = MentalHealthProblemManager.generateTmpMentalHealthProblem(inputDTO);
 		
@@ -78,7 +84,7 @@ public class MentalHealthProblemManager {
 		return MentalHealthProblemManager.generateMentalHealthProblemDTO(tmpMentalHealthProblem);
 	}
 	
-	public static MentalHealthProblemDTO updateMentalHealthProblem(MentalHealthProblemDTO inputDTO) {
+	public MentalHealthProblemDTO updateMentalHealthProblem(MentalHealthProblemDTO inputDTO) {
 		// Generate a MentalHealthProblem from the input
 		TmpMentalHealthProblem tmpMentalHealthProblem = MentalHealthProblemManager.generateTmpMentalHealthProblem(inputDTO);
 		tmpMentalHealthProblem.setMentalHealthProblemId(Integer.parseInt(inputDTO.getMentalHealthProblemId()));
@@ -92,7 +98,7 @@ public class MentalHealthProblemManager {
 
 	}
 	
-	public static boolean deleteMentalHealthProblem(String mentalHealthProblemId) {
+	public boolean deleteMentalHealthProblem(String mentalHealthProblemId) {
 		TmpMentalHealthProblem tmpMentalHealthProblem = tmpMentalHealthProblemDAO.getTmpMentalHealthProblemById(Integer.parseInt(mentalHealthProblemId));
 		tmpMentalHealthProblemDAO.delete(tmpMentalHealthProblem);
 		return true;

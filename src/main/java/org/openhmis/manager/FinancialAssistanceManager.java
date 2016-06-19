@@ -19,16 +19,22 @@ import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.FinancialAssistanceDTO;
 
 public class FinancialAssistanceManager {
-	private static final TmpFinancialAssistanceDAO tmpFinancialAssistanceDAO = new TmpFinancialAssistanceDAO();
+	private TmpFinancialAssistanceDAO tmpFinancialAssistanceDAO;
 
-	public FinancialAssistanceManager() {}
+	public FinancialAssistanceManager() {
+		this.tmpFinancialAssistanceDAO = new TmpFinancialAssistanceDAO();
+	}
+	
+	public FinancialAssistanceManager(TmpFinancialAssistanceDAO tmpFinancialAssistanceDAO) {
+		this.tmpFinancialAssistanceDAO = tmpFinancialAssistanceDAO;
+	}
 
-	public static FinancialAssistanceDTO getFinancialAssistanceById(String financialAssistanceId) {
+	public FinancialAssistanceDTO getFinancialAssistanceById(String financialAssistanceId) {
 		FinancialAssistanceDTO financialAssistanceDTO = FinancialAssistanceManager.generateFinancialAssistanceDTO(tmpFinancialAssistanceDAO.getTmpFinancialAssistanceById(Integer.parseInt(financialAssistanceId)));
 		return financialAssistanceDTO;
 	}
 
-	public static List<FinancialAssistanceDTO> getFinancialAssistances() {
+	public List<FinancialAssistanceDTO> getFinancialAssistances() {
 		List<FinancialAssistanceDTO> financialAssistanceDTOs = new ArrayList<FinancialAssistanceDTO>();
 
 		// Collect the financialAssistances
@@ -44,7 +50,7 @@ public class FinancialAssistanceManager {
 
 	}
 
-	public static List<FinancialAssistanceDTO> getFinancialAssistances(Date updateDate) {
+	public List<FinancialAssistanceDTO> getFinancialAssistances(Date updateDate) {
 		List<FinancialAssistanceDTO> financialAssistanceDTOs = new ArrayList<FinancialAssistanceDTO>();
 
 		// Collect the financialAssistances
@@ -60,7 +66,7 @@ public class FinancialAssistanceManager {
 
 	}
 
-	public static List<FinancialAssistanceDTO> getFinancialAssistancesByEnrollmentId(String enrollmentId) {
+	public List<FinancialAssistanceDTO> getFinancialAssistancesByEnrollmentId(String enrollmentId) {
 		List<FinancialAssistanceDTO> financialAssistanceDTOs = new ArrayList<FinancialAssistanceDTO>();
 
 		// Collect the financialAssistances
@@ -76,7 +82,7 @@ public class FinancialAssistanceManager {
 
 	}
 
-	public static List<FinancialAssistanceDTO> getFinancialAssistancesByEnrollmentId(String enrollmentId, Date updateDate) {
+	public List<FinancialAssistanceDTO> getFinancialAssistancesByEnrollmentId(String enrollmentId, Date updateDate) {
 		List<FinancialAssistanceDTO> financialAssistanceDTOs = new ArrayList<FinancialAssistanceDTO>();
 
 		// Collect the financialAssistances
@@ -92,7 +98,7 @@ public class FinancialAssistanceManager {
 
 	}
 	
-	public static FinancialAssistanceDTO addFinancialAssistance(FinancialAssistanceDTO inputDTO) {
+	public FinancialAssistanceDTO addFinancialAssistance(FinancialAssistanceDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpFinancialAssistance tmpFinancialAssistance = FinancialAssistanceManager.generateTmpFinancialAssistance(inputDTO);
 		
@@ -108,7 +114,7 @@ public class FinancialAssistanceManager {
 		return FinancialAssistanceManager.generateFinancialAssistanceDTO(tmpFinancialAssistance);
 	}
 	
-	public static FinancialAssistanceDTO updateFinancialAssistance(FinancialAssistanceDTO inputDTO) {
+	public FinancialAssistanceDTO updateFinancialAssistance(FinancialAssistanceDTO inputDTO) {
 		// Generate a FinancialAssistance from the input
 		TmpFinancialAssistance tmpFinancialAssistance = FinancialAssistanceManager.generateTmpFinancialAssistance(inputDTO);
 		tmpFinancialAssistance.setFinancialAssistanceId(Integer.parseInt(inputDTO.getFinancialAssistanceId()));
@@ -122,7 +128,7 @@ public class FinancialAssistanceManager {
 
 	}
 	
-	public static boolean deleteFinancialAssistance(String financialAssistanceId) {
+	public boolean deleteFinancialAssistance(String financialAssistanceId) {
 		TmpFinancialAssistance tmpFinancialAssistance = tmpFinancialAssistanceDAO.getTmpFinancialAssistanceById(Integer.parseInt(financialAssistanceId));
 		tmpFinancialAssistanceDAO.delete(tmpFinancialAssistance);
 		return true;

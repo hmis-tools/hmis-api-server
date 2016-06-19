@@ -19,16 +19,22 @@ import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.IncomeSourceDTO;
 
 public class IncomeSourceManager {
-	private static final TmpIncomeSourceDAO tmpIncomeSourceDAO = new TmpIncomeSourceDAO();
+	private TmpIncomeSourceDAO tmpIncomeSourceDAO;
 
-	public IncomeSourceManager() {}
+	public IncomeSourceManager() {
+		this.tmpIncomeSourceDAO = new TmpIncomeSourceDAO();
+	}
+	
+	public IncomeSourceManager(TmpIncomeSourceDAO tmpIncomeSourceDAO) {
+		this.tmpIncomeSourceDAO = new TmpIncomeSourceDAO();
+	}
 
-	public static IncomeSourceDTO getIncomeSourceById(String incomeSourceId) {
+	public IncomeSourceDTO getIncomeSourceById(String incomeSourceId) {
 		IncomeSourceDTO incomeSourceDTO = IncomeSourceManager.generateIncomeSourceDTO(tmpIncomeSourceDAO.getTmpIncomeSourceById(Integer.parseInt(incomeSourceId)));
 		return incomeSourceDTO;
 	}
 
-	public static List<IncomeSourceDTO> getIncomeSources() {
+	public List<IncomeSourceDTO> getIncomeSources() {
 		List<IncomeSourceDTO> incomeSourceDTOs = new ArrayList<IncomeSourceDTO>();
 
 		// Collect the incomeSources
@@ -44,7 +50,7 @@ public class IncomeSourceManager {
 
 	}
 
-	public static List<IncomeSourceDTO> getIncomeSources(Date updateDate) {
+	public List<IncomeSourceDTO> getIncomeSources(Date updateDate) {
 		List<IncomeSourceDTO> incomeSourceDTOs = new ArrayList<IncomeSourceDTO>();
 
 		// Collect the incomeSources
@@ -60,7 +66,7 @@ public class IncomeSourceManager {
 
 	}
 
-	public static List<IncomeSourceDTO> getIncomeSourcesByEnrollmentId(String enrollmentId) {
+	public List<IncomeSourceDTO> getIncomeSourcesByEnrollmentId(String enrollmentId) {
 		List<IncomeSourceDTO> incomeSourceDTOs = new ArrayList<IncomeSourceDTO>();
 
 		// Collect the incomeSources
@@ -76,7 +82,7 @@ public class IncomeSourceManager {
 
 	}
 
-	public static List<IncomeSourceDTO> getIncomeSourcesByEnrollmentId(String enrollmentId, Date updateDate) {
+	public List<IncomeSourceDTO> getIncomeSourcesByEnrollmentId(String enrollmentId, Date updateDate) {
 		List<IncomeSourceDTO> incomeSourceDTOs = new ArrayList<IncomeSourceDTO>();
 
 		// Collect the incomeSources
@@ -92,7 +98,7 @@ public class IncomeSourceManager {
 
 	}
 	
-	public static IncomeSourceDTO addIncomeSource(IncomeSourceDTO inputDTO) {
+	public IncomeSourceDTO addIncomeSource(IncomeSourceDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpIncomeSource tmpIncomeSource = IncomeSourceManager.generateTmpIncomeSource(inputDTO);
 		
@@ -108,7 +114,7 @@ public class IncomeSourceManager {
 		return IncomeSourceManager.generateIncomeSourceDTO(tmpIncomeSource);
 	}
 	
-	public static IncomeSourceDTO updateIncomeSource(IncomeSourceDTO inputDTO) {
+	public IncomeSourceDTO updateIncomeSource(IncomeSourceDTO inputDTO) {
 		// Generate a IncomeSource from the input
 		TmpIncomeSource tmpIncomeSource = IncomeSourceManager.generateTmpIncomeSource(inputDTO);
 		tmpIncomeSource.setIncomeSourceId(Integer.parseInt(inputDTO.getIncomeSourceId()));
@@ -122,7 +128,7 @@ public class IncomeSourceManager {
 
 	}
 	
-	public static boolean deleteIncomeSource(String incomeSourceId) {
+	public boolean deleteIncomeSource(String incomeSourceId) {
 		TmpIncomeSource tmpIncomeSource = tmpIncomeSourceDAO.getTmpIncomeSourceById(Integer.parseInt(incomeSourceId));
 		tmpIncomeSourceDAO.delete(tmpIncomeSource);
 		return true;

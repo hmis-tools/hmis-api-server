@@ -20,16 +20,22 @@ import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.ReferralDTO;
 
 public class ReferralManager {
-	private static final TmpReferralDAO tmpReferralDAO = new TmpReferralDAO();
+	private TmpReferralDAO tmpReferralDAO;
 
-	public ReferralManager() {}
+	public ReferralManager() {
+		this.tmpReferralDAO = new TmpReferralDAO();
+	}
 
-	public static ReferralDTO getReferralById(String referralId) {
+	public ReferralManager(TmpReferralDAO tmpReferralDAO) {
+		this.tmpReferralDAO = tmpReferralDAO;
+	}
+
+	public ReferralDTO getReferralById(String referralId) {
 		ReferralDTO referralDTO = ReferralManager.generateReferralDTO(tmpReferralDAO.getTmpReferralById(Integer.parseInt(referralId)));
 		return referralDTO;
 	}
 
-	public static List<ReferralDTO> getReferrals() {
+	public List<ReferralDTO> getReferrals() {
 		List<ReferralDTO> referralDTOs = new ArrayList<ReferralDTO>();
 
 		// Collect the referrals
@@ -45,7 +51,7 @@ public class ReferralManager {
 
 	}
 
-	public static List<ReferralDTO> getReferrals(Date updateDate) {
+	public List<ReferralDTO> getReferrals(Date updateDate) {
 		List<ReferralDTO> referralDTOs = new ArrayList<ReferralDTO>();
 
 		// Collect the referrals
@@ -61,7 +67,7 @@ public class ReferralManager {
 
 	}
 
-	public static List<ReferralDTO> getReferralsByEnrollmentId(String enrollmentId) {
+	public List<ReferralDTO> getReferralsByEnrollmentId(String enrollmentId) {
 		List<ReferralDTO> referralDTOs = new ArrayList<ReferralDTO>();
 
 		// Collect the referrals
@@ -77,7 +83,7 @@ public class ReferralManager {
 
 	}
 
-	public static List<ReferralDTO> getReferralsByEnrollmentId(String enrollmentId, Date updateDate) {
+	public List<ReferralDTO> getReferralsByEnrollmentId(String enrollmentId, Date updateDate) {
 		List<ReferralDTO> referralDTOs = new ArrayList<ReferralDTO>();
 
 		// Collect the referrals
@@ -93,7 +99,7 @@ public class ReferralManager {
 
 	}
 	
-	public static ReferralDTO addReferral(ReferralDTO inputDTO) {
+	public ReferralDTO addReferral(ReferralDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpReferral tmpReferral = ReferralManager.generateTmpReferral(inputDTO);
 		
@@ -109,7 +115,7 @@ public class ReferralManager {
 		return ReferralManager.generateReferralDTO(tmpReferral);
 	}
 	
-	public static ReferralDTO updateReferral(ReferralDTO inputDTO) {
+	public ReferralDTO updateReferral(ReferralDTO inputDTO) {
 		// Generate a Referral from the input
 		TmpReferral tmpReferral = ReferralManager.generateTmpReferral(inputDTO);
 		tmpReferral.setReferralId(Integer.parseInt(inputDTO.getReferralId()));
@@ -123,7 +129,7 @@ public class ReferralManager {
 
 	}
 	
-	public static boolean deleteReferral(String referralId) {
+	public boolean deleteReferral(String referralId) {
 		TmpReferral tmpReferral = tmpReferralDAO.getTmpReferralById(Integer.parseInt(referralId));
 		tmpReferralDAO.delete(tmpReferral);
 		return true;

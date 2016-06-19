@@ -21,16 +21,22 @@ import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.SubstanceAbuseDTO;
 
 public class SubstanceAbuseManager {
-	private static final TmpSubstanceAbuseDAO tmpSubstanceAbuseDAO = new TmpSubstanceAbuseDAO();
+	private TmpSubstanceAbuseDAO tmpSubstanceAbuseDAO = new TmpSubstanceAbuseDAO();
 
-	public SubstanceAbuseManager() {}
+	public SubstanceAbuseManager() {
+		this.tmpSubstanceAbuseDAO = new TmpSubstanceAbuseDAO();
+	}
 
-	public static SubstanceAbuseDTO getSubstanceAbuseById(String substanceAbuseId) {
+	public SubstanceAbuseManager(TmpSubstanceAbuseDAO tmpSubstanceAbuseDAO) {
+		this.tmpSubstanceAbuseDAO = tmpSubstanceAbuseDAO;
+	}
+
+	public SubstanceAbuseDTO getSubstanceAbuseById(String substanceAbuseId) {
 		SubstanceAbuseDTO substanceAbuseDTO = SubstanceAbuseManager.generateSubstanceAbuseDTO(tmpSubstanceAbuseDAO.getTmpSubstanceAbuseById(Integer.parseInt(substanceAbuseId)));
 		return substanceAbuseDTO;
 	}
 
-	public static List<SubstanceAbuseDTO> getSubstanceAbuses() {
+	public List<SubstanceAbuseDTO> getSubstanceAbuses() {
 		List<SubstanceAbuseDTO> substanceAbuseDTOs = new ArrayList<SubstanceAbuseDTO>();
 
 		// Collect the substanceAbuses
@@ -46,7 +52,7 @@ public class SubstanceAbuseManager {
 
 	}
 
-	public static List<SubstanceAbuseDTO> getSubstanceAbuses(Date updateDate) {
+	public List<SubstanceAbuseDTO> getSubstanceAbuses(Date updateDate) {
 		List<SubstanceAbuseDTO> substanceAbuseDTOs = new ArrayList<SubstanceAbuseDTO>();
 
 		// Collect the substanceAbuses
@@ -62,7 +68,7 @@ public class SubstanceAbuseManager {
 
 	}
 
-	public static List<SubstanceAbuseDTO> getSubstanceAbusesByEnrollmentId(String enrollmentId) {
+	public List<SubstanceAbuseDTO> getSubstanceAbusesByEnrollmentId(String enrollmentId) {
 		List<SubstanceAbuseDTO> substanceAbuseDTOs = new ArrayList<SubstanceAbuseDTO>();
 
 		// Collect the substanceAbuses
@@ -78,7 +84,7 @@ public class SubstanceAbuseManager {
 
 	}
 
-	public static List<SubstanceAbuseDTO> getSubstanceAbusesByEnrollmentId(String enrollmentId, Date updateDate) {
+	public List<SubstanceAbuseDTO> getSubstanceAbusesByEnrollmentId(String enrollmentId, Date updateDate) {
 		List<SubstanceAbuseDTO> substanceAbuseDTOs = new ArrayList<SubstanceAbuseDTO>();
 
 		// Collect the substanceAbuses
@@ -94,7 +100,7 @@ public class SubstanceAbuseManager {
 
 	}
 	
-	public static SubstanceAbuseDTO addSubstanceAbuse(SubstanceAbuseDTO inputDTO) {
+	public SubstanceAbuseDTO addSubstanceAbuse(SubstanceAbuseDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpSubstanceAbuse tmpSubstanceAbuse = SubstanceAbuseManager.generateTmpSubstanceAbuse(inputDTO);
 		
@@ -110,7 +116,7 @@ public class SubstanceAbuseManager {
 		return SubstanceAbuseManager.generateSubstanceAbuseDTO(tmpSubstanceAbuse);
 	}
 	
-	public static SubstanceAbuseDTO updateSubstanceAbuse(SubstanceAbuseDTO inputDTO) {
+	public SubstanceAbuseDTO updateSubstanceAbuse(SubstanceAbuseDTO inputDTO) {
 		// Generate a SubstanceAbuse from the input
 		TmpSubstanceAbuse tmpSubstanceAbuse = SubstanceAbuseManager.generateTmpSubstanceAbuse(inputDTO);
 		tmpSubstanceAbuse.setSubstanceAbuseId(Integer.parseInt(inputDTO.getSubstanceAbuseId()));
@@ -124,7 +130,7 @@ public class SubstanceAbuseManager {
 
 	}
 	
-	public static boolean deleteSubstanceAbuse(String substanceAbuseId) {
+	public boolean deleteSubstanceAbuse(String substanceAbuseId) {
 		TmpSubstanceAbuse tmpSubstanceAbuse = tmpSubstanceAbuseDAO.getTmpSubstanceAbuseById(Integer.parseInt(substanceAbuseId));
 		tmpSubstanceAbuseDAO.delete(tmpSubstanceAbuse);
 		return true;
