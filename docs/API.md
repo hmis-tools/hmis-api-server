@@ -5,16 +5,16 @@ Introduction
 ------------
 
 The OpenHMIS API is a web-based API for collecting data and generating
-reports about sources and users of social services.
+reports about sources and users of social services.  It is
+vendor-neutral, fully open, and can be implemented by anyone writing
+an HMIS application, to allow their application to exchange HMIS
+information with any source that speaks this API.
 
-The OpenHMIS API is vendor-neutral.  It is fully open and can be
-implemented by anyone writing an HMIS application, allowing their
-application to process HMIS information with any source that speaks
-the same API.  It is based on the the 2014 data standards from the
+The OpenHMIS API is based on the the 2014 data standards from the
 [U.S. Department of Housing and Urban Development
-(HUD)](http://hud.gov/), and is independent from the underlying data
-storage system, that is, it is not related to nor dependent on any
-particular database schema.
+(HUD)](http://hud.gov/), but it is independent from the underlying
+data storage system, that is, it does not depend on any particular
+database schema.
 
 The latest version of the API is version 3 and provides complete
 coverage of the HUD 2014 data standards, though it is still in
@@ -52,11 +52,11 @@ OpenHMIS API Reference Documentation
 
 The OpenHMIS API is a [RESTful
 API](https://en.wikipedia.org/wiki/Representational_state_transfer)
-that works as you would expect if you are familiar with other RESTful
-APIs.  (Note that authentication and authorization are considered
-separate from the API itself; implementations typically use
-OAuth-style authentication, such as Google Sign-in, and [this install
-file](../INSTALL.md) describes one such workflow in more detail.)
+that works like typical RESTful APIs.  (Authentication and
+authorization are considered separate from the API itself; most
+implementations use OAuth-style authentication, such as Google
+Sign-in, and [this INSTALL file](../INSTALL.md) describes one such
+workflow in more detail.)
 
 Request bodies send and receive either JSON or XML representations of
 objects.  The examples in this document are all given in JSON, but the
@@ -132,15 +132,22 @@ Extending that with the appropriate personalId value ...
         }
       }
 
-Note that the "data" wrapper has been added to correspond to the
-"errors" wrapper for responses to failed requests.  This is in part to
-correspond with this [Google style
-guide](https://google.github.io/styleguide/jsoncstyleguide.xml#error)
-and the [HMIS
-API](https://github.com/servinglynk/hmis-lynk-open-source).  As you can
-see above, "data" will contain either one "item" or a list of "items."
+Returned data is contained in a "data" wrapper object, as recommended
+by the [Google JSON Style
+Guide](https://google.github.io/styleguide/jsoncstyleguide.xml) and,
+not coincidentally, for compliance with the [HMIS
+API](https://github.com/servinglynk/hmis-lynk-open-source) as well.
+As the above examples show, the "data" object will contain either one
+"item" or a list of "items".
 
-POST, PUT, and DELETE work as expected.
+(When there is an error, an "error" wrapper is used instead, as
+described later in this document.  Although the Google JSON Style
+Guide technically allows both "data" and "error" to be included in the
+same response, in the OpenHMIS API they are currently mutually
+exclusive: you will get either "data" or "error", but not both.)
+
+POST, PUT, and DELETE work as expected: you just supply the object(s),
+in the same JSON format that responses use.
 
 Note that you cannot edit fields inside nested objects.  For example,
 if you PUT an Enrollment object (containing `income sources` nested
@@ -821,7 +828,7 @@ Example Search: `/clients?firstName=J*&dobEnd=2015-05-09
   - Parameters: Takes an `enrollmentId` for the client to be deleted.
   - Responses: Returns `true` if the enrollment was successfully deleted.
   - Example:
-    - Call: `$ curl -X DELETE http://localhost:8080/openhmis/api/v3/enrollments/46521
+    - Call: `$ curl -X DELETE http://localhost:8080/openhmis/api/v3/enrollments/46521`
     - Response: `true`
 
 
@@ -837,7 +844,7 @@ Example Search: `/clients?firstName=J*&dobEnd=2015-05-09
 * GET:
   - Path: `/enrollments/{enrollmentId}/exits/{exitId}`
   - Method name: `getExit("enrollmentId", "exitId")`
-  - Parameters: enrollmentId and exitId
+  - Parameters: `enrollmentId` and `exitId`
   - Responses: 
   - Example:
 
@@ -851,14 +858,14 @@ Example Search: `/clients?firstName=J*&dobEnd=2015-05-09
 * PUT:
   - Path: `/enrollments/{enrollmentId}/exits/{exitId}`
   - Method name: updateExit("enrollmentId", "exitId")
-  - Parameters: enrollmentId and exitId
+  - Parameters: `enrollmentId` and `exitId`
   - Responses: 
   - Example:
 
 * DELETE:
   - Path: `/enrollments/{enrollmentId}/exits/{exitId}`
   - Method name: deleteExit("enrollmentId", "exitId")
-  - Parameters: enrollmentId and exitId
+  - Parameters: `enrollmentId` and `exitId`
   - Responses:
   - Example:
 
@@ -875,7 +882,7 @@ Example Search: `/clients?firstName=J*&dobEnd=2015-05-09
 * GET:
   -Path: `/enrollments/{enrollmentId}/chronic-health-conditions/{chronicHealthConditionId}`
   - Method name: getChronicHealthCondition("enrollmentId", "chronicHealthConditionId")
-  - Parameters: enrollmentId and chronicHealthConditionId
+  - Parameters: `enrollmentId` and `chronicHealthConditionId`
   - Responses: 
   - Example:
 
@@ -889,14 +896,14 @@ Example Search: `/clients?firstName=J*&dobEnd=2015-05-09
 * PUT:
   - Path: `/enrollments/{enrollmentId}/chronic-health-conditions/{chronicHealthConditionId}`
   - Method name: updateChronicHealthCondition("enrollmentId", "chronicHealthConditionId")
-  - Parameters: enrollmentId and chronicHealthConditionId
+  - Parameters: `enrollmentId` and `chronicHealthConditionId`
   - Responses: 
   - Example:
 
 * DELETE:
   - Path: `/enrollments/{enrollmentId}/chronic-health-conditions/{chronicHealthConditionId}`
   - Method name: deleteChronicHealthCondition("enrollmentId", "chronicHealthConditionId")
-  - Parameters: enrollmentId and chronicHealthConditionId
+  - Parameters: `enrollmentId` and `chronicHealthConditionId`
   - Responses:
   - Example:
 
@@ -912,7 +919,7 @@ Example Search: `/clients?firstName=J*&dobEnd=2015-05-09
 * GET:
   - Path: `/enrollments/{enrollmentId}/contacts/{contactId}`
   - Method name: getContact("enrollmentId", "contactId")
-  - Parameters: enrollmentId and contactId
+  - Parameters: `enrollmentId` and `contactId`
   - Responses: 
   - Example:
 
@@ -926,14 +933,14 @@ Example Search: `/clients?firstName=J*&dobEnd=2015-05-09
 * PUT:
   - Path: `/enrollments/{enrollmentId}/contacts/{contactId}`
   - Method name: updateContact("enrollmentId", "contactId")
-  - Parameters: enrollmentId and contactId
+  - Parameters: `enrollmentId` and `contactId`
   - Responses: 
   - Example:
 
 * DELETE:
   - Path: `/enrollments/{enrollmentId}/contacts/{contactId}`
   - Method name: deleteContact("enrollmentId", "contactId")
-  - Parameters: enrollmentId and contactId
+  - Parameters: `enrollmentId` and `contactId`
   - Responses:
   - Example:
 
@@ -948,7 +955,7 @@ Example Search: `/clients?firstName=J*&dobEnd=2015-05-09
 * GET:
   - Path: `/enrollments/{enrollmentId}/developmental-disabilities/{developmentalDisabilityId}`
   - Method name: getDevelopmentalDisability("enrollmentId", "developmentalDisabilityId")
-  - Parameters: enrollmentId and developmentalDisabilityId
+  - Parameters: `enrollmentId` and `developmentalDisabilityId`
   - Responses: 
   - Example:
 
@@ -962,14 +969,14 @@ Example Search: `/clients?firstName=J*&dobEnd=2015-05-09
 * PUT:
   - Path: `/enrollments/{enrollmentId}/developmental-disabilities/{developmentalDisabilityId}`
   - Method name: updateDevelopmentalDisability("enrollmentId", "developmentalDisabilityId")
-  - Parameters: enrollmentId and developmentalDisabilityId
+  - Parameters: `enrollmentId` and `developmentalDisabilityId`
   - Responses: 
   - Example:
 
 * DELETE:
   - Path: `/enrollments/{enrollmentId}/developmental-disabilities/{developmentalDisabilityId}`
   - Method name: deleteDevelopmentalDisability("enrollmentId", "developmentalDisabilityId")
-  - Parameters: enrollmentId and developmentalDisabilityId
+  - Parameters: `enrollmentId` and `developmentalDisabilityId`
   - Responses:
   - Example:
 
@@ -985,7 +992,7 @@ Example Search: `/clients?firstName=J*&dobEnd=2015-05-09
 * GET:
   - Path: `/enrollments/{enrollmentId}/domestic-abuses/{domesticAbuseId}`
   - Method name: getDomesticAbuse("enrollmentId", "domesticAbuseId")
-  - Parameters: enrollmentId and domesticAbuseId
+  - Parameters: `enrollmentId` and `domesticAbuseId`
   - Responses: 
   - Example:
 
@@ -999,14 +1006,14 @@ Example Search: `/clients?firstName=J*&dobEnd=2015-05-09
 * PUT:
   - Path: `/enrollments/{enrollmentId}/domestic-abuses/{domesticAbuseId}`
   - Method name: updateDomesticAbuse("enrollmentId", "domesticAbuseId")
-  - Parameters: enrollmentId and domesticAbuseId
+  - Parameters: `enrollmentId` and `domesticAbuseId`
   - Responses: 
   - Example:
 
 * DELETE:
   - Path: `/enrollments/{enrollmentId}/domestic-abuses/{domesticAbuseId}`
   - Method name: deleteDomesticAbuse("enrollmentId", "domesticAbuseId")
-  - Parameters: enrollmentId and domesticAbuseId
+  - Parameters: `enrollmentId` and `domesticAbuseId`
   - Responses:
   - Example:
 
@@ -1026,14 +1033,17 @@ The API returns exceptions using the following format:
 }
 ```
 
-The following error codes have been built into the API:
+The following error codes have been built into the API so far:
 
 - ACCESS_DENIED: when you try to access content you are not authenticated to see.
 - AUTHENTICATION_FAILURE: when you have attempted to authenticate but something went wrong (invalid token, for instance)
 - MISSING_PARAMETER: a required parameter was not provided.
 - INVALID_PARAMETER: a parameter was provided but is not of the proper format.
 
-This list will grow.
+(Expect the above list to grow.)
 
-Each error type, for now, only provides a code and a message.  The objects returned for each error type are expected to become richer based on the error, to include more detailed information in a structured way.  For now the intent is that the message will contain the information in a human readable format.
-
+Each error type, for now, only provides a code and a message.  The
+objects returned for each error type are expected to become richer
+based on the error, to include more detailed information in a
+structured way.  For now, where possible the error message contains
+information in a human-readable format.
