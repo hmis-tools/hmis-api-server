@@ -163,9 +163,6 @@ e.g., `services/income-sources/1`.
 * Organizations
 * Projects
 
-TODO: All endpoints are now top-level.  This section may need more
-changes to reflect that.
-
 # Clients
 
 The Clients resource supports GET, POST, PUT, and DELETE methods.
