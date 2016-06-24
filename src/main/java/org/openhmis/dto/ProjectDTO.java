@@ -16,7 +16,7 @@ import org.openhmis.code.YesNo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @XmlRootElement
-public class ProjectDTO {
+public class ProjectDTO extends BaseDTO {
 	
 	/**
 	 * The client object represents a client record

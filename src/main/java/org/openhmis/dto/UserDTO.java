@@ -21,7 +21,7 @@ import org.openhmis.code.YesNoReason;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @XmlRootElement
-public class UserDTO {
+public class UserDTO extends BaseDTO {
 	
 	private String userId;
 	private String externalId;

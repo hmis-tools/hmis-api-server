@@ -32,7 +32,7 @@ import org.openhmis.code.YesNoReason;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @XmlRootElement
-public class EnrollmentDTO {
+public class EnrollmentDTO extends BaseDTO {
 	/**
 	 * The client object represents a client enrollment record
 	 * Fields returned with the client object represent fields marked as "At project entry" in the HUD standards

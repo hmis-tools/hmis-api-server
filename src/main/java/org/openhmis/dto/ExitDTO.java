@@ -21,7 +21,7 @@ import org.openhmis.code.YesNoReason;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @XmlRootElement
-public class ExitDTO {
+public class ExitDTO extends BaseDTO {
 	
 	private String exitId;
 	private String enrollmentId;

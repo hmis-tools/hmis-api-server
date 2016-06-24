@@ -11,7 +11,7 @@ import org.openhmis.code.ClientContactLocation;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @XmlRootElement
-public class ContactDTO {
+public class ContactDTO extends BaseDTO {
 	private String contactId;
 	private String enrollmentId;
 

@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @XmlRootElement
-public class MedicalAssistanceDTO {
+public class MedicalAssistanceDTO extends BaseDTO {
 	private String medicalAssistanceId;
 	private String enrollmentId;
 

@@ -15,7 +15,7 @@ import org.openhmis.code.ProjectYouthAgeGroup;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @XmlRootElement
-public class InventoryDTO {
+public class InventoryDTO extends BaseDTO {
 	
 	/**
 	 * The client object represents a client record

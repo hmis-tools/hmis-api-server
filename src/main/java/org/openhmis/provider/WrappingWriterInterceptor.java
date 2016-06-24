@@ -12,6 +12,7 @@ import org.openhmis.dto.error.AbstractErrorDTO;
 import org.openhmis.dto.error.RootErrorDTO;
 import org.openhmis.dto.result.DataResultDTO;
 import org.openhmis.dto.result.ListResultDTO;
+import org.openhmis.dto.BaseDTO;
 
 @Provider
 public class WrappingWriterInterceptor implements WriterInterceptor {
@@ -29,8 +30,7 @@ public class WrappingWriterInterceptor implements WriterInterceptor {
             context.setEntity(resultDTO);
             context.setGenericType(ListResultDTO.class);
             context.setType(ListResultDTO.class);           
-        } else if(!(currentEntity instanceof RootErrorDTO)
-        	&& !(currentEntity instanceof String)) {
+        } else if(currentEntity instanceof BaseDTO) {
             DataResultDTO resultDTO = new DataResultDTO(currentEntity);
             context.setEntity(resultDTO);
             context.setGenericType(DataResultDTO.class);
