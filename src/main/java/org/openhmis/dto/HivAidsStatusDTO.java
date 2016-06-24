@@ -12,7 +12,7 @@ import org.openhmis.code.YesNoReason;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @XmlRootElement
-public class HivAidsStatusDTO {
+public class HivAidsStatusDTO extends BaseDTO {
 	private String hivAidsStatusId;
 	private String enrollmentId;
 

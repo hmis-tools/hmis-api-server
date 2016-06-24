@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @XmlRootElement
-public class ClientDTO {
+public class ClientDTO extends BaseDTO {
 	
 	/**
 	 * The client object represents a client record

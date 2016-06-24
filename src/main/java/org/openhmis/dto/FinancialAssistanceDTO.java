@@ -13,7 +13,7 @@ import org.openhmis.code.ClientSsvfFinancialAssistance;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @XmlRootElement
-public class FinancialAssistanceDTO {
+public class FinancialAssistanceDTO extends BaseDTO {
 	private String financialAssistanceId;
 	private String enrollmentId;
 

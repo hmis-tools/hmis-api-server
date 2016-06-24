@@ -12,7 +12,7 @@ import org.openhmis.code.YesNoReason;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @XmlRootElement
-public class DevelopmentalDisabilityDTO {
+public class DevelopmentalDisabilityDTO extends BaseDTO {
 	private String developmentalDisabilityId;
 	private String enrollmentId;
 
