@@ -122,8 +122,16 @@ public class Authentication {
 			}
 			return false;
 		} catch (IOException e) {
+			log.debug("IOException authenticating with Google: " + e.toString());
 			return false;
 		} catch (GeneralSecurityException e) {
+			log.debug("GeneralSecurityException authenticating with Google: " + e.toString());
+			return false;
+		} catch (IllegalArgumentException e) {
+			log.debug("IllegalArgumentException authenticating with Google: " + e.toString());
+			return false;
+		} catch (Exception e) {
+			log.debug("Unexpected exception authenticating with Google: " + e.toString());
 			return false;
 		}
 	}

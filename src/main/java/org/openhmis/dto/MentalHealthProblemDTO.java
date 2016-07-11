@@ -14,7 +14,7 @@ import org.openhmis.code.YesNoReason;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @XmlRootElement
-public class MentalHealthProblemDTO {
+public class MentalHealthProblemDTO extends BaseDTO {
 	private String mentalHealthProblemId;
 	private String enrollmentId;
 

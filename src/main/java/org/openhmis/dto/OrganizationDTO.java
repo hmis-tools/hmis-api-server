@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @XmlRootElement
-public class OrganizationDTO {
+public class OrganizationDTO extends BaseDTO {
 	
 	/**
 	 * The client object represents a client record

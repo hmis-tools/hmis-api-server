@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @XmlRootElement
-public class ReferralDTO {
+public class ReferralDTO extends BaseDTO {
 	private String referralId;
 	private String enrollmentId;
 

@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @XmlRootElement
-public class CoCDTO {
+public class CoCDTO extends BaseDTO {
 	
 	/**
 	 * The client object represents a client record

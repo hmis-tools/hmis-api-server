@@ -12,7 +12,7 @@ import org.openhmis.code.YesNoReason;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @XmlRootElement
-public class NonCashBenefitDTO {
+public class NonCashBenefitDTO extends BaseDTO {
 	private String nonCashBenefitId;
 	private String enrollmentId;
 
