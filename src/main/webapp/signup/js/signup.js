@@ -33,7 +33,7 @@ function signInCallback(authResult) {
 
      $.ajax({
           type: 'POST',
-          url: 'http://localhost:8080/openhmis/api/v3/authenticate/google',
+          url: '../api/v3/authenticate/google',
           contentType: 'application/octet-stream; charset=utf-8',
           processData: false,
           data: authResult['code'],

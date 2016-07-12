@@ -1,8 +1,15 @@
 application.version=3.1.0
 
-# these are credentials for a demo Google instance, which will work with
-# localhost on ports 8000, 3000, 8080, and 8888 (using either http or
-# https)
+# These are default Google credentials which will work with localhost on
+# ports 8000, 3000, 8080, and 8888 (using either http or https) to
+# identify users with OAuth.  The client ID and secret were created in
+# the Google API Console
+# (https://console.developers.google.com/projectselector/apis/library?pli=1)
+# as described here:
+# https://developers.google.com/identity/sign-in/web/server-side-flow.
+#
+# See the "Manage OAuth authentication" section in INSTALL.md for more
+# about this.
 google.clientId=984426589261-8pgt3rlh49jtb7inb1ob4hfjvcptrg3d.apps.googleusercontent.com
 google.secret=lG1q4KKd3wz02wP_OFVd9zhu
 
