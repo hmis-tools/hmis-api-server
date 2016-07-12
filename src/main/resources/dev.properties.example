@@ -1,7 +1,10 @@
 application.version=3.1.0
 
-google.clientId=
-google.secret=
+# these are credentials for a demo Google instance, which will work with
+# localhost on ports 8000, 3000, 8080, and 8888 (using either http or
+# https)
+google.clientId=984426589261-8pgt3rlh49jtb7inb1ob4hfjvcptrg3d.apps.googleusercontent.com
+google.secret=lG1q4KKd3wz02wP_OFVd9zhu
 
 authEnabled=true
 

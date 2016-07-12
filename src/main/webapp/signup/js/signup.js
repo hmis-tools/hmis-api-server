@@ -1,16 +1,16 @@
 $(function() {
     $('#signinButton').click(function() {
-        console.log("DEBUG: test");
         auth2.grantOfflineAccess({'redirect_uri': 'postmessage'}).then(signInCallback);
     });
 });
 
 function start() {
     gapi.load('auth2', function() {
-        // TBD: get this from the properties file?  Shouldn't be hardcoded here.
-        id = '512268687331-6t93vg67gvr12lc6uqaf55e82ic52dnj.apps.googleusercontent.com';
-        auth2 = gapi.auth2.init({
-            client_id: id
+        // use the same GET call as in admin.js
+	var clientId = $.get("../api/v3/authenticate/google/client_key", function(data) {
+	    auth2 = gapi.auth2.init({
+		client_id: data,
+	    });
         });
     });
 };

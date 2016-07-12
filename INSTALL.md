@@ -122,7 +122,7 @@ _Note: you do not need to install anything for this to work.  Flyway is automati
     ```shell
         $> cp src/main/resources/dev.properties.example src/main/resources/dev.properties
     ```
-    Open the new file and enter the database username and password that you created in steps 1 and 2.  You'll add more entries to this file once you have information for Google authentication (see "Set up OAuth authentication" below).
+    Open the new file and enter the database username and password that you created in steps 1 and 2.  Note that the file has default values for client id and client key.  Many users can continue to use these, but see "Set up OAuth authentication" below for more details.
 
 Import sample data (or real data, if you have some):
 ---------------------------------------------------
@@ -158,7 +158,8 @@ Console project.
 2. Set the value of the Authorization header to that id token for all
    requests you send to your local instance.  Note that id tokens will
    only work for authorization if you've added the corresponding email
-   address to your users table, as explained in the next section.
+   address to your users table, as explained in the next section,
+   "Create your first admin user."
 
 
 #### For developers setting up a production instance of the server:
