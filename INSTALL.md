@@ -120,6 +120,18 @@ _Note: you do not need to install anything for this to work.  Flyway is automati
         $> mvn clean compile flyway:migrate
     ```
 
+   NOTE: If the above command gets an error that looks something like this...
+
+    ```
+        [ERROR] Failed to execute goal                          \
+                org.flywaydb:flyway-maven-plugin:3.2.1:migrate  \
+                (default-cli) on project api:                   \
+                org.flywaydb.core.api.FlywayException:          \
+                Validate failed. Migration Checksum mismatch for migration 010
+    ```
+
+   ...then you might need to run `mvn flyway:repair` and retry.  See [here](http://stackoverflow.com/questions/23776706/flyway-3-0-migration-checksum-mismatch) for more details.
+
 4. Create the `dev.properties` file.
 
 
