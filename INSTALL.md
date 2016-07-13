@@ -50,17 +50,21 @@ _In order for those endpoints to function correctly, you must also create a loca
 
 6. Restart Tomcat
 
-    ```Shell
-        $> cd <CATALINA_HOME>   # (e.g., /usr/share/tomcat7)
-        $> bin/shutdown.sh
-        $> bin/startup.sh
-    ```
-
-   Or, on many Unix-like systems:
+   On many Unix-like systems, this will work:
 
     ```Shell
         $> sudo service tomcat7 stop
         $> sudo service tomcat7 start
+    ```
+
+   TODO 2016-07-13: The above might need to be updated for systemd-style shutdown and startup.  It would be something like `systemctl stop tomcat7.service; systemctl start tomcat7.service` probably.
+
+   You could also try doing it manually:
+
+    ```Shell
+        $> cd <CATALINA_HOME>   # (e.g., /usr/share/tomcat7)
+        $> bin/shutdown.sh
+        $> bin/startup.sh
     ```
 
 7. Update Maven's settings by editing `<MAVEN_PATH>/conf/settings.xml` so that Maven will be able to use the Tomcat user in step 3.
