@@ -138,7 +138,7 @@ _Note: you do not need to install anything for this to work.  Flyway is automati
     ```shell
         $> cp src/main/resources/dev.properties.example src/main/resources/dev.properties
     ```
-    Open the new file and enter the database username and password that you created in steps 1 and 2.  You'll add more entries to this file once you have information for Google authentication (see "Set up OAuth authentication" below).
+    Open the new file and enter the database username and password that you created in steps 1 and 2.  Note that the file has default values for client id and client key.  Many users can continue to use these, but see "Set up OAuth authentication" below for more details.
 
 Import sample data (or real data, if you have some):
 ---------------------------------------------------
@@ -146,35 +146,6 @@ Import sample data (or real data, if you have some):
 ```shell
         mysql -u openhmis_user -p openhmis < src/main/resources/db/data/DATA.sql
 ```
-
-Set up OAuth authentication:
-----------------------------
-This API uses [Google Sign-in](https://developers.google.com/identity/) OAuth-style authentication.  To build an application powered by this API, your application must use the Google Sign-in [server side flow](https://developers.google.com/identity/sign-in/web/server-side-flow).
-
-NOTE: If you simply want to make requests to an HMIS server based on a
-Google identity, you can find your id token by using the Google OAuth
-2.0 Playground as described
-[here](https://www.tbray.org/ongoing/When/201x/2013/04/04/ID-Tokens#p-5).
-Then, pass that id token as the value of the Authorization header in
-your requests, as described in step 5 below.
-
-1. Begin the [Google sign-in tutorial](https://developers.google.com/identity/sign-in/web/server-side-flow).  Create a client ID and a client secret and store them in a local `dev.properties` file, then restart your app.
-
-   ```shell
-        $> emacs src/main/resources/dev.properties
-        $> mvn tomcat7:redeploy
-   ```
-
-2. Continue the tutorial.  Use the code provided there to generate an authorization code and a token.  If you are setting this up locally for development purposes, use `http://localhost:8080` for the authorized Javascript origin and the authorized redirect URI.
-
-3. `POST` to `http://localhost:8080/openhmis/api/v3/authenticate/google` in part 6 of [the Google tutorial](https://developers.google.com/identity/sign-in/web/server-side-flow), passing the generated authentication code as the raw POST value, as explained there.
-
-4. Extract the `id_token` component from the JSON object returned in part 7 of the tutorial.  If instead you receive an error like `Token Fail: 401 Unauthorized`, check that your origin and redirect URIs are correct, that your `client_id` and `client_secret` are in `dev.properties`, and that you've run `mvn tomcat7:redeploy` whenever any of these values change.
-
-5. For all API calls that require authentication include the HTTP header `Authorization` with the value of the `id_token` you collected in step 3.  To test these calls with specific headers, try the [Postman](https://www.getpostman.com/) app.
-
-You can test that you are passing your `id_token` correctly by using the `api/v3/healthcheck/authentication` endpoint.  You can turn off authentication for local development by changing the "authEnabled" entry in the dev.properties file to false and running `mvn tomcat7:redeploy`.  Turn authentication back on at any time by changing authEnabled to true and running `mvn tomcat7:redeploy`.
-
 
 Create your first admin user:
 -----------------------------
@@ -184,7 +155,7 @@ that you have a TMP_USER table in your database.  If you don't, then do
 the following:
 
 ```
-    $ mysql -u __YOUR_USER__ -p
+    $ mysql -u __YOUR_USER__ -p __YOUR_SCHEMA__
     Enter password: __YOUR_PASSWORD__
     
     mysql> \. src/main/resources/db/migration/V028__CREATE_TMP_USER.sql
@@ -202,7 +173,76 @@ would use a Google email address for the `externalID`, but you could set
 up OAuth with any other external auth, too.
 
 Each request to the API should include an authorization header with an
-id_token corresponding to an email address in this user table.
+id_token corresponding to an email address in this user table (see
+"Manage OAuth authentication," below).
+
+Manage OAuth authentication:
+----------------------------
+
+#### For users making requests to an existing server:
+
+Note that you will need to be an authorized user on the server for your
+requests to work, even if you have the correct id token.  An "authorized
+user" is one that has been added to the admin list by a server
+administrator, probably using the page at `/openhmis/admin`.  Your
+username will be a Google email address.
+
+Each request to the API needs to be accompanied by an Authorization
+header which contains an id token.  You can find your id token by
+navigating to `YOUR_SERVER_ROOT/openhmis/signup/`.  Click on "Sign in
+with Google," and sign in with the Google email address that is on the
+admin list for the server.  In response, you'll see a very long string
+of numbers and letters.  That is your id token, and you will use it in
+each request you send to the API.  You can test requests to the API with
+the Postman app or curl.  In each request, set the value of the
+Authorization header to that id token.
+
+#### For developers setting up a local instance of the server:
+
+The process here is the same for users making requests to an existing
+server (the previous section).  Even though you've set up a local
+instance of the server, you can use our default/test client ID and
+secret, pre-set in `dev.properties.example`, instead of creating your
+own [Google API
+Console](https://console.developers.google.com/projectselector/apis/library)
+project to sign in to Google.  The default values will work as long as
+you don't need to control the origin and redirect URIs -- i.e., as long
+as you're not setting up a non-local server.  If you are, see the next
+section.  For more information, see [the Google server-side flow
+](https://developers.google.com/identity/sign-in/web/server-side-flow)
+
+1. Navigate to `localhost:8080/openhmis/signup/` and sign in there
+   using the google email you used as the `externalID` in your users
+   table (above).  You'll receive an id token as a response.
+   
+2. Set the value of the Authorization header to that id token for all
+   requests you send to your local instance.  Note that id tokens will
+   only work for authorization if you've added the corresponding email
+   address to your users table, as explained in the previous section,
+   "Create your first admin user."
+
+
+#### For developers setting up a production instance of the server:
+
+This API uses [Google Sign-in](https://developers.google.com/identity/) OAuth-style authentication.  To set up an instance of this server, use the Google Sign-in [server side flow](https://developers.google.com/identity/sign-in/web/server-side-flow).
+
+1. Begin the [Google sign-in
+tutorial](https://developers.google.com/identity/sign-in/web/server-side-flow).
+Create a client ID and a client secret and edit `dev.properties` to use
+those values instead of the default ones, then restart your app.
+
+   ```shell
+        $> emacs src/main/resources/dev.properties
+        $> mvn tomcat7:redeploy
+   ```
+
+2. We've incorporated the tutorial steps into the `/openhmis/signup` endpoint.  After you've replaced the client ID and client secret, navigate to that page and click "Sign in with Google," using the Google email address that you added to your users table above.  You'll get an id token back.  
+
+3. For all API calls that require authentication include the HTTP header `Authorization` with the value of the `id_token` you collected in step 2.  To test these calls with specific headers, try the [Postman](https://www.getpostman.com/) app.
+
+
+You can test that you are passing your `id_token` correctly by using the `api/v3/healthcheck/authentication` endpoint.  You can turn off authentication for local development by changing the "authEnabled" entry in the dev.properties file to false and running `mvn tomcat7:redeploy`.  Turn authentication back on at any time by changing authEnabled to true and running `mvn tomcat7:redeploy`.
+
 
 
 Run the web service:

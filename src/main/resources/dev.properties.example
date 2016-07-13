@@ -1,7 +1,19 @@
 application.version=3.1.0
 
-google.clientId=
-google.secret=
+# These are default Google credentials which will work with localhost on
+# ports 8000, 3000, 8080, and 8888 (using either http or https) to
+# identify users with OAuth.  The client ID and secret were created in
+# the Google API Console
+# (https://console.developers.google.com/projectselector/apis/library?pli=1)
+# as described here:
+# https://developers.google.com/identity/sign-in/web/server-side-flow.
+#
+# If you are just doing local development or testing, you can probably
+# use these default credentials.  If you are deploying a production
+# instance, you'll need to get new dedicated credentials for it; see
+# the "Manage OAuth authentication" section in INSTALL.md for more.
+google.clientId=984426589261-8pgt3rlh49jtb7inb1ob4hfjvcptrg3d.apps.googleusercontent.com
+google.secret=lG1q4KKd3wz02wP_OFVd9zhu
 
 authEnabled=true
 
