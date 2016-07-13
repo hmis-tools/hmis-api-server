@@ -130,7 +130,7 @@ _Note: you do not need to install anything for this to work.  Flyway is automati
                 Validate failed. Migration Checksum mismatch for migration 010
     ```
 
-   ...then you might need to run `mvn flyway:repair` and retry.  See [here](http://stackoverflow.com/questions/23776706/flyway-3-0-migration-checksum-mismatch) for more details.
+   ...then you might need to run `mvn flyway:repair` and retry.  (Flyway 3.0 set `validateOnMigrate` to true by default, as explained [here](http://stackoverflow.com/questions/23776706/flyway-3-0-migration-checksum-mismatch), though Flyway 4.0 supposedly has a [better fix](http://stackoverflow.com/questions/29043269/flyway-3-1-migration-checksum-mismatch-calculation-of-checksum-is-platform-depe) so maybe you won't run into this problem anyway.)
 
 4. Create the `dev.properties` file.
 
