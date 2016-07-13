@@ -40,11 +40,15 @@ public class HealthCheckService {
     @Path("/authentication")
     @Produces(MediaType.TEXT_PLAIN)
     public String authenticationHealthcheck(@HeaderParam("Authorization") String authorization) {
+        /* To avoid possible confusion: Yes, the HTTP header is named
+           (or mis-named) "Authorization", but the process we're
+           talking about here is authentication, so we use the latter
+           term except when referring to the header itself. */
     	if(authorization == null)
-    		return "Your Authorization header isn't set.";
+    		return "Unable to authenticate, because the HTTP Authorization header isn't set.";
 
     	if(Authentication.googleAuthenticate(authorization))
-    		return "You have a valid authorization token;";
+    		return "You have a valid authentication token.";
     				
     	return "You are not authenticated";
     }
