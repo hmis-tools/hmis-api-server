@@ -139,7 +139,7 @@ that you have a TMP_USER table in your database.  If you don't, then do
 the following:
 
 ```
-    $ mysql -u __YOUR_USER__ -p
+    $ mysql -u __YOUR_USER__ -p __YOUR_SCHEMA__
     Enter password: __YOUR_PASSWORD__
     
     mysql> \. src/main/resources/db/migration/V028__CREATE_TMP_USER.sql
