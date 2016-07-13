@@ -8,8 +8,10 @@ application.version=3.1.0
 # as described here:
 # https://developers.google.com/identity/sign-in/web/server-side-flow.
 #
-# See the "Manage OAuth authentication" section in INSTALL.md for more
-# about this.
+# If you are just doing local development or testing, you can probably
+# use these default credentials.  If you are deploying a production
+# instance, you'll need to get new dedicated credentials for it; see
+# the "Manage OAuth authentication" section in INSTALL.md for more.
 google.clientId=984426589261-8pgt3rlh49jtb7inb1ob4hfjvcptrg3d.apps.googleusercontent.com
 google.secret=lG1q4KKd3wz02wP_OFVd9zhu
 
