@@ -107,7 +107,7 @@ _Note: you do not need to install anything for this to work.  Flyway is automati
 
 2. Create a local `src/config/flyway.properties` file with your database connection information
 
-    The schema name, username, and password entered in this file must match those created in step2 1
+    The schema name, username, and password entered in this file must match those created in the above step
 
     ```shell
         $> cp src/config/flyway.properties.example src/config/flyway.properties
