@@ -49,6 +49,11 @@ public class ClientService {
 		
 		// Return clients that match the search terms
         List<ClientDTO> clientDTOs = clientManager.getClients(searchDTO);
+        /* TBD (issue #65): We need to determine a standard logging
+           format, some conventions, and maybe a helper class to
+           enforce it all; would also be nice to log which user made
+           the request.  But for now, just show that logging works. */
+        log.debug("GET /clients/ (" + clientDTOs.size() + " results)");
         return clientDTOs;
 	}
 	
