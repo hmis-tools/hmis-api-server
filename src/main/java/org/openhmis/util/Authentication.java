@@ -100,23 +100,21 @@ public class Authentication {
 			TmpUserDAO tmpUserDAO = new TmpUserDAO();
 			TmpUser tmpUser = tmpUserDAO.getTmpUserByExternalId(externalId);
 			
-			// If the user doesn't exist in our system, they aren't authorized
-			if(tmpUser == null)
+			// If the user doesn't exist, they aren't authorized
+			if(externalId == null)
 				return false;
 			
 			switch(authType) {
 				case Authentication.EXISTS:
 					return true;
 				case Authentication.READ:
-					if(tmpUser.getCanRead() == 1)
-						return true;
-					break;
+                                        return true;
 				case Authentication.WRITE:
-					if(tmpUser.getCanWrite() == 1)
+					if(tmpUser != null && tmpUser.getCanWrite() == 1)
 						return true;
 					break;
 				case Authentication.ADMIN:
-					if(tmpUser.getCanAdmin() == 1)
+					if(tmpUser != null && tmpUser.getCanAdmin() == 1)
 						return true;
 					break;
 			}

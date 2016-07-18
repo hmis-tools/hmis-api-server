@@ -149,12 +149,29 @@ exclusive: you will get either "data" or "error", but not both.)
 POST, PUT, and DELETE work as expected: you just supply the object(s),
 in the same JSON format that responses use.
 
-Note that you cannot edit fields inside nested objects.  For example,
-if you PUT an Enrollment object (containing `income sources` nested
-within it) to `services/enrollments/3/`, you should not expect changes
-in nested income sources to take effect.  Instead, to change or add
-those income sources, you must use the appropriate top-level endpoint,
-e.g., `services/income-sources/1`.
+For example, to update the example client given above, the PUT request
+would look like:
+
+`$ curl -H "Authorization: __YOUR_GOOGLE_KEY_HERE__" -H "Content-Type:application/json" -H "Accept: application/json" -X PUT --data @sample-call.json 'http://localhost:8080/openhmis/api/v3/clients/336788'`
+
+...where the contents of `sample_call.json` look like:
+
+```
+{
+    "firstName": "NewName",
+    "middleName": null,
+    "lastName": "Mover"
+    ...
+}
+```
+
+
+Note that you cannot edit fields inside nested objects.  For example, if
+you PUT an Enrollment object (containing `income sources` nested within
+it) to `services/enrollments/3/`, you should not expect changes in
+nested income sources to take effect.  Instead, to change or add those
+income sources, you must use the appropriate top-level endpoint, e.g.,
+`services/income-sources/1`.
 
 # Top-level resources:
 
@@ -316,7 +333,7 @@ Example Search: `/clients?firstName=J*&dobEnd=2015-05-09
     }
     ```
 
-    Call: `curl -H "Authorization: __YOUR_GOOGLE_KEY_HERE__" -H "Content-Type:application/json" -H "Accept: application/json" -X POST -data @sample-call.json 'http://localhost:8080/openhmis/api/v3/clients/'`
+    Call: `curl -H "Authorization: __YOUR_GOOGLE_KEY_HERE__" -H "Content-Type:application/json" -H "Accept: application/json" -X POST --data @sample-call.json 'http://localhost:8080/openhmis/api/v3/clients/'`
 
     The response will be the newly created client object.
 
