@@ -50,44 +50,47 @@
         <p>&nbsp;</p>
 
               <!-- Current status -->
-        <div style="border-top: 2px dotted #42935a; border-bottom: 2px dotted #42935a;" >
-          <p>&nbsp;</p>
-          <div style="text-align: center;" >
-            <ul style="list-style-type: none;" >
-          <li><p><a
-                  href="https://github.com/PCNI/OpenHMIS/blob/master/docs/API.md"
-                    >API documentation</a></p></li>
-          <li><p>&nbsp</p></li>
-          <li><p>The OpenHMIS project is an open source,
-              standards-based HMIS (Homeless Management Information
-              System).</p></li>
-          <li><p> The current test server for this API is:
-          hmis.opentechstrategies.com:8080.  Try an endpoint
+        <div style="border-top: 2px dotted #42935a; border-bottom: 2px dotted #42935a; padding-top: 2em; padding-bottom: 1em;" >
+
+          <p>The OpenHMIS project is an open source, standards-based
+          HMIS (Homeless Management Information System); see
+          the <a
+          href="https://github.com/PCNI/OpenHMIS/blob/master/docs/API.md" 
+          >OpenHMIS API documentation</a> for an introduction.</p>
+
+          <p> The current test server for the API is:
+          <tt><b>hmis.opentechstrategies.com:8080</b></tt></p>
+
+          <p>Try an endpoint
           like <a href="http://hmis.opentechstrategies.com:8080/openhmis/api/v3/clients">http://hmis.opentechstrategies.com:8080/openhmis/api/v3/clients</a>.
           You'll need to pass an authorization header to get actual
-          results.  Please post to
-          <a href="https://groups.google.com/a/openhmis.org/forum/#!forum/openhmis-discuss">the
-          list</a> if you would like authorization to make test API
-          calls to this server (of course, you can also always set up
-          your own).
+          results.  For now, anyone who signs in and passes that header
+          can make read-only requests.  Please post
+          to <a href="https://groups.google.com/a/openhmis.org/forum/#!forum/openhmis-discuss">the
+          list</a> if you would like authorization to make
+          create/update/delete calls to this server (of course, you can
+          also always set up your own).
           See <a href="https://www.tbray.org/ongoing/When/201x/2013/04/04/ID-Tokens">this
           guide</a> to getting an id token from Google
           and <a href="https://github.com/PCNI/OpenHMIS/blob/master/INSTALL.md#set-up-oauth-authentication">our
           OAuth flow documentation</a> for more detail about
-          authentication and authorization with the OpenHMIS
-          API.</p></li>
-          <li><p><a href="https://github.com/PCNI/OpenHMIS/" >API server
+            authentication and authorization with the OpenHMIS API.</p>
+
+          <p> Alternatively, use our demo client app
+          at <a href="http://hmis.opentechstrategies.com:3000">http://hmis.opentechstrategies.com:3000</a>.
+          Sign in with a Google email account and try searching for
+          clients.
+            </p>
+
+          <p><a href="https://github.com/PCNI/OpenHMIS/" >API server
           source code </a>
           and <a href="https://github.com/OpenTechStrategies/openhmis-intake/"
-          >source code for an out-of-date demo client</a> are also
-              available.</p></li>
-          <li><p> For more information about HMIS,
+          >source code for the demo client</a> are also available.</p>
+
+          <p> For more information about HMIS,
           see <a href="http://openhmis.pcni.org/">PCNI</a> and
           our <a href="https://groups.google.com/a/openhmis.org/forum/#!forum/openhmis-discuss">Google
           group</a>.
-          </ul>
-          </div>
-            <p>&nbsp;</p>
         </div>
       </div>
       <!-- container -->
