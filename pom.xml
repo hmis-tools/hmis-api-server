@@ -89,6 +89,12 @@
 		</dependency>
 
 		<dependency>
+		    <groupId>org.glassfish.jersey.test-framework.providers</groupId>
+		    <artifactId>jersey-test-framework-provider-grizzly2</artifactId>
+		    <version>2.18</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.google.oauth-client</groupId>
 			<artifactId>google-oauth-client</artifactId>
 			<version>1.20.0</version>
