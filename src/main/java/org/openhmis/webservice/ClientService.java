@@ -53,7 +53,7 @@ public class ClientService {
            format, some conventions, and maybe a helper class to
            enforce it all; would also be nice to log which user made
            the request.  But for now, just show that logging works. */
-        log.debug("GET /clients/ (" + clientDTOs.size() + " results)");
+        log.info("GET /clients/ (" + clientDTOs.size() + " results)");
         return clientDTOs;
 	}
 	
@@ -65,6 +65,7 @@ public class ClientService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		ClientDTO outputVO = clientManager.addClient(inputVO);
+                log.info("POST /clients/ (ID: " + outputVO.getId() + ")");
 		return outputVO;
 	}
 	
@@ -75,7 +76,8 @@ public class ClientService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		ClientDTO clientDTO = clientManager.getClientByPersonalId(personalId);
-		return clientDTO;
+                log.info("GET /clients/" + personalId);
+        	return clientDTO;
 	}
 	
 	@PUT
@@ -88,6 +90,7 @@ public class ClientService {
 		inputVO.setPersonalId(personalId);
 		
 		ClientDTO outputVO = clientManager.updateClient(inputVO);
+                log.info("PUT /clients/" + personalId);
 		return outputVO;
 	}
 	
@@ -98,6 +101,7 @@ public class ClientService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		clientManager.deleteClient(personalId);
+                log.info("DELETE /clients/" + personalId);
 		return "true";
 	}
 }
