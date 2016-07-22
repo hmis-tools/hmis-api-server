@@ -49,8 +49,8 @@
         <h2>OpenHMIS</h2>
         <p>&nbsp;</p>
 
-              <!-- Current status -->
-        <div style="border-top: 2px dotted #42935a; border-bottom: 2px dotted #42935a; padding-top: 2em; padding-bottom: 1em;" >
+        <!-- Current status -->
+        <div class="left-container">
 
           <p>The OpenHMIS project is an open source, standards-based
           data storage and sharing system for HMIS (Homeless
@@ -60,34 +60,38 @@
           between different systems, and enables sharing/consent-based
           access controls.</p>
 
-          <p style="text-align: center;"><img
-            src="images/openhmis_api_data_warehouse.png"
-            alt="Data Warehouse configuration with OpenHMIS API input/output"
-            style="width: 50%;"
-            /></p>
-
-          <p>See the <a
-          href="https://github.com/PCNI/OpenHMIS/blob/master/docs/API.md" 
-          >OpenHMIS API documentation</a> for a programmer's
-          introduction to the API.</p>
-
+          <div class="graphics-container">
+          <div class="left-container">
+            <p  style="text-align: left;" class="subheading"><a
+                                                                href="https://github.com/PCNI/OpenHMIS/blob/master/docs/API.md" 
+                                                                >OpenHMIS API documentation</a></p>
+            <p style="text-align:
+                      left;"> <a href="https://github.com/PCNI/OpenHMIS/blob/master/docs/API.md">
+                <img src="images/docs-screenshot.png" alt="OpenHMIS API
+                                                           documentation" style="width: 50%;" /></a></p>
+            <p>&nbsp&nbsp</p>
+            <p style="text-align:
+                      left;" class="subheading"><a href="https://github.com/PCNI/OpenHMIS/tree/master/www/landing-page/HMIS_Data">Import/Export
+                (CSV) Examples</a></p>
+            <p style="text-align: left;">
+              <a href="https://github.com/PCNI/OpenHMIS/tree/master/www/landing-page/HMIS_Data"><img src="images/csv-screenshot.png"
+                                                                                                     alt="Example CSV screenshot" style="width:50%"/></a>
+            </p>
+          </div>
+          
+          <div class="right-container">
+            <p style="text-align:
+                      center;"><img src="images/openhmis_api_data_warehouse.png"
+                                    alt="Data Warehouse configuration with OpenHMIS API
+                                         input/output" style="width: 100%;"/></p>
+          </div>
+          </div>
           <p>Our test server for the API is:
           <tt><b>hmis.opentechstrategies.com:8080</b></tt>.  
           An example endpoint looks like this:</p>
 
           <pre>  hmis.opentechstrategies.com:8080/openhmis/api/v3/clients</pre>
 
-          <p>You can try it out using our demo client app at <a
-          href="http://hmis.opentechstrategies.com:3000"
-          >http://hmis.opentechstrategies.com:3000</a>.  Sign in with
-          a Google email account and try searching for clients.  (If
-          you're making API calls from some other client, note you'll
-          need to pass an HTTP <tt>Authorization</tt> header with each
-          API request.)  For now, anyone who authenticates to our
-          server can make read-only requests.  Please <a
-          href="https://groups.google.com/a/openhmis.org/forum/#!forum/openhmis-discuss"
-          >ask us</a> if you would like authorization to make
-          create/update/delete calls to this server.</p>
 
           <p>Of course, you can also set up your own
           server.  The <a
@@ -108,7 +112,23 @@
           <li><a href="https://github.com/OpenTechStrategies/openhmis-intake/" 
               >Demo client source code</a></li>
           </ul>
-        </div>
+      </div>
+      <div class="right-container">
+          <p>You can try it out using our demo client app at <a
+          href="http://hmis.opentechstrategies.com:3000"
+          >http://hmis.opentechstrategies.com:3000</a>.  Sign in with
+          a Google email account and try searching for clients.  (If
+          you're making API calls from some other client, note you'll
+          need to pass an HTTP <tt>Authorization</tt> header with each
+          API request.)  For now, anyone who authenticates to our
+          server can make read-only requests.  Please <a
+          href="https://groups.google.com/a/openhmis.org/forum/#!forum/openhmis-discuss"
+          >ask us</a> if you would like authorization to make
+            create/update/delete calls to this server.</p>
+          <!-- I'm not sure how to embed the client here? -->
+          <div id="embedClient">
+            </div>
+      </div>
       </div>
       <!-- container -->
     </div>

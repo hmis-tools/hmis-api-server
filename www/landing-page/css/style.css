@@ -206,6 +206,38 @@ and (max-width: 768px) {
   }
 }
 
+.subheading {
+    font-weight: bold;
+}
+
+.container {
+    width: 100%;
+}
+
+.left-container {
+    border-top: 2px dotted #42935a;
+    border-bottom: 2px dotted #42935a;
+    padding-top: 2em;
+    padding-bottom: 1em;
+    padding-right: 2em;
+    width: 50%;
+    float: left;
+}
+
+.right-container {
+    border-top: 2px dotted #42935a;
+    border-bottom: 2px dotted #42935a;
+    padding-top: 2em;
+    padding-bottom: 1em;
+    padding-right: 2em;
+    width: 50%;
+    float: right;
+}
+
+.graphics-container {
+    display: flex;
+}
+
 /*GREEN SECTIONS*/
 
 .green-section {
