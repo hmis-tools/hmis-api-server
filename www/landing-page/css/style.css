@@ -216,20 +216,18 @@ and (max-width: 768px) {
 
 .left-container {
     border-top: 2px dotted #42935a;
-    border-bottom: 2px dotted #42935a;
     padding-top: 2em;
     padding-bottom: 1em;
-    padding-right: 2em;
+    padding-right: 3em;
     width: 50%;
     float: left;
 }
 
 .right-container {
     border-top: 2px dotted #42935a;
-    border-bottom: 2px dotted #42935a;
     padding-top: 2em;
     padding-bottom: 1em;
-    padding-right: 2em;
+    padding-right: 3em;
     width: 50%;
     float: right;
 }
