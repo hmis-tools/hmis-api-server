@@ -236,6 +236,21 @@ and (max-width: 768px) {
 
 .graphics-container {
     display: flex;
+    padding-top: 2em;
+    padding-bottom: 1em;
+    padding-right: 2em;
+}
+
+/* 
+ * Reference:
+ * http://code.stephenmorley.org/html-and-css/styling-buttons-with-css3 
+ */
+.button-img {
+    text-align: left;
+    border: 5px solid rgb(128,128,128);
+    border-radius: 10px;
+    padding: 0 8px;
+    line-height: 24px;
 }
 
 /*GREEN SECTIONS*/
