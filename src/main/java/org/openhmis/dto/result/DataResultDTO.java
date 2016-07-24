@@ -46,21 +46,21 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 	org.openhmis.dto.SubstanceAbuseDTO.class,
 	org.openhmis.dto.UserDTO.class
 })
-public class DataResultDTO {
+public class DataResultDTO<T> {
 
 	// Base error information
-	private Object item;
+	private T item;
 
 	public DataResultDTO() {
 	}
 
-	public DataResultDTO(Object item) {
+	public DataResultDTO(T item) {
 		this.item = item;
 	}
 
 	@JsonProperty
 	@XmlElement
-	public Object getItem() {
+	public T getItem() {
 		return item;
 	}
 }
