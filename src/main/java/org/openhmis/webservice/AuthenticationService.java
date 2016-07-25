@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -23,6 +24,7 @@ import org.openhmis.code.ClientNameDataQuality;
 import org.openhmis.dto.ClientDTO;
 import org.openhmis.manager.ClientManager;
 
+import org.openhmis.exception.AccessDeniedException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -53,8 +55,16 @@ public class AuthenticationService {
 
 	@POST
 	@Path("/externalId")
-	public String getExternalId(String id_token) {
-                /* TBD: May need to take an authorization header here. */
+	public String getExternalId(@HeaderParam("Authorization") String authorization, String id_token) {
+                /*
+                 * We probably don't need to limit access to this
+                 * endpoint to those with READ privileges on our server,
+                 * since Google provides services to find a person's
+                 * name from an id token, but we prefer to use an
+                 * abundance of caution.
+                 */
+		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
+                        throw new AccessDeniedException();
                 log.info("POST /externalId/ " + id_token);
                 String externalId = Authentication.resolveIdentity(id_token);
                 return externalId;

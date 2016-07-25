@@ -91,6 +91,10 @@ public class Authentication {
 			
                 // Make sure this user has the requested credentials
                 TmpUserDAO tmpUserDAO = new TmpUserDAO();
+                /*
+                 * TBD: does this throw exceptions?  If so, where are
+                 * they caught?
+                 */
                 TmpUser tmpUser = tmpUserDAO.getTmpUserByExternalId(externalId);
 			
                 // If the user doesn't exist, they aren't authorized
