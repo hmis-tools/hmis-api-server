@@ -3,6 +3,7 @@ package org.openhmis.webservice;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.ws.rs.core.Application;
@@ -32,7 +33,9 @@ public class ClientServiceTest extends BaseIntegrationTest {
 
     @Override
     protected IDataSet getDataSet() throws Exception {
-        return new FlatXmlDataSetBuilder().build(new File("dataset.xml"));
+    	// For these tests we'll just use the default data
+    	String path = getClass().getClassLoader().getResource("db/test/default.xml").getPath();
+        return new FlatXmlDataSetBuilder().build(new File(path));
     }
 
     @Test
