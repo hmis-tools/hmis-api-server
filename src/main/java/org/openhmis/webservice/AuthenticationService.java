@@ -35,7 +35,7 @@ import org.openhmis.util.ApplicationPropertyUtil;
 
 @Path("/authenticate")
 public class AuthenticationService {
-
+	private static final Logger log = Logger.getLogger(ClientService.class);
 	public AuthenticationService() {}
 
 	@POST
@@ -50,5 +50,16 @@ public class AuthenticationService {
 		ApplicationPropertyUtil applicationPropertyUtil = new ApplicationPropertyUtil();
 		return applicationPropertyUtil.getGoogleClientId();
 	}
+
+	@POST
+	@Path("/externalId")
+	public String getExternalId(String id_token) {
+                /* TBD: May need to take an authorization header here. */
+                log.info("POST /externalId/ " + id_token);
+                String externalId = Authentication.resolveIdentity(id_token);
+                return externalId;
+	}
+
+        
 
 }

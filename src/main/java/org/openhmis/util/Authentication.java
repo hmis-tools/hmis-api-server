@@ -85,57 +85,68 @@ public class Authentication {
                 if(tokenString == null)
                         return false;
                 
-		try {
-			// Verify that the token is a legitimate google token
-			GoogleIdToken token = GoogleIdToken.parse(JSON_FACTORY, tokenString);
-			GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier(TRANSPORT, JSON_FACTORY);
-			verifier.verify(token);
+                String externalId = resolveIdentity(tokenString);
 			
-			// If we get here then this is a valid google item
-			String externalId = token.getPayload().getEmail();
+                log.debug("Login attempt:" + externalId);
 			
-			log.debug("Login attempt:" + token.getPayload().getEmail());
+                // Make sure this user has the requested credentials
+                TmpUserDAO tmpUserDAO = new TmpUserDAO();
+                TmpUser tmpUser = tmpUserDAO.getTmpUserByExternalId(externalId);
 			
-			// Make sure this user has the requested credentials
-			TmpUserDAO tmpUserDAO = new TmpUserDAO();
-			TmpUser tmpUser = tmpUserDAO.getTmpUserByExternalId(externalId);
+                // If the user doesn't exist, they aren't authorized
+                if(externalId == null)
+                        return false;
 			
-			// If the user doesn't exist, they aren't authorized
-			if(externalId == null)
-				return false;
-			
-			switch(authType) {
-				case Authentication.EXISTS:
-					return true;
-				case Authentication.READ:
-                                        return true;
-				case Authentication.WRITE:
-					if(tmpUser != null && tmpUser.getCanWrite() == 1)
-						return true;
-					break;
-				case Authentication.ADMIN:
-					if(tmpUser != null && tmpUser.getCanAdmin() == 1)
-						return true;
-					break;
-			}
-			return false;
-		} catch (IOException e) {
-			log.debug("IOException authenticating with Google: " + e.toString());
-			return false;
-		} catch (GeneralSecurityException e) {
-			log.debug("GeneralSecurityException authenticating with Google: " + e.toString());
-			return false;
-		} catch (IllegalArgumentException e) {
-			log.debug("IllegalArgumentException authenticating with Google: " + e.toString());
-			return false;
-		} catch (Exception e) {
-			log.debug("Unexpected exception authenticating with Google: " + e.toString());
-			return false;
-		}
+                switch(authType) {
+                case Authentication.EXISTS:
+                        return true;
+                case Authentication.READ:
+                        return true;
+                case Authentication.WRITE:
+                        if(tmpUser != null && tmpUser.getCanWrite() == 1)
+                            return true;
+                        break;
+                case Authentication.ADMIN:
+                        if(tmpUser != null && tmpUser.getCanAdmin() == 1)
+                            return true;
+                        break;
+                }
+                return false;
 	}
 
         public static Boolean getAuthEnabled() {
             return AUTH_ENABLED;
+        }
+
+        /*
+         * Given the id token, return the identity represented (usually a
+         * Google email address, for now).
+        */
+        public static String resolveIdentity(String id_token) {
+                String externalId;
+                try {
+                    // Verify that the token is a legitimate google token
+                    GoogleIdToken token = GoogleIdToken.parse(JSON_FACTORY, id_token);
+                    GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier(TRANSPORT, JSON_FACTORY);
+                    verifier.verify(token);
+    			
+                    // If we get here then this is a valid google item
+                    externalId = token.getPayload().getEmail();
+		} catch (IOException e) {
+			log.debug("IOException authenticating with Google: " + e.toString());
+                        externalId = null;
+		} catch (GeneralSecurityException e) {
+			log.debug("GeneralSecurityException authenticating with Google: " + e.toString());
+                        externalId = null;
+		} catch (IllegalArgumentException e) {
+			log.debug("IllegalArgumentException authenticating with Google: " + e.toString());
+                        externalId = null;
+		} catch (Exception e) {
+			log.debug("Unexpected exception authenticating with Google: " + e.toString());
+                        externalId = null;
+		}
+                
+                return externalId;
         }
 
 }
