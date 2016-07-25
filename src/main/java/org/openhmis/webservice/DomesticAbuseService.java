@@ -42,16 +42,16 @@ public class DomesticAbuseService {
 	public List<DomesticAbuseDTO> getDomesticAbuses(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
-		
+
+                List<DomesticAbuseDTO> domesticAbuseDTOs;
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<DomesticAbuseDTO> domesticAbuseDTOs = DomesticAbuseManager.getDomesticAbuses();
-			return domesticAbuseDTOs;
+			domesticAbuseDTOs = DomesticAbuseManager.getDomesticAbuses();
 		} else {
-			List<DomesticAbuseDTO> domesticAbuseDTOs = DomesticAbuseManager.getDomesticAbuses(DateParser.parseDate(updatedSince));
-			return domesticAbuseDTOs;			
+			domesticAbuseDTOs = DomesticAbuseManager.getDomesticAbuses(DateParser.parseDate(updatedSince));
 		}
-		
+                log.info("GET /domestic-abuses (" + domesticAbuseDTOs.size() + " results)");
+                return domesticAbuseDTOs;
 	}
 	
 	@POST
@@ -62,6 +62,7 @@ public class DomesticAbuseService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		DomesticAbuseDTO outputDTO = DomesticAbuseManager.addDomesticAbuse(inputDTO);
+                log.info("POST /domestic-abuses (" + outputDTO.getId() + ")");
 		return outputDTO;
 	}
 	
@@ -72,6 +73,7 @@ public class DomesticAbuseService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		DomesticAbuseDTO outputDTO = DomesticAbuseManager.getDomesticAbuseById(domesticAbuseId);
+                log.info("GET /domestic-abuses/" + domesticAbuseId);
 		return outputDTO;
 	}
 	
@@ -85,6 +87,7 @@ public class DomesticAbuseService {
 		inputDTO.setDomesticAbuseId(domesticAbuseId);
 		
 		DomesticAbuseDTO outputDTO = DomesticAbuseManager.updateDomesticAbuse(inputDTO);
+                log.info("PUT /domestic-abuses/" + domesticAbuseId);
 		return outputDTO;
 	}
 	
@@ -95,6 +98,7 @@ public class DomesticAbuseService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		DomesticAbuseManager.deleteDomesticAbuse(domesticAbuseId);
+                log.info("DELETE /domestic-abuses/" + domesticAbuseId);
 		return "true";
 	}
 }

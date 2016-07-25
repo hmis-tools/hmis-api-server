@@ -43,15 +43,15 @@ public class SiteService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		
-		// If the user specified no updatedSince parameter, return everything
+                List<SiteDTO> siteDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<SiteDTO> siteDTOs = SiteManager.getSites();
-			return siteDTOs;
+			siteDTOs = SiteManager.getSites();
 		} else {
-			List<SiteDTO> siteDTOs = SiteManager.getSites(DateParser.parseDate(updatedSince));
-			return siteDTOs;			
+			siteDTOs = SiteManager.getSites(DateParser.parseDate(updatedSince));
 		}
-		
+                log.info("GET /sites (" + siteDTOs.size() + ")");
+                return siteDTOs;
 	}
 	
 	@POST
@@ -62,7 +62,8 @@ public class SiteService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		SiteDTO outputDTO = SiteManager.addSite(inputDTO);
-		return outputDTO;
+                log.info("POST  /sites (" + outputDTO.getId() + ")");
+                return outputDTO;
 	}
 	
 	@GET
@@ -72,6 +73,7 @@ public class SiteService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		SiteDTO outputDTO = SiteManager.getSiteById(siteId);
+                log.info("GET  /sites/" + siteId);
 		return outputDTO;
 	}
 	
@@ -85,6 +87,7 @@ public class SiteService {
 		inputDTO.setSiteId(siteId);
 		
 		SiteDTO outputDTO = SiteManager.updateSite(inputDTO);
+                log.info("PUT  /sites/" + siteId);
 		return outputDTO;
 	}
 	
@@ -95,6 +98,7 @@ public class SiteService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		SiteManager.deleteSite(siteId);
+                log.info("DELETE  /sites/" + siteId);
 		return "true";
 	}
 }

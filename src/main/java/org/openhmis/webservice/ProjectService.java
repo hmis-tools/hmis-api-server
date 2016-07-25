@@ -41,6 +41,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Path("/projects")
 public class ProjectService {
 	private static final ObjectMapper om = new ObjectMapper();
+	private static final Logger log = Logger.getLogger(ClientService.class);
 
 	public ProjectService() {}
 
@@ -51,15 +52,17 @@ public class ProjectService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
+                List<ProjectDTO> projectDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<ProjectDTO> projectDTOs = ProjectManager.getProjects();
-			return projectDTOs;
+			projectDTOs = ProjectManager.getProjects();
 		} else {
-			List<ProjectDTO> projectDTOs = ProjectManager.getProjectsByUpdateDate(DateParser.parseDate(updatedSince));
-			return projectDTOs;
+			projectDTOs = ProjectManager.getProjectsByUpdateDate(DateParser.parseDate(updatedSince));
 		}
-	}
+                log.info("GET /projects (" + projectDTOs.size() + ")");
+                return projectDTOs;
+        }
+
 	
 	@POST
 	@Path("/")
@@ -69,7 +72,8 @@ public class ProjectService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		ProjectDTO outputVO = ProjectManager.addProject(inputVO);
-		return outputVO;
+                log.info("POST  /projects (" + outputVO.getId() + ")");
+                return outputVO;
 	}
 	
 	@GET
@@ -79,6 +83,7 @@ public class ProjectService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		ProjectDTO projectDTO = ProjectManager.getProjectById(projectId);
+                log.info("GET  /projects/" + projectId);
 		return projectDTO;
 	}
 	
@@ -92,6 +97,7 @@ public class ProjectService {
 		inputVO.setProjectId(projectId);
 		
 		ProjectDTO outputVO = ProjectManager.updateProject(inputVO);
+                log.info("PUT  /projects/" + projectId);
 		return outputVO;
 	}
 	
@@ -102,6 +108,7 @@ public class ProjectService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		ProjectManager.deleteProject(projectId);
+                log.info("DELETE  /projects/" + projectId);
 		return "true";
 	}
 	
@@ -113,14 +120,15 @@ public class ProjectService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
+                List<CoCDTO> coCDTOs;
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<CoCDTO> coCDTOs = CoCManager.getCoCsByProjectId(projectId);
-			return coCDTOs;
+			coCDTOs = CoCManager.getCoCsByProjectId(projectId);
 		} else {
-			List<CoCDTO> coCDTOs = CoCManager.getCoCsByProjectId(projectId, DateParser.parseDate(updatedSince));
-			return coCDTOs;
+			coCDTOs = CoCManager.getCoCsByProjectId(projectId, DateParser.parseDate(updatedSince));
 		}
+                log.info("GET  /" + projectId + "/cocs (" + coCDTOs.size() + " results)");
+                return coCDTOs;
 	}
 	
 	/* Funder Endpoints */
@@ -131,13 +139,14 @@ public class ProjectService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
+                List<FunderDTO> funderDTOs;
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<FunderDTO> funderDTOs = FunderManager.getFundersByProjectId(projectId);
-			return funderDTOs;
+			funderDTOs = FunderManager.getFundersByProjectId(projectId);
 		} else {
-			List<FunderDTO> funderDTOs = FunderManager.getFundersByProjectId(projectId, DateParser.parseDate(updatedSince));
-			return funderDTOs;
+			funderDTOs = FunderManager.getFundersByProjectId(projectId, DateParser.parseDate(updatedSince));
 		}
+                log.info("GET  /" + projectId + "/funders (" + funderDTOs.size() + " results)");
+                return funderDTOs;
 	}
 }

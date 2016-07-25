@@ -46,16 +46,16 @@ public class CoCService {
 	public List<CoCDTO> getCoCs(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
-		
+
+                List<CoCDTO> coCDTOs;
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<CoCDTO> coCDTOs = CoCManager.getCoCs();
-			return coCDTOs;
+			coCDTOs = CoCManager.getCoCs();
 		} else {
-			List<CoCDTO> coCDTOs = CoCManager.getCoCs(DateParser.parseDate(updatedSince));
-			return coCDTOs;			
+			coCDTOs = CoCManager.getCoCs(DateParser.parseDate(updatedSince));
 		}
-		
+                log.info("GET /cocs (" + coCDTOs.size() + " results)");
+                return coCDTOs;
 	}
 	
 	@POST
@@ -66,6 +66,7 @@ public class CoCService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		CoCDTO outputDTO = CoCManager.addCoC(inputDTO);
+                log.info("POST /cocs (" + outputDTO.getId() + " results)");
 		return outputDTO;
 	}
 	
@@ -76,6 +77,7 @@ public class CoCService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		CoCDTO outputDTO = CoCManager.getCoCByProjectCoCId(coCId);
+                log.info("GET /cocs/" + coCId);
 		return outputDTO;
 	}
 	
@@ -89,6 +91,7 @@ public class CoCService {
 		inputDTO.setProjectCoCId(coCId);
 		
 		CoCDTO outputDTO = CoCManager.updateCoC(inputDTO);
+                log.info("PUT /cocs/" + coCId);
 		return outputDTO;
 	}
 	
@@ -99,6 +102,7 @@ public class CoCService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		CoCManager.deleteCoC(coCId);
+                log.info("DELETE /cocs/" + coCId);
 		return "true";
 	}
 
@@ -110,14 +114,15 @@ public class CoCService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
+                List<InventoryDTO> inventoryDTOs;
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<InventoryDTO> inventoryDTOs = InventoryManager.getInventoriesByProjectCoCId(coCId);
-			return inventoryDTOs;
+			inventoryDTOs = InventoryManager.getInventoriesByProjectCoCId(coCId);
 		} else {
-			List<InventoryDTO> inventoryDTOs = InventoryManager.getInventoriesByProjectCoCId(coCId, DateParser.parseDate(updatedSince));
-			return inventoryDTOs;
+			inventoryDTOs = InventoryManager.getInventoriesByProjectCoCId(coCId, DateParser.parseDate(updatedSince));
 		}
+                log.info("GET /" + coCId + "/inventories (" + inventoryDTOs.size() + " results)");
+                return inventoryDTOs;
 	}
 
 	/* Site Endpoints */
@@ -128,14 +133,15 @@ public class CoCService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
+                List<SiteDTO> siteDTOs;
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<SiteDTO> siteDTOs = SiteManager.getSitesByProjectCoCId(coCId);
-			return siteDTOs;
+			siteDTOs = SiteManager.getSitesByProjectCoCId(coCId);
 		} else {
-			List<SiteDTO> siteDTOs = SiteManager.getSitesByProjectCoCId(coCId, DateParser.parseDate(updatedSince));
-			return siteDTOs;
+			siteDTOs = SiteManager.getSitesByProjectCoCId(coCId, DateParser.parseDate(updatedSince));
 		}
+                log.info("GET /" + coCId + "/sites (" + siteDTOs.size() + " results)");
+                return siteDTOs;
 	}
 
 }

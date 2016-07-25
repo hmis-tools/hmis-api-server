@@ -31,7 +31,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 
-@Path("/hiv-aids-satatuses")
+@Path("/hiv-aids-statuses")
 public class HivAidsStatusService {
 	private static final Logger log = Logger.getLogger(HivAidsStatusService.class);
 	public HivAidsStatusService() {}
@@ -43,14 +43,15 @@ public class HivAidsStatusService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		
-		// If the user specified no updatedSince parameter, return everything
+                List<HivAidsStatusDTO> hivAidsStatusDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<HivAidsStatusDTO> hivAidsStatusDTOs = HivAidsStatusManager.getHivAidsStatuses();
-			return hivAidsStatusDTOs;
+			hivAidsStatusDTOs = HivAidsStatusManager.getHivAidsStatuses();
 		} else {
-			List<HivAidsStatusDTO> hivAidsStatusDTOs = HivAidsStatusManager.getHivAidsStatuses(DateParser.parseDate(updatedSince));
-			return hivAidsStatusDTOs;			
+			hivAidsStatusDTOs = HivAidsStatusManager.getHivAidsStatuses(DateParser.parseDate(updatedSince));
 		}
+                log.info("GET /hiv-aids-statuses (" + hivAidsStatusDTOs.size() + " results)");
+                return hivAidsStatusDTOs;
 		
 	}
 	
@@ -62,6 +63,7 @@ public class HivAidsStatusService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		HivAidsStatusDTO outputDTO = HivAidsStatusManager.addHivAidsStatus(inputDTO);
+                log.info("GET /hiv-aids-statuses (" + outputDTO.getId() + ")");
 		return outputDTO;
 	}
 	
@@ -72,6 +74,7 @@ public class HivAidsStatusService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		HivAidsStatusDTO outputDTO = HivAidsStatusManager.getHivAidsStatusById(hivAidsStatusId);
+                log.info("GET /hiv-aids-statuses/" + hivAidsStatusId);
 		return outputDTO;
 	}
 	
@@ -85,6 +88,7 @@ public class HivAidsStatusService {
 		inputDTO.setHivAidsStatusId(hivAidsStatusId);
 		
 		HivAidsStatusDTO outputDTO = HivAidsStatusManager.updateHivAidsStatus(inputDTO);
+                log.info("PUT /hiv-aids-statuses/" + hivAidsStatusId);
 		return outputDTO;
 	}
 	
@@ -95,6 +99,7 @@ public class HivAidsStatusService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		HivAidsStatusManager.deleteHivAidsStatus(hivAidsStatusId);
+                log.info("DELETE /hiv-aids-statuses/" + hivAidsStatusId);
 		return "true";
 	}
 }

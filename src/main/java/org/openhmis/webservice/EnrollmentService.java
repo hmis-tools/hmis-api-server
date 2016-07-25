@@ -68,6 +68,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class EnrollmentService {
 	private static final ObjectMapper om = new ObjectMapper();
 	private static final EnrollmentManager enrollmentManager = new EnrollmentManager();
+	private static final Logger log = Logger.getLogger(ClientService.class);
 
 	public EnrollmentService() {}
 
@@ -81,14 +82,15 @@ public class EnrollmentService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
+                List<EnrollmentDTO> enrollmentDTOs;
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<EnrollmentDTO> enrollmentDTOs = enrollmentManager.getEnrollments();
-			return enrollmentDTOs;
+			enrollmentDTOs = enrollmentManager.getEnrollments();
 		} else {
-			List<EnrollmentDTO> enrollmentDTOs = enrollmentManager.getEnrollmentsByUpdateDate(DateParser.parseDate(updatedSince));
-			return enrollmentDTOs;			
+			enrollmentDTOs = enrollmentManager.getEnrollmentsByUpdateDate(DateParser.parseDate(updatedSince));
 		}
+                log.info("GET /enrollments/ (" + enrollmentDTOs.size() + " results)");
+                return enrollmentDTOs;
 	}
 	
 	@GET
@@ -98,6 +100,7 @@ public class EnrollmentService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		EnrollmentDTO enrollmentDTO = enrollmentManager.getEnrollmentById(enrollmentId);
+                log.info("GET /enrollments/" + enrollmentId);
 		return enrollmentDTO;
 	}
 
@@ -109,6 +112,7 @@ public class EnrollmentService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		EnrollmentDTO outputVO = enrollmentManager.addEnrollment(inputVO);
+                log.info("POST /enrollments (" + outputVO.getId() + ")");
 		return outputVO;
 	}
 	
@@ -122,6 +126,7 @@ public class EnrollmentService {
 		inputVO.setEnrollmentId(enrollmentId);
 		
 		EnrollmentDTO outputVO = enrollmentManager.updateEnrollment(inputVO);
+                log.info("PUT /enrollments/" + enrollmentId);
 		return outputVO;
 	}
 	
@@ -132,6 +137,7 @@ public class EnrollmentService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		enrollmentManager.deleteEnrollment(enrollmentId);
+                log.info("PUT /enrollments/" + enrollmentId);
 		return "true";
 	}
 	
@@ -147,7 +153,8 @@ public class EnrollmentService {
 		// TODO: figure out whether or not we want exists to have history
 		List<ExitDTO> exitDTOs = new ArrayList<ExitDTO>();
 		exitDTOs.add(ExitManager.getExitByEnrollmentId(enrollmentId));
-		return exitDTOs;
+                log.info("GET /" + enrollmentId + "/exits (" + exitDTOs.size() + " results)");
+                return exitDTOs;
 	}
 
 
@@ -158,15 +165,16 @@ public class EnrollmentService {
 	public List<ChronicHealthConditionDTO> getChronicHealthConditions(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
-		
+                
+		List<ChronicHealthConditionDTO> chronicHealthConditionDTOs;
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = ChronicHealthConditionManager.getChronicHealthConditionsByEnrollmentId(enrollmentId);
-			return chronicHealthConditionDTOs;
+			chronicHealthConditionDTOs = ChronicHealthConditionManager.getChronicHealthConditionsByEnrollmentId(enrollmentId);
 		} else {
-			List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = ChronicHealthConditionManager.getChronicHealthConditionsByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return chronicHealthConditionDTOs;
+			chronicHealthConditionDTOs = ChronicHealthConditionManager.getChronicHealthConditionsByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
+                log.info("GET /" + enrollmentId + "/chronic-health-conditions (" + chronicHealthConditionDTOs.size() + " results)");
+                return chronicHealthConditionDTOs;
 	}
 	
 
@@ -178,14 +186,15 @@ public class EnrollmentService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
+                List<ContactDTO> contactDTOs;
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<ContactDTO> contactDTOs = ContactManager.getContactsByEnrollmentId(enrollmentId);
-			return contactDTOs;
+			contactDTOs = ContactManager.getContactsByEnrollmentId(enrollmentId);
 		} else {
-			List<ContactDTO> contactDTOs = ContactManager.getContactsByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return contactDTOs;			
+			contactDTOs = ContactManager.getContactsByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
+                log.info("GET /" + enrollmentId + "/contacts (" + contactDTOs.size() + " results)");
+                return contactDTOs;
 	}
 
 
@@ -196,15 +205,16 @@ public class EnrollmentService {
 	public List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilities(@HeaderParam("Authorization") String authorization, @PathParam("enrollmentId") String enrollmentId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
-		
+
+                List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs;
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = DevelopmentalDisabilityManager.getDevelopmentalDisabilitiesByEnrollmentId(enrollmentId);
-			return developmentalDisabilityDTOs;
+			developmentalDisabilityDTOs = DevelopmentalDisabilityManager.getDevelopmentalDisabilitiesByEnrollmentId(enrollmentId);
 		} else {
-			List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = DevelopmentalDisabilityManager.getDevelopmentalDisabilitiesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return developmentalDisabilityDTOs;
+                        developmentalDisabilityDTOs = DevelopmentalDisabilityManager.getDevelopmentalDisabilitiesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
+                log.info("GET /" + enrollmentId + "/developmental-disabilities (" + developmentalDisabilityDTOs.size() + " results)");
+                return developmentalDisabilityDTOs;
 	}
 
 
@@ -216,14 +226,15 @@ public class EnrollmentService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		
-		// If the user specified no updatedSince parameter, return everything
+                List<DomesticAbuseDTO> domesticAbuseDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<DomesticAbuseDTO> domesticAbuseDTOs = DomesticAbuseManager.getDomesticAbusesByEnrollmentId(enrollmentId);
-			return domesticAbuseDTOs;
+			domesticAbuseDTOs = DomesticAbuseManager.getDomesticAbusesByEnrollmentId(enrollmentId);
 		} else {
-			List<DomesticAbuseDTO> domesticAbuseDTOs = DomesticAbuseManager.getDomesticAbusesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return domesticAbuseDTOs;
+			domesticAbuseDTOs = DomesticAbuseManager.getDomesticAbusesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
+                log.info("GET /" + enrollmentId + "/domestic-abuses (" + domesticAbuseDTOs.size() + " results)");
+                return domesticAbuseDTOs;
 	}
 
 
@@ -235,14 +246,15 @@ public class EnrollmentService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
+                List<FinancialAssistanceDTO> financialAssistanceDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<FinancialAssistanceDTO> financialAssistanceDTOs = FinancialAssistanceManager.getFinancialAssistancesByEnrollmentId(enrollmentId);
-			return financialAssistanceDTOs;
+			financialAssistanceDTOs = FinancialAssistanceManager.getFinancialAssistancesByEnrollmentId(enrollmentId);
 		} else {
-			List<FinancialAssistanceDTO> financialAssistanceDTOs = FinancialAssistanceManager.getFinancialAssistancesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return financialAssistanceDTOs;
+			financialAssistanceDTOs = FinancialAssistanceManager.getFinancialAssistancesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
+                log.info("GET /" + enrollmentId + "/financial-assitances (" + financialAssistanceDTOs.size() + " results)");
+                return financialAssistanceDTOs;
 	}
 	
 
@@ -254,14 +266,15 @@ public class EnrollmentService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
+                List<HealthInsuranceDTO> healthInsuranceDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<HealthInsuranceDTO> healthInsuranceDTOs = HealthInsuranceManager.getHealthInsurancesByEnrollmentId(enrollmentId);
-			return healthInsuranceDTOs;
+			healthInsuranceDTOs = HealthInsuranceManager.getHealthInsurancesByEnrollmentId(enrollmentId);
 		} else {
-			List<HealthInsuranceDTO> healthInsuranceDTOs = HealthInsuranceManager.getHealthInsurancesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return healthInsuranceDTOs;
+			healthInsuranceDTOs = HealthInsuranceManager.getHealthInsurancesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
+                log.info("GET /" + enrollmentId + "/health-insurances (" + healthInsuranceDTOs.size() + " results)");
+                return healthInsuranceDTOs;
 	}
 	
 
@@ -273,14 +286,15 @@ public class EnrollmentService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
+                List<HivAidsStatusDTO> hivAidsStatusDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<HivAidsStatusDTO> hivAidsStatusDTOs = HivAidsStatusManager.getHivAidsStatusesByEnrollmentId(enrollmentId);
-			return hivAidsStatusDTOs;
+			hivAidsStatusDTOs = HivAidsStatusManager.getHivAidsStatusesByEnrollmentId(enrollmentId);
 		} else {
-			List<HivAidsStatusDTO> hivAidsStatusDTOs = HivAidsStatusManager.getHivAidsStatusesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return hivAidsStatusDTOs;
+			hivAidsStatusDTOs = HivAidsStatusManager.getHivAidsStatusesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
+                log.info("GET /" + enrollmentId + "/hiv-aids-statuses (" + hivAidsStatusDTOs.size() + " results)");
+                return hivAidsStatusDTOs;
 	}
 	
 
@@ -292,14 +306,15 @@ public class EnrollmentService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
+                List<MedicalAssistanceDTO> medicalAssistanceDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<MedicalAssistanceDTO> medicalAssistanceDTOs = MedicalAssistanceManager.getMedicalAssistancesByEnrollmentId(enrollmentId);
-			return medicalAssistanceDTOs;
+			medicalAssistanceDTOs = MedicalAssistanceManager.getMedicalAssistancesByEnrollmentId(enrollmentId);
 		} else {
-			List<MedicalAssistanceDTO> medicalAssistanceDTOs = MedicalAssistanceManager.getMedicalAssistancesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return medicalAssistanceDTOs;
+			medicalAssistanceDTOs = MedicalAssistanceManager.getMedicalAssistancesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
+                log.info("GET /" + enrollmentId + "/medical-assistances (" + medicalAssistanceDTOs.size() + " results)");
+                return medicalAssistanceDTOs;
 	}
 	
 
@@ -311,14 +326,15 @@ public class EnrollmentService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
+                List<IncomeSourceDTO> incomeSourceDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<IncomeSourceDTO> incomeSourceDTOs = IncomeSourceManager.getIncomeSourcesByEnrollmentId(enrollmentId);
-			return incomeSourceDTOs;
+			incomeSourceDTOs = IncomeSourceManager.getIncomeSourcesByEnrollmentId(enrollmentId);
 		} else {
-			List<IncomeSourceDTO> incomeSourceDTOs = IncomeSourceManager.getIncomeSourcesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return incomeSourceDTOs;
+			incomeSourceDTOs = IncomeSourceManager.getIncomeSourcesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
+                log.info("GET /" + enrollmentId + "/income-sources (" + incomeSourceDTOs.size() + " results)");
+                return incomeSourceDTOs;
 	}
 	
 
@@ -330,14 +346,15 @@ public class EnrollmentService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
+                List<NonCashBenefitDTO> nonCashBenefitDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<NonCashBenefitDTO> nonCashBenefitDTOs = NonCashBenefitManager.getNonCashBenefitsByEnrollmentId(enrollmentId);
-			return nonCashBenefitDTOs;
+			nonCashBenefitDTOs = NonCashBenefitManager.getNonCashBenefitsByEnrollmentId(enrollmentId);
 		} else {
-			List<NonCashBenefitDTO> nonCashBenefitDTOs = NonCashBenefitManager.getNonCashBenefitsByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return nonCashBenefitDTOs;
+			nonCashBenefitDTOs = NonCashBenefitManager.getNonCashBenefitsByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
+                log.info("GET /" + enrollmentId + "/noncash-benefits (" + nonCashBenefitDTOs.size() + " results)");
+                return nonCashBenefitDTOs;
 	}
 	
 
@@ -349,14 +366,15 @@ public class EnrollmentService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
+                List<PhysicalDisabilityDTO> physicalDisabilityDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<PhysicalDisabilityDTO> physicalDisabilityDTOs = PhysicalDisabilityManager.getPhysicalDisabilitiesByEnrollmentId(enrollmentId);
-			return physicalDisabilityDTOs;
+			physicalDisabilityDTOs = PhysicalDisabilityManager.getPhysicalDisabilitiesByEnrollmentId(enrollmentId);
 		} else {
-			List<PhysicalDisabilityDTO> physicalDisabilityDTOs = PhysicalDisabilityManager.getPhysicalDisabilitiesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return physicalDisabilityDTOs;
+			physicalDisabilityDTOs = PhysicalDisabilityManager.getPhysicalDisabilitiesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
+                log.info("GET /" + enrollmentId + "/physical-disabilities (" + physicalDisabilityDTOs.size() + " results)");
+                return physicalDisabilityDTOs;
 	}
 	
 
@@ -368,14 +386,15 @@ public class EnrollmentService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
+                List<ReferralDTO> referralDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<ReferralDTO> referralDTOs = ReferralManager.getReferralsByEnrollmentId(enrollmentId);
-			return referralDTOs;
+			referralDTOs = ReferralManager.getReferralsByEnrollmentId(enrollmentId);
 		} else {
-			List<ReferralDTO> referralDTOs = ReferralManager.getReferralsByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return referralDTOs;
+			referralDTOs = ReferralManager.getReferralsByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
+                log.info("GET /" + enrollmentId + "/referrals (" + referralDTOs.size() + " results)");
+                return referralDTOs;
 	}
 	
 
@@ -387,14 +406,15 @@ public class EnrollmentService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
+                List<ServiceDTO> serviceDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<ServiceDTO> serviceDTOs = ServiceManager.getServicesByEnrollmentId(enrollmentId);
-			return serviceDTOs;
+			serviceDTOs = ServiceManager.getServicesByEnrollmentId(enrollmentId);
 		} else {
-			List<ServiceDTO> serviceDTOs = ServiceManager.getServicesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return serviceDTOs;
+			serviceDTOs = ServiceManager.getServicesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
+                log.info("GET /" + enrollmentId + "/services (" + serviceDTOs.size() + " results)");
+                return serviceDTOs;
 	}
 	
 
@@ -406,13 +426,14 @@ public class EnrollmentService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
+                List<SubstanceAbuseDTO> substanceAbuseDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<SubstanceAbuseDTO> substanceAbuseDTOs = SubstanceAbuseManager.getSubstanceAbusesByEnrollmentId(enrollmentId);
-			return substanceAbuseDTOs;
+			substanceAbuseDTOs = SubstanceAbuseManager.getSubstanceAbusesByEnrollmentId(enrollmentId);
 		} else {
-			List<SubstanceAbuseDTO> substanceAbuseDTOs = SubstanceAbuseManager.getSubstanceAbusesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
-			return substanceAbuseDTOs;
+			substanceAbuseDTOs = SubstanceAbuseManager.getSubstanceAbusesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
+                log.info("GET /" + enrollmentId + "/substance-abuses (" + substanceAbuseDTOs.size() + " results)");
+                return substanceAbuseDTOs;
 	}
 }

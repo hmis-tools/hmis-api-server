@@ -43,15 +43,15 @@ public class ServiceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		
-		// If the user specified no updatedSince parameter, return everything
+                List<ServiceDTO> serviceDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<ServiceDTO> serviceDTOs = ServiceManager.getServices();
-			return serviceDTOs;
+			serviceDTOs = ServiceManager.getServices();
 		} else {
-			List<ServiceDTO> serviceDTOs = ServiceManager.getServices(DateParser.parseDate(updatedSince));
-			return serviceDTOs;			
+			serviceDTOs = ServiceManager.getServices(DateParser.parseDate(updatedSince));
 		}
-		
+                log.info("GET /services (" + serviceDTOs.size() + ")");
+                return serviceDTOs;
 	}
 	
 	@POST
@@ -62,7 +62,8 @@ public class ServiceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		ServiceDTO outputDTO = ServiceManager.addService(inputDTO);
-		return outputDTO;
+                log.info("POST  /services (" + outputDTO.getId() + ")");
+                return outputDTO;
 	}
 	
 	@GET
@@ -72,6 +73,7 @@ public class ServiceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		ServiceDTO outputDTO = ServiceManager.getServiceById(serviceId);
+                log.info("GET  /services/" + serviceId);
 		return outputDTO;
 	}
 	
@@ -85,6 +87,7 @@ public class ServiceService {
 		inputDTO.setServiceId(serviceId);
 		
 		ServiceDTO outputDTO = ServiceManager.updateService(inputDTO);
+                log.info("PUT  /services/" + serviceId);
 		return outputDTO;
 	}
 	
@@ -95,6 +98,7 @@ public class ServiceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		ServiceManager.deleteService(serviceId);
+                log.info("DELETE  /services/" + serviceId);
 		return "true";
 	}
 }

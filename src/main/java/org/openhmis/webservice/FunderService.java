@@ -43,14 +43,15 @@ public class FunderService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		
-		// If the user specified no updatedSince parameter, return everything
+                List<FunderDTO> funderDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<FunderDTO> funderDTOs = FunderManager.getFunders();
-			return funderDTOs;
+			funderDTOs = FunderManager.getFunders();
 		} else {
-			List<FunderDTO> funderDTOs = FunderManager.getFunders(DateParser.parseDate(updatedSince));
-			return funderDTOs;			
+			funderDTOs = FunderManager.getFunders(DateParser.parseDate(updatedSince));
 		}
+                log.info("GET /funders (" + funderDTOs.size() + " results)");
+                return funderDTOs;
 		
 	}
 	
@@ -62,6 +63,7 @@ public class FunderService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		FunderDTO outputDTO = FunderManager.addFunder(inputDTO);
+                log.info("POST /funders (" + outputDTO.getId() + ")");
 		return outputDTO;
 	}
 	
@@ -72,6 +74,7 @@ public class FunderService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		FunderDTO outputDTO = FunderManager.getFunderById(funderId);
+                log.info("GET /funders/" + funderId);
 		return outputDTO;
 	}
 	
@@ -85,6 +88,7 @@ public class FunderService {
 		inputDTO.setFunderId(funderId);
 		
 		FunderDTO outputDTO = FunderManager.updateFunder(inputDTO);
+                log.info("PUT /funders/" + funderId);
 		return outputDTO;
 	}
 	
@@ -95,6 +99,7 @@ public class FunderService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		FunderManager.deleteFunder(funderId);
+                log.info("DELETE /funders/" + funderId);
 		return "true";
 	}
 }

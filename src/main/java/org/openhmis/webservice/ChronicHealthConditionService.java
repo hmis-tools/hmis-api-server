@@ -42,15 +42,17 @@ public class ChronicHealthConditionService {
 	public List<ChronicHealthConditionDTO> getChronicHealthConditions(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
-		
+
+                List<ChronicHealthConditionDTO> chronicHealthConditionDTOs;
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = ChronicHealthConditionManager.getChronicHealthConditions();
-			return chronicHealthConditionDTOs;
+			chronicHealthConditionDTOs = ChronicHealthConditionManager.getChronicHealthConditions();
 		} else {
-			List<ChronicHealthConditionDTO> chronicHealthConditionDTOs = ChronicHealthConditionManager.getChronicHealthConditions(DateParser.parseDate(updatedSince));
-			return chronicHealthConditionDTOs;			
+			chronicHealthConditionDTOs = ChronicHealthConditionManager.getChronicHealthConditions(DateParser.parseDate(updatedSince));
 		}
+                
+                log.info("GET /chronic-health-conditions (" + chronicHealthConditionDTOs.size() + " results)");
+                return chronicHealthConditionDTOs;
 		
 	}
 	
@@ -62,6 +64,7 @@ public class ChronicHealthConditionService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		ChronicHealthConditionDTO outputDTO = ChronicHealthConditionManager.addChronicHealthCondition(inputDTO);
+                log.info("POST /chronic-health-conditions (" + outputDTO.getChronicHealthConditionId() + ")");
 		return outputDTO;
 	}
 	
@@ -72,6 +75,7 @@ public class ChronicHealthConditionService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		ChronicHealthConditionDTO outputDTO = ChronicHealthConditionManager.getChronicHealthConditionById(chronicHealthConditionId);
+                log.info("GET /chronic-health-conditions/" + outputDTO.getChronicHealthConditionId());
 		return outputDTO;
 	}
 	
@@ -85,6 +89,7 @@ public class ChronicHealthConditionService {
 		inputDTO.setChronicHealthConditionId(chronicHealthConditionId);
 		
 		ChronicHealthConditionDTO outputDTO = ChronicHealthConditionManager.updateChronicHealthCondition(inputDTO);
+                log.info("PUT /chronic-health-conditions/" + outputDTO.getChronicHealthConditionId());
 		return outputDTO;
 	}
 	
@@ -95,6 +100,7 @@ public class ChronicHealthConditionService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		ChronicHealthConditionManager.deleteChronicHealthCondition(chronicHealthConditionId);
+                log.info("DELETE /chronic-health-conditions/" + chronicHealthConditionId);
 		return "true";
 	}
 }

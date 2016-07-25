@@ -43,15 +43,15 @@ public class SubstanceAbuseService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		
-		// If the user specified no updatedSince parameter, return everything
+                List<SubstanceAbuseDTO> substanceAbuseDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<SubstanceAbuseDTO> substanceAbuseDTOs = SubstanceAbuseManager.getSubstanceAbuses();
-			return substanceAbuseDTOs;
+			substanceAbuseDTOs = SubstanceAbuseManager.getSubstanceAbuses();
 		} else {
-			List<SubstanceAbuseDTO> substanceAbuseDTOs = SubstanceAbuseManager.getSubstanceAbuses(DateParser.parseDate(updatedSince));
-			return substanceAbuseDTOs;			
+			substanceAbuseDTOs = SubstanceAbuseManager.getSubstanceAbuses(DateParser.parseDate(updatedSince));
 		}
-		
+                log.info("GET /substance-abuses (" + substanceAbuseDTOs.size() + ")");
+                return substanceAbuseDTOs;
 	}
 	
 	@POST
@@ -62,7 +62,8 @@ public class SubstanceAbuseService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		SubstanceAbuseDTO outputDTO = SubstanceAbuseManager.addSubstanceAbuse(inputDTO);
-		return outputDTO;
+                log.info("POST  /substance-abuses (" + outputDTO.getId() + ")");
+                return outputDTO;
 	}
 	
 	@GET
@@ -72,6 +73,7 @@ public class SubstanceAbuseService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		SubstanceAbuseDTO outputDTO = SubstanceAbuseManager.getSubstanceAbuseById(substanceAbuseId);
+                log.info("GET  /substance-abuses/" + substanceAbuseId);
 		return outputDTO;
 	}
 	
@@ -85,6 +87,7 @@ public class SubstanceAbuseService {
 		inputDTO.setSubstanceAbuseId(substanceAbuseId);
 		
 		SubstanceAbuseDTO outputDTO = SubstanceAbuseManager.updateSubstanceAbuse(inputDTO);
+                log.info("PUT  /substance-abuses/" + substanceAbuseId);
 		return outputDTO;
 	}
 	
@@ -95,6 +98,7 @@ public class SubstanceAbuseService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		SubstanceAbuseManager.deleteSubstanceAbuse(substanceAbuseId);
+                log.info("DELETE  /substance-abuses/" + substanceAbuseId);
 		return "true";
 	}
 }

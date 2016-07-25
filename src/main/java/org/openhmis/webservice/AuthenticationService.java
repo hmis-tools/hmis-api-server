@@ -37,16 +37,19 @@ import org.openhmis.util.ApplicationPropertyUtil;
 public class AuthenticationService {
 
 	public AuthenticationService() {}
-
+	private static final Logger log = Logger.getLogger(ClientService.class);
+    
 	@POST
 	@Path("/google")
 	public String authenticate(@Context SecurityContext sc, String code) {
+                log.info("POST /google/ (" + code + ")");
 		return Authentication.getGoogleToken(code);
 	}
 
 	@GET
 	@Path("/google/client_key")
 	public String googleClientKey() {
+                log.info("GET /google/client_key");
 		ApplicationPropertyUtil applicationPropertyUtil = new ApplicationPropertyUtil();
 		return applicationPropertyUtil.getGoogleClientId();
 	}

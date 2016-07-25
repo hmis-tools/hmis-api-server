@@ -42,16 +42,17 @@ public class ContactService {
 	public List<ContactDTO> getContacts(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
-		
+
+                List<ContactDTO> contactDTOs;
 		// If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<ContactDTO> contactDTOs = ContactManager.getContacts();
-			return contactDTOs;
+			contactDTOs = ContactManager.getContacts();
 		} else {
-			List<ContactDTO> contactDTOs = ContactManager.getContacts(DateParser.parseDate(updatedSince));
-			return contactDTOs;			
+			contactDTOs = ContactManager.getContacts(DateParser.parseDate(updatedSince));
 		}
-		
+                log.info("GET /contacts/ (" + contactDTOs.size() + " results)");
+                return contactDTOs;
+                        
 	}
 	
 	@POST
@@ -62,6 +63,7 @@ public class ContactService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		ContactDTO outputDTO = ContactManager.addContact(inputDTO);
+                log.info("POST /contacts " + outputDTO.getId());
 		return outputDTO;
 	}
 	
@@ -72,6 +74,7 @@ public class ContactService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		ContactDTO outputDTO = ContactManager.getContactById(contactId);
+                log.info("GET /contacts/" + outputDTO.getId());
 		return outputDTO;
 	}
 	
@@ -85,6 +88,7 @@ public class ContactService {
 		inputDTO.setContactId(contactId);
 		
 		ContactDTO outputDTO = ContactManager.updateContact(inputDTO);
+                log.info("PUT /contacts/" + contactId);
 		return outputDTO;
 	}
 	
@@ -95,6 +99,7 @@ public class ContactService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		ContactManager.deleteContact(contactId);
+                log.info("DELETE /contacts/" + contactId);
 		return "true";
 	}
 }

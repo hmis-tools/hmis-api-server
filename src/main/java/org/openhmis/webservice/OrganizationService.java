@@ -41,6 +41,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Path("/organizations")
 public class OrganizationService {
 	private static final ObjectMapper om = new ObjectMapper();
+	private static final Logger log = Logger.getLogger(ClientService.class);
 
 	public OrganizationService() {}
 
@@ -51,15 +52,17 @@ public class OrganizationService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 
-		// If the user specified no updatedSince parameter, return everything
+                List<OrganizationDTO> organizationDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<OrganizationDTO> organizationDTOs = OrganizationManager.getOrganizations();
-			return organizationDTOs;
+			organizationDTOs = OrganizationManager.getOrganizations();
 		} else {
-			List<OrganizationDTO> organizationDTOs = OrganizationManager.getOrganizationsByUpdateDate(DateParser.parseDate(updatedSince));
-			return organizationDTOs;
+			organizationDTOs = OrganizationManager.getOrganizationsByUpdateDate(DateParser.parseDate(updatedSince));
 		}
-	}
+                log.info("GET /organizations (" + organizationDTOs.size() + ")");
+                return organizationDTOs;
+        }
+
 	
 	@POST
 	@Path("/")
@@ -69,7 +72,8 @@ public class OrganizationService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		OrganizationDTO outputVO = OrganizationManager.addOrganization(inputVO);
-		return outputVO;
+                log.info("POST  /organizations (" + outputVO.getId() + ")");
+                return outputVO;
 	}
 	
 	@GET
@@ -79,6 +83,7 @@ public class OrganizationService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		OrganizationDTO organizationDTO = OrganizationManager.getOrganizationByOrganizationId(organizationId);
+                log.info("GET  /organizations/" + organizationId);
 		return organizationDTO;
 	}
 	
@@ -92,6 +97,7 @@ public class OrganizationService {
 		inputVO.setOrganizationId(organizationId);
 		
 		OrganizationDTO outputVO = OrganizationManager.updateOrganization(inputVO);
+                log.info("PUT  /organizations/" + organizationId);
 		return outputVO;
 	}
 	
@@ -102,6 +108,7 @@ public class OrganizationService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		OrganizationManager.deleteOrganization(organizationId);
+                log.info("DELETE  /organizations/" + organizationId);
 		return "true";
 	}
 }
