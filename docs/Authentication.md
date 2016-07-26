@@ -19,7 +19,7 @@ each request you send to the API.  You can test requests to the API with
 the Postman app or curl.  In each request, set the value of the
 Authorization header to that id token.
 
-# For developers setting up a local instance of the server:
+# For developers (of client apps, or setting up a local server instance, etc)
 
 The process here is the same for users making requests to an existing
 server (the previous section).  Even though you've set up a local
@@ -43,7 +43,7 @@ section.  For more information, see [the Google server-side flow
    address to your users table, as explained in the previous section,
    "Create your first admin user."
 
-# For developers setting up a production instance of the server:
+# For deployers setting up a production instance of the server:
 
 This API uses [Google Sign-in](https://developers.google.com/identity/) OAuth-style authentication.  To set up an instance of this server, use the Google Sign-in [server side flow](https://developers.google.com/identity/sign-in/web/server-side-flow).
 
