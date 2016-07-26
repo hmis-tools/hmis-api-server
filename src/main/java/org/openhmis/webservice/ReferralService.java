@@ -43,15 +43,15 @@ public class ReferralService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		
-		// If the user specified no updatedSince parameter, return everything
+                List<ReferralDTO> referralDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<ReferralDTO> referralDTOs = ReferralManager.getReferrals();
-			return referralDTOs;
+			referralDTOs = ReferralManager.getReferrals();
 		} else {
-			List<ReferralDTO> referralDTOs = ReferralManager.getReferrals(DateParser.parseDate(updatedSince));
-			return referralDTOs;			
+			referralDTOs = ReferralManager.getReferrals(DateParser.parseDate(updatedSince));
 		}
-		
+                log.info("GET /referrals (" + referralDTOs.size() + ")");
+                return referralDTOs;
 	}
 	
 	@POST
@@ -62,7 +62,8 @@ public class ReferralService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		ReferralDTO outputDTO = ReferralManager.addReferral(inputDTO);
-		return outputDTO;
+                log.info("POST  /referrals (" + outputDTO.getId() + ")");
+                return outputDTO;
 	}
 	
 	@GET
@@ -72,6 +73,7 @@ public class ReferralService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		ReferralDTO outputDTO = ReferralManager.getReferralById(referralId);
+                log.info("GET  /referrals/" + referralId);
 		return outputDTO;
 	}
 	
@@ -85,6 +87,7 @@ public class ReferralService {
 		inputDTO.setReferralId(referralId);
 		
 		ReferralDTO outputDTO = ReferralManager.updateReferral(inputDTO);
+                log.info("PUT  /referrals/" + referralId);
 		return outputDTO;
 	}
 	
@@ -95,6 +98,7 @@ public class ReferralService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		ReferralManager.deleteReferral(referralId);
+                log.info("DELETE  /referrals/" + referralId);
 		return "true";
 	}
 }

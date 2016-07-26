@@ -43,14 +43,15 @@ public class ExitService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		
-		// If the user specified no updatedSince parameter, return everything
+                List<ExitDTO> exitDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<ExitDTO> exitDTOs = ExitManager.getExits();
-			return exitDTOs;
+			exitDTOs = ExitManager.getExits();
 		} else {
-			List<ExitDTO> exitDTOs = ExitManager.getExits(DateParser.parseDate(updatedSince));
-			return exitDTOs;			
+			exitDTOs = ExitManager.getExits(DateParser.parseDate(updatedSince));
 		}
+                log.info("GET /exits (" + exitDTOs.size() + " results)");
+                return exitDTOs;
 		
 	}
 	
@@ -62,6 +63,7 @@ public class ExitService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		ExitDTO outputDTO = ExitManager.addExit(inputDTO);
+                log.info("POST /exits " + outputDTO.getId());
 		return outputDTO;
 	}
 	
@@ -72,6 +74,7 @@ public class ExitService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		ExitDTO outputDTO = ExitManager.getExitById(exitId);
+                log.info("GET /exits/" + exitId);
 		return outputDTO;
 	}
 	
@@ -85,6 +88,7 @@ public class ExitService {
 		inputDTO.setExitId(exitId);
 		
 		ExitDTO outputDTO = ExitManager.updateExit(inputDTO);
+                log.info("PUT /exits/" + exitId);
 		return outputDTO;
 	}
 	
@@ -95,6 +99,7 @@ public class ExitService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		ExitManager.deleteExit(exitId);
+                log.info("DELETE /exits/" + exitId);
 		return "true";
 	}
 }

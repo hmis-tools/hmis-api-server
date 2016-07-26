@@ -43,15 +43,15 @@ public class PhysicalDisabilityService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		
-		// If the user specified no updatedSince parameter, return everything
+                List<PhysicalDisabilityDTO> physicalDisabilityDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<PhysicalDisabilityDTO> physicalDisabilityDTOs = PhysicalDisabilityManager.getPhysicalDisabilities();
-			return physicalDisabilityDTOs;
+			physicalDisabilityDTOs = PhysicalDisabilityManager.getPhysicalDisabilities();
 		} else {
-			List<PhysicalDisabilityDTO> physicalDisabilityDTOs = PhysicalDisabilityManager.getPhysicalDisabilities(DateParser.parseDate(updatedSince));
-			return physicalDisabilityDTOs;			
+			physicalDisabilityDTOs = PhysicalDisabilityManager.getPhysicalDisabilities(DateParser.parseDate(updatedSince));
 		}
-		
+                log.info("GET /physical-disabilities (" + physicalDisabilityDTOs.size() + ")");
+                return physicalDisabilityDTOs;
 	}
 	
 	@POST
@@ -62,7 +62,8 @@ public class PhysicalDisabilityService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		PhysicalDisabilityDTO outputDTO = PhysicalDisabilityManager.addPhysicalDisability(inputDTO);
-		return outputDTO;
+                log.info("POST  /physical-disabilities (" + outputDTO.getId() + ")");
+                return outputDTO;
 	}
 	
 	@GET
@@ -72,6 +73,7 @@ public class PhysicalDisabilityService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		PhysicalDisabilityDTO outputDTO = PhysicalDisabilityManager.getPhysicalDisabilityById(physicalDisabilityId);
+                log.info("GET  /physical-disabilities/" + physicalDisabilityId);
 		return outputDTO;
 	}
 	
@@ -85,6 +87,7 @@ public class PhysicalDisabilityService {
 		inputDTO.setPhysicalDisabilityId(physicalDisabilityId);
 		
 		PhysicalDisabilityDTO outputDTO = PhysicalDisabilityManager.updatePhysicalDisability(inputDTO);
+                log.info("PUT  /physical-disabilities/" + physicalDisabilityId);
 		return outputDTO;
 	}
 	
@@ -95,6 +98,7 @@ public class PhysicalDisabilityService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		PhysicalDisabilityManager.deletePhysicalDisability(physicalDisabilityId);
+                log.info("DELETE  /physical-disabilities/" + physicalDisabilityId);
 		return "true";
 	}
 }

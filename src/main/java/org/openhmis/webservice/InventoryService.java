@@ -43,15 +43,15 @@ public class InventoryService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		
-		// If the user specified no updatedSince parameter, return everything
+                List<InventoryDTO> inventoryDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<InventoryDTO> inventoryDTOs = InventoryManager.getInventories();
-			return inventoryDTOs;
+			inventoryDTOs = InventoryManager.getInventories();
 		} else {
-			List<InventoryDTO> inventoryDTOs = InventoryManager.getInventories(DateParser.parseDate(updatedSince));
-			return inventoryDTOs;			
+			inventoryDTOs = InventoryManager.getInventories(DateParser.parseDate(updatedSince));
 		}
-		
+                log.info("GET /inventories (" + inventoryDTOs.size() + ")");
+                return inventoryDTOs;
 	}
 	
 	@POST
@@ -62,7 +62,8 @@ public class InventoryService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		InventoryDTO outputDTO = InventoryManager.addInventory(inputDTO);
-		return outputDTO;
+                log.info("POST  /inventories (" + outputDTO.getId() + ")");
+                return outputDTO;
 	}
 	
 	@GET
@@ -72,6 +73,7 @@ public class InventoryService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		InventoryDTO outputDTO = InventoryManager.getInventoryById(inventoryId);
+                log.info("GET  /inventories/" + inventoryId);
 		return outputDTO;
 	}
 	
@@ -85,6 +87,7 @@ public class InventoryService {
 		inputDTO.setInventoryId(inventoryId);
 		
 		InventoryDTO outputDTO = InventoryManager.updateInventory(inputDTO);
+                log.info("PUT  /inventories/" + inventoryId);
 		return outputDTO;
 	}
 	
@@ -95,6 +98,7 @@ public class InventoryService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		InventoryManager.deleteInventory(inventoryId);
+                log.info("DELETE  /inventories/" + inventoryId);
 		return "true";
 	}
 }

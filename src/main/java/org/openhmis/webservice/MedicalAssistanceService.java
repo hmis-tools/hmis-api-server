@@ -43,15 +43,15 @@ public class MedicalAssistanceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		
-		// If the user specified no updatedSince parameter, return everything
+                List<MedicalAssistanceDTO> medicalAssistanceDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<MedicalAssistanceDTO> medicalAssistanceDTOs = MedicalAssistanceManager.getMedicalAssistances();
-			return medicalAssistanceDTOs;
+			medicalAssistanceDTOs = MedicalAssistanceManager.getMedicalAssistances();
 		} else {
-			List<MedicalAssistanceDTO> medicalAssistanceDTOs = MedicalAssistanceManager.getMedicalAssistances(DateParser.parseDate(updatedSince));
-			return medicalAssistanceDTOs;			
+			medicalAssistanceDTOs = MedicalAssistanceManager.getMedicalAssistances(DateParser.parseDate(updatedSince));
 		}
-		
+                log.info("GET /medical-assistances (" + medicalAssistanceDTOs.size() + ")");
+                return medicalAssistanceDTOs;
 	}
 	
 	@POST
@@ -62,7 +62,8 @@ public class MedicalAssistanceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		MedicalAssistanceDTO outputDTO = MedicalAssistanceManager.addMedicalAssistance(inputDTO);
-		return outputDTO;
+                log.info("POST  /medical-assistances (" + outputDTO.getId() + ")");
+                return outputDTO;
 	}
 	
 	@GET
@@ -72,6 +73,7 @@ public class MedicalAssistanceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		MedicalAssistanceDTO outputDTO = MedicalAssistanceManager.getMedicalAssistanceById(medicalAssistanceId);
+                log.info("GET  /medical-assistances/" + medicalAssistanceId);
 		return outputDTO;
 	}
 	
@@ -85,6 +87,7 @@ public class MedicalAssistanceService {
 		inputDTO.setMedicalAssistanceId(medicalAssistanceId);
 		
 		MedicalAssistanceDTO outputDTO = MedicalAssistanceManager.updateMedicalAssistance(inputDTO);
+                log.info("PUT  /medical-assistances/" + medicalAssistanceId);
 		return outputDTO;
 	}
 	
@@ -95,6 +98,7 @@ public class MedicalAssistanceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		MedicalAssistanceManager.deleteMedicalAssistance(medicalAssistanceId);
+                log.info("DELETE  /medical-assistances/" + medicalAssistanceId);
 		return "true";
 	}
 }

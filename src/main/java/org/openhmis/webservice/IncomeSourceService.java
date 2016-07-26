@@ -43,15 +43,15 @@ public class IncomeSourceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		
-		// If the user specified no updatedSince parameter, return everything
+                List<IncomeSourceDTO> incomeSourceDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<IncomeSourceDTO> incomeSourceDTOs = IncomeSourceManager.getIncomeSources();
-			return incomeSourceDTOs;
+			incomeSourceDTOs = IncomeSourceManager.getIncomeSources();
 		} else {
-			List<IncomeSourceDTO> incomeSourceDTOs = IncomeSourceManager.getIncomeSources(DateParser.parseDate(updatedSince));
-			return incomeSourceDTOs;			
+			incomeSourceDTOs = IncomeSourceManager.getIncomeSources(DateParser.parseDate(updatedSince));
 		}
-		
+                log.info("GET /income-sources (" + incomeSourceDTOs.size() + ")");
+                return incomeSourceDTOs;
 	}
 	
 	@POST
@@ -62,7 +62,8 @@ public class IncomeSourceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		IncomeSourceDTO outputDTO = IncomeSourceManager.addIncomeSource(inputDTO);
-		return outputDTO;
+                log.info("POST  /income-sources (" + outputDTO.getId() + ")");
+                return outputDTO;
 	}
 	
 	@GET
@@ -72,6 +73,7 @@ public class IncomeSourceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		IncomeSourceDTO outputDTO = IncomeSourceManager.getIncomeSourceById(incomeSourceId);
+                log.info("GET  /income-sources/" + incomeSourceId);
 		return outputDTO;
 	}
 	
@@ -85,6 +87,7 @@ public class IncomeSourceService {
 		inputDTO.setIncomeSourceId(incomeSourceId);
 		
 		IncomeSourceDTO outputDTO = IncomeSourceManager.updateIncomeSource(inputDTO);
+                log.info("PUT  /income-sources/" + incomeSourceId);
 		return outputDTO;
 	}
 	
@@ -95,6 +98,7 @@ public class IncomeSourceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		IncomeSourceManager.deleteIncomeSource(incomeSourceId);
+                log.info("DELETE  /income-sources/" + incomeSourceId);
 		return "true";
 	}
 }

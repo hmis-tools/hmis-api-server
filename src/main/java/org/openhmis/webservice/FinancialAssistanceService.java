@@ -43,14 +43,15 @@ public class FinancialAssistanceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		
-		// If the user specified no updatedSince parameter, return everything
+                List<FinancialAssistanceDTO> financialAssistanceDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<FinancialAssistanceDTO> financialAssistanceDTOs = FinancialAssistanceManager.getFinancialAssistances();
-			return financialAssistanceDTOs;
+			financialAssistanceDTOs = FinancialAssistanceManager.getFinancialAssistances();
 		} else {
-			List<FinancialAssistanceDTO> financialAssistanceDTOs = FinancialAssistanceManager.getFinancialAssistances(DateParser.parseDate(updatedSince));
-			return financialAssistanceDTOs;			
+			financialAssistanceDTOs = FinancialAssistanceManager.getFinancialAssistances(DateParser.parseDate(updatedSince));
 		}
+                log.info("GET /financial-assistances (" + financialAssistanceDTOs.size() + " results)");
+                return financialAssistanceDTOs;
 		
 	}
 	
@@ -62,6 +63,7 @@ public class FinancialAssistanceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		FinancialAssistanceDTO outputDTO = FinancialAssistanceManager.addFinancialAssistance(inputDTO);
+                log.info("POST /financial-assistances (" + outputDTO.getId() + ")");
 		return outputDTO;
 	}
 	
@@ -72,6 +74,7 @@ public class FinancialAssistanceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		FinancialAssistanceDTO outputDTO = FinancialAssistanceManager.getFinancialAssistanceById(financialAssistanceId);
+                log.info("POST /financial-assistances/" + financialAssistanceId);
 		return outputDTO;
 	}
 	
@@ -85,6 +88,7 @@ public class FinancialAssistanceService {
 		inputDTO.setFinancialAssistanceId(financialAssistanceId);
 		
 		FinancialAssistanceDTO outputDTO = FinancialAssistanceManager.updateFinancialAssistance(inputDTO);
+                log.info("PUT /financial-assistances/" + financialAssistanceId);
 		return outputDTO;
 	}
 	
@@ -95,6 +99,7 @@ public class FinancialAssistanceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		FinancialAssistanceManager.deleteFinancialAssistance(financialAssistanceId);
+                log.info("DELETE /financial-assistances/" + financialAssistanceId);
 		return "true";
 	}
 }

@@ -43,15 +43,15 @@ public class NonCashBenefitService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		
-		// If the user specified no updatedSince parameter, return everything
+                List<NonCashBenefitDTO> nonCashBenefitDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<NonCashBenefitDTO> nonCashBenefitDTOs = NonCashBenefitManager.getNonCashBenefits();
-			return nonCashBenefitDTOs;
+			nonCashBenefitDTOs = NonCashBenefitManager.getNonCashBenefits();
 		} else {
-			List<NonCashBenefitDTO> nonCashBenefitDTOs = NonCashBenefitManager.getNonCashBenefits(DateParser.parseDate(updatedSince));
-			return nonCashBenefitDTOs;			
+			nonCashBenefitDTOs = NonCashBenefitManager.getNonCashBenefits(DateParser.parseDate(updatedSince));
 		}
-		
+                log.info("GET /non-cash-benefits (" + nonCashBenefitDTOs.size() + ")");
+                return nonCashBenefitDTOs;
 	}
 	
 	@POST
@@ -62,7 +62,8 @@ public class NonCashBenefitService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		NonCashBenefitDTO outputDTO = NonCashBenefitManager.addNonCashBenefit(inputDTO);
-		return outputDTO;
+                log.info("POST  /non-cash-benefits (" + outputDTO.getId() + ")");
+                return outputDTO;
 	}
 	
 	@GET
@@ -72,6 +73,7 @@ public class NonCashBenefitService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		NonCashBenefitDTO outputDTO = NonCashBenefitManager.getNonCashBenefitById(nonCashBenefitId);
+                log.info("GET  /non-cash-benefits/" + nonCashBenefitId);
 		return outputDTO;
 	}
 	
@@ -85,6 +87,7 @@ public class NonCashBenefitService {
 		inputDTO.setNonCashBenefitId(nonCashBenefitId);
 		
 		NonCashBenefitDTO outputDTO = NonCashBenefitManager.updateNonCashBenefit(inputDTO);
+                log.info("PUT  /non-cash-benefits/" + nonCashBenefitId);
 		return outputDTO;
 	}
 	
@@ -95,6 +98,7 @@ public class NonCashBenefitService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		NonCashBenefitManager.deleteNonCashBenefit(nonCashBenefitId);
+                log.info("DELETE  /non-cash-benefits/" + nonCashBenefitId);
 		return "true";
 	}
 }

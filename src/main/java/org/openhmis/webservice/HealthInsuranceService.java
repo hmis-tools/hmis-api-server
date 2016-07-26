@@ -43,14 +43,15 @@ public class HealthInsuranceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		
-		// If the user specified no updatedSince parameter, return everything
+                List<HealthInsuranceDTO> healthInsuranceDTOs;
+                // If the user specified no updatedSince parameter, return everything
 		if(updatedSince == null) {
-			List<HealthInsuranceDTO> healthInsuranceDTOs = HealthInsuranceManager.getHealthInsurances();
-			return healthInsuranceDTOs;
+			healthInsuranceDTOs = HealthInsuranceManager.getHealthInsurances();
 		} else {
-			List<HealthInsuranceDTO> healthInsuranceDTOs = HealthInsuranceManager.getHealthInsurances(DateParser.parseDate(updatedSince));
-			return healthInsuranceDTOs;			
+			healthInsuranceDTOs = HealthInsuranceManager.getHealthInsurances(DateParser.parseDate(updatedSince));
 		}
+                log.info("GET /health-insurances (" + healthInsuranceDTOs.size() + " results)");
+                return healthInsuranceDTOs;
 		
 	}
 	
@@ -62,6 +63,7 @@ public class HealthInsuranceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		HealthInsuranceDTO outputDTO = HealthInsuranceManager.addHealthInsurance(inputDTO);
+                log.info("POST /health-insurances (" + outputDTO.getId() + ")");
 		return outputDTO;
 	}
 	
@@ -72,6 +74,7 @@ public class HealthInsuranceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		HealthInsuranceDTO outputDTO = HealthInsuranceManager.getHealthInsuranceById(healthInsuranceId);
+                log.info("GET /health-insurances/" + healthInsuranceId);
 		return outputDTO;
 	}
 	
@@ -85,6 +88,7 @@ public class HealthInsuranceService {
 		inputDTO.setHealthInsuranceId(healthInsuranceId);
 		
 		HealthInsuranceDTO outputDTO = HealthInsuranceManager.updateHealthInsurance(inputDTO);
+                log.info("PUT /health-insurances/" + healthInsuranceId);
 		return outputDTO;
 	}
 	
@@ -95,6 +99,7 @@ public class HealthInsuranceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		HealthInsuranceManager.deleteHealthInsurance(healthInsuranceId);
+                log.info("DELETE /health-insurances/" + healthInsuranceId);
 		return "true";
 	}
 }
