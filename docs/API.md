@@ -1090,18 +1090,22 @@ Consent-to-Share Records support the GET, POST, PUT, and DELETE methods.
               {
                   "id": CONSENT_RECORD_ID,
                   "client_id": CLIENT_ID,
-                  "submitter_id": SUBMITTER_ID (e.g., of caseworker who sent in the request)
+                  # (submitterID is, e.g., the ID of the caseworker who
+                  # submitted this request on behalf of the client)
+                  "submitter_id": SUBMITTER_ID,
                   "coc_ids": [COC_ID, ...],
                   "organization_ids": [ORG_ID, ...],
                   "fields": 
                   {
-                      # The field_names here are all the field names available in a
-                      # client object, e.g., "firstName", "middleName", "lastName",
-                      # "gender", etc.  TBD: We should also support enrollments; what
-                      # is the best way to do that?
                       "field_name_1" : "share" | "not-share",
                       "field_name_2" : "share" | "not-share",
                       ...
+                      # The field_names here are all the field names
+                      # available in a client object, e.g., "firstName",
+                      # "middleName", "lastName", "gender", etc.  
+                      #
+                      # TBD: Shouldn't we also support enrollments?
+                      #      What is the best way to do that?
                   },
                   "date_created": CREATION_DATE,
                   "date_processed": PROCESSED_DATE,
@@ -1120,6 +1124,8 @@ implement "pending".
 
 We don't do "All yes" because we don't know what future fields might
 exist.
+
+TBD: Finish this out with POST, PUT, and DELETE methods.
 
 # Errors and Exceptions
 
