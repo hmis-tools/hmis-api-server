@@ -420,7 +420,7 @@ The response will be the newly created client object.
 
 # Enrollments
 
-# GET:
+### GET:
 * Path: `/enrollments`
 * Method name: `getEnrollments()`
 * Parameters: None
