@@ -86,8 +86,8 @@ public class TokenCacheManager {
 		TokenCacheDTO tokenCacheDTO = new TokenCacheDTO();
 
 		tokenCacheDTO.setTokenCacheId(tmpTokenCache.getTokenCacheId());
-                tmpTokenCache.setUserId(tmpTokenCache.getUserId());
-                tmpTokenCache.setIdToken(tmpTokenCache.getIdToken());
+                tokenCacheDTO.setUserId(tmpTokenCache.getUserId());
+                tokenCacheDTO.setIdToken(tmpTokenCache.getIdToken());
 		
 		// Export Standard Fields (TBD: what are "Standard Fields"?)
 		tokenCacheDTO.setDateCreated(tmpTokenCache.getDateCreated());

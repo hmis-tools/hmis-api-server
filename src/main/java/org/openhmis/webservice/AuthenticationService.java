@@ -58,7 +58,7 @@ public class AuthenticationService {
 
 	@POST
 	@Path("/externalId")
-	public String getExternalId(@HeaderParam("Authorization") String authorization, String id_token) {
+	public Integer getExternalId(@HeaderParam("Authorization") String authorization, String id_token) {
                 /*
                  * We probably don't need to limit access to this
                  * endpoint to those with READ privileges on our server,
@@ -69,8 +69,10 @@ public class AuthenticationService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
                 log.info("POST /externalId/ " + id_token);
-                String externalId = Authentication.resolveIdentity(id_token);
-                return externalId;
+                // Now sending the internal id, the user id, so that
+                // clients can exchange that for a full user object.
+                Integer userId = Authentication.resolveIdentity(id_token);
+                return userId;
 	}
 
         
