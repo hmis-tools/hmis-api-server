@@ -42,8 +42,9 @@ public class UserService {
 	public List<UserDTO> getUsers(@HeaderParam("Authorization") String authorization) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.ADMIN))
                         throw new AccessDeniedException();
-		
+
 		List<UserDTO> userDTOs = UserManager.getUsers();
+                log.info("GET /users (" + userDTOs.size() + " results)");
 		return userDTOs;
 	}
 	
@@ -55,6 +56,7 @@ public class UserService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.ADMIN))
                         throw new AccessDeniedException();
 		UserDTO outputDTO = UserManager.addUser(inputDTO);
+                log.info("POST /users (" + outputDTO.getId() + ")");
 		return outputDTO;
 	}
 	
@@ -65,6 +67,7 @@ public class UserService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.ADMIN))
                         throw new AccessDeniedException();
 		UserDTO outputDTO = UserManager.getUserById(userId);
+                log.info("GET /users/" + userId);
 		return outputDTO;
 	}
 	
@@ -78,6 +81,7 @@ public class UserService {
 		inputDTO.setUserId(userId);
 		
 		UserDTO outputDTO = UserManager.updateUser(inputDTO);
+                log.info("PUT /users/" + userId);
 		return outputDTO;
 	}
 	
@@ -88,6 +92,7 @@ public class UserService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.ADMIN))
                         throw new AccessDeniedException();
 		UserManager.deleteUser(userId);
+                log.info("DELETE /users/" + userId);
 		return "true";
 	}
 }

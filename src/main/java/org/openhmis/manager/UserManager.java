@@ -65,6 +65,8 @@ public class UserManager {
 		TmpUser tmpUser = UserManager.generateTmpUser(inputDTO);
 		tmpUser.setUserId(Integer.parseInt(inputDTO.getUserId()));
 		tmpUser.setDateUpdated(new Date());
+                tmpUser.setOrganization(inputDTO.getOrganization());
+                tmpUser.setCoC(inputDTO.getCoC());
 		
 		// Update the object
 		tmpUserDAO.update(tmpUser);
@@ -88,6 +90,8 @@ public class UserManager {
 		userDTO.setCanRead(tmpUser.getCanRead());
 		userDTO.setCanWrite(tmpUser.getCanWrite());
 		userDTO.setCanAdmin(tmpUser.getCanAdmin());
+                userDTO.setOrganization(tmpUser.getOrganization());
+                userDTO.setCoC(tmpUser.getCoC());
 		
 		// Export Standard Fields (TBD: what are "Standard Fields"?)
 		userDTO.setDateCreated(tmpUser.getDateCreated());
@@ -103,6 +107,8 @@ public class UserManager {
 		tmpUser.setCanRead(inputDTO.getCanRead());
 		tmpUser.setCanWrite(inputDTO.getCanWrite());
 		tmpUser.setCanAdmin(inputDTO.getCanAdmin());
+                tmpUser.setOrganization(inputDTO.getOrganization());
+                tmpUser.setCoC(inputDTO.getCoC());
 		
 		// Export Standard Fields (TBD: what are "Standard Fields"?)
 		tmpUser.setDateCreated(inputDTO.getDateCreated());

@@ -27,12 +27,16 @@ $(function() {
 	$("#saveUser").click(function() {
 		var internalId = $("#internalId").val();
 		var externalId = $("#externalId").val();
+		var organization = $("#organization").val();
+		var coC = $("#coC").val();
 		var canAdmin = $("#canAdmin").prop("checked")?1:0;
 		var canRead = $("#canRead").prop("checked")?1:0;
 		var canWrite = $("#canWrite").prop("checked")?1:0;
 
 		var data = {
-			externalId: externalId,
+    		        externalId: externalId,
+                        organization: organization,
+                        coC: coC,
 			canRead: canRead,
 			canWrite: canWrite,
 			canAdmin: canAdmin
@@ -49,8 +53,8 @@ $(function() {
 });
 
 function saveUser(data, internalId) {
-	// Does the internal ID exist?
-	if(internalId) {
+    // Does the internal ID exist?
+    if(internalId) {
 		$.ajax({
 			"type": "PUT",
 			"url": "../api/v3/users/" + internalId,
@@ -61,7 +65,7 @@ function saveUser(data, internalId) {
 			"dataType": "json",
 			"contentType": "application/json"
 		}).success(function() {
-			reloadAdmin();
+		    reloadAdmin();
 		})
 	} else {
 		$.ajax({
@@ -74,7 +78,7 @@ function saveUser(data, internalId) {
 			"dataType": "json",
 			"contentType": "application/json"
 		}).success(function() {
-			reloadAdmin();
+		    reloadAdmin();
 		})
 	}
 
@@ -157,18 +161,20 @@ function renderAdmin() {
 
 // Loads the latest user data and refreshes the view
 function reloadAdmin() {
-	$("#loader").show();
+    $("#loader").show();
 	$.ajax({
 		"type": "GET",
 		"url": "../api/v3/users",
-		beforeSend: function (request) {
-            request.setRequestHeader("Authorization", idToken);
-        },
+	    beforeSend: function (request) {
+                request.setRequestHeader("Authorization", idToken);
+            },
 		"dataType": "json"
 	}).success(function(data) {
-		var users = data.data.items;
+	    var users = data.data.items;
 		var columns = [
 			{ title: "Email" },
+			{ title: "Organization" },
+			{ title: "Continuum of Care" },
 			{ title: "Read" },
 			{ title: "Write" },
 			{ title: "Admin" }, 
@@ -179,7 +185,9 @@ function reloadAdmin() {
 		for(var x in users) {
 			var user = users[x];
 			var row = [
-				user.externalId,
+                                user.externalId,
+                                user.organization,
+                                user.coC,
 				user.canRead,
 				user.canWrite,
 				user.canAdmin,
@@ -222,13 +230,17 @@ function renderInput(user) {
 		$("#canAdmin").prop("checked", user.canAdmin);
 		$("#canRead").prop("checked", user.canRead);
 		$("#canWrite").prop("checked", user.canWrite);
-		$("#deleteUser").show();
+                $("#organization").val(user.organization);
+	        $("#coC").val(user.coC);
+	        $("#deleteUser").show();
 	} else {
 		$("#internalId").val("")
 		$("#externalId").val("");
 		$("#canAdmin").prop("checked", false);
 		$("#canRead").prop("checked", false);
 		$("#canWrite").prop("checked", false);
-		$("#deleteUser").hide();
+		$("#organization").val("");
+	        $("#coC").val("");
+	        $("#deleteUser").hide();
 	}
 }
