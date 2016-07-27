@@ -1080,6 +1080,7 @@ Consent-to-Share Records support the GET, POST, PUT, and DELETE methods.
 * Example:
 
   Call: `$ curl http://localhost:8080/openhmis/api/v3/consent/1729`
+
   Response: 
 
       {
