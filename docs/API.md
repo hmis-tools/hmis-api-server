@@ -179,6 +179,7 @@ income sources, you must use the appropriate top-level endpoint, e.g.,
 * Enrollments
 * Organizations
 * Projects
+* Consent-to-Share Record
 
 # Clients
 
@@ -1060,6 +1061,64 @@ The response will be the newly created client object.
 * Responses:
 * Example:
 
+# Consent-to-Share Record (DRAFT 2016-07-27)
+
+A Consent-to-Share Record represents a client's consent (or
+non-consent) to have their information shared with other parties.  In
+practice, a Consent-to-Share Record usually covers sharing within a
+given Continuum of Care, or sometimes just within one organization.
+
+Consent-to-Share Records support the GET, POST, PUT, and DELETE methods.
+
+(TBD: Should we use "/consents" instead of "/consent", to match "/clients/ID"?)
+
+### GET
+* Path: `/consent/{consentId}`
+* Method name: `getConsent("personalId")`
+* Parameters: Takes a `consentId`.
+* Responses: Returns a single consent-to-share record with `consentId` matching the parameter passed in.
+* Example:
+
+  Call: `$ curl http://localhost:8080/openhmis/api/v3/consent/1729`
+  Response: 
+
+      {
+      "data":
+          { 
+          "item": 
+              {
+                  "id": CONSENT_RECORD_ID,
+                  "client_id": CLIENT_ID,
+                  "submitter_id": SUBMITTER_ID (e.g., of caseworker who sent in the request)
+                  "coc_ids": [COC_ID, ...],
+                  "organization_ids": [ORG_ID, ...],
+                  "fields": 
+                  {
+                      # The field_names here are all the field names available in a
+                      # client object, e.g., "firstName", "middleName", "lastName",
+                      # "gender", etc.  TBD: We should also support enrollments; what
+                      # is the best way to do that?
+                      "field_name_1" : "share" | "not-share",
+                      "field_name_2" : "share" | "not-share",
+                      ...
+                  },
+                  "date_created": CREATION_DATE,
+                  "date_processed": PROCESSED_DATE,
+                  "approval": "approved" | "rejected" | "pending"
+              }
+          }
+      }
+      
+A POST or PUT returns either "approved" or "pending" for success, or
+"rejected" for failure.
+
+A return value of "pending" usually means that the C-t-S Record has
+been entered but requires review and approval by an administrator
+before it can take effect.  Server implementations are not required to
+implement "pending".
+
+We don't do "All yes" because we don't know what future fields might
+exist.
 
 # Errors and Exceptions
 
