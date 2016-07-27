@@ -54,7 +54,7 @@ public class TmpTokenCacheDAO extends BaseDAO {
 	public TmpTokenCache getTmpTokenCacheByIdToken(String idToken)  {
 		String queryString = "select tokenCache " + 
 			"from TmpTokenCache as tokenCache " + 
-			"where tokenCache.id_token =:idToken";
+			"where tokenCache.idToken =:idToken";
 		
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);

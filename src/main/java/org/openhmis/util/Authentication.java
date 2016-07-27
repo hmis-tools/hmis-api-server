@@ -27,6 +27,10 @@ import org.apache.log4j.Logger;
 import org.openhmis.dao.TmpUserDAO;
 import org.openhmis.domain.TmpUser;
 import org.openhmis.exception.AuthenticationFailureException;
+import org.openhmis.manager.TokenCacheManager;
+import org.openhmis.manager.UserManager;
+import org.openhmis.dto.TokenCacheDTO;
+import org.openhmis.dto.UserDTO;
 
 import com.google.api.client.auth.oauth2.TokenResponseException;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
@@ -127,7 +131,19 @@ public class Authentication {
          * Google email address, for now).
         */
         public static String resolveIdentity(String id_token) {
-                String externalId;
+            // look this up in TMP_TOKEN_CACHE first. Test whether the
+            // dateCreated/dateUpdated value are less than a day old
+            // (i.e. not expired).  If it does not exist or is too old,
+            // then go into the Google retrieval routine.
+            //
+            String externalId;
+            try {
+                TokenCacheDTO tokenCacheDTO = TokenCacheManager.getTokenCacheByIdToken(id_token);
+                externalId = tokenCacheDTO.getUserId().toString();
+            }
+            catch (Exception noRecord) {
+                // no token was found
+                log.info ("Exception: no cached token found " + noRecord.toString());
                 try {
                     // Verify that the token is a legitimate google token
                     GoogleIdToken token = GoogleIdToken.parse(JSON_FACTORY, id_token);
@@ -136,6 +152,18 @@ public class Authentication {
     			
                     // If we get here then this is a valid google item
                     externalId = token.getPayload().getEmail();
+
+                    // get user id from external id
+                    UserDTO userDTO = UserManager.getUserByExternalId(externalId);
+                    String userID = userDTO.getUserId();
+                    // TBD: what happens if the user doesn't exist?
+
+                    // create a new entry in the TMP_TOKEN_CACHE table
+                    TokenCacheDTO inputDTO = new TokenCacheDTO();
+                    inputDTO.setIdToken(id_token);
+                    inputDTO.setUserId(Integer.parseInt(userID));
+                    TokenCacheManager.addTokenCache(inputDTO);
+                    
 		} catch (IOException e) {
 			log.debug("IOException authenticating with Google: " + e.toString());
                         externalId = null;
@@ -149,7 +177,7 @@ public class Authentication {
 			log.debug("Unexpected exception authenticating with Google: " + e.toString());
                         externalId = null;
 		}
-                
+            }
                 return externalId;
         }
 
