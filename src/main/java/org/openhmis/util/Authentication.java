@@ -89,10 +89,10 @@ public class Authentication {
 
                 if(tokenString == null)
                         return false;
-                
+
                 AccountDTO account = resolveIdentity(tokenString);
 			
-                log.debug("Login attempt:" + account.getExternalId());
+                log.info("Login attempt:" + account.getExternalId());
 			
                 // If the user doesn't exist for Google, then the account
                 // should be null and they aren't authorized
@@ -140,15 +140,11 @@ public class Authentication {
          * Given the id token, return the external ID (usually an email
          * address) and, if the user exists in the database, the user
          * object.  If the user doesn't exist, the user object will be
-         * null/empty.
+         * null.
          *
-         * With this endpoint, the client will display either just the
+         * With this endpoint, the client may display either just the
          * external ID or, if available, more information about the
          * user.
-         *
-         * If the id token is bad in some way, currently we return an
-         * empty object, but see the TODO note below -- we should pass
-         * an error.
          *
         */
         public static AccountDTO resolveIdentity(String id_token) {
@@ -164,12 +160,10 @@ public class Authentication {
                 TokenCacheDTO tokenCacheDTO = TokenCacheManager.getTokenCacheByIdToken(id_token);
                 // TODO: At some point, we'll add a timeout here
                 externalId = tokenCacheDTO.getExternalId();
-                UserDTO userDTO = UserManager.getUserByExternalId(externalId);
-                accountDTO.setUser(userDTO);
                 accountDTO.setExternalId(externalId);
             }
-            catch (Exception noRecord) {
-                log.info ("Exception: no cache record found: " + noRecord.toString());
+            catch (Exception noCacheRecord) {
+                log.info ("No record found for this id token in the cache: " + noCacheRecord.toString());
                 try {
                     // Verify that the token is a legitimate google token
                     GoogleIdToken token = GoogleIdToken.parse(JSON_FACTORY, id_token);
@@ -187,7 +181,6 @@ public class Authentication {
 
                     }
                     catch (Exception noUser){
-                        log.info("User " + externalId + " does not exist in the database.");
                         accountDTO.setUser(null);
                     }
                     
@@ -198,30 +191,28 @@ public class Authentication {
                     inputDTO.setExternalId(externalId);
                     TokenCacheManager.addTokenCache(inputDTO);
 
-                    /*
-                     * TODO: Instead of just sending an empty object
-                     * back in these various "catch" scenarios, we
-                     * probably want to send the client an error, since
-                     * these imply that the token is bad.
-                     */
 		} catch (IOException e) {
 			log.debug("IOException authenticating with Google: " + e.toString());
-                        accountDTO.setUser(null);
-                        accountDTO.setExternalId(null);
+			throw new AuthenticationFailureException();
 		} catch (GeneralSecurityException e) {
 			log.debug("GeneralSecurityException authenticating with Google: " + e.toString());
-                        accountDTO.setUser(null);
-                        accountDTO.setExternalId(null);
+			throw new AuthenticationFailureException();
 		} catch (IllegalArgumentException e) {
 			log.debug("IllegalArgumentException authenticating with Google: " + e.toString());
-                        accountDTO.setUser(null);
-                        accountDTO.setExternalId(null);
+			throw new AuthenticationFailureException();
 		} catch (Exception e) {
 			log.debug("Unexpected exception authenticating with Google: " + e.toString());
-                        accountDTO.setUser(null);
-                        accountDTO.setExternalId(null);
+			throw new AuthenticationFailureException();
 		}
             }
+            try {
+                UserDTO userDTO = UserManager.getUserByExternalId(externalId);
+                accountDTO.setUser(userDTO);
+            }
+            catch (Exception noUser) {
+                accountDTO.setUser(null);
+            }
+
             return accountDTO;
         }
 
