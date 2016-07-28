@@ -28,13 +28,11 @@ For more information about the HUD 2014 standards, see:
 * [HUD HMIS 2014 CSV Format Specification](http://www.hudhdx.info/Resources/Vendors/4_0/HMISCSVSpecifications4_0FINAL.pdf)
 
 Note that the OpenHMIS API has a shared origin with the [HMIS API
-project](https://github.com/hmis-api/) project, and we are actively
+project](https://anypoint.mulesoft.com/apiplatform/apis/#/portals), and we are actively
 coordinating with that API to achieve maximum possible compatibility.
-Currently the OpenHMIS API is compatible with the HMIS API in almost
-all of the [core
-methods](http://htmlpreview.github.io/?https://github.com/hmis-api/api/blob/master/doc/hmis-api.html)
-and we are working to expand the compatible area.  Interoperability is
-a primary goal of OpenHMIS.
+We believe the OpenHMIS API is compatible with the 2015 HMIS API in
+most of the core methods, and we are working to expand the compatible
+area.  Interoperability is a primary goal of OpenHMIS.
 
 #### Historical background:
 
@@ -1070,16 +1068,14 @@ given Continuum of Care, or sometimes just within one organization.
 
 Consent-to-Share Records support the GET, POST, PUT, and DELETE methods.
 
-(TBD: Should we use "/consents" instead of "/consent", to match "/clients/ID"?)
-
 ### GET
-* Path: `/consent/{consentId}`
+* Path: `/consents/{consentId}`
 * Method name: `getConsent("personalId")`
 * Parameters: Takes a `consentId`.
 * Responses: Returns a single consent-to-share record with `consentId` matching the parameter passed in.
 * Example:
 
-  Call: `$ curl http://localhost:8080/openhmis/api/v3/consent/1729`
+  Call: `$ curl http://localhost:8080/openhmis/api/v3/consents/1729`
 
   Response: 
 
