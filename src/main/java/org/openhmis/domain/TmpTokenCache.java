@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 @Table(name = "TMP_TOKEN_CACHE")
 public class TmpTokenCache implements java.io.Serializable {
         private Integer tokenCacheId;
-	private Integer userId;
+	private String externalId;
         private String idToken;
 	private Date dateCreated;
 	private Date dateUpdated;
@@ -26,11 +26,11 @@ public class TmpTokenCache implements java.io.Serializable {
 	public TmpTokenCache() {
 	}
 
-        public TmpTokenCache(Integer tokenCacheId, Integer userId,
+        public TmpTokenCache(Integer tokenCacheId, String externalId,
                          String idToken,
 			Date dateCreated, Date dateUpdated) {
                 this.tokenCacheId = tokenCacheId;
-		this.userId = userId;
+		this.externalId = externalId;
                 this.idToken = idToken;
 		this.dateCreated = dateCreated;
 		this.dateUpdated = dateUpdated;
@@ -47,13 +47,13 @@ public class TmpTokenCache implements java.io.Serializable {
 		this.tokenCacheId = tokenCacheId;
 	}
 
-        @Column(name = "userId")
-	public Integer getUserId() {
-		return this.userId;
+        @Column(name = "externalId")
+	public String getExternalId() {
+		return this.externalId;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setExternalId(String externalId) {
+		this.externalId = externalId;
 	}
 
         @Column(name = "idToken")

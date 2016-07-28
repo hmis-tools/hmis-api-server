@@ -32,14 +32,14 @@ public class TmpTokenCacheDAO extends BaseDAO {
 			return null;
 	}
 
-	public TmpTokenCache getTmpTokenCacheByUserId(String userId)  {
+	public TmpTokenCache getTmpTokenCacheByExternalId(String externalId)  {
 		String queryString = "select tokenCache " + 
 			"from TmpTokenCache as tokenCache " + 
-			"where tokenCache.userId =:userId";
+			"where tokenCache.externalId =:externalId";
 		
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("userId", userId);
+		queryObject.setParameter("externalId", externalId);
 		queryObject.setMaxResults(1);
 		
 		List<TmpTokenCache> results = queryObject.list();

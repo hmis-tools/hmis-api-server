@@ -65,7 +65,7 @@ public class TokenCacheManager {
 		TmpTokenCache tmpTokenCache = TokenCacheManager.generateTmpTokenCache(inputDTO);
 		tmpTokenCache.setTokenCacheId(inputDTO.getTokenCacheId());
 		tmpTokenCache.setDateUpdated(new Date());
-                tmpTokenCache.setUserId(inputDTO.getUserId());
+                tmpTokenCache.setExternalId(inputDTO.getExternalId());
                 tmpTokenCache.setIdToken(inputDTO.getIdToken());
 		
 		// Update the object
@@ -86,7 +86,7 @@ public class TokenCacheManager {
 		TokenCacheDTO tokenCacheDTO = new TokenCacheDTO();
 
 		tokenCacheDTO.setTokenCacheId(tmpTokenCache.getTokenCacheId());
-                tokenCacheDTO.setUserId(tmpTokenCache.getUserId());
+                tokenCacheDTO.setExternalId(tmpTokenCache.getExternalId());
                 tokenCacheDTO.setIdToken(tmpTokenCache.getIdToken());
 		
 		// Export Standard Fields (TBD: what are "Standard Fields"?)
@@ -99,7 +99,7 @@ public class TokenCacheManager {
 	public static TmpTokenCache generateTmpTokenCache(TokenCacheDTO inputDTO) {
 		TmpTokenCache tmpTokenCache = new TmpTokenCache();
 		
-		tmpTokenCache.setUserId(inputDTO.getUserId());
+		tmpTokenCache.setExternalId(inputDTO.getExternalId());
 		tmpTokenCache.setIdToken(inputDTO.getIdToken());
 		
 		// Export Standard Fields (TBD: what are "Standard Fields"?)

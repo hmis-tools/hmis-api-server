@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class TokenCacheDTO extends BaseDTO {
 
         private Integer tokenCacheId;
-    	private Integer userId;
+    	private String externalId;
         private String idToken;
     
 	// Export Standard Fields
@@ -43,13 +43,13 @@ public class TokenCacheDTO extends BaseDTO {
 	}
 
 	@JsonProperty
-	public Integer getUserId() {
-		return userId;
+	public String getExternalId() {
+		return externalId;
 	}
 
 	@JsonProperty
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setExternalId(String externalId) {
+		this.externalId = externalId;
 	}
 
 	@JsonProperty
