@@ -1,0 +1,96 @@
+#
+#!/bin/bash
+
+# Here's one way to do backups on a production server:
+#
+# Create a user named 'hmis-backup', who has no password, whose shell
+# is set to /bin/bash, and whose home directory is readable only by
+# that user & group.
+#
+# Create also a MySQL user named 'hmisro' (for "HMIS read-only"), with
+# read access to the HMIS database:
+#
+#   GRANT USAGE ON *.*                                \
+#         TO hmisro@localhost IDENTIFIED BY 'PASSWD';
+#   GRANT SELECT, LOCK TABLES ON `openhmis`.*         \
+#         TO hmisro@localhost IDENTIFIED BY 'PASSWD';
+#
+# (PASSWD should be the same for all of them.)
+#
+#
+# Edit this script with the backup location, username, and database
+# information for your installation.  Then run
+#
+#     $ chmod a+x ${SCRIPT}
+#
+# to make sure that it will be executable.
+#
+#
+# Now you have an 'backup-hmis' script that you can run as in a cron job
+# as user 'hmis-backup', assuming you set up permissions appropriately.
+# For example, you could put this in /etc/crontab
+#
+#   30 3 * * * hmis-backup /path/to/scripts/backup-hmis
+#
+# ...to have the script run at 3:30am every morning and put the backup
+# in /path/to/backups/hmis-demo-backup-DATE_TIME.tar.gz.  (Of
+# course, you might want to have another cron job that then copies the
+# backup to an off-site location.)
+#
+#  ************************ <<< IMPORTANT NOTE >>> ************************
+#  **                                                                    **
+#  **  Keep the final 'backup-hmis' script private!  It contains a       **
+#  **  password that allows read-only access to your HMIS database.      **
+#  **                                                                    **
+#  ************************************************************************
+
+BACKUPS_TOP=__BACKUPS_TOP__
+BACKUP_USER=__USER__
+DB_USER=__DB_USER__
+DB_PASS=__DB_PASS__
+DB_NAME=__DB_NAME__
+DATE_YMD_PREFIX="\%Y-\%m-\%d"
+DATE_FULL_FORMAT="\%Y-\%m-\%d_\%H.\%M.\%S"
+
+# You could customize this if you want, but there's no real reason to:
+BACKUP_PREFIX="hmis-demo-backup"
+
+# Get the date now, so that even if intermediate steps are so slow as
+# to let more than a second pass, or if they cross midnight and change
+# the day, none of that will affect the name of the backup.
+BACKUP_TIME=`(date +"${DATE_FULL_FORMAT}")`
+
+# Do everything within BACKUPS_TOP, to avoid leading-"/" warnings from tar.
+cd ${BACKUPS_TOP}
+
+THIS_BACKUP_DIR=${BACKUP_PREFIX}-${BACKUP_TIME}
+
+test -d "${THIS_BACKUP_DIR}" || mkdir -p "${THIS_BACKUP_DIR}"
+mysqldump -u ${DB_USER} --password=${DB_PASS}                  \
+            --single-transaction --routines "${DB_NAME}"            \
+    > "${THIS_BACKUP_DIR}/${DB_NAME}-backup-${BACKUP_TIME}.sql"
+tar zcf ${THIS_BACKUP_DIR}.tar.gz ${THIS_BACKUP_DIR}
+rm -rf ${THIS_BACKUP_DIR}
+
+# Remove backup(s) from two weeks ago, _after_ creating new backup above.
+if [ $(date +%u) = 1 ]; then
+  rm -f ${BACKUP_PREFIX}-`date -d'monday-fortnight ago' +${DATE_YMD_PREFIX}`_*.tar.gz
+fi
+if [ $(date +%u) = 2 ]; then
+  rm -f ${BACKUP_PREFIX}-`date -d'tuesday-fortnight ago' +${DATE_YMD_PREFIX}`_*.tar.gz
+fi
+if [ $(date +%u) = 3 ]; then
+  rm -f ${BACKUP_PREFIX}-`date -d'wednesday-fortnight ago' +${DATE_YMD_PREFIX}`_*.tar.gz
+fi
+if [ $(date +%u) = 4 ]; then
+  rm -f ${BACKUP_PREFIX}-`date -d'thursday-fortnight ago' +${DATE_YMD_PREFIX}`_*.tar.gz
+fi
+if [ $(date +%u) = 5 ]; then
+  rm -f ${BACKUP_PREFIX}-`date -d'friday-fortnight ago' +${DATE_YMD_PREFIX}`_*.tar.gz
+fi
+if [ $(date +%u) = 6 ]; then
+  rm -f ${BACKUP_PREFIX}-`date -d'saturday-fortnight ago' +${DATE_YMD_PREFIX}`_*.tar.gz
+fi
+if [ $(date +%u) = 7 ]; then
+  rm -f ${BACKUP_PREFIX}-`date -d'sunday-fortnight ago' +${DATE_YMD_PREFIX}`_*.tar.gz
+fi
