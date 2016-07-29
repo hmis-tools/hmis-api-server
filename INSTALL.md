@@ -213,6 +213,13 @@ Run the web service:
 
 6. Once authentication works, if the schema is properly set up, [http://localhost:8080/openhmis/api/v3/clients](http://localhost:8080/openhmis/api/v3/clients) should yield a valid XML object.
 
+7. You can check that regular event logging is happening in `CATALINA_BASE/logs/catalina.out` (e.g., `/var/lib/tomcat7/logs/catalina.out`).  The default log level provides an informational log entry for every API endpoint request, in the following format:
+
+   * Authorizatation events start with `AUTHN`.
+   * A GET/PUT/DELETE of one object: `GET|PUT|DELETE <endpoint>/<id>`
+   * A GET that fetches multiple objects: `GET <endpoint> (<number> results)`
+   * A POST that creates a new object: `POST <endpoint> (New id: <id>)`
+
 Continuous integration:
 ----------------------
 
