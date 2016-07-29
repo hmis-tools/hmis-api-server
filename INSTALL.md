@@ -212,8 +212,3 @@ Run the web service:
 5. If the [authentication](docs/Authentication.md) has been set up successfully, then [http://localhost:8080/openhmis/api/v3/healthcheck/authentication](http://localhost:8080/openhmis/api/v3/healthcheck/authentication) should display "You have a valid authentication token."
 
 6.  Once authentication works, if the schema is properly set up, [http://localhost:8080/openhmis/api/v3/clients](http://localhost:8080/openhmis/api/v3/clients) should yield a valid XML object.
-
-Continuous integration:
-----------------------
-
-Test that continuous integration happens on push.
