@@ -1,6 +1,8 @@
 OpenHMIS
 ========
 
+Current build status:  ![Build status](https://travis-ci.org/cecilia-donnelly/OpenHMIS.svg?branch=master)
+
 The OpenHMIS project is an [open source](LICENSE.md),
 [standards-based](docs/API.md) HMIS (Homeless Management Information
 System).
