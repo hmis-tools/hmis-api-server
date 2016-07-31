@@ -228,3 +228,11 @@ the instructions at
 [Travis](https://docs.travis-ci.com/user/getting-started/).  We've
 already added the .travis.yml file to this repo, so all you need to do
 is turn on CI for your fork, as described on that page.
+
+Further reading, if this is a production server:
+------------------------------------------------
+
+If you're setting up a production instance of this server, you might
+want to look at the documentation in the [maintenance](maintenance)
+folder.
+
