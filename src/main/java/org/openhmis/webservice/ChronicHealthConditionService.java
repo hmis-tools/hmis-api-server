@@ -75,6 +75,10 @@ public class ChronicHealthConditionService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		ChronicHealthConditionDTO outputDTO = ChronicHealthConditionManager.getChronicHealthConditionById(chronicHealthConditionId);
+                /* TODO: In most similar logging lines, we use the
+                   original variable (e.g., chronicHealthConditionId)
+                   instead of calling a getID() method on the
+                   resultant object.  Why is this case different? */
                 log.info("GET /chronic-health-conditions/" + outputDTO.getChronicHealthConditionId());
 		return outputDTO;
 	}

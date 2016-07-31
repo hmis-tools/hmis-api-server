@@ -74,6 +74,10 @@ public class ContactService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		ContactDTO outputDTO = ContactManager.getContactById(contactId);
+                /* TODO: In most similar logging lines, we use the
+                   original variable (e.g., contactId) instead of
+                   calling a getID() method on the resultant object.
+                   Why is this case different? */
                 log.info("GET /contacts/" + outputDTO.getId());
 		return outputDTO;
 	}
