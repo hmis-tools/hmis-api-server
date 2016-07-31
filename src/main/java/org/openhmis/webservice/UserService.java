@@ -56,7 +56,7 @@ public class UserService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.ADMIN))
                         throw new AccessDeniedException();
 		UserDTO outputDTO = UserManager.addUser(inputDTO);
-                log.info("POST /users (" + outputDTO.getId() + ")");
+                log.info("POST /users (new id: " + outputDTO.getId() + ")");
 		return outputDTO;
 	}
 	

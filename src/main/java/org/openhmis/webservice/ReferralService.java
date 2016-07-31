@@ -50,7 +50,7 @@ public class ReferralService {
 		} else {
 			referralDTOs = ReferralManager.getReferrals(DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /referrals (" + referralDTOs.size() + ")");
+                log.info("GET /referrals (" + referralDTOs.size() + " results)");
                 return referralDTOs;
 	}
 	
@@ -62,7 +62,7 @@ public class ReferralService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		ReferralDTO outputDTO = ReferralManager.addReferral(inputDTO);
-                log.info("POST  /referrals (" + outputDTO.getId() + ")");
+                log.info("POST /referrals (new id: " + outputDTO.getId() + ")");
                 return outputDTO;
 	}
 	
@@ -73,7 +73,7 @@ public class ReferralService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		ReferralDTO outputDTO = ReferralManager.getReferralById(referralId);
-                log.info("GET  /referrals/" + referralId);
+                log.info("GET /referrals/" + referralId);
 		return outputDTO;
 	}
 	
@@ -87,7 +87,7 @@ public class ReferralService {
 		inputDTO.setReferralId(referralId);
 		
 		ReferralDTO outputDTO = ReferralManager.updateReferral(inputDTO);
-                log.info("PUT  /referrals/" + referralId);
+                log.info("PUT /referrals/" + referralId);
 		return outputDTO;
 	}
 	
@@ -98,7 +98,7 @@ public class ReferralService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		ReferralManager.deleteReferral(referralId);
-                log.info("DELETE  /referrals/" + referralId);
+                log.info("DELETE /referrals/" + referralId);
 		return "true";
 	}
 }

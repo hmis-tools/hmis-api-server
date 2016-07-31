@@ -44,14 +44,14 @@ public class AuthenticationService {
 	@POST
 	@Path("/google")
 	public String authenticate(@Context SecurityContext sc, String code) {
-                log.info("POST /google/ (" + code + ")");
+                log.info("AUTHN POST /google/ (" + code + ")");
 		return Authentication.getGoogleToken(code);
 	}
 
 	@GET
 	@Path("/google/client_key")
 	public String googleClientKey() {
-                log.info("GET /google/client_key");
+                log.info("AUTHN GET /google/client_key");
 		ApplicationPropertyUtil applicationPropertyUtil = new ApplicationPropertyUtil();
 		return applicationPropertyUtil.getGoogleClientId();
 	}
@@ -68,7 +68,7 @@ public class AuthenticationService {
                  */
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
-                log.info("POST /externalId/ " + id_token);
+                log.info("AUTHN POST /externalId/ " + id_token);
                 String externalId = Authentication.resolveIdentity(id_token);
                 return externalId;
 	}

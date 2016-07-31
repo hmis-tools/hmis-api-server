@@ -63,7 +63,7 @@ public class FunderService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		FunderDTO outputDTO = FunderManager.addFunder(inputDTO);
-                log.info("POST /funders (" + outputDTO.getId() + ")");
+                log.info("POST /funders (new id: " + outputDTO.getId() + ")");
 		return outputDTO;
 	}
 	

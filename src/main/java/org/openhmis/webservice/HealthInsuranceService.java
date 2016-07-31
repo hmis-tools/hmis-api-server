@@ -63,7 +63,7 @@ public class HealthInsuranceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		HealthInsuranceDTO outputDTO = HealthInsuranceManager.addHealthInsurance(inputDTO);
-                log.info("POST /health-insurances (" + outputDTO.getId() + ")");
+                log.info("POST /health-insurances (new id: " + outputDTO.getId() + ")");
 		return outputDTO;
 	}
 	

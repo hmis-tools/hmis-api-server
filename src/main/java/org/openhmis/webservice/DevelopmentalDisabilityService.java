@@ -62,7 +62,7 @@ public class DevelopmentalDisabilityService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		DevelopmentalDisabilityDTO outputDTO = DevelopmentalDisabilityManager.addDevelopmentalDisability(inputDTO);
-                log.info("POST /development-disabilities (" + outputDTO.getId() + ")");
+                log.info("POST /development-disabilities (new id: " + outputDTO.getId() + ")");
 		return outputDTO;
 	}
 	
@@ -73,7 +73,7 @@ public class DevelopmentalDisabilityService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		DevelopmentalDisabilityDTO outputDTO = DevelopmentalDisabilityManager.getDevelopmentalDisabilityById(developmentalDisabilityId);
-                log.info("POST /development-disabilities/" + developmentalDisabilityId);
+                log.info("GET /development-disabilities/" + developmentalDisabilityId);
 		return outputDTO;
 	}
 	

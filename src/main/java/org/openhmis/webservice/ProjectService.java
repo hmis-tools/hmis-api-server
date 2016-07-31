@@ -59,7 +59,7 @@ public class ProjectService {
 		} else {
 			projectDTOs = ProjectManager.getProjectsByUpdateDate(DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /projects (" + projectDTOs.size() + ")");
+                log.info("GET /projects (" + projectDTOs.size() + " results)");
                 return projectDTOs;
         }
 
@@ -72,7 +72,7 @@ public class ProjectService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		ProjectDTO outputVO = ProjectManager.addProject(inputVO);
-                log.info("POST  /projects (" + outputVO.getId() + ")");
+                log.info("POST /projects (new id: " + outputVO.getId() + ")");
                 return outputVO;
 	}
 	
@@ -83,7 +83,7 @@ public class ProjectService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		ProjectDTO projectDTO = ProjectManager.getProjectById(projectId);
-                log.info("GET  /projects/" + projectId);
+                log.info("GET /projects/" + projectId);
 		return projectDTO;
 	}
 	
@@ -97,7 +97,7 @@ public class ProjectService {
 		inputVO.setProjectId(projectId);
 		
 		ProjectDTO outputVO = ProjectManager.updateProject(inputVO);
-                log.info("PUT  /projects/" + projectId);
+                log.info("PUT /projects/" + projectId);
 		return outputVO;
 	}
 	
@@ -108,7 +108,7 @@ public class ProjectService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		ProjectManager.deleteProject(projectId);
-                log.info("DELETE  /projects/" + projectId);
+                log.info("DELETE /projects/" + projectId);
 		return "true";
 	}
 	
@@ -127,7 +127,7 @@ public class ProjectService {
 		} else {
 			coCDTOs = CoCManager.getCoCsByProjectId(projectId, DateParser.parseDate(updatedSince));
 		}
-                log.info("GET  /" + projectId + "/cocs (" + coCDTOs.size() + " results)");
+                log.info("GET /projects/" + projectId + "/cocs (" + coCDTOs.size() + " results)");
                 return coCDTOs;
 	}
 	
@@ -146,7 +146,7 @@ public class ProjectService {
 		} else {
 			funderDTOs = FunderManager.getFundersByProjectId(projectId, DateParser.parseDate(updatedSince));
 		}
-                log.info("GET  /" + projectId + "/funders (" + funderDTOs.size() + " results)");
+                log.info("GET /projects/" + projectId + "/funders (" + funderDTOs.size() + " results)");
                 return funderDTOs;
 	}
 }

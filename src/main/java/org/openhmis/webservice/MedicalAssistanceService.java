@@ -50,7 +50,7 @@ public class MedicalAssistanceService {
 		} else {
 			medicalAssistanceDTOs = MedicalAssistanceManager.getMedicalAssistances(DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /medical-assistances (" + medicalAssistanceDTOs.size() + ")");
+                log.info("GET /medical-assistances (" + medicalAssistanceDTOs.size() + " results)");
                 return medicalAssistanceDTOs;
 	}
 	
@@ -62,7 +62,7 @@ public class MedicalAssistanceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		MedicalAssistanceDTO outputDTO = MedicalAssistanceManager.addMedicalAssistance(inputDTO);
-                log.info("POST  /medical-assistances (" + outputDTO.getId() + ")");
+                log.info("POST /medical-assistances (new id: " + outputDTO.getId() + ")");
                 return outputDTO;
 	}
 	
@@ -73,7 +73,7 @@ public class MedicalAssistanceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		MedicalAssistanceDTO outputDTO = MedicalAssistanceManager.getMedicalAssistanceById(medicalAssistanceId);
-                log.info("GET  /medical-assistances/" + medicalAssistanceId);
+                log.info("GET /medical-assistances/" + medicalAssistanceId);
 		return outputDTO;
 	}
 	
@@ -87,7 +87,7 @@ public class MedicalAssistanceService {
 		inputDTO.setMedicalAssistanceId(medicalAssistanceId);
 		
 		MedicalAssistanceDTO outputDTO = MedicalAssistanceManager.updateMedicalAssistance(inputDTO);
-                log.info("PUT  /medical-assistances/" + medicalAssistanceId);
+                log.info("PUT /medical-assistances/" + medicalAssistanceId);
 		return outputDTO;
 	}
 	
@@ -98,7 +98,7 @@ public class MedicalAssistanceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		MedicalAssistanceManager.deleteMedicalAssistance(medicalAssistanceId);
-                log.info("DELETE  /medical-assistances/" + medicalAssistanceId);
+                log.info("DELETE /medical-assistances/" + medicalAssistanceId);
 		return "true";
 	}
 }

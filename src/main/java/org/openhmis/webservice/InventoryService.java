@@ -50,7 +50,7 @@ public class InventoryService {
 		} else {
 			inventoryDTOs = InventoryManager.getInventories(DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /inventories (" + inventoryDTOs.size() + ")");
+                log.info("GET /inventories (" + inventoryDTOs.size() + " results)");
                 return inventoryDTOs;
 	}
 	
@@ -62,7 +62,7 @@ public class InventoryService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		InventoryDTO outputDTO = InventoryManager.addInventory(inputDTO);
-                log.info("POST  /inventories (" + outputDTO.getId() + ")");
+                log.info("POST /inventories (new id: " + outputDTO.getId() + ")");
                 return outputDTO;
 	}
 	
@@ -73,7 +73,7 @@ public class InventoryService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		InventoryDTO outputDTO = InventoryManager.getInventoryById(inventoryId);
-                log.info("GET  /inventories/" + inventoryId);
+                log.info("GET /inventories/" + inventoryId);
 		return outputDTO;
 	}
 	
@@ -87,7 +87,7 @@ public class InventoryService {
 		inputDTO.setInventoryId(inventoryId);
 		
 		InventoryDTO outputDTO = InventoryManager.updateInventory(inputDTO);
-                log.info("PUT  /inventories/" + inventoryId);
+                log.info("PUT /inventories/" + inventoryId);
 		return outputDTO;
 	}
 	
@@ -98,7 +98,7 @@ public class InventoryService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		InventoryManager.deleteInventory(inventoryId);
-                log.info("DELETE  /inventories/" + inventoryId);
+                log.info("DELETE /inventories/" + inventoryId);
 		return "true";
 	}
 }

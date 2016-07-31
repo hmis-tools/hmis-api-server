@@ -63,7 +63,7 @@ public class FinancialAssistanceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		FinancialAssistanceDTO outputDTO = FinancialAssistanceManager.addFinancialAssistance(inputDTO);
-                log.info("POST /financial-assistances (" + outputDTO.getId() + ")");
+                log.info("POST /financial-assistances (new id: " + outputDTO.getId() + ")");
 		return outputDTO;
 	}
 	
@@ -74,7 +74,7 @@ public class FinancialAssistanceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		FinancialAssistanceDTO outputDTO = FinancialAssistanceManager.getFinancialAssistanceById(financialAssistanceId);
-                log.info("POST /financial-assistances/" + financialAssistanceId);
+                log.info("GET /financial-assistances/" + financialAssistanceId);
 		return outputDTO;
 	}
 	

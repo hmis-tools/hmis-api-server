@@ -35,7 +35,7 @@ public class HealthCheckService {
     @Path("/")
     @Produces(MediaType.TEXT_PLAIN)
     public String healthcheck() throws Exception {
-        log.info("GET /healthcheck/ ");
+        log.info("GET /healthcheck ");
         return "Your service is working with version " + applicationPropertyUtil.getApplicationVersion();
     }
 
@@ -48,12 +48,12 @@ public class HealthCheckService {
            talking about here is authentication, so we use the latter
            term except when referring to the header itself. */
     	if(authorization == null) {
-                log.info("GET /healthcheck/authentication (Failed)");
+                log.info("GET /healthcheck/authentication (failed)");
                 return "Unable to authenticate, because the HTTP Authorization header isn't set.";
         }
 
     	if(Authentication.googleAuthenticate(authorization)) {
-                log.info("GET /healthcheck/authentication (Success)");
+                log.info("GET /healthcheck/authentication (succeeded)");
     		return "You have a valid authentication token.";
         }
     				

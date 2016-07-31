@@ -65,7 +65,7 @@ public class ClientService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		ClientDTO outputVO = clientManager.addClient(inputVO);
-                log.info("POST /clients/ (ID: " + outputVO.getId() + ")");
+                log.info("POST /clients/ (new id: " + outputVO.getId() + ")");
 		return outputVO;
 	}
 	

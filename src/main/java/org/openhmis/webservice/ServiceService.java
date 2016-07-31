@@ -50,7 +50,7 @@ public class ServiceService {
 		} else {
 			serviceDTOs = ServiceManager.getServices(DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /services (" + serviceDTOs.size() + ")");
+                log.info("GET /services (" + serviceDTOs.size() + " results)");
                 return serviceDTOs;
 	}
 	
@@ -62,7 +62,7 @@ public class ServiceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		ServiceDTO outputDTO = ServiceManager.addService(inputDTO);
-                log.info("POST  /services (" + outputDTO.getId() + ")");
+                log.info("POST /services (new id: " + outputDTO.getId() + ")");
                 return outputDTO;
 	}
 	
@@ -73,7 +73,7 @@ public class ServiceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		ServiceDTO outputDTO = ServiceManager.getServiceById(serviceId);
-                log.info("GET  /services/" + serviceId);
+                log.info("GET /services/" + serviceId);
 		return outputDTO;
 	}
 	
@@ -87,7 +87,7 @@ public class ServiceService {
 		inputDTO.setServiceId(serviceId);
 		
 		ServiceDTO outputDTO = ServiceManager.updateService(inputDTO);
-                log.info("PUT  /services/" + serviceId);
+                log.info("PUT /services/" + serviceId);
 		return outputDTO;
 	}
 	
@@ -98,7 +98,7 @@ public class ServiceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		ServiceManager.deleteService(serviceId);
-                log.info("DELETE  /services/" + serviceId);
+                log.info("DELETE /services/" + serviceId);
 		return "true";
 	}
 }

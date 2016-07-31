@@ -50,7 +50,7 @@ public class SiteService {
 		} else {
 			siteDTOs = SiteManager.getSites(DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /sites (" + siteDTOs.size() + ")");
+                log.info("GET /sites (" + siteDTOs.size() + " results)");
                 return siteDTOs;
 	}
 	
@@ -62,7 +62,7 @@ public class SiteService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		SiteDTO outputDTO = SiteManager.addSite(inputDTO);
-                log.info("POST  /sites (" + outputDTO.getId() + ")");
+                log.info("POST /sites (new id: " + outputDTO.getId() + ")");
                 return outputDTO;
 	}
 	
@@ -73,7 +73,7 @@ public class SiteService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		SiteDTO outputDTO = SiteManager.getSiteById(siteId);
-                log.info("GET  /sites/" + siteId);
+                log.info("GET /sites/" + siteId);
 		return outputDTO;
 	}
 	
@@ -87,7 +87,7 @@ public class SiteService {
 		inputDTO.setSiteId(siteId);
 		
 		SiteDTO outputDTO = SiteManager.updateSite(inputDTO);
-                log.info("PUT  /sites/" + siteId);
+                log.info("PUT /sites/" + siteId);
 		return outputDTO;
 	}
 	
@@ -98,7 +98,7 @@ public class SiteService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		SiteManager.deleteSite(siteId);
-                log.info("DELETE  /sites/" + siteId);
+                log.info("DELETE /sites/" + siteId);
 		return "true";
 	}
 }

@@ -63,7 +63,7 @@ public class ExitService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		ExitDTO outputDTO = ExitManager.addExit(inputDTO);
-                log.info("POST /exits " + outputDTO.getId());
+                log.info("POST /exits (new id: " + outputDTO.getId() + ")");
 		return outputDTO;
 	}
 	

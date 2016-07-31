@@ -62,7 +62,7 @@ public class DomesticAbuseService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		DomesticAbuseDTO outputDTO = DomesticAbuseManager.addDomesticAbuse(inputDTO);
-                log.info("POST /domestic-abuses (" + outputDTO.getId() + ")");
+                log.info("POST /domestic-abuses (new id: " + outputDTO.getId() + ")");
 		return outputDTO;
 	}
 	

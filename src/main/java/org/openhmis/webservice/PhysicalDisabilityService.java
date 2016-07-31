@@ -50,7 +50,7 @@ public class PhysicalDisabilityService {
 		} else {
 			physicalDisabilityDTOs = PhysicalDisabilityManager.getPhysicalDisabilities(DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /physical-disabilities (" + physicalDisabilityDTOs.size() + ")");
+                log.info("GET /physical-disabilities (" + physicalDisabilityDTOs.size() + " results)");
                 return physicalDisabilityDTOs;
 	}
 	
@@ -62,7 +62,7 @@ public class PhysicalDisabilityService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		PhysicalDisabilityDTO outputDTO = PhysicalDisabilityManager.addPhysicalDisability(inputDTO);
-                log.info("POST  /physical-disabilities (" + outputDTO.getId() + ")");
+                log.info("POST /physical-disabilities (new id: " + outputDTO.getId() + ")");
                 return outputDTO;
 	}
 	
@@ -73,7 +73,7 @@ public class PhysicalDisabilityService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		PhysicalDisabilityDTO outputDTO = PhysicalDisabilityManager.getPhysicalDisabilityById(physicalDisabilityId);
-                log.info("GET  /physical-disabilities/" + physicalDisabilityId);
+                log.info("GET /physical-disabilities/" + physicalDisabilityId);
 		return outputDTO;
 	}
 	
@@ -87,7 +87,7 @@ public class PhysicalDisabilityService {
 		inputDTO.setPhysicalDisabilityId(physicalDisabilityId);
 		
 		PhysicalDisabilityDTO outputDTO = PhysicalDisabilityManager.updatePhysicalDisability(inputDTO);
-                log.info("PUT  /physical-disabilities/" + physicalDisabilityId);
+                log.info("PUT /physical-disabilities/" + physicalDisabilityId);
 		return outputDTO;
 	}
 	
@@ -98,7 +98,7 @@ public class PhysicalDisabilityService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		PhysicalDisabilityManager.deletePhysicalDisability(physicalDisabilityId);
-                log.info("DELETE  /physical-disabilities/" + physicalDisabilityId);
+                log.info("DELETE /physical-disabilities/" + physicalDisabilityId);
 		return "true";
 	}
 }

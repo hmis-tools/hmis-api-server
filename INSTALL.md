@@ -218,7 +218,7 @@ Run the web service:
    * Authorizatation events start with `AUTHN`.
    * A GET/PUT/DELETE of one object: `GET|PUT|DELETE <endpoint>/<id>`
    * A GET that fetches multiple objects: `GET <endpoint> (<number> results)`
-   * A POST that creates a new object: `POST <endpoint> (New id: <id>)`
+   * A POST that creates a new object: `POST <endpoint> (new id: <id>)`
 
 Continuous integration:
 ----------------------

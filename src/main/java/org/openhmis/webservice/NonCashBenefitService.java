@@ -50,7 +50,7 @@ public class NonCashBenefitService {
 		} else {
 			nonCashBenefitDTOs = NonCashBenefitManager.getNonCashBenefits(DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /non-cash-benefits (" + nonCashBenefitDTOs.size() + ")");
+                log.info("GET /non-cash-benefits (" + nonCashBenefitDTOs.size() + " results)");
                 return nonCashBenefitDTOs;
 	}
 	
@@ -62,7 +62,7 @@ public class NonCashBenefitService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		NonCashBenefitDTO outputDTO = NonCashBenefitManager.addNonCashBenefit(inputDTO);
-                log.info("POST  /non-cash-benefits (" + outputDTO.getId() + ")");
+                log.info("POST /non-cash-benefits (new id: " + outputDTO.getId() + ")");
                 return outputDTO;
 	}
 	
@@ -73,7 +73,7 @@ public class NonCashBenefitService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		NonCashBenefitDTO outputDTO = NonCashBenefitManager.getNonCashBenefitById(nonCashBenefitId);
-                log.info("GET  /non-cash-benefits/" + nonCashBenefitId);
+                log.info("GET /non-cash-benefits/" + nonCashBenefitId);
 		return outputDTO;
 	}
 	
@@ -87,7 +87,7 @@ public class NonCashBenefitService {
 		inputDTO.setNonCashBenefitId(nonCashBenefitId);
 		
 		NonCashBenefitDTO outputDTO = NonCashBenefitManager.updateNonCashBenefit(inputDTO);
-                log.info("PUT  /non-cash-benefits/" + nonCashBenefitId);
+                log.info("PUT /non-cash-benefits/" + nonCashBenefitId);
 		return outputDTO;
 	}
 	
@@ -98,7 +98,7 @@ public class NonCashBenefitService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		NonCashBenefitManager.deleteNonCashBenefit(nonCashBenefitId);
-                log.info("DELETE  /non-cash-benefits/" + nonCashBenefitId);
+                log.info("DELETE /non-cash-benefits/" + nonCashBenefitId);
 		return "true";
 	}
 }

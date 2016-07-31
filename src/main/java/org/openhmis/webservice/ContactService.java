@@ -63,7 +63,7 @@ public class ContactService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		ContactDTO outputDTO = ContactManager.addContact(inputDTO);
-                log.info("POST /contacts " + outputDTO.getId());
+                log.info("POST /contacts (new id: " + outputDTO.getId() + ")");
 		return outputDTO;
 	}
 	

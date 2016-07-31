@@ -50,7 +50,7 @@ public class SubstanceAbuseService {
 		} else {
 			substanceAbuseDTOs = SubstanceAbuseManager.getSubstanceAbuses(DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /substance-abuses (" + substanceAbuseDTOs.size() + ")");
+                log.info("GET /substance-abuses (" + substanceAbuseDTOs.size() + " results)");
                 return substanceAbuseDTOs;
 	}
 	
@@ -62,7 +62,7 @@ public class SubstanceAbuseService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		SubstanceAbuseDTO outputDTO = SubstanceAbuseManager.addSubstanceAbuse(inputDTO);
-                log.info("POST  /substance-abuses (" + outputDTO.getId() + ")");
+                log.info("POST /substance-abuses (new id: " + outputDTO.getId() + ")");
                 return outputDTO;
 	}
 	
@@ -73,7 +73,7 @@ public class SubstanceAbuseService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		SubstanceAbuseDTO outputDTO = SubstanceAbuseManager.getSubstanceAbuseById(substanceAbuseId);
-                log.info("GET  /substance-abuses/" + substanceAbuseId);
+                log.info("GET /substance-abuses/" + substanceAbuseId);
 		return outputDTO;
 	}
 	
@@ -87,7 +87,7 @@ public class SubstanceAbuseService {
 		inputDTO.setSubstanceAbuseId(substanceAbuseId);
 		
 		SubstanceAbuseDTO outputDTO = SubstanceAbuseManager.updateSubstanceAbuse(inputDTO);
-                log.info("PUT  /substance-abuses/" + substanceAbuseId);
+                log.info("PUT /substance-abuses/" + substanceAbuseId);
 		return outputDTO;
 	}
 	
@@ -98,7 +98,7 @@ public class SubstanceAbuseService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		SubstanceAbuseManager.deleteSubstanceAbuse(substanceAbuseId);
-                log.info("DELETE  /substance-abuses/" + substanceAbuseId);
+                log.info("DELETE /substance-abuses/" + substanceAbuseId);
 		return "true";
 	}
 }

@@ -50,7 +50,7 @@ public class IncomeSourceService {
 		} else {
 			incomeSourceDTOs = IncomeSourceManager.getIncomeSources(DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /income-sources (" + incomeSourceDTOs.size() + ")");
+                log.info("GET /income-sources (" + incomeSourceDTOs.size() + " results)");
                 return incomeSourceDTOs;
 	}
 	
@@ -62,7 +62,7 @@ public class IncomeSourceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		IncomeSourceDTO outputDTO = IncomeSourceManager.addIncomeSource(inputDTO);
-                log.info("POST  /income-sources (" + outputDTO.getId() + ")");
+                log.info("POST /income-sources (new id: " + outputDTO.getId() + ")");
                 return outputDTO;
 	}
 	
@@ -73,7 +73,7 @@ public class IncomeSourceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		IncomeSourceDTO outputDTO = IncomeSourceManager.getIncomeSourceById(incomeSourceId);
-                log.info("GET  /income-sources/" + incomeSourceId);
+                log.info("GET /income-sources/" + incomeSourceId);
 		return outputDTO;
 	}
 	
@@ -87,7 +87,7 @@ public class IncomeSourceService {
 		inputDTO.setIncomeSourceId(incomeSourceId);
 		
 		IncomeSourceDTO outputDTO = IncomeSourceManager.updateIncomeSource(inputDTO);
-                log.info("PUT  /income-sources/" + incomeSourceId);
+                log.info("PUT /income-sources/" + incomeSourceId);
 		return outputDTO;
 	}
 	
@@ -98,7 +98,7 @@ public class IncomeSourceService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		IncomeSourceManager.deleteIncomeSource(incomeSourceId);
-                log.info("DELETE  /income-sources/" + incomeSourceId);
+                log.info("DELETE /income-sources/" + incomeSourceId);
 		return "true";
 	}
 }

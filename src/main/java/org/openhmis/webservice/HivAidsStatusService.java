@@ -63,7 +63,7 @@ public class HivAidsStatusService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		HivAidsStatusDTO outputDTO = HivAidsStatusManager.addHivAidsStatus(inputDTO);
-                log.info("GET /hiv-aids-statuses (" + outputDTO.getId() + ")");
+                log.info("POST /hiv-aids-statuses (new id: " + outputDTO.getId() + ")");
 		return outputDTO;
 	}
 	

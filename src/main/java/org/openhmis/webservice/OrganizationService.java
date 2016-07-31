@@ -59,7 +59,7 @@ public class OrganizationService {
 		} else {
 			organizationDTOs = OrganizationManager.getOrganizationsByUpdateDate(DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /organizations (" + organizationDTOs.size() + ")");
+                log.info("GET /organizations (" + organizationDTOs.size() + " results)");
                 return organizationDTOs;
         }
 
@@ -72,7 +72,7 @@ public class OrganizationService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		OrganizationDTO outputVO = OrganizationManager.addOrganization(inputVO);
-                log.info("POST  /organizations (" + outputVO.getId() + ")");
+                log.info("POST /organizations (new id: " + outputVO.getId() + ")");
                 return outputVO;
 	}
 	
@@ -83,7 +83,7 @@ public class OrganizationService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		OrganizationDTO organizationDTO = OrganizationManager.getOrganizationByOrganizationId(organizationId);
-                log.info("GET  /organizations/" + organizationId);
+                log.info("GET /organizations/" + organizationId);
 		return organizationDTO;
 	}
 	
@@ -97,7 +97,7 @@ public class OrganizationService {
 		inputVO.setOrganizationId(organizationId);
 		
 		OrganizationDTO outputVO = OrganizationManager.updateOrganization(inputVO);
-                log.info("PUT  /organizations/" + organizationId);
+                log.info("PUT /organizations/" + organizationId);
 		return outputVO;
 	}
 	
@@ -108,7 +108,7 @@ public class OrganizationService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		OrganizationManager.deleteOrganization(organizationId);
-                log.info("DELETE  /organizations/" + organizationId);
+                log.info("DELETE /organizations/" + organizationId);
 		return "true";
 	}
 }

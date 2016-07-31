@@ -66,7 +66,7 @@ public class CoCService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		CoCDTO outputDTO = CoCManager.addCoC(inputDTO);
-                log.info("POST /cocs (" + outputDTO.getId() + " results)");
+                log.info("POST /cocs (new id: " + outputDTO.getId() + ")");
 		return outputDTO;
 	}
 	
@@ -121,7 +121,7 @@ public class CoCService {
 		} else {
 			inventoryDTOs = InventoryManager.getInventoriesByProjectCoCId(coCId, DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /" + coCId + "/inventories (" + inventoryDTOs.size() + " results)");
+                log.info("GET /cocs/" + coCId + "/inventories (" + inventoryDTOs.size() + " results)");
                 return inventoryDTOs;
 	}
 
@@ -140,7 +140,7 @@ public class CoCService {
 		} else {
 			siteDTOs = SiteManager.getSitesByProjectCoCId(coCId, DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /" + coCId + "/sites (" + siteDTOs.size() + " results)");
+                log.info("GET /cocs/" + coCId + "/sites (" + siteDTOs.size() + " results)");
                 return siteDTOs;
 	}
 

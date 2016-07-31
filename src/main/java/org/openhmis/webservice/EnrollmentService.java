@@ -112,7 +112,7 @@ public class EnrollmentService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		EnrollmentDTO outputVO = enrollmentManager.addEnrollment(inputVO);
-                log.info("POST /enrollments (" + outputVO.getId() + ")");
+                log.info("POST /enrollments (new id: " + outputVO.getId() + ")");
 		return outputVO;
 	}
 	
@@ -153,7 +153,7 @@ public class EnrollmentService {
 		// TODO: figure out whether or not we want exists to have history
 		List<ExitDTO> exitDTOs = new ArrayList<ExitDTO>();
 		exitDTOs.add(ExitManager.getExitByEnrollmentId(enrollmentId));
-                log.info("GET /" + enrollmentId + "/exits (" + exitDTOs.size() + " results)");
+                log.info("GET /enrollments/" + enrollmentId + "/exits (" + exitDTOs.size() + " results)");
                 return exitDTOs;
 	}
 
@@ -173,7 +173,7 @@ public class EnrollmentService {
 		} else {
 			chronicHealthConditionDTOs = ChronicHealthConditionManager.getChronicHealthConditionsByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /" + enrollmentId + "/chronic-health-conditions (" + chronicHealthConditionDTOs.size() + " results)");
+                log.info("GET /enrollments/" + enrollmentId + "/chronic-health-conditions (" + chronicHealthConditionDTOs.size() + " results)");
                 return chronicHealthConditionDTOs;
 	}
 	
@@ -193,7 +193,7 @@ public class EnrollmentService {
 		} else {
 			contactDTOs = ContactManager.getContactsByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /" + enrollmentId + "/contacts (" + contactDTOs.size() + " results)");
+                log.info("GET /enrollments/" + enrollmentId + "/contacts (" + contactDTOs.size() + " results)");
                 return contactDTOs;
 	}
 
@@ -213,7 +213,7 @@ public class EnrollmentService {
 		} else {
                         developmentalDisabilityDTOs = DevelopmentalDisabilityManager.getDevelopmentalDisabilitiesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /" + enrollmentId + "/developmental-disabilities (" + developmentalDisabilityDTOs.size() + " results)");
+                log.info("GET /enrollments/" + enrollmentId + "/developmental-disabilities (" + developmentalDisabilityDTOs.size() + " results)");
                 return developmentalDisabilityDTOs;
 	}
 
@@ -233,7 +233,7 @@ public class EnrollmentService {
 		} else {
 			domesticAbuseDTOs = DomesticAbuseManager.getDomesticAbusesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /" + enrollmentId + "/domestic-abuses (" + domesticAbuseDTOs.size() + " results)");
+                log.info("GET /enrollments/" + enrollmentId + "/domestic-abuses (" + domesticAbuseDTOs.size() + " results)");
                 return domesticAbuseDTOs;
 	}
 
@@ -253,7 +253,7 @@ public class EnrollmentService {
 		} else {
 			financialAssistanceDTOs = FinancialAssistanceManager.getFinancialAssistancesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /" + enrollmentId + "/financial-assitances (" + financialAssistanceDTOs.size() + " results)");
+                log.info("GET /enrollments/" + enrollmentId + "/financial-assitances (" + financialAssistanceDTOs.size() + " results)");
                 return financialAssistanceDTOs;
 	}
 	
@@ -273,7 +273,7 @@ public class EnrollmentService {
 		} else {
 			healthInsuranceDTOs = HealthInsuranceManager.getHealthInsurancesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /" + enrollmentId + "/health-insurances (" + healthInsuranceDTOs.size() + " results)");
+                log.info("GET /enrollments/" + enrollmentId + "/health-insurances (" + healthInsuranceDTOs.size() + " results)");
                 return healthInsuranceDTOs;
 	}
 	
@@ -293,7 +293,7 @@ public class EnrollmentService {
 		} else {
 			hivAidsStatusDTOs = HivAidsStatusManager.getHivAidsStatusesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /" + enrollmentId + "/hiv-aids-statuses (" + hivAidsStatusDTOs.size() + " results)");
+                log.info("GET /enrollments/" + enrollmentId + "/hiv-aids-statuses (" + hivAidsStatusDTOs.size() + " results)");
                 return hivAidsStatusDTOs;
 	}
 	
@@ -313,7 +313,7 @@ public class EnrollmentService {
 		} else {
 			medicalAssistanceDTOs = MedicalAssistanceManager.getMedicalAssistancesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /" + enrollmentId + "/medical-assistances (" + medicalAssistanceDTOs.size() + " results)");
+                log.info("GET /enrollments/" + enrollmentId + "/medical-assistances (" + medicalAssistanceDTOs.size() + " results)");
                 return medicalAssistanceDTOs;
 	}
 	
@@ -333,7 +333,7 @@ public class EnrollmentService {
 		} else {
 			incomeSourceDTOs = IncomeSourceManager.getIncomeSourcesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /" + enrollmentId + "/income-sources (" + incomeSourceDTOs.size() + " results)");
+                log.info("GET /enrollments/" + enrollmentId + "/income-sources (" + incomeSourceDTOs.size() + " results)");
                 return incomeSourceDTOs;
 	}
 	
@@ -353,7 +353,7 @@ public class EnrollmentService {
 		} else {
 			nonCashBenefitDTOs = NonCashBenefitManager.getNonCashBenefitsByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /" + enrollmentId + "/noncash-benefits (" + nonCashBenefitDTOs.size() + " results)");
+                log.info("GET /enrollments/" + enrollmentId + "/noncash-benefits (" + nonCashBenefitDTOs.size() + " results)");
                 return nonCashBenefitDTOs;
 	}
 	
@@ -373,7 +373,7 @@ public class EnrollmentService {
 		} else {
 			physicalDisabilityDTOs = PhysicalDisabilityManager.getPhysicalDisabilitiesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /" + enrollmentId + "/physical-disabilities (" + physicalDisabilityDTOs.size() + " results)");
+                log.info("GET /enrollments/" + enrollmentId + "/physical-disabilities (" + physicalDisabilityDTOs.size() + " results)");
                 return physicalDisabilityDTOs;
 	}
 	
@@ -393,7 +393,7 @@ public class EnrollmentService {
 		} else {
 			referralDTOs = ReferralManager.getReferralsByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /" + enrollmentId + "/referrals (" + referralDTOs.size() + " results)");
+                log.info("GET /enrollments/" + enrollmentId + "/referrals (" + referralDTOs.size() + " results)");
                 return referralDTOs;
 	}
 	
@@ -413,7 +413,7 @@ public class EnrollmentService {
 		} else {
 			serviceDTOs = ServiceManager.getServicesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /" + enrollmentId + "/services (" + serviceDTOs.size() + " results)");
+                log.info("GET /enrollments/" + enrollmentId + "/services (" + serviceDTOs.size() + " results)");
                 return serviceDTOs;
 	}
 	
@@ -433,7 +433,7 @@ public class EnrollmentService {
 		} else {
 			substanceAbuseDTOs = SubstanceAbuseManager.getSubstanceAbusesByEnrollmentId(enrollmentId, DateParser.parseDate(updatedSince));
 		}
-                log.info("GET /" + enrollmentId + "/substance-abuses (" + substanceAbuseDTOs.size() + " results)");
+                log.info("GET /enrollments/" + enrollmentId + "/substance-abuses (" + substanceAbuseDTOs.size() + " results)");
                 return substanceAbuseDTOs;
 	}
 }
