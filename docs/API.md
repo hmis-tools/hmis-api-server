@@ -179,17 +179,17 @@ The HTTP response codes returned from this API follow [RFC
 standards.  We do not document the HTTP response codes for each
 endpoint, but the API follows these principles:
 
-Successful requests get a response code in the 2xx range (e.g., of
-`200 OK`, or `201 Created` in the case of a succesful POST or PUT
-request).  Unsuccessful requests should get a response code in the 4xx
-range (e.g., `400 Bad Request` in case of a data validation problem,
-or `401 Unauthorized` in case of an authorization failure).  HTTP
-response codes in the 5xx range are not part of this API; however,
-note that some implementations may return them in practice.  For
-example when a data validity problem is _not_ explicitly caught and
-thus leads to a database type mismatch error later on, the resultant
-low-level error might be propagated back to the client as a `500
-Internal Server Error`.
+Successful requests get a response code in the 2xx range (e.g., `200
+OK`, or `201 Created` in the case of a succesful POST or PUT request).
+Unsuccessful requests should get a response code in the 4xx range
+(e.g., `400 Bad Request` in case of a data validation problem, or `401
+Unauthorized` in case of an authorization failure).  HTTP response
+codes in the 5xx range are not part of this API; however, note that
+some implementations may return them in practice.  For example when a
+data validity problem is _not_ explicitly caught and thus leads to a
+database type mismatch error later on, the resultant low-level error
+might be propagated back to the client as a `500 Internal Server
+Error`.
 
 # Top-level resources:
 
