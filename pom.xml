@@ -89,6 +89,12 @@
 		</dependency>
 
 		<dependency>
+		    <groupId>org.glassfish.jersey.test-framework.providers</groupId>
+		    <artifactId>jersey-test-framework-provider-jetty</artifactId>
+		    <version>2.18</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.google.oauth-client</groupId>
 			<artifactId>google-oauth-client</artifactId>
 			<version>1.20.0</version>
@@ -121,6 +127,24 @@
 		    <artifactId>mockito-core</artifactId>
 		    <version>1.10.19</version>
 		</dependency>
+
+		<dependency>
+		    <groupId>org.dbunit</groupId>
+		    <artifactId>dbunit</artifactId>
+		    <version>2.5.2</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.json</groupId>
+		    <artifactId>json</artifactId>
+		    <version>20160212</version>
+		</dependency>
+		
+		<dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>3.2.1</version>
+        </dependency>
 
 	</dependencies>
 	
