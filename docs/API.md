@@ -1089,8 +1089,8 @@ Consent-to-Share Records support the GET, POST, PUT, and DELETE methods.
                   # (submitterID is, e.g., the ID of the caseworker who
                   # submitted this request on behalf of the client)
                   "submitter_id": SUBMITTER_ID,
-                  "coc_ids": [COC_ID, ...],
                   "organization_ids": [ORG_ID, ...],
+                  "coc_ids": [COC_ID, ...],
                   "fields": 
                   {
                       "field_name_1" : "share" | "not-share",
