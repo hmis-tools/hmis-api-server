@@ -26,7 +26,7 @@ public class WrappingWriterInterceptor implements WriterInterceptor {
         // If this is an error, continue normally
         // TODO: error wrapper should be applied here as well
         if(currentEntity instanceof List) {
-			ListResultDTO resultDTO = new ListResultDTO((List<Object>) currentEntity);
+			ListResultDTO<Object> resultDTO = new ListResultDTO<Object>((List<Object>) currentEntity);
             context.setEntity(resultDTO);
             context.setGenericType(ListResultDTO.class);
             context.setType(ListResultDTO.class);           

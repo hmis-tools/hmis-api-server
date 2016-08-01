@@ -13,24 +13,18 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
-import org.openhmis.code.ClientNameDataQuality;
 import org.openhmis.dto.ClientDTO;
 import org.openhmis.exception.AccessDeniedException;
-import org.openhmis.exception.RecordNotFoundException;
 import org.openhmis.dto.search.ClientSearchDTO;
 import org.openhmis.manager.ClientManager;
 import org.openhmis.util.Authentication;
-import org.openhmis.util.DateParser;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @Path("/clients")
@@ -46,7 +40,7 @@ public class ClientService {
 	public List<ClientDTO> getClients(@HeaderParam("Authorization") String authorization, @BeanParam ClientSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
 			throw new AccessDeniedException();
-		
+
 		// Return clients that match the search terms
         List<ClientDTO> clientDTOs = clientManager.getClients(searchDTO);
         return clientDTOs;
