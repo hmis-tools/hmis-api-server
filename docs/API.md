@@ -1105,23 +1105,28 @@ Consent-to-Share Records support the GET, POST, PUT, and DELETE methods.
                   },
                   "date_created": CREATION_DATE,
                   "date_processed": PROCESSED_DATE,
-                  "approval": "approved" | "rejected" | "pending"
+                  "approval_status": "approved" | "pending"
               }
           }
       }
       
-A POST or PUT returns either "approved" or "pending" for success, or
-"rejected" for failure.
+For both POST and PUT, in either success case, the new or updated
+consent record is returned in the response body.  If the
+`approval_status` field's value is "approved", then change took effect
+immediately; if the value is "pending", the interpretation is formally
+implementation-dependent, but typically means that the change to the
+Consent-to-Share Record has been received but requires review and
+approval by an administrator before taking effect.  Server
+implementations are not required to implement "pending".
 
-A return value of "pending" usually means that the C-t-S Record has
-been entered but requires review and approval by an administrator
-before it can take effect.  Server implementations are not required to
-implement "pending".
+If POST or PUT is not successful due to lack of authorization, an
+ACCESS_DENIED error is returned, as described in the "Errors and
+Exceptions" section below.
 
-We don't do "All yes" because we don't know what future fields might
-exist.
-
-TBD: Finish this out with POST, PUT, and DELETE methods.
+If a DELETE call is successful, the HTTP response code 200 (OK)
+indicates this.  Otherwise, an appropriate HTTP error code, and the
+appropriate error response body from "Errors and Exceptions", is
+returned in the response.
 
 # Errors and Exceptions
 
@@ -1141,7 +1146,7 @@ The API returns exceptions using the following format:
 
 The following error codes have been built into the API so far:
 
-- ACCESS_DENIED: when you try to access content you are not authenticated to see.
+- ACCESS_DENIED: when you try to access content you are not authorized to see (or to write)
 - AUTHENTICATION_FAILURE: when you have attempted to authenticate but something went wrong (invalid token, for instance)
 - MISSING_PARAMETER: a required parameter was not provided.
 - INVALID_PARAMETER: a parameter was provided but is not of the proper format.
