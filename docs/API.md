@@ -172,6 +172,25 @@ nested income sources to take effect.  Instead, to change or add those
 income sources, you must use the appropriate top-level endpoint, e.g.,
 `services/income-sources/1`.
 
+# HTTP response codes
+
+The HTTP response codes returned from this API follow [RFC
+2616](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html) web
+standards.  We do not document the HTTP response codes for each
+endpoint, but the API follows these principles:
+
+Successful requests get a response code in the 2xx range (e.g., of
+`200 OK`, or `201 Created` in the case of a succesful POST or PUT
+request).  Unsuccessful requests should get a response code in the 4xx
+range (e.g., `400 Bad Request` in case of a data validation problem,
+or `401 Unauthorized` in case of an authorization failure).  HTTP
+response codes in the 5xx range are not part of this API; however,
+note that some implementations may return them in practice.  For
+example when a data validity problem is _not_ explicitly caught and
+thus leads to a database type mismatch error later on, the resultant
+low-level error might be propagated back to the client as a `500
+Internal Server Error`.
+
 # Top-level resources:
 
 * Clients
