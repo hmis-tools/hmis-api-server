@@ -57,22 +57,6 @@ public class ExitManager {
 
 	}
 
-	public static List<ExitDTO> getExits(Date updateDate) {
-		List<ExitDTO> exitDTOs = new ArrayList<ExitDTO>();
-
-		// Collect the exits
-		List<TmpExit> tmpExits = tmpExitDAO.getTmpExits(updateDate);
-
-		// For each exit, collect and map the data
-		for (Iterator<TmpExit> iterator = tmpExits.iterator(); iterator.hasNext();) {
-			TmpExit tmpExit = iterator.next();
-			ExitDTO exitDTO = ExitManager.generateExitDTO(tmpExit);
-			exitDTOs.add(exitDTO);
-		}
-		return exitDTOs;
-
-	}
-
 	public static ExitDTO getExitByEnrollmentId(String enrollmentId) {
 		List<ExitDTO> exitDTOs = new ArrayList<ExitDTO>();
 
