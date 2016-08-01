@@ -138,11 +138,12 @@ API](https://github.com/servinglynk/hmis-lynk-open-source) as well.
 As the above examples show, the "data" object will contain either one
 "item" or a list of "items".
 
-(When there is an error, an "error" wrapper is used instead, as
-described later in this document.  Although the Google JSON Style
-Guide technically allows both "data" and "error" to be included in the
-same response, in the OpenHMIS API they are currently mutually
-exclusive: you will get either "data" or "error", but not both.)
+When there is an error, an "error" wrapper is used instead, as
+described in "Errors and Exceptions" later in this document.  Although
+the Google JSON Style Guide technically allows both "data" and "error"
+to be included in the same response, in the OpenHMIS API they are
+currently mutually exclusive: you will get either "data" or "error",
+but not both.
 
 POST, PUT, and DELETE work as expected: you just supply the object(s),
 in the same JSON format that responses use.
