@@ -4,9 +4,13 @@ package org.openhmis.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.openhmis.domain.TmpPhysicalDisability;
+import org.openhmis.dto.search.PhysicalDisabilitySearchDTO;
+import org.openhmis.util.DateParser;
 
 public class TmpPhysicalDisabilityDAO extends BaseDAO {
 
@@ -33,58 +37,19 @@ public class TmpPhysicalDisabilityDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpPhysicalDisability> getTmpPhysicalDisabilities() {
-		String queryString = "select phyiscalDisability " + 
-				"from TmpPhysicalDisability as phyiscalDisability";
+	public List<TmpPhysicalDisability> getTmpPhysicalDisabilities(PhysicalDisabilitySearchDTO searchDTO) {
 
 		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		List<TmpPhysicalDisability> results = queryObject.list();
+                Criteria query =  session.createCriteria(TmpPhysicalDisability.class);
+                if(searchDTO.getUpdatedSince() != null) {
+                    query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
+		}
+                if(searchDTO.getEnrollmentId() != null) {
+                    query.add(Restrictions.eq("enrollmentId", Integer.parseInt(searchDTO.getEnrollmentId())));
+		}
+		List<TmpPhysicalDisability> results = query.list();
 		session.close();
 		return results;
 	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpPhysicalDisability> getTmpPhysicalDisabilities(Date updateDate) {
-		String queryString = "select phyiscalDisability " + 
-				"from TmpPhysicalDisability as phyiscalDisability " + 
-				"where phyiscalDisability.dateUpdated >= :updatedSince";
 
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpPhysicalDisability> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpPhysicalDisability> getTmpPhysicalDisabilitiesByEnrollmentId(Integer enrollmentId) {
-		String queryString = "select phyiscalDisability " + 
-				"from TmpPhysicalDisability as phyiscalDisability " + 
-				"where phyiscalDisability.enrollmentId =:enrollmentId";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		List<TmpPhysicalDisability> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpPhysicalDisability> getTmpPhysicalDisabilitiesByEnrollmentId(Integer enrollmentId, Date updateDate) {
-		String queryString = "select phyiscalDisability " + 
-				"from TmpPhysicalDisability as phyiscalDisability " + 
-				"where phyiscalDisability.enrollmentId =:enrollmentId " + 
-				"  and phyiscalDisability.dateUpdated >= :updatedSince";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpPhysicalDisability> results = queryObject.list();
-		session.close();
-		return results;
-	}
 }

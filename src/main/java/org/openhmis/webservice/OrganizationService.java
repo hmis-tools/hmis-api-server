@@ -3,6 +3,7 @@ package org.openhmis.webservice;
 import java.io.IOException;
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -18,6 +19,7 @@ import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 import org.openhmis.dto.ClientDTO;
+import org.openhmis.dto.search.OrganizationSearchDTO;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.InventoryDTO;
@@ -48,21 +50,13 @@ public class OrganizationService {
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<OrganizationDTO> getOrganizations(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<OrganizationDTO> getOrganizations(@HeaderParam("Authorization") String authorization, @BeanParam OrganizationSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
-
-                List<OrganizationDTO> organizationDTOs;
-                // If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			organizationDTOs = OrganizationManager.getOrganizations();
-		} else {
-			organizationDTOs = OrganizationManager.getOrganizationsByUpdateDate(DateParser.parseDate(updatedSince));
-		}
+                List<OrganizationDTO> organizationDTOs = OrganizationManager.getOrganizations(searchDTO);
                 log.info("GET /organizations (" + organizationDTOs.size() + " results)");
                 return organizationDTOs;
         }
-
 	
 	@POST
 	@Path("/")

@@ -17,6 +17,7 @@ import org.openhmis.domain.TmpDomesticAbuse;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.DomesticAbuseDTO;
+import org.openhmis.dto.search.DomesticAbuseSearchDTO;
 
 public class DomesticAbuseManager {
 	private static final TmpDomesticAbuseDAO tmpDomesticAbuseDAO = new TmpDomesticAbuseDAO();
@@ -28,11 +29,11 @@ public class DomesticAbuseManager {
 		return domesticAbuseDTO;
 	}
 
-	public static List<DomesticAbuseDTO> getDomesticAbuses() {
+	public static List<DomesticAbuseDTO> getDomesticAbuses(DomesticAbuseSearchDTO searchDTO) {
 		List<DomesticAbuseDTO> domesticAbuseDTOs = new ArrayList<DomesticAbuseDTO>();
 
 		// Collect the domesticAbuses
-		List<TmpDomesticAbuse> tmpDomesticAbuses = tmpDomesticAbuseDAO.getTmpDomesticAbuses();
+		List<TmpDomesticAbuse> tmpDomesticAbuses = tmpDomesticAbuseDAO.getTmpDomesticAbuses(searchDTO);
 
 		// For each domesticAbuse, collect and map the data
 		for (Iterator<TmpDomesticAbuse> iterator = tmpDomesticAbuses.iterator(); iterator.hasNext();) {
@@ -44,53 +45,6 @@ public class DomesticAbuseManager {
 
 	}
 
-	public static List<DomesticAbuseDTO> getDomesticAbuses(Date updateDate) {
-		List<DomesticAbuseDTO> domesticAbuseDTOs = new ArrayList<DomesticAbuseDTO>();
-
-		// Collect the domesticAbuses
-		List<TmpDomesticAbuse> tmpDomesticAbuses = tmpDomesticAbuseDAO.getTmpDomesticAbuses(updateDate);
-
-		// For each domesticAbuse, collect and map the data
-		for (Iterator<TmpDomesticAbuse> iterator = tmpDomesticAbuses.iterator(); iterator.hasNext();) {
-			TmpDomesticAbuse tmpDomesticAbuse = iterator.next();
-			DomesticAbuseDTO domesticAbuseDTO = DomesticAbuseManager.generateDomesticAbuseDTO(tmpDomesticAbuse);
-			domesticAbuseDTOs.add(domesticAbuseDTO);
-		}
-		return domesticAbuseDTOs;
-
-	}
-
-	public static List<DomesticAbuseDTO> getDomesticAbusesByEnrollmentId(String enrollmentId) {
-		List<DomesticAbuseDTO> domesticAbuseDTOs = new ArrayList<DomesticAbuseDTO>();
-
-		// Collect the domesticAbuses
-		List<TmpDomesticAbuse> tmpDomesticAbuses = tmpDomesticAbuseDAO.getTmpDomesticAbusesByEnrollmentId(Integer.parseInt(enrollmentId));
-
-		// For each domesticAbuse, collect and map the data
-		for (Iterator<TmpDomesticAbuse> iterator = tmpDomesticAbuses.iterator(); iterator.hasNext();) {
-			TmpDomesticAbuse tmpDomesticAbuse = iterator.next();
-			DomesticAbuseDTO domesticAbuseDTO = DomesticAbuseManager.generateDomesticAbuseDTO(tmpDomesticAbuse);
-			domesticAbuseDTOs.add(domesticAbuseDTO);
-		}
-		return domesticAbuseDTOs;
-
-	}
-
-	public static List<DomesticAbuseDTO> getDomesticAbusesByEnrollmentId(String enrollmentId, Date updateDate) {
-		List<DomesticAbuseDTO> domesticAbuseDTOs = new ArrayList<DomesticAbuseDTO>();
-
-		// Collect the domesticAbuses
-		List<TmpDomesticAbuse> tmpDomesticAbuses = tmpDomesticAbuseDAO.getTmpDomesticAbusesByEnrollmentId(Integer.parseInt(enrollmentId), updateDate);
-
-		// For each domesticAbuse, collect and map the data
-		for (Iterator<TmpDomesticAbuse> iterator = tmpDomesticAbuses.iterator(); iterator.hasNext();) {
-			TmpDomesticAbuse tmpDomesticAbuse = iterator.next();
-			DomesticAbuseDTO domesticAbuseDTO = DomesticAbuseManager.generateDomesticAbuseDTO(tmpDomesticAbuse);
-			domesticAbuseDTOs.add(domesticAbuseDTO);
-		}
-		return domesticAbuseDTOs;
-
-	}
 	
 	public static DomesticAbuseDTO addDomesticAbuse(DomesticAbuseDTO inputDTO) {
 		// Generate a PathClient from the input

@@ -7,6 +7,7 @@ package org.openhmis.webservice;
 import java.io.IOException;
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -21,6 +22,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 import org.openhmis.dto.UserDTO;
+import org.openhmis.dto.search.UserSearchDTO;
 import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.manager.UserManager;
 import org.openhmis.util.Authentication;
@@ -39,11 +41,10 @@ public class UserService {
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<UserDTO> getUsers(@HeaderParam("Authorization") String authorization) throws JsonProcessingException {
+	public List<UserDTO> getUsers(@HeaderParam("Authorization") String authorization, @BeanParam UserSearchDTO searchDTO ) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.ADMIN))
                         throw new AccessDeniedException();
-
-		List<UserDTO> userDTOs = UserManager.getUsers();
+		List<UserDTO> userDTOs = UserManager.getUsers(searchDTO);
                 log.info("GET /users (" + userDTOs.size() + " results)");
 		return userDTOs;
 	}

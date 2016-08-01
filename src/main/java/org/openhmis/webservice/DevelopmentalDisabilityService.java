@@ -7,6 +7,7 @@ package org.openhmis.webservice;
 import java.io.IOException;
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -22,6 +23,7 @@ import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 import org.openhmis.dto.DevelopmentalDisabilityDTO;
 import org.openhmis.exception.AccessDeniedException;
+import org.openhmis.dto.search.DevelopmentalDisabilitySearchDTO;
 import org.openhmis.manager.DevelopmentalDisabilityManager;
 import org.openhmis.util.Authentication;
 import org.openhmis.util.DateParser;
@@ -39,19 +41,12 @@ public class DevelopmentalDisabilityService {
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilities(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<DevelopmentalDisabilityDTO> getDevelopmentalDisabilities(@HeaderParam("Authorization") String authorization,  @BeanParam DevelopmentalDisabilitySearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
-
-                List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs;
-		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			developmentalDisabilityDTOs = DevelopmentalDisabilityManager.getDevelopmentalDisabilities();
-		} else {
-			developmentalDisabilityDTOs = DevelopmentalDisabilityManager.getDevelopmentalDisabilities(DateParser.parseDate(updatedSince));
-		}
+                List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = DevelopmentalDisabilityManager.getDevelopmentalDisabilities(searchDTO);
                 log.info("GET /development-disabilities (" + developmentalDisabilityDTOs.size() + " results)");
-                return developmentalDisabilityDTOs;
+                return developmentalDisabilityDTOs;			
 	}
 	
 	@POST

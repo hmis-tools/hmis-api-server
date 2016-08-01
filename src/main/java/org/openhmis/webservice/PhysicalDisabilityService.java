@@ -7,6 +7,7 @@ package org.openhmis.webservice;
 import java.io.IOException;
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -21,6 +22,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 import org.openhmis.dto.PhysicalDisabilityDTO;
+import org.openhmis.dto.search.PhysicalDisabilitySearchDTO;
 import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.manager.PhysicalDisabilityManager;
 import org.openhmis.util.Authentication;
@@ -39,17 +41,10 @@ public class PhysicalDisabilityService {
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<PhysicalDisabilityDTO> getPhysicalDisabilities(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<PhysicalDisabilityDTO> getPhysicalDisabilities(@HeaderParam("Authorization") String authorization, @BeanParam PhysicalDisabilitySearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
-		
-                List<PhysicalDisabilityDTO> physicalDisabilityDTOs;
-                // If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			physicalDisabilityDTOs = PhysicalDisabilityManager.getPhysicalDisabilities();
-		} else {
-			physicalDisabilityDTOs = PhysicalDisabilityManager.getPhysicalDisabilities(DateParser.parseDate(updatedSince));
-		}
+                List<PhysicalDisabilityDTO> physicalDisabilityDTOs = PhysicalDisabilityManager.getPhysicalDisabilities(searchDTO);
                 log.info("GET /physical-disabilities (" + physicalDisabilityDTOs.size() + " results)");
                 return physicalDisabilityDTOs;
 	}

@@ -41,24 +41,40 @@ import org.openhmis.domain.PathClientProgram;
 import org.openhmis.domain.TmpEnrollment;
 import org.openhmis.domain.TmpProjectInventory;
 import org.openhmis.dto.ChronicHealthConditionDTO;
+import org.openhmis.dto.search.ChronicHealthConditionSearchDTO;
 import org.openhmis.dto.ClientDTO;
 import org.openhmis.dto.ContactDTO;
+import org.openhmis.dto.search.ContactSearchDTO;
 import org.openhmis.dto.DevelopmentalDisabilityDTO;
+import org.openhmis.dto.search.DevelopmentalDisabilitySearchDTO;
 import org.openhmis.dto.DomesticAbuseDTO;
+import org.openhmis.dto.search.DomesticAbuseSearchDTO;
 import org.openhmis.dto.EnrollmentDTO;
 import org.openhmis.dto.ExitDTO;
 import org.openhmis.dto.FinancialAssistanceDTO;
+import org.openhmis.dto.search.FinancialAssistanceSearchDTO;
 import org.openhmis.dto.HealthInsuranceDTO;
+import org.openhmis.dto.search.HealthInsuranceSearchDTO;
 import org.openhmis.dto.HivAidsStatusDTO;
+import org.openhmis.dto.search.HivAidsStatusSearchDTO;
 import org.openhmis.dto.IncomeSourceDTO;
+import org.openhmis.dto.search.IncomeSourceSearchDTO;
 import org.openhmis.dto.InventoryDTO;
 import org.openhmis.dto.MedicalAssistanceDTO;
+import org.openhmis.dto.search.MedicalAssistanceSearchDTO;
 import org.openhmis.dto.MentalHealthProblemDTO;
 import org.openhmis.dto.NonCashBenefitDTO;
+import org.openhmis.dto.search.NonCashBenefitSearchDTO;
 import org.openhmis.dto.PhysicalDisabilityDTO;
 import org.openhmis.dto.ReferralDTO;
 import org.openhmis.dto.ServiceDTO;
 import org.openhmis.dto.SubstanceAbuseDTO;
+import org.openhmis.dto.search.EnrollmentSearchDTO;
+import org.openhmis.dto.search.PhysicalDisabilitySearchDTO;
+import org.openhmis.dto.search.ReferralSearchDTO;
+import org.openhmis.dto.search.ServiceSearchDTO;
+import org.openhmis.dto.search.SubstanceAbuseSearchDTO;
+
 import org.openhmis.exception.InvalidParameterException;
 
 public class EnrollmentManager {
@@ -72,37 +88,22 @@ public class EnrollmentManager {
 		return enrollmentDTO;
 	}
 
-	public List<EnrollmentDTO> getEnrollments() {
+	public List<EnrollmentDTO> getEnrollments(EnrollmentSearchDTO searchDTO) {
 		List<EnrollmentDTO> enrollmentDTOs = new ArrayList<EnrollmentDTO>();
 
 		// Collect the inventories
-		List<TmpEnrollment> tempEnrollments = tmpEnrollmentDAO.getTmpEnrollments();
+		List<TmpEnrollment> tempEnrollments = tmpEnrollmentDAO.getTmpEnrollments(searchDTO);
 
 		// For each inventory, collect and map the data
 		for (Iterator<TmpEnrollment> iterator = tempEnrollments.iterator(); iterator.hasNext();) {
 			TmpEnrollment tempEnrollment = iterator.next();
 			EnrollmentDTO enrollmentDTO = EnrollmentManager.generateEnrollmentDTO(tempEnrollment);
-			enrollmentDTOs.add(enrollmentDTO);
+                        enrollmentDTOs.add(enrollmentDTO);
 		}
 		return enrollmentDTOs;
 	}
 
 
-	public List<EnrollmentDTO> getEnrollmentsByUpdateDate(Date updateDate) {
-		List<EnrollmentDTO> enrollmentDTOs = new ArrayList<EnrollmentDTO>();
-
-		// Collect the inventories
-		List<TmpEnrollment> tempEnrollments = tmpEnrollmentDAO.getTmpEnrollmentsByUpdateDate(updateDate);
-
-		// For each inventory, collect and map the data
-		for (Iterator<TmpEnrollment> iterator = tempEnrollments.iterator(); iterator.hasNext();) {
-			TmpEnrollment tempEnrollment = iterator.next();
-			EnrollmentDTO enrollmentDTO = EnrollmentManager.generateEnrollmentDTO(tempEnrollment);
-			enrollmentDTOs.add(enrollmentDTO);
-		}
-		return enrollmentDTOs;
-	}
-	
 	public EnrollmentDTO addEnrollment(EnrollmentDTO inputDTO) {
 		// Validate the enrollment
 		// TODO: this should return a list of errors that get wrapped appropriately
@@ -204,9 +205,38 @@ public class EnrollmentManager {
 	
 	public static EnrollmentDTO generateEnrollmentDTO(TmpEnrollment tmpEnrollment) {
 		EnrollmentDTO enrollmentDTO = new EnrollmentDTO();
+                ChronicHealthConditionSearchDTO chcSearchDTO = new ChronicHealthConditionSearchDTO();
+                ContactSearchDTO contactSearchDTO = new ContactSearchDTO();
+                DevelopmentalDisabilitySearchDTO devDisSearchDTO = new DevelopmentalDisabilitySearchDTO();
+                DomesticAbuseSearchDTO domesticAbuseSearchDTO = new DomesticAbuseSearchDTO();
+                FinancialAssistanceSearchDTO financialAssistanceSearchDTO = new FinancialAssistanceSearchDTO();
+                HealthInsuranceSearchDTO healthInsuranceSearchDTO = new HealthInsuranceSearchDTO();
+                HivAidsStatusSearchDTO hivAidsStatusSearchDTO = new HivAidsStatusSearchDTO();
+                IncomeSourceSearchDTO incomeSourceSearchDTO = new IncomeSourceSearchDTO();
+                MedicalAssistanceSearchDTO medicalAssistanceSearchDTO = new MedicalAssistanceSearchDTO();
+                NonCashBenefitSearchDTO nonCashBenefitSearchDTO = new NonCashBenefitSearchDTO();
+                PhysicalDisabilitySearchDTO physicalDisabilitySearchDTO = new PhysicalDisabilitySearchDTO();
+                ReferralSearchDTO referralSearchDTO = new ReferralSearchDTO();
+                ServiceSearchDTO serviceSearchDTO = new ServiceSearchDTO();
+                SubstanceAbuseSearchDTO substanceAbuseSearchDTO = new SubstanceAbuseSearchDTO();
 
+                
 		String enrollmentId = tmpEnrollment.getEnrollmentId().toString();
 		enrollmentDTO.setEnrollmentId(enrollmentId);
+                chcSearchDTO.setEnrollmentId(enrollmentId);
+                contactSearchDTO.setEnrollmentId(enrollmentId);
+                devDisSearchDTO.setEnrollmentId(enrollmentId);
+                domesticAbuseSearchDTO.setEnrollmentId(enrollmentId);
+                financialAssistanceSearchDTO.setEnrollmentId(enrollmentId);
+                healthInsuranceSearchDTO.setEnrollmentId(enrollmentId);
+                hivAidsStatusSearchDTO.setEnrollmentId(enrollmentId);
+                incomeSourceSearchDTO.setEnrollmentId(enrollmentId);
+                medicalAssistanceSearchDTO.setEnrollmentId(enrollmentId);
+                nonCashBenefitSearchDTO.setEnrollmentId(enrollmentId);
+                physicalDisabilitySearchDTO.setEnrollmentId(enrollmentId);
+                referralSearchDTO.setEnrollmentId(enrollmentId);
+                serviceSearchDTO.setEnrollmentId(enrollmentId);
+                substanceAbuseSearchDTO.setEnrollmentId(enrollmentId);
 
 		// The client object associated with this enrollment
 		enrollmentDTO.setPersonalId(tmpEnrollment.getPersonalId().toString());
@@ -247,49 +277,49 @@ public class EnrollmentManager {
 		enrollmentDTO.setHousingStatus(ClientHousingStatus.valueByCode(tmpEnrollment.getHousingStatus()));
 
 		// Program Specific Data Standards: Income Sources (2014, 4.2)
-		enrollmentDTO.setIncomeSources(IncomeSourceManager.getIncomeSourcesByEnrollmentId(enrollmentId));
+		enrollmentDTO.setIncomeSources(IncomeSourceManager.getIncomeSources(incomeSourceSearchDTO));
 
 		// Program Specific Data Standards: Non-cash Benefits (2014, 4.3)
-		enrollmentDTO.setNonCashBenefits(NonCashBenefitManager.getNonCashBenefitsByEnrollmentId(enrollmentId));
+		enrollmentDTO.setNonCashBenefits(NonCashBenefitManager.getNonCashBenefits(nonCashBenefitSearchDTO));
 
 		// Program Specific Data Standards: Health Insurance (2014, 4.4)
-		enrollmentDTO.setHealthInsurances(HealthInsuranceManager.getHealthInsurancesByEnrollmentId(enrollmentId));
+		enrollmentDTO.setHealthInsurances(HealthInsuranceManager.getHealthInsurances(healthInsuranceSearchDTO));
 
 		// Program Specific Data Standards: Physical Disability (2014, 4.5)
-		enrollmentDTO.setPhysicalDisabilities(PhysicalDisabilityManager.getPhysicalDisabilitiesByEnrollmentId(enrollmentId));
+		enrollmentDTO.setPhysicalDisabilities(PhysicalDisabilityManager.getPhysicalDisabilities(physicalDisabilitySearchDTO));
 
 		// Program Specific Data Standards: Developmental Disability (2014, 4.6)
-		enrollmentDTO.setDevelopmentalDisabilities(DevelopmentalDisabilityManager.getDevelopmentalDisabilitiesByEnrollmentId(enrollmentId));
+		enrollmentDTO.setDevelopmentalDisabilities(DevelopmentalDisabilityManager.getDevelopmentalDisabilities(devDisSearchDTO));
 		
 		// Program Specific Data Standards: Chronic Health Condition (2014, 4.7)
-		enrollmentDTO.setChronicHealthConditions(ChronicHealthConditionManager.getChronicHealthConditionsByEnrollmentId(enrollmentId));
+		enrollmentDTO.setChronicHealthConditions(ChronicHealthConditionManager.getChronicHealthConditions(chcSearchDTO));
 
 		// Program Specific Data Standards: HIV/AIDS (2014, 4.8)
-		enrollmentDTO.setHivAidsStatuses(HivAidsStatusManager.getHivAidsStatusesByEnrollmentId(enrollmentId));
+		enrollmentDTO.setHivAidsStatuses(HivAidsStatusManager.getHivAidsStatuses(hivAidsStatusSearchDTO));
 
 		// Program Specific Data Standards: Mental Health Problem (2014, 4.9)
 		enrollmentDTO.setMentalHealthProblems(MentalHealthProblemManager.getMentalHealthProblemsByEnrollmentId(enrollmentId));
 
 		// Program Specific Data Standards: Substance Abuse (2014, 4.10)
-		enrollmentDTO.setSubstanceAbuses(SubstanceAbuseManager.getSubstanceAbusesByEnrollmentId(enrollmentId));
+		enrollmentDTO.setSubstanceAbuses(SubstanceAbuseManager.getSubstanceAbuses(substanceAbuseSearchDTO));
 
 		// Program Specific Data Standards: Domestic Abuse (2014, 4.11)
-		enrollmentDTO.setDomesticAbuses(DomesticAbuseManager.getDomesticAbusesByEnrollmentId(enrollmentId));
+		enrollmentDTO.setDomesticAbuses(DomesticAbuseManager.getDomesticAbuses(domesticAbuseSearchDTO));
 
 		// Program Specific Data Standards: Contact (2014, 4.12)
-		enrollmentDTO.setContacts(ContactManager.getContactsByEnrollmentId(enrollmentId));
+		enrollmentDTO.setContacts(ContactManager.getContacts(contactSearchDTO));
 
 		// Program Specific Data Standards: Date of Engagement (2014, 4.13)
 		enrollmentDTO.setDateOfEngagement(tmpEnrollment.getDateOfEngagement());
 
 		// Program Specific Data Standards: Services Provided (2014, 4.14)
-		enrollmentDTO.setServices(ServiceManager.getServicesByEnrollmentId(enrollmentId));
+		enrollmentDTO.setServices(ServiceManager.getServices(serviceSearchDTO));
 
 		// Program Specific Data Standards: Financial Assets Provided (2014, 4.15)
-		enrollmentDTO.setFinancialAssistances(FinancialAssistanceManager.getFinancialAssistancesByEnrollmentId(enrollmentId));
+		enrollmentDTO.setFinancialAssistances(FinancialAssistanceManager.getFinancialAssistances(financialAssistanceSearchDTO));
 
 		// Program Specific Data Standards: References Provided (2014, 4.16)
-		enrollmentDTO.setReferrals(ReferralManager.getReferralsByEnrollmentId(enrollmentId));
+		enrollmentDTO.setReferrals(ReferralManager.getReferrals(referralSearchDTO));
 
 		// Program Specific Data Standards: Residential Move-in Date (2014, 4.17)
 		enrollmentDTO.setResidentialMoveInDate(tmpEnrollment.getResidentialMoveInDate());
@@ -381,7 +411,7 @@ public class EnrollmentManager {
 		enrollmentDTO.setAskedOrForcedToExchangeForSex(YesNoReason.valueByCode(tmpEnrollment.getAskedOrForcedToExchangeForSex()));
 
 		// HOPWA Specific Data Standards: Medical Assistance (2014, 4.39)
-		enrollmentDTO.setMedicalAssistances(MedicalAssistanceManager.getMedicalAssistancesByEnrollmentId(enrollmentId));
+		enrollmentDTO.setMedicalAssistances(MedicalAssistanceManager.getMedicalAssistances(medicalAssistanceSearchDTO));
 
 		// RHSP Specific Data Standards: Worst Housing Situation (2014, 4.40)
 		enrollmentDTO.setWorstHousingSituation(YesNoReason.valueByCode(tmpEnrollment.getWorstHousingSituation()));

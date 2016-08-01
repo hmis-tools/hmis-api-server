@@ -7,6 +7,7 @@ package org.openhmis.webservice;
 import java.io.IOException;
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -21,6 +22,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 import org.openhmis.dto.MedicalAssistanceDTO;
+import org.openhmis.dto.search.MedicalAssistanceSearchDTO;
 import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.manager.MedicalAssistanceManager;
 import org.openhmis.util.Authentication;
@@ -39,17 +41,10 @@ public class MedicalAssistanceService {
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<MedicalAssistanceDTO> getMedicalAssistances(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<MedicalAssistanceDTO> getMedicalAssistances(@HeaderParam("Authorization") String authorization, @BeanParam MedicalAssistanceSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
-		
-                List<MedicalAssistanceDTO> medicalAssistanceDTOs;
-                // If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			medicalAssistanceDTOs = MedicalAssistanceManager.getMedicalAssistances();
-		} else {
-			medicalAssistanceDTOs = MedicalAssistanceManager.getMedicalAssistances(DateParser.parseDate(updatedSince));
-		}
+                List<MedicalAssistanceDTO> medicalAssistanceDTOs = MedicalAssistanceManager.getMedicalAssistances(searchDTO);
                 log.info("GET /medical-assistances (" + medicalAssistanceDTOs.size() + " results)");
                 return medicalAssistanceDTOs;
 	}

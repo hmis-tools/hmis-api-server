@@ -4,9 +4,13 @@ package org.openhmis.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.openhmis.domain.TmpMedicalAssistance;
+import org.openhmis.dto.search.MedicalAssistanceSearchDTO;
+import org.openhmis.util.DateParser;
 
 public class TmpMedicalAssistanceDAO extends BaseDAO {
 
@@ -33,58 +37,19 @@ public class TmpMedicalAssistanceDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpMedicalAssistance> getTmpMedicalAssistances() {
-		String queryString = "select medicalAssistance " + 
-				"from TmpMedicalAssistance as medicalAssistance";
+	public List<TmpMedicalAssistance> getTmpMedicalAssistances(MedicalAssistanceSearchDTO searchDTO) {
 
 		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		List<TmpMedicalAssistance> results = queryObject.list();
+                Criteria query =  session.createCriteria(TmpMedicalAssistance.class);
+                if(searchDTO.getUpdatedSince() != null) {
+                    query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
+		}
+                if(searchDTO.getEnrollmentId() != null) {
+                    query.add(Restrictions.eq("enrollmentId", Integer.parseInt(searchDTO.getEnrollmentId())));
+		}
+		List<TmpMedicalAssistance> results = query.list();
 		session.close();
 		return results;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<TmpMedicalAssistance> getTmpMedicalAssistances(Date updateDate) {
-		String queryString = "select medicalAssistance " + 
-				"from TmpMedicalAssistance as medicalAssistance " + 
-				"where medicalAssistance.dateUpdated >= :updatedSince";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpMedicalAssistance> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpMedicalAssistance> getTmpMedicalAssistancesByEnrollmentId(Integer enrollmentId) {
-		String queryString = "select medicalAssistance " + 
-				"from TmpMedicalAssistance as medicalAssistance " + 
-				"where medicalAssistance.enrollmentId =:enrollmentId";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		List<TmpMedicalAssistance> results = queryObject.list();
-		session.close();
-		return results;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TmpMedicalAssistance> getTmpMedicalAssistancesByEnrollmentId(Integer enrollmentId, Date updateDate) {
-		String queryString = "select medicalAssistance " + 
-				"from TmpMedicalAssistance as medicalAssistance " + 
-				"where medicalAssistance.enrollmentId =:enrollmentId " + 
-				"  and medicalAssistance.dateUpdated >= :updatedSince";
-
-		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("enrollmentId", enrollmentId);
-		queryObject.setParameter("updatedSince", updateDate);
-		List<TmpMedicalAssistance> results = queryObject.list();
-		session.close();
-		return results;
-	}
 }

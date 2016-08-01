@@ -15,6 +15,7 @@ import org.openhmis.domain.TmpProjectInventory;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.InventoryDTO;
+import org.openhmis.dto.search.InventorySearchDTO;
 import org.openhmis.exception.InvalidParameterException;
 
 public class InventoryManager {
@@ -27,11 +28,11 @@ public class InventoryManager {
 		return inventoryDTO;
 	}
 
-	public static List<InventoryDTO> getInventories() {
+	public static List<InventoryDTO> getInventories(InventorySearchDTO searchDTO) {
 		List<InventoryDTO> inventoryDTOs = new ArrayList<InventoryDTO>();
 
 		// Collect the inventories
-		List<TmpProjectInventory> tmpProjectInventories = tmpProjectInventoryDAO.getTmpProjectInventories();
+		List<TmpProjectInventory> tmpProjectInventories = tmpProjectInventoryDAO.getTmpProjectInventories(searchDTO);
 
 		// For each inventory, collect and map the data
 		for (Iterator<TmpProjectInventory> iterator = tmpProjectInventories.iterator(); iterator.hasNext();) {
@@ -43,53 +44,6 @@ public class InventoryManager {
 
 	}
 
-	public static List<InventoryDTO> getInventories(Date updateDate) {
-		List<InventoryDTO> inventoryDTOs = new ArrayList<InventoryDTO>();
-
-		// Collect the inventories
-		List<TmpProjectInventory> tmpProjectInventories = tmpProjectInventoryDAO.getTmpProjectInventories(updateDate);
-
-		// For each inventory, collect and map the data
-		for (Iterator<TmpProjectInventory> iterator = tmpProjectInventories.iterator(); iterator.hasNext();) {
-			TmpProjectInventory tmpProjectInventory = iterator.next();
-			InventoryDTO inventoryDTO = InventoryManager.generateInventoryDTO(tmpProjectInventory);
-			inventoryDTOs.add(inventoryDTO);
-		}
-		return inventoryDTOs;
-
-	}
-
-	public static List<InventoryDTO> getInventoriesByProjectCoCId(String projectCoCId) {
-		List<InventoryDTO> inventoryDTOs = new ArrayList<InventoryDTO>();
-
-		// Collect the inventories
-		List<TmpProjectInventory> tmpProjectInventories = tmpProjectInventoryDAO.getTmpProjectInventoriesByProjectCoCId(Integer.parseInt(projectCoCId));
-
-		// For each inventory, collect and map the data
-		for (Iterator<TmpProjectInventory> iterator = tmpProjectInventories.iterator(); iterator.hasNext();) {
-			TmpProjectInventory tmpProjectInventory = iterator.next();
-			InventoryDTO inventoryDTO = InventoryManager.generateInventoryDTO(tmpProjectInventory);
-			inventoryDTOs.add(inventoryDTO);
-		}
-		return inventoryDTOs;
-
-	}
-
-	public static List<InventoryDTO> getInventoriesByProjectCoCId(String projectCoCId, Date updateDate) {
-		List<InventoryDTO> inventoryDTOs = new ArrayList<InventoryDTO>();
-
-		// Collect the inventories
-		List<TmpProjectInventory> tmpProjectInventories = tmpProjectInventoryDAO.getTmpProjectInventoriesByProjectCoCId(Integer.parseInt(projectCoCId), updateDate);
-
-		// For each inventory, collect and map the data
-		for (Iterator<TmpProjectInventory> iterator = tmpProjectInventories.iterator(); iterator.hasNext();) {
-			TmpProjectInventory tmpProjectInventory = iterator.next();
-			InventoryDTO inventoryDTO = InventoryManager.generateInventoryDTO(tmpProjectInventory);
-			inventoryDTOs.add(inventoryDTO);
-		}
-		return inventoryDTOs;
-
-	}
 	
 	public static InventoryDTO addInventory(InventoryDTO inputDTO) {
 		

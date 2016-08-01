@@ -17,6 +17,7 @@ import org.openhmis.domain.TmpHivAidsStatus;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.HivAidsStatusDTO;
+import org.openhmis.dto.search.HivAidsStatusSearchDTO;
 
 public class HivAidsStatusManager {
 	private static final TmpHivAidsStatusDAO tmpHivAidsStatusDAO = new TmpHivAidsStatusDAO();
@@ -28,11 +29,11 @@ public class HivAidsStatusManager {
 		return hivAidsStatusDTO;
 	}
 
-	public static List<HivAidsStatusDTO> getHivAidsStatuses() {
+	public static List<HivAidsStatusDTO> getHivAidsStatuses(HivAidsStatusSearchDTO searchDTO) {
 		List<HivAidsStatusDTO> hivAidsStatusDTOs = new ArrayList<HivAidsStatusDTO>();
 
 		// Collect the hivAidsStatuses
-		List<TmpHivAidsStatus> tmpHivAidsStatuses = tmpHivAidsStatusDAO.getTmpHivAidsStatuses();
+		List<TmpHivAidsStatus> tmpHivAidsStatuses = tmpHivAidsStatusDAO.getTmpHivAidsStatuses(searchDTO);
 
 		// For each hivAidsStatus, collect and map the data
 		for (Iterator<TmpHivAidsStatus> iterator = tmpHivAidsStatuses.iterator(); iterator.hasNext();) {
@@ -44,54 +45,8 @@ public class HivAidsStatusManager {
 
 	}
 
-	public static List<HivAidsStatusDTO> getHivAidsStatuses(Date updateDate) {
-		List<HivAidsStatusDTO> hivAidsStatusDTOs = new ArrayList<HivAidsStatusDTO>();
 
-		// Collect the hivAidsStatuses
-		List<TmpHivAidsStatus> tmpHivAidsStatuses = tmpHivAidsStatusDAO.getTmpHivAidsStatuses(updateDate);
 
-		// For each hivAidsStatus, collect and map the data
-		for (Iterator<TmpHivAidsStatus> iterator = tmpHivAidsStatuses.iterator(); iterator.hasNext();) {
-			TmpHivAidsStatus tmpHivAidsStatus = iterator.next();
-			HivAidsStatusDTO hivAidsStatusDTO = HivAidsStatusManager.generateHivAidsStatusDTO(tmpHivAidsStatus);
-			hivAidsStatusDTOs.add(hivAidsStatusDTO);
-		}
-		return hivAidsStatusDTOs;
-
-	}
-
-	public static List<HivAidsStatusDTO> getHivAidsStatusesByEnrollmentId(String enrollmentId) {
-		List<HivAidsStatusDTO> hivAidsStatusDTOs = new ArrayList<HivAidsStatusDTO>();
-
-		// Collect the hivAidsStatuses
-		List<TmpHivAidsStatus> tmpHivAidsStatuses = tmpHivAidsStatusDAO.getTmpHivAidsStatusesByEnrollmentId(Integer.parseInt(enrollmentId));
-
-		// For each hivAidsStatus, collect and map the data
-		for (Iterator<TmpHivAidsStatus> iterator = tmpHivAidsStatuses.iterator(); iterator.hasNext();) {
-			TmpHivAidsStatus tmpHivAidsStatus = iterator.next();
-			HivAidsStatusDTO hivAidsStatusDTO = HivAidsStatusManager.generateHivAidsStatusDTO(tmpHivAidsStatus);
-			hivAidsStatusDTOs.add(hivAidsStatusDTO);
-		}
-		return hivAidsStatusDTOs;
-
-	}
-
-	public static List<HivAidsStatusDTO> getHivAidsStatusesByEnrollmentId(String enrollmentId, Date updateDate) {
-		List<HivAidsStatusDTO> hivAidsStatusDTOs = new ArrayList<HivAidsStatusDTO>();
-
-		// Collect the hivAidsStatuses
-		List<TmpHivAidsStatus> tmpHivAidsStatuses = tmpHivAidsStatusDAO.getTmpHivAidsStatusesByEnrollmentId(Integer.parseInt(enrollmentId), updateDate);
-
-		// For each hivAidsStatus, collect and map the data
-		for (Iterator<TmpHivAidsStatus> iterator = tmpHivAidsStatuses.iterator(); iterator.hasNext();) {
-			TmpHivAidsStatus tmpHivAidsStatus = iterator.next();
-			HivAidsStatusDTO hivAidsStatusDTO = HivAidsStatusManager.generateHivAidsStatusDTO(tmpHivAidsStatus);
-			hivAidsStatusDTOs.add(hivAidsStatusDTO);
-		}
-		return hivAidsStatusDTOs;
-
-	}
-	
 	public static HivAidsStatusDTO addHivAidsStatus(HivAidsStatusDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpHivAidsStatus tmpHivAidsStatus = HivAidsStatusManager.generateTmpHivAidsStatus(inputDTO);

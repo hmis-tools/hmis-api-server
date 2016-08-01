@@ -9,6 +9,9 @@ import org.openhmis.dao.TmpProjectContinuumDAO;
 import org.openhmis.domain.TmpProjectContinuum;
 import org.openhmis.dto.ClientDTO;
 import org.openhmis.dto.CoCDTO;
+import org.openhmis.dto.search.CoCSearchDTO;
+import org.openhmis.dto.search.InventorySearchDTO;
+import org.openhmis.dto.search.SiteSearchDTO;
 
 public class CoCManager {
 	private static final TmpProjectContinuumDAO tmpProjectContinuumDAO = new TmpProjectContinuumDAO();
@@ -22,11 +25,11 @@ public class CoCManager {
 		return CoCDTO;
 	}
 
-	public static List<CoCDTO> getCoCs() {
+	public static List<CoCDTO> getCoCs(CoCSearchDTO searchDTO) {
 		List<CoCDTO> coCDTOs = new ArrayList<CoCDTO>();
 
 		// Collect the projects
-		List<TmpProjectContinuum> tmpProjectContinuums = tmpProjectContinuumDAO.getTmpProjectContinuums();
+		List<TmpProjectContinuum> tmpProjectContinuums = tmpProjectContinuumDAO.getTmpProjectContinuums(searchDTO);
 
 		// For each project, collect and map the data
 		// TODO: this should be done in a single query
@@ -40,59 +43,7 @@ public class CoCManager {
 
 	}
 
-	public static List<CoCDTO> getCoCs(Date updateDate) {
-		List<CoCDTO> coCDTOs = new ArrayList<CoCDTO>();
 
-		// Collect the projects
-		List<TmpProjectContinuum> tmpProjectContinuums = tmpProjectContinuumDAO.getTmpProjectContinuums(updateDate);
-
-		// For each project, collect and map the data
-		// TODO: this should be done in a single query
-		for (Iterator<TmpProjectContinuum> iterator = tmpProjectContinuums.iterator(); iterator.hasNext();) {
-			TmpProjectContinuum tmpProjectContinuum = iterator.next();
-
-			CoCDTO coCDTO = CoCManager.generateCoCDTO(tmpProjectContinuum);
-			coCDTOs.add(coCDTO);
-		}
-		return coCDTOs;
-
-	}
-
-	public static List<CoCDTO> getCoCsByProjectId(String projectId) {
-		List<CoCDTO> coCDTOs = new ArrayList<CoCDTO>();
-
-		// Collect the projects
-		List<TmpProjectContinuum> tmpProjectContinuums = tmpProjectContinuumDAO.getTmpProjectContinuumsByProjectId(Integer.parseInt(projectId));
-
-		// For each project, collect and map the data
-		// TODO: this should be done in a single query
-		for (Iterator<TmpProjectContinuum> iterator = tmpProjectContinuums.iterator(); iterator.hasNext();) {
-			TmpProjectContinuum tmpProjectContinuum = iterator.next();
-
-			CoCDTO coCDTO = CoCManager.generateCoCDTO(tmpProjectContinuum);
-			coCDTOs.add(coCDTO);
-		}
-		return coCDTOs;
-
-	}
-
-	public static List<CoCDTO> getCoCsByProjectId(String projectId, Date updateDate) {
-		List<CoCDTO> coCDTOs = new ArrayList<CoCDTO>();
-
-		// Collect the projects
-		List<TmpProjectContinuum> tmpProjectContinuums = tmpProjectContinuumDAO.getTmpProjectContinuumsByProjectId(Integer.parseInt(projectId), updateDate);
-
-		// For each project, collect and map the data
-		// TODO: this should be done in a single query
-		for (Iterator<TmpProjectContinuum> iterator = tmpProjectContinuums.iterator(); iterator.hasNext();) {
-			TmpProjectContinuum tmpProjectContinuum = iterator.next();
-
-			CoCDTO coCDTO = CoCManager.generateCoCDTO(tmpProjectContinuum);
-			coCDTOs.add(coCDTO);
-		}
-		return coCDTOs;
-
-	}
 	
 	public static CoCDTO addCoC(CoCDTO inputDTO) {
 
@@ -153,17 +104,21 @@ public class CoCManager {
 		Integer projectCoCId = tmpProjectContinuum.getProjectCocId();
 		
 		CoCDTO coCDTO = new CoCDTO();
-		coCDTO.setProjectCoCId(tmpProjectContinuum.getProjectCocId().toString());
+		InventorySearchDTO inventorySearchDTO = new InventorySearchDTO();
+                SiteSearchDTO siteSearchDTO = new SiteSearchDTO();
+                coCDTO.setProjectCoCId(tmpProjectContinuum.getProjectCocId().toString());
 		coCDTO.setProjectId(tmpProjectContinuum.getProjectId().toString());
+                inventorySearchDTO.setProjectCocId(projectCoCId.toString());
+                siteSearchDTO.setProjectCocId(projectCoCId.toString()); 
 		
 		// Universal Data Standard: Project Identifiers (2014, 2.2) 
 		coCDTO.setCoCCode(tmpProjectContinuum.getCocCode());
 
 		// Universal Data Standard: Inventories (2014, 2.7)
-		coCDTO.setInventories(InventoryManager.getInventoriesByProjectCoCId(projectCoCId.toString()));
+		coCDTO.setInventories(InventoryManager.getInventories(inventorySearchDTO));
 
 		// Universal Data Standard: Sites (2014, 2.8)
-		coCDTO.setSites(SiteManager.getSitesByProjectCoCId(projectCoCId.toString()));
+		coCDTO.setSites(SiteManager.getSites(siteSearchDTO));
 
 		// Export Standard Fields
 		coCDTO.setDateCreated(tmpProjectContinuum.getDateCreated());

@@ -7,6 +7,7 @@ package org.openhmis.webservice;
 import java.io.IOException;
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -21,6 +22,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 import org.openhmis.dto.DomesticAbuseDTO;
+import org.openhmis.dto.search.DomesticAbuseSearchDTO;
 import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.manager.DomesticAbuseManager;
 import org.openhmis.util.Authentication;
@@ -39,17 +41,10 @@ public class DomesticAbuseService {
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<DomesticAbuseDTO> getDomesticAbuses(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<DomesticAbuseDTO> getDomesticAbuses(@HeaderParam("Authorization") String authorization, @BeanParam DomesticAbuseSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
-
-                List<DomesticAbuseDTO> domesticAbuseDTOs;
-		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			domesticAbuseDTOs = DomesticAbuseManager.getDomesticAbuses();
-		} else {
-			domesticAbuseDTOs = DomesticAbuseManager.getDomesticAbuses(DateParser.parseDate(updatedSince));
-		}
+                List<DomesticAbuseDTO> domesticAbuseDTOs = DomesticAbuseManager.getDomesticAbuses(searchDTO);
                 log.info("GET /domestic-abuses (" + domesticAbuseDTOs.size() + " results)");
                 return domesticAbuseDTOs;
 	}

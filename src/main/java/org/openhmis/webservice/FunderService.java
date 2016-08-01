@@ -7,6 +7,7 @@ package org.openhmis.webservice;
 import java.io.IOException;
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -21,6 +22,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 import org.openhmis.dto.FunderDTO;
+import org.openhmis.dto.search.FunderSearchDTO;
 import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.manager.FunderManager;
 import org.openhmis.util.Authentication;
@@ -39,20 +41,12 @@ public class FunderService {
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<FunderDTO> getFunders(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<FunderDTO> getFunders(@HeaderParam("Authorization") String authorization, @BeanParam FunderSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
-		
-                List<FunderDTO> funderDTOs;
-                // If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			funderDTOs = FunderManager.getFunders();
-		} else {
-			funderDTOs = FunderManager.getFunders(DateParser.parseDate(updatedSince));
-		}
+                List<FunderDTO> funderDTOs = FunderManager.getFunders(searchDTO);
                 log.info("GET /funders (" + funderDTOs.size() + " results)");
                 return funderDTOs;
-		
 	}
 	
 	@POST

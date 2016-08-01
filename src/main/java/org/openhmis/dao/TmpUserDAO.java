@@ -4,9 +4,13 @@ package org.openhmis.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.openhmis.domain.TmpUser;
+import org.openhmis.dto.search.UserSearchDTO;
+import org.openhmis.util.DateParser;
 
 public class TmpUserDAO extends BaseDAO {
 
@@ -53,13 +57,14 @@ public class TmpUserDAO extends BaseDAO {
 
 
 	@SuppressWarnings("unchecked")
-	public List<TmpUser> getTmpUsers() {
-		String queryString = "select user " + 
-				"from TmpUser as user";
+	public List<TmpUser> getTmpUsers(UserSearchDTO searchDTO) {
 
 		Session session = getSession();
-		Query queryObject = session.createQuery(queryString);
-		List<TmpUser> results = queryObject.list();
+                Criteria query =  session.createCriteria(TmpUser.class);
+                if(searchDTO.getUpdatedSince() != null) {
+                    query.add(Restrictions.gt("dateUpdated", DateParser.parseDate(searchDTO.getUpdatedSince())));
+		}
+		List<TmpUser> results = query.list();
 		session.close();
 		return results;
 	}

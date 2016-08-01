@@ -19,6 +19,7 @@ import org.openhmis.domain.TmpSubstanceAbuse;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.SubstanceAbuseDTO;
+import org.openhmis.dto.search.SubstanceAbuseSearchDTO;
 
 public class SubstanceAbuseManager {
 	private static final TmpSubstanceAbuseDAO tmpSubstanceAbuseDAO = new TmpSubstanceAbuseDAO();
@@ -30,11 +31,11 @@ public class SubstanceAbuseManager {
 		return substanceAbuseDTO;
 	}
 
-	public static List<SubstanceAbuseDTO> getSubstanceAbuses() {
+	public static List<SubstanceAbuseDTO> getSubstanceAbuses(SubstanceAbuseSearchDTO searchDTO) {
 		List<SubstanceAbuseDTO> substanceAbuseDTOs = new ArrayList<SubstanceAbuseDTO>();
 
 		// Collect the substanceAbuses
-		List<TmpSubstanceAbuse> tmpSubstanceAbuses = tmpSubstanceAbuseDAO.getTmpSubstanceAbuses();
+		List<TmpSubstanceAbuse> tmpSubstanceAbuses = tmpSubstanceAbuseDAO.getTmpSubstanceAbuses(searchDTO);
 
 		// For each substanceAbuse, collect and map the data
 		for (Iterator<TmpSubstanceAbuse> iterator = tmpSubstanceAbuses.iterator(); iterator.hasNext();) {
@@ -46,53 +47,6 @@ public class SubstanceAbuseManager {
 
 	}
 
-	public static List<SubstanceAbuseDTO> getSubstanceAbuses(Date updateDate) {
-		List<SubstanceAbuseDTO> substanceAbuseDTOs = new ArrayList<SubstanceAbuseDTO>();
-
-		// Collect the substanceAbuses
-		List<TmpSubstanceAbuse> tmpSubstanceAbuses = tmpSubstanceAbuseDAO.getTmpSubstanceAbuses(updateDate);
-
-		// For each substanceAbuse, collect and map the data
-		for (Iterator<TmpSubstanceAbuse> iterator = tmpSubstanceAbuses.iterator(); iterator.hasNext();) {
-			TmpSubstanceAbuse tmpSubstanceAbuse = iterator.next();
-			SubstanceAbuseDTO substanceAbuseDTO = SubstanceAbuseManager.generateSubstanceAbuseDTO(tmpSubstanceAbuse);
-			substanceAbuseDTOs.add(substanceAbuseDTO);
-		}
-		return substanceAbuseDTOs;
-
-	}
-
-	public static List<SubstanceAbuseDTO> getSubstanceAbusesByEnrollmentId(String enrollmentId) {
-		List<SubstanceAbuseDTO> substanceAbuseDTOs = new ArrayList<SubstanceAbuseDTO>();
-
-		// Collect the substanceAbuses
-		List<TmpSubstanceAbuse> tmpSubstanceAbuses = tmpSubstanceAbuseDAO.getTmpSubstanceAbusesByEnrollmentId(Integer.parseInt(enrollmentId));
-
-		// For each substanceAbuse, collect and map the data
-		for (Iterator<TmpSubstanceAbuse> iterator = tmpSubstanceAbuses.iterator(); iterator.hasNext();) {
-			TmpSubstanceAbuse tmpSubstanceAbuse = iterator.next();
-			SubstanceAbuseDTO substanceAbuseDTO = SubstanceAbuseManager.generateSubstanceAbuseDTO(tmpSubstanceAbuse);
-			substanceAbuseDTOs.add(substanceAbuseDTO);
-		}
-		return substanceAbuseDTOs;
-
-	}
-
-	public static List<SubstanceAbuseDTO> getSubstanceAbusesByEnrollmentId(String enrollmentId, Date updateDate) {
-		List<SubstanceAbuseDTO> substanceAbuseDTOs = new ArrayList<SubstanceAbuseDTO>();
-
-		// Collect the substanceAbuses
-		List<TmpSubstanceAbuse> tmpSubstanceAbuses = tmpSubstanceAbuseDAO.getTmpSubstanceAbusesByEnrollmentId(Integer.parseInt(enrollmentId), updateDate);
-
-		// For each substanceAbuse, collect and map the data
-		for (Iterator<TmpSubstanceAbuse> iterator = tmpSubstanceAbuses.iterator(); iterator.hasNext();) {
-			TmpSubstanceAbuse tmpSubstanceAbuse = iterator.next();
-			SubstanceAbuseDTO substanceAbuseDTO = SubstanceAbuseManager.generateSubstanceAbuseDTO(tmpSubstanceAbuse);
-			substanceAbuseDTOs.add(substanceAbuseDTO);
-		}
-		return substanceAbuseDTOs;
-
-	}
 	
 	public static SubstanceAbuseDTO addSubstanceAbuse(SubstanceAbuseDTO inputDTO) {
 		// Generate a PathClient from the input

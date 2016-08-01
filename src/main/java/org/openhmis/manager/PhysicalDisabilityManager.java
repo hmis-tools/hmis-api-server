@@ -17,6 +17,7 @@ import org.openhmis.domain.TmpPhysicalDisability;
 import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.PhysicalDisabilityDTO;
+import org.openhmis.dto.search.PhysicalDisabilitySearchDTO;
 
 public class PhysicalDisabilityManager {
 	private static final TmpPhysicalDisabilityDAO tmpPhysicalDisabilityDAO = new TmpPhysicalDisabilityDAO();
@@ -28,59 +29,11 @@ public class PhysicalDisabilityManager {
 		return physicalDisabilityDTO;
 	}
 
-	public static List<PhysicalDisabilityDTO> getPhysicalDisabilities() {
+	public static List<PhysicalDisabilityDTO> getPhysicalDisabilities(PhysicalDisabilitySearchDTO searchDTO) {
 		List<PhysicalDisabilityDTO> physicalDisabilityDTOs = new ArrayList<PhysicalDisabilityDTO>();
 
 		// Collect the physicalDisabilities
-		List<TmpPhysicalDisability> tmpPhysicalDisabilities = tmpPhysicalDisabilityDAO.getTmpPhysicalDisabilities();
-
-		// For each physicalDisability, collect and map the data
-		for (Iterator<TmpPhysicalDisability> iterator = tmpPhysicalDisabilities.iterator(); iterator.hasNext();) {
-			TmpPhysicalDisability tmpPhysicalDisability = iterator.next();
-			PhysicalDisabilityDTO physicalDisabilityDTO = PhysicalDisabilityManager.generatePhysicalDisabilityDTO(tmpPhysicalDisability);
-			physicalDisabilityDTOs.add(physicalDisabilityDTO);
-		}
-		return physicalDisabilityDTOs;
-
-	}
-
-	public static List<PhysicalDisabilityDTO> getPhysicalDisabilities(Date updateDate) {
-		List<PhysicalDisabilityDTO> physicalDisabilityDTOs = new ArrayList<PhysicalDisabilityDTO>();
-
-		// Collect the physicalDisabilities
-		List<TmpPhysicalDisability> tmpPhysicalDisabilities = tmpPhysicalDisabilityDAO.getTmpPhysicalDisabilities(updateDate);
-
-		// For each physicalDisability, collect and map the data
-		for (Iterator<TmpPhysicalDisability> iterator = tmpPhysicalDisabilities.iterator(); iterator.hasNext();) {
-			TmpPhysicalDisability tmpPhysicalDisability = iterator.next();
-			PhysicalDisabilityDTO physicalDisabilityDTO = PhysicalDisabilityManager.generatePhysicalDisabilityDTO(tmpPhysicalDisability);
-			physicalDisabilityDTOs.add(physicalDisabilityDTO);
-		}
-		return physicalDisabilityDTOs;
-
-	}
-
-	public static List<PhysicalDisabilityDTO> getPhysicalDisabilitiesByEnrollmentId(String enrollmentId) {
-		List<PhysicalDisabilityDTO> physicalDisabilityDTOs = new ArrayList<PhysicalDisabilityDTO>();
-
-		// Collect the physicalDisabilities
-		List<TmpPhysicalDisability> tmpPhysicalDisabilities = tmpPhysicalDisabilityDAO.getTmpPhysicalDisabilitiesByEnrollmentId(Integer.parseInt(enrollmentId));
-
-		// For each physicalDisability, collect and map the data
-		for (Iterator<TmpPhysicalDisability> iterator = tmpPhysicalDisabilities.iterator(); iterator.hasNext();) {
-			TmpPhysicalDisability tmpPhysicalDisability = iterator.next();
-			PhysicalDisabilityDTO physicalDisabilityDTO = PhysicalDisabilityManager.generatePhysicalDisabilityDTO(tmpPhysicalDisability);
-			physicalDisabilityDTOs.add(physicalDisabilityDTO);
-		}
-		return physicalDisabilityDTOs;
-
-	}
-
-	public static List<PhysicalDisabilityDTO> getPhysicalDisabilitiesByEnrollmentId(String enrollmentId, Date updateDate) {
-		List<PhysicalDisabilityDTO> physicalDisabilityDTOs = new ArrayList<PhysicalDisabilityDTO>();
-
-		// Collect the physicalDisabilities
-		List<TmpPhysicalDisability> tmpPhysicalDisabilities = tmpPhysicalDisabilityDAO.getTmpPhysicalDisabilitiesByEnrollmentId(Integer.parseInt(enrollmentId), updateDate);
+		List<TmpPhysicalDisability> tmpPhysicalDisabilities = tmpPhysicalDisabilityDAO.getTmpPhysicalDisabilities(searchDTO);
 
 		// For each physicalDisability, collect and map the data
 		for (Iterator<TmpPhysicalDisability> iterator = tmpPhysicalDisabilities.iterator(); iterator.hasNext();) {

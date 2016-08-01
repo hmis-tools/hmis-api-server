@@ -3,6 +3,7 @@ package org.openhmis.webservice;
 import java.io.IOException;
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -19,10 +20,15 @@ import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 import org.openhmis.dto.ClientDTO;
 import org.openhmis.dto.CoCDTO;
+import org.openhmis.dto.search.CoCSearchDTO;
 import org.openhmis.dto.FunderDTO;
+import org.openhmis.dto.search.FunderSearchDTO;
 import org.openhmis.dto.InventoryDTO;
-import org.openhmis.dto.ProjectDTO;
+import org.openhmis.dto.search.InventorySearchDTO;
 import org.openhmis.dto.SiteDTO;
+import org.openhmis.dto.search.SiteSearchDTO;
+import org.openhmis.dto.ProjectDTO;
+import org.openhmis.dto.search.ProjectSearchDTO;
 import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.manager.CoCManager;
 import org.openhmis.manager.FunderManager;
@@ -48,21 +54,13 @@ public class ProjectService {
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<ProjectDTO> getProjects(@HeaderParam("Authorization") String authorization, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<ProjectDTO> getProjects(@HeaderParam("Authorization") String authorization, @BeanParam ProjectSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
-
-                List<ProjectDTO> projectDTOs;
-                // If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			projectDTOs = ProjectManager.getProjects();
-		} else {
-			projectDTOs = ProjectManager.getProjectsByUpdateDate(DateParser.parseDate(updatedSince));
-		}
+                List<ProjectDTO> projectDTOs = ProjectManager.getProjects(searchDTO);
                 log.info("GET /projects (" + projectDTOs.size() + " results)");
                 return projectDTOs;
         }
-
 	
 	@POST
 	@Path("/")
@@ -116,17 +114,11 @@ public class ProjectService {
 	@GET
 	@Path("/{projectId}/cocs")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<CoCDTO> getCoCs(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<CoCDTO> getCoCs(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @BeanParam CoCSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
-
-                List<CoCDTO> coCDTOs;
-		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			coCDTOs = CoCManager.getCoCsByProjectId(projectId);
-		} else {
-			coCDTOs = CoCManager.getCoCsByProjectId(projectId, DateParser.parseDate(updatedSince));
-		}
+                searchDTO.setProjectId(projectId);
+                List<CoCDTO> coCDTOs = CoCManager.getCoCs(searchDTO);
                 log.info("GET /projects/" + projectId + "/cocs (" + coCDTOs.size() + " results)");
                 return coCDTOs;
 	}
@@ -135,17 +127,11 @@ public class ProjectService {
 	@GET
 	@Path("/{projectId}/funders")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<FunderDTO> getFunders(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @QueryParam("updatedSince") String updatedSince) throws JsonProcessingException {
+	public List<FunderDTO> getFunders(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @BeanParam FunderSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
-
-                List<FunderDTO> funderDTOs;
-		// If the user specified no updatedSince parameter, return everything
-		if(updatedSince == null) {
-			funderDTOs = FunderManager.getFundersByProjectId(projectId);
-		} else {
-			funderDTOs = FunderManager.getFundersByProjectId(projectId, DateParser.parseDate(updatedSince));
-		}
+                searchDTO.setProjectId(projectId);
+                List<FunderDTO> funderDTOs = FunderManager.getFunders(searchDTO);
                 log.info("GET /projects/" + projectId + "/funders (" + funderDTOs.size() + " results)");
                 return funderDTOs;
 	}
