@@ -45,7 +45,7 @@ public class DevelopmentalDisabilityService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
                 List<DevelopmentalDisabilityDTO> developmentalDisabilityDTOs = DevelopmentalDisabilityManager.getDevelopmentalDisabilities(searchDTO);
-                log.info("GET /development-disabilities (" + developmentalDisabilityDTOs.size() + " results)");
+                log.info("GET /developmental-disabilities (" + developmentalDisabilityDTOs.size() + " results)");
                 return developmentalDisabilityDTOs;			
 	}
 	
@@ -57,7 +57,7 @@ public class DevelopmentalDisabilityService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		DevelopmentalDisabilityDTO outputDTO = DevelopmentalDisabilityManager.addDevelopmentalDisability(inputDTO);
-                log.info("POST /development-disabilities (new id: " + outputDTO.getId() + ")");
+                log.info("POST /developmental-disabilities (new id: " + outputDTO.getId() + ")");
 		return outputDTO;
 	}
 	
@@ -68,7 +68,7 @@ public class DevelopmentalDisabilityService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		DevelopmentalDisabilityDTO outputDTO = DevelopmentalDisabilityManager.getDevelopmentalDisabilityById(developmentalDisabilityId);
-                log.info("GET /development-disabilities/" + developmentalDisabilityId);
+                log.info("GET /developmental-disabilities/" + developmentalDisabilityId);
 		return outputDTO;
 	}
 	
@@ -82,7 +82,7 @@ public class DevelopmentalDisabilityService {
 		inputDTO.setDevelopmentalDisabilityId(developmentalDisabilityId);
 		
 		DevelopmentalDisabilityDTO outputDTO = DevelopmentalDisabilityManager.updateDevelopmentalDisability(inputDTO);
-                log.info("PUT /development-disabilities/" + developmentalDisabilityId);
+                log.info("PUT /developmental-disabilities/" + developmentalDisabilityId);
 		return outputDTO;
 	}
 	
@@ -93,7 +93,7 @@ public class DevelopmentalDisabilityService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		DevelopmentalDisabilityManager.deleteDevelopmentalDisability(developmentalDisabilityId);
-                log.info("DELETE /development-disabilities/" + developmentalDisabilityId);
+                log.info("DELETE /developmental-disabilities/" + developmentalDisabilityId);
 		return "true";
 	}
 }

@@ -304,7 +304,7 @@ public class EnrollmentService {
                         throw new AccessDeniedException();
                 searchDTO.setEnrollmentId(enrollmentId);
                 List<NonCashBenefitDTO> nonCashBenefitDTOs = NonCashBenefitManager.getNonCashBenefits(searchDTO);
-                log.info("GET /enrollments/" + enrollmentId + "/noncash-benefits (" + nonCashBenefitDTOs.size() + " results)");
+                log.info("GET /enrollments/" + enrollmentId + "/non-cash-benefits (" + nonCashBenefitDTOs.size() + " results)");
                 return nonCashBenefitDTOs;
 	}
 	
