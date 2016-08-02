@@ -69,7 +69,7 @@ public class ChronicHealthConditionService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
                 ChronicHealthConditionDTO outputDTO = ChronicHealthConditionManager.getChronicHealthConditionById(chronicHealthConditionId);
-                log.info("GET /chronic-health-conditions/" + outputDTO.getChronicHealthConditionId());
+                log.info("GET /chronic-health-conditions/" + chronicHealthConditionId);
 		return outputDTO;
 	}
 	
