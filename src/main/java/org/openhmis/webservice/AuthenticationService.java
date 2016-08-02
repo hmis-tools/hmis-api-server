@@ -70,8 +70,8 @@ public class AuthenticationService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
                 log.info("POST /externalId/ " + id_token);
-                // Now sending the internal id, the user id, so that
-                // clients can exchange that for a full user object.
+                // Send an external ID and a user object, if the user
+                // exists in our database.
                 AccountDTO account = Authentication.resolveIdentity(id_token);
                 return account;
 	}

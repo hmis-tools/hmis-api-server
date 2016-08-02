@@ -148,10 +148,9 @@ public class Authentication {
          *
         */
         public static AccountDTO resolveIdentity(String id_token) {
-            // look this up in TMP_TOKEN_CACHE first. Test whether the
-            // dateCreated or dateUpdated value is less than a day old
-            // (i.e. not expired).  If the token does not exist or is
-            // too old, then go into the Google retrieval routine.
+            // Look this up in TMP_TOKEN_CACHE first. If the token does
+            // not exist or is too old, then go into the Google
+            // retrieval routine.
             //
             String externalId = "";
             AccountDTO accountDTO = new AccountDTO();
