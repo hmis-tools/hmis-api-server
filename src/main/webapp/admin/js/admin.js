@@ -183,14 +183,32 @@ function reloadAdmin() {
 		var rows = [];
 
 		for(var x in users) {
-			var user = users[x];
-			var row = [
+    		        var user = users[x];
+                        if (user.canRead == 1) {
+                                user.canReadDisplay = 'Yes';
+                        }
+                        else {
+                                user.canReadDisplay = 'No';
+                        }
+                        if (user.canWrite == 1) {
+                                user.canWriteDisplay = 'Yes';
+                        }
+                        else {
+                                user.canWriteDisplay = 'No';
+                        }
+		        if (user.canAdmin == 1) {
+                                user.canAdminDisplay = 'Yes';
+                        }
+                        else {
+                                user.canAdminDisplay = 'No';
+                        }
+                        var row = [
                                 user.externalId,
                                 user.organization,
                                 user.coC,
-				user.canRead,
-				user.canWrite,
-				user.canAdmin,
+				user.canReadDisplay,
+			        user.canWriteDisplay,
+				user.canAdminDisplay,
 				"<div id='edit" + x + "' class='edit-user'>Edit</div>"
 			]
 
