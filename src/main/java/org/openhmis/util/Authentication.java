@@ -113,6 +113,9 @@ public class Authentication {
                 if (user != null) {
                          tmpUser = tmpUserDAO.getTmpUserById(Integer.parseInt(user.getUserId()));
                 }
+                else {
+                    tmpUser = null;
+                }
 			
 			
                 switch(authType) {
