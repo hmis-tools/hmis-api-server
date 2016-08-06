@@ -21,6 +21,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 
 import org.apache.log4j.Logger;
 import org.openhmis.code.ClientNameDataQuality;
+import org.openhmis.dto.AccountDTO;
 import org.openhmis.dto.ClientDTO;
 import org.openhmis.manager.ClientManager;
 
@@ -58,7 +59,7 @@ public class AuthenticationService {
 
 	@POST
 	@Path("/externalId")
-	public String getExternalId(@HeaderParam("Authorization") String authorization, String id_token) {
+	public AccountDTO getExternalId(@HeaderParam("Authorization") String authorization, String id_token) {
                 /*
                  * We probably don't need to limit access to this
                  * endpoint to those with READ privileges on our server,
@@ -69,8 +70,10 @@ public class AuthenticationService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
                 log.info("AUTHN POST /externalId/ " + id_token);
-                String externalId = Authentication.resolveIdentity(id_token);
-                return externalId;
+                // Send an external ID and a user object, if the user
+                // exists in our database.
+                AccountDTO account = Authentication.resolveIdentity(id_token);
+                return account;
 	}
 
         

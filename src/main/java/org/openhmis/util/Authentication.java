@@ -27,6 +27,11 @@ import org.apache.log4j.Logger;
 import org.openhmis.dao.TmpUserDAO;
 import org.openhmis.domain.TmpUser;
 import org.openhmis.exception.AuthenticationFailureException;
+import org.openhmis.manager.TokenCacheManager;
+import org.openhmis.manager.UserManager;
+import org.openhmis.dto.AccountDTO;
+import org.openhmis.dto.TokenCacheDTO;
+import org.openhmis.dto.UserDTO;
 
 import com.google.api.client.auth.oauth2.TokenResponseException;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
@@ -84,22 +89,34 @@ public class Authentication {
 
                 if(tokenString == null)
                         return false;
+
+                AccountDTO account = resolveIdentity(tokenString);
+			
+                log.info("Login attempt:" + account.getExternalId());
+			
+                // If the user doesn't exist for Google, then the account
+                // should be null and they aren't authorized
+                if(account.getExternalId() == null)
+                        return false;
+
                 
-                String externalId = resolveIdentity(tokenString);
-			
-                log.debug("Login attempt:" + externalId);
-			
                 // Make sure this user has the requested credentials
                 TmpUserDAO tmpUserDAO = new TmpUserDAO();
                 /*
                  * TBD: does this throw exceptions?  If so, where are
                  * they caught?
                  */
-                TmpUser tmpUser = tmpUserDAO.getTmpUserByExternalId(externalId);
+                // get the user from the account
+                UserDTO user = account.getUser();
+                TmpUser tmpUser = new TmpUser();
+                
+                if (user != null) {
+                         tmpUser = tmpUserDAO.getTmpUserById(Integer.parseInt(user.getUserId()));
+                }
+                else {
+                    tmpUser = null;
+                }
 			
-                // If the user doesn't exist, they aren't authorized
-                if(externalId == null)
-                        return false;
 			
                 switch(authType) {
                 case Authentication.EXISTS:
@@ -123,11 +140,32 @@ public class Authentication {
         }
 
         /*
-         * Given the id token, return the identity represented (usually a
-         * Google email address, for now).
+         * Given the id token, return the external ID (usually an email
+         * address) and, if the user exists in the database, the user
+         * object.  If the user doesn't exist, the user object will be
+         * null.
+         *
+         * With this endpoint, the client may display either just the
+         * external ID or, if available, more information about the
+         * user.
+         *
         */
-        public static String resolveIdentity(String id_token) {
-                String externalId;
+        public static AccountDTO resolveIdentity(String id_token) {
+            // Look this up in TMP_TOKEN_CACHE first. If the token does
+            // not exist or is too old, then go into the Google
+            // retrieval routine.
+            //
+            String externalId = "";
+            AccountDTO accountDTO = new AccountDTO();
+            
+            try {
+                TokenCacheDTO tokenCacheDTO = TokenCacheManager.getTokenCacheByIdToken(id_token);
+                // TODO: At some point, we'll add a timeout here
+                externalId = tokenCacheDTO.getExternalId();
+                accountDTO.setExternalId(externalId);
+            }
+            catch (Exception noCacheRecord) {
+                log.info ("No record found for this id token in the cache: " + noCacheRecord.toString());
                 try {
                     // Verify that the token is a legitimate google token
                     GoogleIdToken token = GoogleIdToken.parse(JSON_FACTORY, id_token);
@@ -136,21 +174,48 @@ public class Authentication {
     			
                     // If we get here then this is a valid google item
                     externalId = token.getPayload().getEmail();
+                    accountDTO.setExternalId(externalId);
+
+                    try {
+                        // get user id from external id
+                        UserDTO userDTO = UserManager.getUserByExternalId(externalId);
+                        accountDTO.setUser(userDTO);
+
+                    }
+                    catch (Exception noUser){
+                        accountDTO.setUser(null);
+                    }
+                    
+                    // Create a new entry in the TMP_TOKEN_CACHE table.
+                    // TODO: Delete old entries for this user id.
+                    TokenCacheDTO inputDTO = new TokenCacheDTO();
+                    inputDTO.setIdToken(id_token);
+                    inputDTO.setExternalId(externalId);
+                    TokenCacheManager.addTokenCache(inputDTO);
+
 		} catch (IOException e) {
 			log.debug("IOException authenticating with Google: " + e.toString());
-                        externalId = null;
+			throw new AuthenticationFailureException();
 		} catch (GeneralSecurityException e) {
 			log.debug("GeneralSecurityException authenticating with Google: " + e.toString());
-                        externalId = null;
+			throw new AuthenticationFailureException();
 		} catch (IllegalArgumentException e) {
 			log.debug("IllegalArgumentException authenticating with Google: " + e.toString());
-                        externalId = null;
+			throw new AuthenticationFailureException();
 		} catch (Exception e) {
 			log.debug("Unexpected exception authenticating with Google: " + e.toString());
-                        externalId = null;
+			throw new AuthenticationFailureException();
 		}
-                
-                return externalId;
+            }
+            try {
+                UserDTO userDTO = UserManager.getUserByExternalId(externalId);
+                accountDTO.setUser(userDTO);
+            }
+            catch (Exception noUser) {
+                accountDTO.setUser(null);
+            }
+
+            return accountDTO;
         }
 
 }

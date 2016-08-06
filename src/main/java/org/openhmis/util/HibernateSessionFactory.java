@@ -103,6 +103,7 @@ public class HibernateSessionFactory {
 	        configuration.addAnnotatedClass(org.openhmis.domain.TmpIncomeSource.class);
 	        configuration.addAnnotatedClass(org.openhmis.domain.PathClientRace.class);
 	        configuration.addAnnotatedClass(org.openhmis.domain.TmpDevelopmentalDisability.class);
+                configuration.addAnnotatedClass(org.openhmis.domain.TmpTokenCache.class);
 	        configuration.addAnnotatedClass(org.openhmis.domain.TmpUser.class);
 
 	        // Load the application properties based on the current context
