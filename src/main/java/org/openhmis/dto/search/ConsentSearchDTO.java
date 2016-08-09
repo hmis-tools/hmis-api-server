@@ -10,11 +10,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @XmlRootElement
-public class ConsentCoCSearchDTO extends BaseSearchDTO {
+public class ConsentSearchDTO extends BaseSearchDTO {
 
 	private Integer submitterId;
 	
-	public ConsentCoCSearchDTO() {}
+	public ConsentSearchDTO() {}
 
 	// Getters / Setters
 	@JsonProperty

@@ -1,23 +1,20 @@
 package org.openhmis.dao;
 
-
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-import org.openhmis.domain.PathClient;
-import org.openhmis.dto.search.ClientSearchDTO;
-import org.openhmis.util.DateParser;
+import org.openhmis.domain.TmpConsent;
+import org.openhmis.dto.search.ConsentSearchDTO;
 
 public class TmpConsentDAO extends BaseDAO {
 
 	// default constructor
 	public TmpConsentDAO() { }
 
+	@SuppressWarnings("unchecked")
 	public TmpConsent getTmpConsentById(Integer consentId)  {
 		String queryString = "select consent " + 
 			"from TmpConsent as consent " + 

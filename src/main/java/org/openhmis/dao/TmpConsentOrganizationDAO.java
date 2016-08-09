@@ -10,7 +10,9 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.openhmis.domain.PathClient;
+import org.openhmis.domain.TmpConsentOrganization;
 import org.openhmis.dto.search.ClientSearchDTO;
+import org.openhmis.dto.search.ConsentOrganizationSearchDTO;
 import org.openhmis.util.DateParser;
 
 public class TmpConsentOrganizationDAO extends BaseDAO {

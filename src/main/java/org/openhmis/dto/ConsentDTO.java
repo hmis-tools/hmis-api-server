@@ -40,12 +40,12 @@ public class ConsentDTO extends BaseDTO {
 	}
 
 	@JsonProperty
-	public String getClientId() {
+	public String getConsentId() {
 		return clientId;
 	}
 
 	@JsonProperty
-	public void setClientId(String clientId) {
+	public void setConsentId(String clientId) {
 		this.clientId = clientId;
 	}
 

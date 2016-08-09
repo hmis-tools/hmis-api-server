@@ -12,7 +12,7 @@ import org.openhmis.code.YesNoReason;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @XmlRootElement
-public class ConsentFieldDTO extends BaseDTO {
+public class ConsentFieldsDTO extends BaseDTO {
 	private String firstName;
 	private String middleName;
 	private String lastName;
@@ -24,14 +24,15 @@ public class ConsentFieldDTO extends BaseDTO {
 	private String gender;
 	private String veteranStatus;
 
-	public ConsentFieldDTO() {}
+	public ConsentFieldsDTO() {}
 
 	@JsonProperty
 	public String getFirstName() {
 		return firstName;
 	}
 
-	@JsonProperty setFirstName(String firstName) {
+	@JsonProperty 
+	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
@@ -40,7 +41,8 @@ public class ConsentFieldDTO extends BaseDTO {
 		return middleName;
 	}
 
-	@JsonProperty setMiddleName(String middleName) {
+	@JsonProperty 
+	public void setMiddleName(String middleName) {
 		this.middleName = middleName;
 	}
 
@@ -49,7 +51,8 @@ public class ConsentFieldDTO extends BaseDTO {
 		return lastName;
 	}
 
-	@JsonProperty setLastName(String lastName) {
+	@JsonProperty 
+	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
@@ -58,7 +61,8 @@ public class ConsentFieldDTO extends BaseDTO {
 		return nameSuffix;
 	}
 
-	@JsonProperty setNameSuffix(String nameSuffix) {
+	@JsonProperty 
+	public void setNameSuffix(String nameSuffix) {
 		this.nameSuffix = nameSuffix;
 	}
 
@@ -67,7 +71,8 @@ public class ConsentFieldDTO extends BaseDTO {
 		return ssn;
 	}
 
-	@JsonProperty setSsn(String ssn) {
+	@JsonProperty 
+	public void setSsn(String ssn) {
 		this.ssn = ssn;
 	}
 
@@ -76,7 +81,8 @@ public class ConsentFieldDTO extends BaseDTO {
 		return dob;
 	}
 
-	@JsonProperty setDob(String dob) {
+	@JsonProperty 
+	public void setDob(String dob) {
 		this.dob = dob;
 	}
 
@@ -85,7 +91,8 @@ public class ConsentFieldDTO extends BaseDTO {
 		return race;
 	}
 
-	@JsonProperty setRace(String race) {
+	@JsonProperty 
+	public void setRace(String race) {
 		this.race = race;
 	}
 
@@ -94,7 +101,8 @@ public class ConsentFieldDTO extends BaseDTO {
 		return ethnicity;
 	}
 
-	@JsonProperty setEthnicity(String ethnicity) {
+	@JsonProperty 
+	public void setEthnicity(String ethnicity) {
 		this.ethnicity = ethnicity;
 	}
 
@@ -103,7 +111,8 @@ public class ConsentFieldDTO extends BaseDTO {
 		return gender;
 	}
 
-	@JsonProperty setGender(String gender) {
+	@JsonProperty 
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
@@ -112,7 +121,8 @@ public class ConsentFieldDTO extends BaseDTO {
 		return veteranStatus;
 	}
 
-	@JsonProperty setVeteranStatus(String veteranStatus) {
+	@JsonProperty 
+	public void setVeteranStatus(String veteranStatus) {
 		this.veteranStatus = veteranStatus;
 	}
 }

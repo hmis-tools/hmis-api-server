@@ -10,17 +10,27 @@ import org.openhmis.code.ProjectAvailability;
 import org.openhmis.code.ProjectBedType;
 import org.openhmis.code.ProjectHouseholdType;
 import org.openhmis.code.ProjectYouthAgeGroup;
+import org.openhmis.dao.TmpConsentCoCDAO;
+import org.openhmis.dao.TmpConsentDAO;
+import org.openhmis.dao.TmpConsentFieldDAO;
+import org.openhmis.dao.TmpConsentOrganizationDAO;
 import org.openhmis.dao.TmpContactDAO;
 import org.openhmis.domain.TmpProject;
+import org.openhmis.domain.TmpConsent;
 import org.openhmis.domain.TmpContact;
 import org.openhmis.dto.CoCDTO;
+import org.openhmis.dto.ConsentDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.ContactDTO;
+import org.openhmis.dto.search.ConsentSearchDTO;
 import org.openhmis.dto.search.ContactSearchDTO;
 
 
 public class ConsentManager {
 	private static final TmpConsentDAO tmpConsentDAO = new TmpConsentDAO();
+	private static final TmpConsentFieldDAO tmpConsentFieldDAO = new TmpConsentFieldDAO();
+	private static final TmpConsentOrganizationDAO tmpConsentOrganizationDAO = new TmpConsentOrganizationDAO();
+	private static final TmpConsentCoCDAO tmpConsentCoCDAO = new TmpConsentCoCDAO();
 
 	public ConsentManager() {}
 
@@ -28,7 +38,6 @@ public class ConsentManager {
 		ConsentDTO consentDTO = ConsentManager.generateConsentDTO(tmpConsentDAO.getTmpConsentById(Integer.parseInt(consentId)));
 		return consentDTO;
 	}
-
 	public static List<ConsentDTO> getConsents(ConsentSearchDTO searchDTO) {
 		List<ConsentDTO> consentDTOs = new ArrayList<ConsentDTO>();
 
@@ -45,7 +54,6 @@ public class ConsentManager {
 
 	}
 
-	
 	public static ConsentDTO addConsent(ConsentDTO inputDTO) {
 		// Generate a PathClient from the input
 		TmpConsent tmpConsent = ConsentManager.generateTmpConsent(inputDTO);
@@ -56,7 +64,7 @@ public class ConsentManager {
 		
 		// Save the client to allow secondary object generation
 		tmpConsentDAO.save(tmpConsent);
-		inputDTO.setConsenId(tmpConsent.getConsentId().toString());
+		inputDTO.setConsentId(tmpConsent.getConsentId().toString());
 		
 		// Return the resulting VO
 		return ConsentManager.generateConsentDTO(tmpConsent);
@@ -64,7 +72,7 @@ public class ConsentManager {
 	
 	public static ConsentDTO updateConsent(ConsentDTO inputDTO) {
 		// Generate a Consent from the input
-		TmpConsent tmpConsent = ContsentManager.generateTmpConsent(inputDTO);
+		TmpConsent tmpConsent = ConsentManager.generateTmpConsent(inputDTO);
 		tmpConsent.setConsentId(Integer.parseInt(inputDTO.getConsentId()));
 		tmpConsent.setDateUpdated(new Date());
 		
