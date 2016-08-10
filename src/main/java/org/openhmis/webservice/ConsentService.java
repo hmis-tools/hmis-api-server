@@ -5,6 +5,7 @@
 package org.openhmis.webservice;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.BeanParam;
@@ -21,6 +22,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
+import org.openhmis.code.ConsentApprovalStatus;
 import org.openhmis.dto.ConsentDTO;
 import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.dto.search.ConsentSearchDTO;
@@ -56,6 +58,11 @@ public class ConsentService {
 	public ConsentDTO createConsent(@HeaderParam("Authorization") String authorization, ConsentDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
+		
+		// TODO: For now we approve all requests
+		inputDTO.setDateProcessed(new Date());
+		inputDTO.setApprovalStatus(ConsentApprovalStatus.APPROVED);
+		
 		ConsentDTO outputDTO = ConsentManager.addConsent(inputDTO);
                 log.info("POST /consents (new id: " + outputDTO.getId() + ")");
 		return outputDTO;

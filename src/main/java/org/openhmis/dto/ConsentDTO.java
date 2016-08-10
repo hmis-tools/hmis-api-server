@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openhmis.code.ConsentApprovalStatus;
 import org.openhmis.code.YesNo;
 import org.openhmis.code.YesNoReason;
 
@@ -16,6 +17,7 @@ public class ConsentDTO extends BaseDTO {
 	private String consentId;
 	private String clientId;
 	private String submitterId;
+	private ConsentApprovalStatus approvalStatus;
 	private List<String> organizationIds;
 	private List<String> cocIds;
 
@@ -67,6 +69,16 @@ public class ConsentDTO extends BaseDTO {
 	@JsonProperty
 	public void setSubmitterId(String submitterId) {
 		this.submitterId = submitterId;
+	}
+
+	@JsonProperty
+	public ConsentApprovalStatus getApprovalStatus() {
+		return approvalStatus;
+	}
+
+	@JsonProperty
+	public void setApprovalStatus(ConsentApprovalStatus approvalStatus) {
+		this.approvalStatus = approvalStatus;
 	}
 
 	@JsonProperty

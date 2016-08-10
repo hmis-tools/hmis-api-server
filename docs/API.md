@@ -1129,7 +1129,10 @@ Consent-to-Share Records support the GET, POST, PUT, and DELETE methods.
                   },
                   "date_created": CREATION_DATE,
                   "date_processed": PROCESSED_DATE,
-                  "approval_status": "approved" | "pending"
+                  # 0: pending
+                  # 1: approved
+                  # 2: denied
+                  "approval_status": 0 | 1 | 2
               }
           }
       }

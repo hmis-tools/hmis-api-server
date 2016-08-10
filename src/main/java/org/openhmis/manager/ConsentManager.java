@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.openhmis.code.ConsentApprovalStatus;
 import org.openhmis.code.ConsentField;
 import org.openhmis.code.ConsentRequestType;
 import org.openhmis.dao.TmpConsentCoCDAO;
@@ -175,6 +176,7 @@ public class ConsentManager {
 		
 		// Base Fields
 		consentDTO.setSubmitterId(tmpConsent.getSubmitterId().toString());
+		consentDTO.setApprovalStatus(ConsentApprovalStatus.valueByCode(tmpConsent.getApprovalStatusCode()));
 		consentDTO.setDateProcessed(tmpConsent.getDateProcessed());
 		
 		// Organizations
@@ -246,6 +248,7 @@ public class ConsentManager {
 		TmpConsent tmpConsent = new TmpConsent();
 		tmpConsent.setSubmitterId(Integer.parseInt(inputDTO.getSubmitterId()));
 		tmpConsent.setDateProcessed(inputDTO.getDateProcessed());
+		tmpConsent.setapprovalStatusCode(inputDTO.getApprovalStatus().getCode());
 
 		// Export Standard Fields
 		tmpConsent.setDateCreated(inputDTO.getDateCreated());
