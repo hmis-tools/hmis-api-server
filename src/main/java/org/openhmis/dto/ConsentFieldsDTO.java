@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openhmis.code.ConsentRequestType;
 import org.openhmis.code.YesNo;
 import org.openhmis.code.YesNoReason;
 
@@ -13,116 +14,116 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @XmlRootElement
 public class ConsentFieldsDTO extends BaseDTO {
-	private String firstName;
-	private String middleName;
-	private String lastName;
-	private String nameSuffix;
-	private String ssn;
-	private String dob;
-	private String race;
-	private String ethnicity;
-	private String gender;
-	private String veteranStatus;
+	private ConsentRequestType firstName;
+	private ConsentRequestType middleName;
+	private ConsentRequestType lastName;
+	private ConsentRequestType nameSuffix;
+	private ConsentRequestType ssn;
+	private ConsentRequestType dob;
+	private ConsentRequestType race;
+	private ConsentRequestType ethnicity;
+	private ConsentRequestType gender;
+	private ConsentRequestType veteranStatus;
 
 	public ConsentFieldsDTO() {}
 
 	@JsonProperty
-	public String getFirstName() {
+	public ConsentRequestType getFirstName() {
 		return firstName;
 	}
 
 	@JsonProperty 
-	public void setFirstName(String firstName) {
+	public void setFirstName(ConsentRequestType firstName) {
 		this.firstName = firstName;
 	}
 
 	@JsonProperty
-	public String getMiddleName() {
+	public ConsentRequestType getMiddleName() {
 		return middleName;
 	}
 
 	@JsonProperty 
-	public void setMiddleName(String middleName) {
+	public void setMiddleName(ConsentRequestType middleName) {
 		this.middleName = middleName;
 	}
 
 	@JsonProperty
-	public String getLastName() {
+	public ConsentRequestType getLastName() {
 		return lastName;
 	}
 
 	@JsonProperty 
-	public void setLastName(String lastName) {
+	public void setLastName(ConsentRequestType lastName) {
 		this.lastName = lastName;
 	}
 
 	@JsonProperty
-	public String getNameSuffix() {
+	public ConsentRequestType getNameSuffix() {
 		return nameSuffix;
 	}
 
 	@JsonProperty 
-	public void setNameSuffix(String nameSuffix) {
+	public void setNameSuffix(ConsentRequestType nameSuffix) {
 		this.nameSuffix = nameSuffix;
 	}
 
 	@JsonProperty
-	public String getSsn() {
+	public ConsentRequestType getSsn() {
 		return ssn;
 	}
 
 	@JsonProperty 
-	public void setSsn(String ssn) {
+	public void setSsn(ConsentRequestType ssn) {
 		this.ssn = ssn;
 	}
 
 	@JsonProperty
-	public String getDob() {
+	public ConsentRequestType getDob() {
 		return dob;
 	}
 
 	@JsonProperty 
-	public void setDob(String dob) {
+	public void setDob(ConsentRequestType dob) {
 		this.dob = dob;
 	}
 
 	@JsonProperty
-	public String getRace() {
+	public ConsentRequestType getRace() {
 		return race;
 	}
 
 	@JsonProperty 
-	public void setRace(String race) {
+	public void setRace(ConsentRequestType race) {
 		this.race = race;
 	}
 
 	@JsonProperty
-	public String getEthnicity() {
+	public ConsentRequestType getEthnicity() {
 		return ethnicity;
 	}
 
 	@JsonProperty 
-	public void setEthnicity(String ethnicity) {
+	public void setEthnicity(ConsentRequestType ethnicity) {
 		this.ethnicity = ethnicity;
 	}
 
 	@JsonProperty
-	public String getGender() {
+	public ConsentRequestType getGender() {
 		return gender;
 	}
 
 	@JsonProperty 
-	public void setGender(String gender) {
+	public void setGender(ConsentRequestType gender) {
 		this.gender = gender;
 	}
 
 	@JsonProperty
-	public String getVeteranStatus() {
+	public ConsentRequestType getVeteranStatus() {
 		return veteranStatus;
 	}
 
 	@JsonProperty 
-	public void setVeteranStatus(String veteranStatus) {
+	public void setVeteranStatus(ConsentRequestType veteranStatus) {
 		this.veteranStatus = veteranStatus;
 	}
 }

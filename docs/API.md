@@ -1113,15 +1113,19 @@ Consent-to-Share Records support the GET, POST, PUT, and DELETE methods.
                   "coc_ids": [COC_ID, ...],
                   "fields": 
                   {
-                      "field_name_1" : "share" | "not-share",
-                      "field_name_2" : "share" | "not-share",
-                      ...
-                      # The field_names here are all the field names
-                      # available in a client object, e.g., "firstName",
-                      # "middleName", "lastName", "gender", etc.  
-                      #
-                      # TBD: Shouldn't we also support enrollments?
-                      #      What is the best way to do that?
+                      # 0 means "share"
+                      # 1 means "no"
+                      # null (or omission) means nothing
+                      "firstName": 0 | 1 | null,
+                      "middleName": 0 | 1 | null,
+                      "lastName": 0 | 1 | null,
+                      "nameSuffix": 0 | 1 | null,
+                      "ssn": 0 | 1 | null,
+                      "dob": 0 | 1 | null,
+                      "race": 0 | 1 | null,
+                      "ethnicity": 0 | 1 | null,
+                      "gender": 0 | 1 | null,
+                      "veteranStatus": 0 | 1 | null
                   },
                   "date_created": CREATION_DATE,
                   "date_processed": PROCESSED_DATE,

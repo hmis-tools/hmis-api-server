@@ -23,6 +23,7 @@ public class TmpConsentOrganization implements java.io.Serializable {
 
 	private Integer consentOrganizationId;
 	private Integer consentId;
+	private Integer organizationId;
 	private Date dateCreated;
 	private Date dateUpdated;
 
@@ -54,6 +55,15 @@ public class TmpConsentOrganization implements java.io.Serializable {
 
 	public void setConsentId(Integer consentId) {
 		this.consentId = consentId;
+	}
+
+	@Column(name = "organizationId")
+	public Integer getOrganizationId() {
+		return this.organizationId;
+	}
+
+	public void setOrganizationId(Integer organizationId) {
+		this.organizationId = organizationId;
 	}
 
 	@Temporal(TemporalType.DATE)

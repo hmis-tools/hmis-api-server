@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @XmlRootElement
 public class ConsentDTO extends BaseDTO {
-	private String shareRequestId;
+	private String consentId;
 	private String clientId;
 	private String submitterId;
 	private List<String> organizationIds;
@@ -31,21 +31,31 @@ public class ConsentDTO extends BaseDTO {
 	
 	@JsonProperty
 	public String getId() {
-		return shareRequestId;
+		return consentId;
 	}
 
 	@JsonProperty
-	public void setId(String shareRequestId) {
-		this.shareRequestId = shareRequestId;
+	public void setId(String consentId) {
+		this.consentId = consentId;
 	}
 
 	@JsonProperty
 	public String getConsentId() {
+		return consentId;
+	}
+
+	@JsonProperty
+	public void setConsentId(String consentId) {
+		this.consentId = consentId;
+	}
+	
+	@JsonProperty
+	public String getClientId() {
 		return clientId;
 	}
 
 	@JsonProperty
-	public void setConsentId(String clientId) {
+	public void setClientId(String clientId) {
 		this.clientId = clientId;
 	}
 

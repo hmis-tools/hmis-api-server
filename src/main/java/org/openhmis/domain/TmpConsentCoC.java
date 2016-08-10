@@ -19,6 +19,7 @@ public class TmpConsentCoC implements java.io.Serializable {
 
 	private Integer consentCoCId;
 	private Integer consentId;
+	private Integer coCId;
 	private Date dateCreated;
 	private Date dateUpdated;
 
@@ -50,6 +51,15 @@ public class TmpConsentCoC implements java.io.Serializable {
 
 	public void setConsentId(Integer consentId) {
 		this.consentId = consentId;
+	}
+
+	@Column(name = "coCId")
+	public Integer getCoCId() {
+		return this.coCId;
+	}
+
+	public void setCoCId(Integer coCId) {
+		this.coCId = coCId;
 	}
 
 	@Temporal(TemporalType.DATE)
