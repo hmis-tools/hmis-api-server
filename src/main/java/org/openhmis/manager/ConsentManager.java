@@ -176,6 +176,7 @@ public class ConsentManager {
 		
 		// Base Fields
 		consentDTO.setSubmitterId(tmpConsent.getSubmitterId().toString());
+		consentDTO.setClientId(tmpConsent.getClientId().toString());
 		consentDTO.setApprovalStatus(ConsentApprovalStatus.valueByCode(tmpConsent.getApprovalStatusCode()));
 		consentDTO.setDateProcessed(tmpConsent.getDateProcessed());
 		
@@ -247,6 +248,7 @@ public class ConsentManager {
 	public static TmpConsent generateTmpConsent(ConsentDTO inputDTO) {
 		TmpConsent tmpConsent = new TmpConsent();
 		tmpConsent.setSubmitterId(Integer.parseInt(inputDTO.getSubmitterId()));
+		tmpConsent.setClientId(Integer.parseInt(inputDTO.getClientId()));
 		tmpConsent.setDateProcessed(inputDTO.getDateProcessed());
 		tmpConsent.setapprovalStatusCode(inputDTO.getApprovalStatus().getCode());
 

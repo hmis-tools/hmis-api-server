@@ -19,6 +19,7 @@ public class TmpConsent implements java.io.Serializable {
 
 	private Integer consentId;
 	private Integer submitterId;
+	private Integer clientId;
 	private Integer approvalStatusCode;
 	private Date dateProcessed;
 	private Date dateCreated;
@@ -27,9 +28,10 @@ public class TmpConsent implements java.io.Serializable {
 	public TmpConsent() {
 	}
 
-	public TmpConsent(Integer consentId, Integer submitterId, Date dateProcessed, Date dateCreated, Date dateUpdated) {
+	public TmpConsent(Integer consentId, Integer submitterId, Integer clientId, Date dateProcessed, Date dateCreated, Date dateUpdated) {
 		this.consentId = consentId;
 		this.submitterId = submitterId;
+		this.clientId = clientId;
 		this.dateProcessed = dateProcessed;
 		this.dateCreated = dateCreated;
 		this.dateUpdated = dateUpdated;
@@ -53,6 +55,15 @@ public class TmpConsent implements java.io.Serializable {
 
 	public void setSubmitterId(Integer submitterId) {
 		this.submitterId = submitterId;
+	}
+
+	@Column(name = "clientId")
+	public Integer getClientId() {
+		return this.clientId;
+	}
+
+	public void setClientId(Integer clientId) {
+		this.clientId = clientId;
 	}
 
 	@Column(name = "approvalStatusCode")
