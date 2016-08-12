@@ -17,9 +17,9 @@ public enum ConsentRequestType implements BaseCode {
 	@XmlEnumValue("-1")
 	ERR_UNKNOWN (-1, "Unknown"),
 	@XmlEnumValue("not-share")
-	DATE_OF_BIRTH (0, "not-share"),
+	NOT_SHARE (0, "not-share"),
 	@XmlEnumValue("share")
-	MENTAL_HEALTH (1, "share");
+	SHARE (1, "share");
 	
 	private final Integer code;
 	private final String description;
