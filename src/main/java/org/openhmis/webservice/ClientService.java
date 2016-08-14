@@ -16,6 +16,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
+import org.openhmis.dao.ConsentProfileDAO;
+import org.openhmis.domain.ConsentProfile;
+import org.openhmis.domain.TmpUser;
 import org.openhmis.dto.ClientDTO;
 import org.openhmis.exception.AccessDeniedException;
 import org.openhmis.dto.search.ClientSearchDTO;
@@ -70,8 +73,19 @@ public class ClientService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
 		ClientDTO clientDTO = clientManager.getClientByPersonalId(personalId);
-                log.info("GET /clients/" + personalId);
-        	return clientDTO;
+		
+		TmpUser currentUser = Authentication.getCurrentUser(authorization);
+		
+		ConsentProfileDAO consentProfileDAO = new ConsentProfileDAO();
+		ConsentProfile consentProfile = consentProfileDAO.getConsentProfileByClientKey(
+			Integer.parseInt(clientDTO.getPersonalId()),
+			Integer.parseInt(currentUser.getOrganization()),
+			Integer.parseInt(currentUser.getCoC())
+		);
+		clientDTO.processConsentProfile(consentProfile);
+		
+        log.info("GET /clients/" + personalId);
+        return clientDTO;
 	}
 	
 	@PUT

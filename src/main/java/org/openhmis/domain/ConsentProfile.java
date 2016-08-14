@@ -1,6 +1,8 @@
 package org.openhmis.domain;
 
 import org.openhmis.code.ConsentField;
+import org.openhmis.util.Authentication;
+
 import java.util.Dictionary;
 
 // This is a summary of consent rules associated with various clients
@@ -22,7 +24,11 @@ public class ConsentProfile {
 	}
 	
 	public boolean hasFieldConsent(Integer clientId, ConsentField field) {
-		Dictionary<ConsentField, Boolean> consentMap = consentMaps.get(clientId); 
+		// If authentication is disabled, everyone has consent for everything
+		if(Authentication.getAuthEnabled() == false)
+			return true;
+		
+		Dictionary<ConsentField, Boolean> consentMap = consentMaps.get(clientId);
 		if(consentMap == null)
 			return false;
 		

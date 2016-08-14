@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.openhmis.code.ConsentApprovalStatus;
 import org.openhmis.code.YesNo;
 import org.openhmis.code.YesNoReason;
+import org.openhmis.domain.ConsentProfile;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
