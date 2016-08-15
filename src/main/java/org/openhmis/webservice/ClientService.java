@@ -81,9 +81,9 @@ public class ClientService {
 	public ClientDTO createClient(@HeaderParam("Authorization") String authorization, ClientDTO inputVO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
-		ClientDTO outputVO = clientManager.addClient(inputVO);
-        log.info("POST /clients/ (new id: " + outputVO.getId() + ")");
-		return outputVO;
+		ClientDTO outputDTO = clientManager.addClient(inputVO);
+        log.info("POST /clients/ (new id: " + outputDTO.getId() + ")");
+		return outputDTO;
 	}
 	
 	@GET
@@ -115,9 +115,16 @@ public class ClientService {
                         throw new AccessDeniedException();
 		inputVO.setPersonalId(personalId);
 		
-		ClientDTO outputVO = clientManager.updateClient(inputVO);
-                log.info("PUT /clients/" + personalId);
-		return outputVO;
+		ClientDTO outputDTO = clientManager.updateClient(inputVO);
+		TmpUser currentUser = Authentication.getCurrentUser(authorization);
+		ConsentProfileDAO consentProfileDAO = new ConsentProfileDAO();
+		ConsentProfile consentProfile = consentProfileDAO.getConsentProfile(
+			Integer.parseInt(currentUser.getOrganization()),
+			Integer.parseInt(currentUser.getCoC())
+		);
+		outputDTO.processConsentProfile(consentProfile);
+        log.info("PUT /clients/" + personalId);
+		return outputDTO;
 	}
 	
 	@DELETE
