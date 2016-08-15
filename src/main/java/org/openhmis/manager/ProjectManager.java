@@ -15,6 +15,7 @@ import org.openhmis.dto.ProjectDTO;
 import org.openhmis.dto.search.ProjectSearchDTO;
 import org.openhmis.dto.search.CoCSearchDTO;
 import org.openhmis.dto.search.FunderSearchDTO;
+import org.openhmis.dto.search.ProjectCoCSearchDTO;
 import org.openhmis.exception.InvalidParameterException;
 
 public class ProjectManager {
@@ -122,10 +123,10 @@ public class ProjectManager {
 		Integer projectId = tmpProject.getProjectId();
 
 		ProjectDTO projectDTO = new ProjectDTO();
-                CoCSearchDTO cocSearchDTO = new CoCSearchDTO();
+                ProjectCoCSearchDTO projectCocSearchDTO = new ProjectCoCSearchDTO();
                 FunderSearchDTO funderSearchDTO = new FunderSearchDTO();
 		projectDTO.setProjectId(tmpProject.getProjectId().toString());
-                cocSearchDTO.setProjectId(tmpProject.getProjectId().toString());
+                projectCocSearchDTO.setProjectId(tmpProject.getProjectId().toString());
                 funderSearchDTO.setProjectId(tmpProject.getProjectId().toString());
                 
 	
@@ -133,7 +134,7 @@ public class ProjectManager {
 		projectDTO.setProjectName(tmpProject.getProjectName());
 		
 		// Universal Data Standard: Project CoC (2014, 2.3)
-		projectDTO.setProjectCoCs(CoCManager.getCoCs(cocSearchDTO));
+		projectDTO.setProjectCoCs(ProjectCoCManager.getProjectCoCs(projectCocSearchDTO));
 
 		// Universal Data Standard: Project Type (2014, 2.4)
 		projectDTO.setContinuumProject(YesNo.valueByCode(tmpProject.getContinuumProject()));

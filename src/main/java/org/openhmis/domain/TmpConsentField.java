@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,7 +23,7 @@ import org.openhmis.code.ConsentRequestType;
 public class TmpConsentField implements java.io.Serializable {
 
 	private Integer consentFieldId;
-	private Integer consentId;
+	private TmpConsent consent;
 	private Integer fieldCode;
 	private Integer requestTypeCode;
 	private Date dateCreated;
@@ -30,9 +32,9 @@ public class TmpConsentField implements java.io.Serializable {
 	public TmpConsentField() {
 	}
 
-	public TmpConsentField(Integer consentFieldId, Integer consentId, Integer fieldCode, Integer requestTypeCode, Date dateCreated, Date dateUpdated) {
+	public TmpConsentField(Integer consentFieldId, TmpConsent consent, Integer fieldCode, Integer requestTypeCode, Date dateCreated, Date dateUpdated) {
 		this.consentFieldId = consentFieldId;
-		this.consentId = consentId;
+		this.consent = consent;
 		this.fieldCode = fieldCode;
 		this.requestTypeCode = requestTypeCode;
 		this.dateCreated = dateCreated;
@@ -50,13 +52,14 @@ public class TmpConsentField implements java.io.Serializable {
 		this.consentFieldId = consentFieldId;
 	}
 
-	@Column(name = "consentId")
-	public Integer getConsentId() {
-		return this.consentId;
+    @ManyToOne
+    @JoinColumn(name="consentId")
+	public TmpConsent getConsent() {
+		return this.consent;
 	}
 
-	public void setConsentId(Integer consentId) {
-		this.consentId = consentId;
+	public void setConsent(TmpConsent consent) {
+		this.consent = consent;
 	}
 
 	@Column(name = "fieldCode")

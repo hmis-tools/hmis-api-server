@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.openhmis.domain.TmpProjectContinuum;
 import org.openhmis.dto.search.CoCSearchDTO;
+import org.openhmis.dto.search.ProjectCoCSearchDTO;
 import org.openhmis.util.DateParser;
 
 public class TmpProjectContinuumDAO extends BaseDAO {
@@ -37,7 +38,7 @@ public class TmpProjectContinuumDAO extends BaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpProjectContinuum> getTmpProjectContinuums(CoCSearchDTO searchDTO) {
+	public List<TmpProjectContinuum> getTmpProjectContinuums(ProjectCoCSearchDTO searchDTO) {
 
 		Session session = getSession();
                 Criteria query =  session.createCriteria(TmpProjectContinuum.class);

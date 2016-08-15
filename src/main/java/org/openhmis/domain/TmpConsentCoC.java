@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -18,17 +20,18 @@ import javax.persistence.TemporalType;
 public class TmpConsentCoC implements java.io.Serializable {
 
 	private Integer consentCoCId;
-	private Integer consentId;
-	private Integer coCId;
+	private TmpConsent consent;
+	private TmpCoC coC;
 	private Date dateCreated;
 	private Date dateUpdated;
 
 	public TmpConsentCoC() {
 	}
 
-	public TmpConsentCoC(Integer consentCoCId, Integer consentId, Date dateCreated, Date dateUpdated) {
+	public TmpConsentCoC(Integer consentCoCId, TmpConsent consent, TmpCoC coC, Date dateCreated, Date dateUpdated) {
 		this.consentCoCId = consentCoCId;
-		this.consentId = consentId;
+		this.consent = consent;
+		this.coC = coC;
 		this.dateCreated = dateCreated;
 		this.dateUpdated = dateUpdated;
 	}
@@ -44,22 +47,24 @@ public class TmpConsentCoC implements java.io.Serializable {
 		this.consentCoCId = consentCoCId;
 	}
 
-	@Column(name = "consentId")
-	public Integer getConsentId() {
-		return this.consentId;
+    @ManyToOne
+    @JoinColumn(name="consentId")
+	public TmpConsent getConsent() {
+		return this.consent;
 	}
 
-	public void setConsentId(Integer consentId) {
-		this.consentId = consentId;
+	public void setConsent(TmpConsent consent) {
+		this.consent = consent;
 	}
 
-	@Column(name = "coCId")
-	public Integer getCoCId() {
-		return this.coCId;
+    @ManyToOne
+    @JoinColumn(name="coCId")
+	public TmpCoC getCoC() {
+		return this.coC;
 	}
 
-	public void setCoCId(Integer coCId) {
-		this.coCId = coCId;
+	public void setCoC(TmpCoC coC) {
+		this.coC = coC;
 	}
 
 	@Temporal(TemporalType.DATE)

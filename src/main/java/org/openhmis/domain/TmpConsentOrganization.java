@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,17 +24,18 @@ import javax.persistence.TemporalType;
 public class TmpConsentOrganization implements java.io.Serializable {
 
 	private Integer consentOrganizationId;
-	private Integer consentId;
-	private Integer organizationId;
+	private TmpConsent consent;
+	private TmpOrganization organization;
 	private Date dateCreated;
 	private Date dateUpdated;
 
 	public TmpConsentOrganization() {
 	}
 
-	public TmpConsentOrganization(Integer consentOrganizationId, Integer consentId, Date dateCreated, Date dateUpdated) {
+	public TmpConsentOrganization(Integer consentOrganizationId, TmpConsent consent, TmpOrganization organization, Date dateCreated, Date dateUpdated) {
 		this.consentOrganizationId = consentOrganizationId;
-		this.consentId = consentId;
+		this.consent = consent;
+		this.organization = organization;
 		this.dateCreated = dateCreated;
 		this.dateUpdated = dateUpdated;
 	}
@@ -49,21 +52,22 @@ public class TmpConsentOrganization implements java.io.Serializable {
 	}
 
 	@Column(name = "consentId")
-	public Integer getConsentId() {
-		return this.consentId;
+	public TmpConsent getConsent() {
+		return this.consent;
 	}
 
-	public void setConsentId(Integer consentId) {
-		this.consentId = consentId;
+	public void setConsent(TmpConsent consent) {
+		this.consent = consent;
 	}
 
-	@Column(name = "organizationId")
-	public Integer getOrganizationId() {
-		return this.organizationId;
+    @ManyToOne
+	@JoinColumn(name = "organizationId")
+	public TmpOrganization getOrganization() {
+		return this.organization;
 	}
 
-	public void setOrganizationId(Integer organizationId) {
-		this.organizationId = organizationId;
+	public void setOrganization(TmpOrganization organization) {
+		this.organization = organization;
 	}
 
 	@Temporal(TemporalType.DATE)

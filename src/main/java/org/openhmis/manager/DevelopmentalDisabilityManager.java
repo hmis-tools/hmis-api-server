@@ -14,7 +14,6 @@ import org.openhmis.code.YesNoReason;
 import org.openhmis.dao.TmpDevelopmentalDisabilityDAO;
 import org.openhmis.domain.TmpProject;
 import org.openhmis.domain.TmpDevelopmentalDisability;
-import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.DevelopmentalDisabilityDTO;
 import org.openhmis.dto.search.DevelopmentalDisabilitySearchDTO;

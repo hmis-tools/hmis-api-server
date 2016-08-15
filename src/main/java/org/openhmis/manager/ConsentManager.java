@@ -8,10 +8,14 @@ import java.util.List;
 import org.openhmis.code.ConsentApprovalStatus;
 import org.openhmis.code.ConsentField;
 import org.openhmis.code.ConsentRequestType;
+import org.openhmis.dao.PathClientDAO;
+import org.openhmis.dao.TmpCoCDAO;
 import org.openhmis.dao.TmpConsentCoCDAO;
 import org.openhmis.dao.TmpConsentDAO;
 import org.openhmis.dao.TmpConsentFieldDAO;
 import org.openhmis.dao.TmpConsentOrganizationDAO;
+import org.openhmis.dao.TmpOrganizationDAO;
+import org.openhmis.dao.TmpUserDAO;
 import org.openhmis.domain.TmpConsent;
 import org.openhmis.domain.TmpConsentCoC;
 import org.openhmis.domain.TmpConsentField;
@@ -29,6 +33,10 @@ public class ConsentManager {
 	private static final TmpConsentFieldDAO tmpConsentFieldDAO = new TmpConsentFieldDAO();
 	private static final TmpConsentOrganizationDAO tmpConsentOrganizationDAO = new TmpConsentOrganizationDAO();
 	private static final TmpConsentCoCDAO tmpConsentCoCDAO = new TmpConsentCoCDAO();
+	private static final TmpUserDAO tmpUserDAO = new TmpUserDAO();
+	private static final PathClientDAO pathClientDAO = new PathClientDAO();
+	private static final TmpCoCDAO tmpCoCDAO = new TmpCoCDAO();
+	private static final TmpOrganizationDAO tmpOrganizationDAO = new TmpOrganizationDAO();
 
 	public ConsentManager() {}
 
@@ -105,7 +113,7 @@ public class ConsentManager {
 		// Save the consent fields
 		for(Iterator<TmpConsentField> fieldIterator = tmpConsentFields.iterator(); fieldIterator.hasNext();) {
 			TmpConsentField tmpConsentField = fieldIterator.next();
-			tmpConsentField.setConsentId(tmpConsent.getConsentId());
+			tmpConsentField.setConsent(tmpConsent);
 			tmpConsentField.setDateCreated(new Date());
 			tmpConsentField.setDateUpdated(new Date());
 			tmpConsentFieldDAO.save(tmpConsentField);
@@ -114,7 +122,7 @@ public class ConsentManager {
 		// Save the consent organizations
 		for(Iterator<TmpConsentOrganization> organizationIterator = tmpConsentOrganizations.iterator(); organizationIterator.hasNext();) {
 			TmpConsentOrganization tmpConsentOrganization = organizationIterator.next();
-			tmpConsentOrganization.setConsentId(tmpConsent.getConsentId());
+			tmpConsentOrganization.setConsent(tmpConsent);
 			tmpConsentOrganization.setDateCreated(new Date());
 			tmpConsentOrganization.setDateUpdated(new Date());
 			tmpConsentFieldDAO.save(tmpConsentOrganization);
@@ -123,7 +131,7 @@ public class ConsentManager {
 		// Save the consent organizations
 		for(Iterator<TmpConsentCoC> coCIterator = tmpConsentCoCs.iterator(); coCIterator.hasNext();) {
 			TmpConsentCoC tmpConsentCoC = coCIterator.next();
-			tmpConsentCoC.setConsentId(tmpConsent.getConsentId());
+			tmpConsentCoC.setConsent(tmpConsent);
 			tmpConsentCoC.setDateCreated(new Date());
 			tmpConsentCoC.setDateUpdated(new Date());
 			tmpConsentFieldDAO.save(tmpConsentCoC);
@@ -175,8 +183,8 @@ public class ConsentManager {
 		consentDTO.setConsentId(tmpConsent.getConsentId().toString());
 		
 		// Base Fields
-		consentDTO.setSubmitterId(tmpConsent.getSubmitterId().toString());
-		consentDTO.setClientId(tmpConsent.getClientId().toString());
+		consentDTO.setSubmitterId(tmpConsent.getSubmitter().getUserId().toString());
+		consentDTO.setClientId(tmpConsent.getClient().getClientKey().toString());
 		consentDTO.setApprovalStatus(ConsentApprovalStatus.valueByCode(tmpConsent.getApprovalStatusCode()));
 		consentDTO.setDateProcessed(tmpConsent.getDateProcessed());
 		
@@ -184,7 +192,7 @@ public class ConsentManager {
 		List<String> organizationIds = new ArrayList<String>();
 		for(Iterator<TmpConsentOrganization> organizationIterator = tmpConsentOrganizations.iterator(); organizationIterator.hasNext();) {
 			TmpConsentOrganization tmpConsentOrganization = organizationIterator.next();
-			organizationIds.add(tmpConsentOrganization.getOrganizationId().toString());
+			organizationIds.add(tmpConsentOrganization.getOrganization().getOrganizationId().toString());
 		}
 		consentDTO.setOrganizationIds(organizationIds);
 
@@ -192,7 +200,7 @@ public class ConsentManager {
 		List<String> cocIds = new ArrayList<String>();
 		for(Iterator<TmpConsentCoC> coCIterator = tmpConsentCoCs.iterator(); coCIterator.hasNext();) {
 			TmpConsentCoC tmpConsentCoC = coCIterator.next();
-			cocIds.add(tmpConsentCoC.getCoCId().toString());
+			cocIds.add(tmpConsentCoC.getCoC().getCoCId().toString());
 		}
 		consentDTO.setCocIds(cocIds);
 		
@@ -247,8 +255,8 @@ public class ConsentManager {
 	
 	public static TmpConsent generateTmpConsent(ConsentDTO inputDTO) {
 		TmpConsent tmpConsent = new TmpConsent();
-		tmpConsent.setSubmitterId(Integer.parseInt(inputDTO.getSubmitterId()));
-		tmpConsent.setClientId(Integer.parseInt(inputDTO.getClientId()));
+		tmpConsent.setSubmitter(tmpUserDAO.getReference(Integer.parseInt(inputDTO.getSubmitterId())));
+		tmpConsent.setClient(pathClientDAO.getReference(Integer.parseInt(inputDTO.getClientId())));
 		tmpConsent.setDateProcessed(inputDTO.getDateProcessed());
 		tmpConsent.setapprovalStatusCode(inputDTO.getApprovalStatus().getCode());
 
@@ -353,7 +361,7 @@ public class ConsentManager {
 		for(Iterator<String> coCIterator = inputDTO.getCocIds().iterator(); coCIterator.hasNext();) {
 			String consentCoCId = coCIterator.next();
 			TmpConsentCoC tmpConsentCoC = new TmpConsentCoC();
-			tmpConsentCoC.setCoCId(Integer.parseInt(consentCoCId));
+			tmpConsentCoC.setCoC(tmpCoCDAO.getReference(Integer.parseInt(consentCoCId)));
 			tmpConsentCoC.setDateCreated(inputDTO.getDateCreated());
 			tmpConsentCoC.setDateUpdated(inputDTO.getDateUpdated());
 			tmpConsentCoCs.add(tmpConsentCoC);
@@ -368,7 +376,7 @@ public class ConsentManager {
 		for(Iterator<String> organizationIterator = inputDTO.getOrganizationIds().iterator(); organizationIterator.hasNext();) {
 			String consentOrganizationId = organizationIterator.next();
 			TmpConsentOrganization tmpConsentOrganization = new TmpConsentOrganization();
-			tmpConsentOrganization.setOrganizationId(Integer.parseInt(consentOrganizationId));
+			tmpConsentOrganization.setOrganization(tmpOrganizationDAO.getReference(Integer.parseInt(consentOrganizationId)));
 			tmpConsentOrganization.setDateCreated(inputDTO.getDateCreated());
 			tmpConsentOrganization.setDateUpdated(inputDTO.getDateUpdated());
 			tmpConsentOrganizations.add(tmpConsentOrganization);

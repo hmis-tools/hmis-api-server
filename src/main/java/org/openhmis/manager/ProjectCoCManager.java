@@ -8,25 +8,26 @@ import java.util.List;
 import org.openhmis.dao.TmpProjectContinuumDAO;
 import org.openhmis.domain.TmpProjectContinuum;
 import org.openhmis.dto.ClientDTO;
-import org.openhmis.dto.CoCDTO;
+import org.openhmis.dto.ProjectCoCDTO;
 import org.openhmis.dto.search.CoCSearchDTO;
 import org.openhmis.dto.search.InventorySearchDTO;
+import org.openhmis.dto.search.ProjectCoCSearchDTO;
 import org.openhmis.dto.search.SiteSearchDTO;
 
-public class CoCManager {
+public class ProjectCoCManager {
 	private static final TmpProjectContinuumDAO tmpProjectContinuumDAO = new TmpProjectContinuumDAO();
 
-	public CoCManager() {}
+	public ProjectCoCManager() {}
 
-	public static CoCDTO getCoCByProjectCoCId(String projectCoCId) {
+	public static ProjectCoCDTO getProjectCoCByProjectCoCId(String projectCoCId) {
 		Integer projectCoCIdInt = Integer.parseInt(projectCoCId);
 		TmpProjectContinuum tmpProjectContinuum= tmpProjectContinuumDAO.getTmpProjectContinuumById(projectCoCIdInt);		
-		CoCDTO CoCDTO = CoCManager.generateCoCDTO(tmpProjectContinuum);
-		return CoCDTO;
+		ProjectCoCDTO ProjectCoCDTO = ProjectCoCManager.generateProjectCoCDTO(tmpProjectContinuum);
+		return ProjectCoCDTO;
 	}
 
-	public static List<CoCDTO> getCoCs(CoCSearchDTO searchDTO) {
-		List<CoCDTO> coCDTOs = new ArrayList<CoCDTO>();
+	public static List<ProjectCoCDTO> getProjectCoCs(ProjectCoCSearchDTO searchDTO) {
+		List<ProjectCoCDTO> projectCoCDTOs = new ArrayList<ProjectCoCDTO>();
 
 		// Collect the projects
 		List<TmpProjectContinuum> tmpProjectContinuums = tmpProjectContinuumDAO.getTmpProjectContinuums(searchDTO);
@@ -36,24 +37,24 @@ public class CoCManager {
 		for (Iterator<TmpProjectContinuum> iterator = tmpProjectContinuums.iterator(); iterator.hasNext();) {
 			TmpProjectContinuum tmpProjectContinuum = iterator.next();
 
-			CoCDTO coCDTO = CoCManager.generateCoCDTO(tmpProjectContinuum);
-			coCDTOs.add(coCDTO);
+			ProjectCoCDTO projectCoCDTO = ProjectCoCManager.generateProjectCoCDTO(tmpProjectContinuum);
+			projectCoCDTOs.add(projectCoCDTO);
 		}
-		return coCDTOs;
+		return projectCoCDTOs;
 
 	}
 
 
 	
-	public static CoCDTO addCoC(CoCDTO inputDTO) {
+	public static ProjectCoCDTO addProjectCoC(ProjectCoCDTO inputDTO) {
 
-		// Validate the CoC
+		// Validate the ProjectCoC
 		// TODO: this should return a list of errors that get wrapped appropriately
-		if(!validateCoC(inputDTO))
+		if(!validateProjectCoC(inputDTO))
 			return null;
 
-		// Generate a CoC from the input
-		TmpProjectContinuum tmpProjectContinuum = CoCManager.generateTmpProjectContinuum(inputDTO);
+		// Generate a ProjectCoC from the input
+		TmpProjectContinuum tmpProjectContinuum = ProjectCoCManager.generateTmpProjectContinuum(inputDTO);
 		
 		// Set Export fields
 		tmpProjectContinuum.setDateCreated(new Date());
@@ -64,16 +65,16 @@ public class CoCManager {
 		inputDTO.setProjectCoCId(tmpProjectContinuum.getProjectCocId().toString());
 		
 		// Return the resulting VO
-		return CoCManager.generateCoCDTO(tmpProjectContinuum);
+		return ProjectCoCManager.generateProjectCoCDTO(tmpProjectContinuum);
 	}
 	
-	public static CoCDTO updateCoC(CoCDTO inputDTO) {
+	public static ProjectCoCDTO updateProjectCoC(ProjectCoCDTO inputDTO) {
 		// Generate a TmpProject from the input
-		TmpProjectContinuum tmpProjectContinuum = CoCManager.generateTmpProjectContinuum(inputDTO);
+		TmpProjectContinuum tmpProjectContinuum = ProjectCoCManager.generateTmpProjectContinuum(inputDTO);
 
-		// Validate the CoC
+		// Validate the ProjectCoC
 		// TODO: this should return a list of errors that get wrapped appropriately
-		if(!validateCoC(inputDTO))
+		if(!validateProjectCoC(inputDTO))
 			return null;
 		
 		tmpProjectContinuum.setProjectCocId(Integer.parseInt(inputDTO.getProjectCoCId()));
@@ -83,51 +84,51 @@ public class CoCManager {
 		tmpProjectContinuumDAO.update(tmpProjectContinuum);
 		
 		// Return the resulting VO
-		return CoCManager.generateCoCDTO(tmpProjectContinuum);
+		return ProjectCoCManager.generateProjectCoCDTO(tmpProjectContinuum);
 		
 	}
 	
-	public static boolean deleteCoC(String projectCoCId) {
+	public static boolean deleteProjectCoC(String projectCoCId) {
 		TmpProjectContinuum tmpProjectContinuum = tmpProjectContinuumDAO.getTmpProjectContinuumById(Integer.parseInt(projectCoCId));
 		tmpProjectContinuumDAO.delete(tmpProjectContinuum);
 		
 		return true;
 	}
 	
-	public static boolean validateCoC(CoCDTO inputDTO) {
+	public static boolean validateProjectCoC(ProjectCoCDTO inputDTO) {
 		// There really aren't fields to validate right now.
 		return true;
 	}
 
 	
-	public static CoCDTO generateCoCDTO(TmpProjectContinuum tmpProjectContinuum) {
+	public static ProjectCoCDTO generateProjectCoCDTO(TmpProjectContinuum tmpProjectContinuum) {
 		Integer projectCoCId = tmpProjectContinuum.getProjectCocId();
 		
-		CoCDTO coCDTO = new CoCDTO();
+		ProjectCoCDTO projectCoCDTO = new ProjectCoCDTO();
 		InventorySearchDTO inventorySearchDTO = new InventorySearchDTO();
                 SiteSearchDTO siteSearchDTO = new SiteSearchDTO();
-                coCDTO.setProjectCoCId(tmpProjectContinuum.getProjectCocId().toString());
-		coCDTO.setProjectId(tmpProjectContinuum.getProjectId().toString());
+                projectCoCDTO.setProjectCoCId(tmpProjectContinuum.getProjectCocId().toString());
+		projectCoCDTO.setProjectId(tmpProjectContinuum.getProjectId().toString());
                 inventorySearchDTO.setProjectCocId(projectCoCId.toString());
                 siteSearchDTO.setProjectCocId(projectCoCId.toString()); 
 		
 		// Universal Data Standard: Project Identifiers (2014, 2.2) 
-		coCDTO.setCoCCode(tmpProjectContinuum.getCocCode());
+		projectCoCDTO.setCoCCode(tmpProjectContinuum.getCocCode());
 
 		// Universal Data Standard: Inventories (2014, 2.7)
-		coCDTO.setInventories(InventoryManager.getInventories(inventorySearchDTO));
+		projectCoCDTO.setInventories(InventoryManager.getInventories(inventorySearchDTO));
 
 		// Universal Data Standard: Sites (2014, 2.8)
-		coCDTO.setSites(SiteManager.getSites(siteSearchDTO));
+		projectCoCDTO.setSites(SiteManager.getSites(siteSearchDTO));
 
 		// Export Standard Fields
-		coCDTO.setDateCreated(tmpProjectContinuum.getDateCreated());
-		coCDTO.setDateUpdated(tmpProjectContinuum.getDateUpdated());
+		projectCoCDTO.setDateCreated(tmpProjectContinuum.getDateCreated());
+		projectCoCDTO.setDateUpdated(tmpProjectContinuum.getDateUpdated());
 		
-		return coCDTO;
+		return projectCoCDTO;
 	}
 
-	public static TmpProjectContinuum generateTmpProjectContinuum(CoCDTO inputDTO) {
+	public static TmpProjectContinuum generateTmpProjectContinuum(ProjectCoCDTO inputDTO) {
 		TmpProjectContinuum tmpProjectContinuum = new TmpProjectContinuum();
 	
 		tmpProjectContinuum.setProjectId(Integer.parseInt(inputDTO.getProjectId()));

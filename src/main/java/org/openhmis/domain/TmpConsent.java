@@ -1,11 +1,17 @@
 package org.openhmis.domain;
 
 import java.util.Date;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -18,20 +24,51 @@ import javax.persistence.TemporalType;
 public class TmpConsent implements java.io.Serializable {
 
 	private Integer consentId;
-	private Integer submitterId;
-	private Integer clientId;
+	private TmpUser submitter;
+	private PathClient client;
 	private Integer approvalStatusCode;
 	private Date dateProcessed;
 	private Date dateCreated;
 	private Date dateUpdated;
+    private Set<TmpConsentCoC> consentCoCs;
+    private Set<TmpConsentField> consentFields;
+    private Set<TmpConsentOrganization> consentOrganizations;
+	
+
+    @OneToMany
+    @JoinColumn( name="consentId")
+    public Set<TmpConsentCoC> getConsentCoCs() {
+    	return this.consentCoCs;
+    }
+    public void setConsentCoCs(Set<TmpConsentCoC> consentCoCs) {
+    	this.consentCoCs = consentCoCs;
+    }
+
+    @OneToMany
+    @JoinColumn( name="consentId")
+    public Set<TmpConsentField> getConsentFields() {
+    	return this.consentFields;
+    }
+    public void setConsentFields(Set<TmpConsentField> consentFields) {
+    	this.consentFields = consentFields;
+    }
+    
+    @OneToMany
+    @JoinColumn( name="consentId")
+    public Set<TmpConsentOrganization> getConsentOrganizations() {
+    	return this.consentOrganizations;
+    }
+    public void setConsentOrganizations(Set<TmpConsentOrganization> consentOrganizations) {
+    	this.consentOrganizations = consentOrganizations;
+    }
 
 	public TmpConsent() {
 	}
 
-	public TmpConsent(Integer consentId, Integer submitterId, Integer clientId, Date dateProcessed, Date dateCreated, Date dateUpdated) {
+	public TmpConsent(Integer consentId, TmpUser submitter, PathClient client, Date dateProcessed, Date dateCreated, Date dateUpdated) {
 		this.consentId = consentId;
-		this.submitterId = submitterId;
-		this.clientId = clientId;
+		this.submitter = submitter;
+		this.client = client;
 		this.dateProcessed = dateProcessed;
 		this.dateCreated = dateCreated;
 		this.dateUpdated = dateUpdated;
@@ -48,22 +85,24 @@ public class TmpConsent implements java.io.Serializable {
 		this.consentId = consentId;
 	}
 
-	@Column(name = "submitterId")
-	public Integer getSubmitterId() {
-		return this.submitterId;
+    @ManyToOne
+    @JoinColumn(name="submitterId")
+	public TmpUser getSubmitter() {
+		return this.submitter;
 	}
 
-	public void setSubmitterId(Integer submitterId) {
-		this.submitterId = submitterId;
+	public void setSubmitter(TmpUser submitter) {
+		this.submitter = submitter;
 	}
 
-	@Column(name = "clientId")
-	public Integer getClientId() {
-		return this.clientId;
+    @ManyToOne
+    @JoinColumn(name="clientKey")
+	public PathClient getClient() {
+		return this.client;
 	}
 
-	public void setClientId(Integer clientId) {
-		this.clientId = clientId;
+	public void setClient(PathClient client) {
+		this.client = client;
 	}
 
 	@Column(name = "approvalStatusCode")

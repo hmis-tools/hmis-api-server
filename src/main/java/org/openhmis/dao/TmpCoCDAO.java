@@ -8,36 +8,38 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.openhmis.domain.TmpCoC;
 import org.openhmis.domain.TmpOrganization;
+import org.openhmis.dto.search.CoCSearchDTO;
 import org.openhmis.dto.search.OrganizationSearchDTO;
 import org.openhmis.util.DateParser;
 
-public class TmpOrganizationDAO extends BaseDAO {
+public class TmpCoCDAO extends BaseDAO {
 
 	// default constructor
-	public TmpOrganizationDAO() { }
+	public TmpCoCDAO() { }
 
-	public TmpOrganization getTmpOrganizationById(Integer organizationId)  {
-		String queryString = "select organization " + 
-			"from TmpOrganization as organization " + 
-			"where organization.organizationId =:organizationId";
+	public TmpCoC getTmpCoCById(Integer coCId)  {
+		String queryString = "select coC " + 
+			"from TmpCoC as coC " + 
+			"where coC.coCId =:coCId";
 
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("organizationId", organizationId);
+		queryObject.setParameter("coCId", coCId);
 		queryObject.setMaxResults(1);
 		
-		List<TmpOrganization> results = queryObject.list();
+		List<TmpCoC> results = queryObject.list();
 		session.close();
 		
 		if(results.size() > 0)
-			return (TmpOrganization)results.get(0);
+			return (TmpCoC)results.get(0);
 		else
 			return null;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<TmpOrganization> getTmpOrganizations(OrganizationSearchDTO searchDTO) {
+	public List<TmpOrganization> getTmpCoCs(CoCSearchDTO searchDTO) {
 
 		Session session = getSession();
                 Criteria query =  session.createCriteria(TmpOrganization.class);
@@ -49,8 +51,8 @@ public class TmpOrganizationDAO extends BaseDAO {
 		return results;
 	}
 	
-	public TmpOrganization getReference(Integer organizationId) {
+	public TmpCoC getReference(Integer coCId) {
 		Session session = getSession();
-		return (TmpOrganization)session.load(TmpOrganization.class, organizationId);
+		return (TmpCoC)session.load(TmpCoC.class, coCId);
 	}
 }

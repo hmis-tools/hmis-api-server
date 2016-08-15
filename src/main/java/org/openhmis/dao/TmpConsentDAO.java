@@ -48,4 +48,9 @@ public class TmpConsentDAO extends BaseDAO {
 		session.close();
 		return results;
 	}
+	
+	public TmpConsent getReference(Integer consentId) {
+		Session session = getSession();
+		return (TmpConsent)session.load(TmpConsent.class, consentId);
+	}
 }

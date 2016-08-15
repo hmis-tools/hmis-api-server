@@ -18,18 +18,17 @@ public class ConsentProfileDAO extends BaseDAO{
 	public ConsentProfile getConsentProfileByClientKey(Integer clientId, Integer coCId, Integer organizationId)  {
 		
 		// Collect a summarized consent map for this client
-		String queryString = "SELECT consentField.fieldCode as fieldCode, " +
-			" 						 consentField.requestTypeCode as requesTypeCode, " + 
-			" 						 consent.clientId as clientId, " +
-			"                   FROM TmpConsentField as consentField " +
-			"                   JOIN TmpConsent as consent ON consentField.consentId = consent.consentId " + 
-			"              LEFT JOIN TmpConsentCoC as consentCoC ON consentCoC.consentId = consent.consentId " +
-			"              LEFT JOIN TmpConsentOrganization as consentOrganization ON consentOrganization.consentId = consent.consentId " + 
-			"                  WHERE consent.clientId =:clientId " +
-			"                    AND consent.approvalStatusCode =:approvedStatusCode " + 
-			"                    AND (consentCoC.coCId == :coCId " +
-			"                      OR consentOrganization.organizationId == :organizationId) " + 
-			"               GROUP BY fieldCode, clientId " + 
+		String queryString = "SELECT consentField.fieldCode, " +
+			" 						 consentField.requestTypeCode, " + 
+			" 						 consent.client.clientKey " +
+			"                   FROM TmpConsent as consent " +
+			"                   JOIN consent.consentFields as consentField " + 
+			"              LEFT JOIN consent.consentCoCs as consentCoC " +
+			"              LEFT JOIN consent.consentOrganizations as consentOrganization " + 
+			"                  WHERE consent.client.clientKey = :clientId " +
+			"                    AND consent.approvalStatusCode = :approvedStatusCode " + 
+			"                    AND (consentCoC.coC.coCId = :coCId " +
+			"                      OR consentOrganization.organization.organizationId = :organizationId) " + 
 			"               ORDER BY consent.dateCreated DESC";
 
 		Session session = getSession();
@@ -50,10 +49,10 @@ public class ConsentProfileDAO extends BaseDAO{
 		for ( Object[] result : results ) {
 			ConsentField consentField = ConsentField.valueByCode((Integer) result[0]); // Field Code 
 			ConsentRequestType requestType = ConsentRequestType.valueByCode((Integer) result[1]); // Request Type Code
-			Integer consentClientId = (Integer) result[2]; // Client Id
+			Integer consentClientKey = (Integer) result[2]; // Client Key
 			
 			// Look up the client's map, or create it
-			Dictionary<ConsentField, Boolean> consentMap = consentMaps.get(consentClientId);
+			Dictionary<ConsentField, Boolean> consentMap = consentMaps.get(consentClientKey);
 			if(consentMap == null)
 				consentMap = new Hashtable<ConsentField, Boolean>();
 			
@@ -61,7 +60,7 @@ public class ConsentProfileDAO extends BaseDAO{
 			consentMap.put(consentField, requestType == ConsentRequestType.SHARE);
 			
 			// Store the client's map back
-			consentMaps.put(consentClientId, consentMap);			
+			consentMaps.put(consentClientKey, consentMap);			
 		}
 		
 		consentProfile.setConsentMaps(consentMaps);

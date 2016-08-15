@@ -109,6 +109,7 @@ public class HibernateSessionFactory {
 	        configuration.addAnnotatedClass(org.openhmis.domain.TmpConsentField.class);
 	        configuration.addAnnotatedClass(org.openhmis.domain.TmpConsentCoC.class);
 	        configuration.addAnnotatedClass(org.openhmis.domain.TmpConsentOrganization.class);
+	        configuration.addAnnotatedClass(org.openhmis.domain.TmpCoC.class);
 
 	        // Load the application properties based on the current context
 	        ApplicationPropertyUtil propertyUtil = new ApplicationPropertyUtil();

@@ -32,7 +32,7 @@ public class ProjectDTO extends BaseDTO {
 	private String projectName;
 
 	// Universal Data Standard: Project CoC (2014, 2.3)
-	private List<CoCDTO> projectCoCs;
+	private List<ProjectCoCDTO> projectCoCs;
 
 	// Universal Data Standard: Project Type (2014, 2.4)
 	private YesNo continuumProject;
@@ -87,12 +87,12 @@ public class ProjectDTO extends BaseDTO {
 	}
 
 	@JsonProperty
-	public List<CoCDTO> getProjectCoCs() {
+	public List<ProjectCoCDTO> getProjectCoCs() {
 		return projectCoCs;
 	}
 
 	@JsonProperty
-	public void setProjectCoCs(List<CoCDTO> projectCoCs) {
+	public void setProjectCoCs(List<ProjectCoCDTO> projectCoCs) {
 		this.projectCoCs = projectCoCs;
 	}
 

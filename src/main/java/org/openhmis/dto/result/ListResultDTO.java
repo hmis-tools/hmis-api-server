@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 @XmlSeeAlso({
 	org.openhmis.dto.ChronicHealthConditionDTO.class,
 	org.openhmis.dto.ClientDTO.class,
+	org.openhmis.dto.ProjectCoCDTO.class,
 	org.openhmis.dto.CoCDTO.class,
 	org.openhmis.dto.ContactDTO.class,
 	org.openhmis.dto.DevelopmentalDisabilityDTO.class,
