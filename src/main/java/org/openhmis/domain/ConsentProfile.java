@@ -22,6 +22,9 @@ public class ConsentProfile {
 	public void setConsentMaps(Dictionary<Integer, Dictionary<ConsentField, Boolean>> consentMaps) {
 		this.consentMaps = consentMaps;
 	}
+	public Dictionary<Integer, Dictionary<ConsentField, Boolean>> getConsentMaps() {
+		return this.consentMaps;
+	}
 	
 	public boolean hasFieldConsent(Integer clientId, ConsentField field) {
 		// If authentication is disabled, everyone has consent for everything

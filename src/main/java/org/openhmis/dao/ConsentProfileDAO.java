@@ -4,20 +4,25 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.openhmis.code.ConsentApprovalStatus;
 import org.openhmis.code.ConsentField;
 import org.openhmis.code.ConsentRequestType;
 import org.openhmis.domain.ConsentProfile;
+import org.openhmis.webservice.ClientService;
 
 
-public class ConsentProfileDAO extends BaseDAO{
+public class ConsentProfileDAO extends BaseDAO {
+	private static final Logger log = Logger.getLogger(ConsentProfileDAO.class);
 	public ConsentProfileDAO() { }
 
-	public ConsentProfile getConsentProfileByClientKey(Integer clientId, Integer coCId, Integer organizationId)  {
+	public ConsentProfile getConsentProfile(Integer coCId, Integer organizationId)  {
 		
 		// Collect a summarized consent map for this client
+		// TODO: This HQL query is probably generating a whole bunch of extra stuff since I can't GROUP BY.
+		// It needs to be optimized.  Also indexes need to be added to the domain objects.
 		String queryString = "SELECT consentField.fieldCode, " +
 			" 						 consentField.requestTypeCode, " + 
 			" 						 consent.client.clientKey " +
@@ -25,15 +30,13 @@ public class ConsentProfileDAO extends BaseDAO{
 			"                   JOIN consent.consentFields as consentField " + 
 			"              LEFT JOIN consent.consentCoCs as consentCoC " +
 			"              LEFT JOIN consent.consentOrganizations as consentOrganization " + 
-			"                  WHERE consent.client.clientKey = :clientId " +
-			"                    AND consent.approvalStatusCode = :approvedStatusCode " + 
+			"                  WHERE consent.approvalStatusCode = :approvedStatusCode " + 
 			"                    AND (consentCoC.coC.coCId = :coCId " +
 			"                      OR consentOrganization.organization.organizationId = :organizationId) " + 
-			"               ORDER BY consent.dateCreated DESC";
+			"               ORDER BY consent.dateCreated ASC";
 
 		Session session = getSession();
 		Query queryObject = session.createQuery(queryString);
-		queryObject.setParameter("clientId", clientId);
 		queryObject.setParameter("approvedStatusCode", ConsentApprovalStatus.APPROVED.getCode());
 		queryObject.setParameter("coCId", (coCId != null?coCId:0));
 		queryObject.setParameter("organizationId", (organizationId != null?organizationId:0));
@@ -57,11 +60,14 @@ public class ConsentProfileDAO extends BaseDAO{
 				consentMap = new Hashtable<ConsentField, Boolean>();
 			
 			// Log this field for this client's map
+			// NOTE: the most recent setting will be the last one set
 			consentMap.put(consentField, requestType == ConsentRequestType.SHARE);
+			log.info("Field: " + consentField + "  || Type: " + requestType + " || Key: " + consentClientKey);
 			
 			// Store the client's map back
 			consentMaps.put(consentClientKey, consentMap);			
 		}
+		log.info("Done generating Consent Map");
 		
 		consentProfile.setConsentMaps(consentMaps);
 		return consentProfile;

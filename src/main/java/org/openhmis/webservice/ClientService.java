@@ -1,6 +1,9 @@
 package org.openhmis.webservice;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.ws.rs.BeanParam;
@@ -18,6 +21,7 @@ import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 import org.openhmis.dao.ConsentProfileDAO;
 import org.openhmis.domain.ConsentProfile;
+import org.openhmis.domain.PathClientRace;
 import org.openhmis.domain.TmpUser;
 import org.openhmis.dto.ClientDTO;
 import org.openhmis.exception.AccessDeniedException;
@@ -46,12 +50,28 @@ public class ClientService {
 
 		// Return clients that match the search terms
         List<ClientDTO> clientDTOs = clientManager.getClients(searchDTO);
+        
+        // Filter out any values the user can't access
+		TmpUser currentUser = Authentication.getCurrentUser(authorization);
+		ConsentProfileDAO consentProfileDAO = new ConsentProfileDAO();
+		ConsentProfile consentProfile = consentProfileDAO.getConsentProfile(
+			Integer.parseInt(currentUser.getOrganization()),
+			Integer.parseInt(currentUser.getCoC())
+		);
+		
+		List<ClientDTO> cleanClientDTOs = new ArrayList<ClientDTO>();
+		for (Iterator<ClientDTO> iterator = clientDTOs.iterator(); iterator.hasNext();) {
+			ClientDTO clientDTO = iterator.next();
+			clientDTO.processConsentProfile(consentProfile);
+			cleanClientDTOs.add(clientDTO);
+		}
+
         /* TBD (issue #65): We need to determine a standard logging
            format, some conventions, and maybe a helper class to
            enforce it all; would also be nice to log which user made
            the request.  But for now, just show that logging works. */
-        log.info("GET /clients/ (" + clientDTOs.size() + " results)");
-        return clientDTOs;
+        log.info("GET /clients/ (" + cleanClientDTOs.size() + " results)");
+        return cleanClientDTOs;
 	}
 	
 	@POST
@@ -62,7 +82,7 @@ public class ClientService {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
 		ClientDTO outputVO = clientManager.addClient(inputVO);
-                log.info("POST /clients/ (new id: " + outputVO.getId() + ")");
+        log.info("POST /clients/ (new id: " + outputVO.getId() + ")");
 		return outputVO;
 	}
 	
@@ -77,13 +97,11 @@ public class ClientService {
 		TmpUser currentUser = Authentication.getCurrentUser(authorization);
 		
 		ConsentProfileDAO consentProfileDAO = new ConsentProfileDAO();
-		ConsentProfile consentProfile = consentProfileDAO.getConsentProfileByClientKey(
-			Integer.parseInt(clientDTO.getPersonalId()),
+		ConsentProfile consentProfile = consentProfileDAO.getConsentProfile(
 			Integer.parseInt(currentUser.getOrganization()),
 			Integer.parseInt(currentUser.getCoC())
 		);
 		clientDTO.processConsentProfile(consentProfile);
-		
         log.info("GET /clients/" + personalId);
         return clientDTO;
 	}

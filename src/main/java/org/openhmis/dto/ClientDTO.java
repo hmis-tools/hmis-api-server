@@ -96,6 +96,8 @@ public class ClientDTO extends BaseDTO {
 	public ClientDTO() {}
 
 
+	// TODO: this should be replaced with a "registerConsentProfile" method and the logic for each field
+	// should be placed in the field getter rather than modifying the value.
 	public void processConsentProfile(ConsentProfile consentProfile) {
 		Integer clientId = Integer.parseInt(this.personalId);
 		
