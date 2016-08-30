@@ -55,8 +55,8 @@ public class ClientService {
 		TmpUser currentUser = Authentication.getCurrentUser(authorization);
 		ConsentProfileDAO consentProfileDAO = new ConsentProfileDAO();
 		ConsentProfile consentProfile = consentProfileDAO.getConsentProfile(
-			Integer.parseInt(currentUser.getOrganization()),
-			Integer.parseInt(currentUser.getCoC())
+			Integer.parseInt(currentUser.getOrganizationId()),
+			Integer.parseInt(currentUser.getCoCId())
 		);
 		
 		List<ClientDTO> cleanClientDTOs = new ArrayList<ClientDTO>();
@@ -98,8 +98,8 @@ public class ClientService {
 		
 		ConsentProfileDAO consentProfileDAO = new ConsentProfileDAO();
 		ConsentProfile consentProfile = consentProfileDAO.getConsentProfile(
-			Integer.parseInt(currentUser.getOrganization()),
-			Integer.parseInt(currentUser.getCoC())
+			Integer.parseInt(currentUser.getOrganizationId()),
+			Integer.parseInt(currentUser.getCoCId())
 		);
 		clientDTO.processConsentProfile(consentProfile);
         log.info("GET /clients/" + personalId);
@@ -119,8 +119,8 @@ public class ClientService {
 		TmpUser currentUser = Authentication.getCurrentUser(authorization);
 		ConsentProfileDAO consentProfileDAO = new ConsentProfileDAO();
 		ConsentProfile consentProfile = consentProfileDAO.getConsentProfile(
-			Integer.parseInt(currentUser.getOrganization()),
-			Integer.parseInt(currentUser.getCoC())
+			Integer.parseInt(currentUser.getOrganizationId()),
+			Integer.parseInt(currentUser.getCoCId())
 		);
 		outputDTO.processConsentProfile(consentProfile);
         log.info("PUT /clients/" + personalId);
