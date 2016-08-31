@@ -1105,12 +1105,12 @@ Consent-to-Share Records support the GET, POST, PUT, and DELETE methods.
           "item": 
               {
                   "id": CONSENT_RECORD_ID,
-                  "client_id": CLIENT_ID,
+                  "clientId": CLIENT_ID,
                   # (submitterID is, e.g., the ID of the caseworker who
                   # submitted this request on behalf of the client)
-                  "submitter_id": SUBMITTER_ID,
-                  "organization_ids": [ORG_ID, ...],
-                  "coc_ids": [COC_ID, ...],
+                  "submitterId": SUBMITTER_ID,
+                  "organizationIds": [ORG_ID, ...],
+                  "cocIds": [COC_ID, ...],
                   "fields": 
                   {
                       # 0 means "share"
@@ -1127,12 +1127,12 @@ Consent-to-Share Records support the GET, POST, PUT, and DELETE methods.
                       "gender": 0 | 1 | null,
                       "veteranStatus": 0 | 1 | null
                   },
-                  "date_created": CREATION_DATE,
-                  "date_processed": PROCESSED_DATE,
+                  "dateCreated": CREATION_DATE,
+                  "dateProcessed": PROCESSED_DATE,
                   # 0: pending
                   # 1: approved
                   # 2: denied
-                  "approval_status": 0 | 1 | 2
+                  "approvalStatus": 0 | 1 | 2
               }
           }
       }

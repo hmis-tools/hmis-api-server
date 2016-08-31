@@ -125,7 +125,7 @@ public class ConsentManager {
 			tmpConsentOrganization.setConsent(tmpConsent);
 			tmpConsentOrganization.setDateCreated(new Date());
 			tmpConsentOrganization.setDateUpdated(new Date());
-			tmpConsentFieldDAO.save(tmpConsentOrganization);
+                        tmpConsentOrganizationDAO.save(tmpConsentOrganization);
 		}
 
 		// Save the consent organizations
@@ -134,7 +134,7 @@ public class ConsentManager {
 			tmpConsentCoC.setConsent(tmpConsent);
 			tmpConsentCoC.setDateCreated(new Date());
 			tmpConsentCoC.setDateUpdated(new Date());
-			tmpConsentFieldDAO.save(tmpConsentCoC);
+			tmpConsentCoCDAO.save(tmpConsentCoC);
 		}
 
 		// Return the resulting DTO

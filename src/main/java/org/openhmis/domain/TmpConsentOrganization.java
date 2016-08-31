@@ -51,7 +51,8 @@ public class TmpConsentOrganization implements java.io.Serializable {
 		this.consentOrganizationId = consentOrganizationId;
 	}
 
-	@Column(name = "consentId")
+    @ManyToOne
+	@JoinColumn(name = "consentId")
 	public TmpConsent getConsent() {
 		return this.consent;
 	}
