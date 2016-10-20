@@ -53,6 +53,11 @@ public class ClientService {
         
         // Filter out any values the user can't access
 		TmpUser currentUser = Authentication.getCurrentUser(authorization);
+                if (currentUser == null) {
+			throw new AccessDeniedException();
+                }
+
+                
 		ConsentProfileDAO consentProfileDAO = new ConsentProfileDAO();
 		ConsentProfile consentProfile = consentProfileDAO.getConsentProfile(
 			Integer.parseInt(currentUser.getOrganizationId()),
