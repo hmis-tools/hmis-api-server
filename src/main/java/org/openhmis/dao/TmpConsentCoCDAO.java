@@ -40,10 +40,6 @@ public class TmpConsentCoCDAO extends BaseDAO {
 		Session session = getSession();
 		Criteria query = session.createCriteria(TmpConsentCoC.class);
 
-		if(searchDTO.getConsentId() != null) {
-			query.add(Restrictions.like("consentId", searchDTO.getConsentId()));
-		}
-
 		List<TmpConsentCoC> results = query.list();
 		session.close();
 		return results;

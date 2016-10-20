@@ -45,9 +45,6 @@ public class TmpConsentOrganizationDAO extends BaseDAO {
 		Session session = getSession();
 		Criteria query = session.createCriteria(TmpConsentOrganization.class);
 
-		if(searchDTO.getConsentId() != null) {
-			query.add(Restrictions.like("consentId", searchDTO.getConsentId()));
-		}
 
 		List<TmpConsentOrganization> results = query.list();
 		session.close();
