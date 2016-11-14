@@ -8,6 +8,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.openhmis.domain.TmpConsent;
 import org.openhmis.domain.TmpUser;
 import org.openhmis.dto.search.UserSearchDTO;
 import org.openhmis.util.DateParser;
@@ -67,5 +68,10 @@ public class TmpUserDAO extends BaseDAO {
 		List<TmpUser> results = query.list();
 		session.close();
 		return results;
+	}
+	
+	public TmpUser getReference(Integer userId) {
+		Session session = getSession();
+		return (TmpUser)session.load(TmpUser.class, userId);
 	}
 }

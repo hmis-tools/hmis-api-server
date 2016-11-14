@@ -14,10 +14,12 @@ import org.openhmis.code.ClientGender;
 import org.openhmis.code.ClientMilitaryBranch;
 import org.openhmis.code.ClientNameDataQuality;
 import org.openhmis.code.ClientSsnDataQuality;
+import org.openhmis.code.ConsentField;
 import org.openhmis.code.ClientDobDataQuality;
 import org.openhmis.code.None;
 import org.openhmis.code.YesNo;
 import org.openhmis.code.YesNoReason;
+import org.openhmis.domain.ConsentProfile;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -93,6 +95,65 @@ public class ClientDTO extends BaseDTO {
 
 	public ClientDTO() {}
 
+
+	// TODO: this should be replaced with a "registerConsentProfile" method and the logic for each field
+	// should be placed in the field getter rather than modifying the value.
+	public void processConsentProfile(ConsentProfile consentProfile) {
+		Integer clientId = Integer.parseInt(this.personalId);
+		
+		// Go through each field and remove any fields the consent profile doesn't provide access to
+		if(!consentProfile.hasFieldConsent(clientId, ConsentField.DATE_OF_BIRTH)) {
+				this.dob = null;
+				this.dobDataQuality = ClientDobDataQuality.REFUSED;
+		}
+		if(!consentProfile.hasFieldConsent(clientId,  ConsentField.ETHNICITY)) {
+			this.ethnicity = ClientEthnicity.REFUSED;
+		}
+		if(!consentProfile.hasFieldConsent(clientId, ConsentField.FIRST_NAME)) {
+			this.firstName = null;
+			if(this.nameDataQuality == ClientNameDataQuality.FULL) {
+				this.nameDataQuality = ClientNameDataQuality.PARTIAL;
+			}
+		}
+		if(!consentProfile.hasFieldConsent(clientId, ConsentField.GENDER)) {
+			this.gender = null;
+			this.gender = ClientGender.REFUSED;
+		}
+		if(!consentProfile.hasFieldConsent(clientId, ConsentField.LAST_NAME)) {
+			this.lastName = null;
+			if(this.nameDataQuality == ClientNameDataQuality.FULL) {
+				this.nameDataQuality = ClientNameDataQuality.PARTIAL;
+			}
+		}
+		if(!consentProfile.hasFieldConsent(clientId, ConsentField.MIDDLE_NAME)) {
+			this.middleName = null;
+			if(this.nameDataQuality == ClientNameDataQuality.FULL) {
+				this.nameDataQuality = ClientNameDataQuality.PARTIAL;
+			}
+		}
+		if(!consentProfile.hasFieldConsent(clientId, ConsentField.NAME_SUFFIX)) {
+			this.nameSuffix = null;
+			if(this.nameDataQuality == ClientNameDataQuality.FULL) {
+				this.nameDataQuality = ClientNameDataQuality.PARTIAL;
+			}
+		}
+		if(!consentProfile.hasFieldConsent(clientId, ConsentField.RACE)) {
+			this.amIndAKNative = null;
+			this.asian = null;
+			this.blackAfAmerican = null;
+			this.nativeHIOtherPacific = null;
+			this.white = null;
+			this.raceNone = None.REFUSED;
+		}
+		if(!consentProfile.hasFieldConsent(clientId, ConsentField.SSN)) {
+			this.ssn = null;
+			this.ssnDataQuality = ClientSsnDataQuality.REFUSED;
+		}
+		if(!consentProfile.hasFieldConsent(clientId, ConsentField.VETERAN_STATUS)) {
+			this.veteranStatus = YesNoReason.REFUSED;
+		}
+	}
+	
 	// Getters / Setters
 	@JsonProperty
 	public String getId() {

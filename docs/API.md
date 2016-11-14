@@ -1105,27 +1105,34 @@ Consent-to-Share Records support the GET, POST, PUT, and DELETE methods.
           "item": 
               {
                   "id": CONSENT_RECORD_ID,
-                  "client_id": CLIENT_ID,
+                  "clientId": CLIENT_ID,
                   # (submitterID is, e.g., the ID of the caseworker who
                   # submitted this request on behalf of the client)
-                  "submitter_id": SUBMITTER_ID,
-                  "organization_ids": [ORG_ID, ...],
-                  "coc_ids": [COC_ID, ...],
+                  "submitterId": SUBMITTER_ID,
+                  "organizationIds": [ORG_ID, ...],
+                  "cocIds": [COC_ID, ...],
                   "fields": 
                   {
-                      "field_name_1" : "share" | "not-share",
-                      "field_name_2" : "share" | "not-share",
-                      ...
-                      # The field_names here are all the field names
-                      # available in a client object, e.g., "firstName",
-                      # "middleName", "lastName", "gender", etc.  
-                      #
-                      # TBD: Shouldn't we also support enrollments?
-                      #      What is the best way to do that?
+                      # 0 means "share"
+                      # 1 means "no"
+                      # null (or omission) means nothing
+                      "firstName": 0 | 1 | null,
+                      "middleName": 0 | 1 | null,
+                      "lastName": 0 | 1 | null,
+                      "nameSuffix": 0 | 1 | null,
+                      "ssn": 0 | 1 | null,
+                      "dob": 0 | 1 | null,
+                      "race": 0 | 1 | null,
+                      "ethnicity": 0 | 1 | null,
+                      "gender": 0 | 1 | null,
+                      "veteranStatus": 0 | 1 | null
                   },
-                  "date_created": CREATION_DATE,
-                  "date_processed": PROCESSED_DATE,
-                  "approval_status": "approved" | "pending"
+                  "dateCreated": CREATION_DATE,
+                  "dateProcessed": PROCESSED_DATE,
+                  # 0: pending
+                  # 1: approved
+                  # 2: denied
+                  "approvalStatus": 0 | 1 | 2
               }
           }
       }
@@ -1147,6 +1154,29 @@ If a DELETE call is successful, the HTTP response code 200 (OK)
 indicates this.  Otherwise, an appropriate HTTP error code, and the
 appropriate error response body from "Errors and Exceptions", is
 returned in the response.
+
+### Manually grant consent
+
+In order to grant consent for a user to view and edit a client in our
+testing phase *only*, please do the following:
+
+1. Add a consent to the TMP_CONSENT table with `approvalStatusCode` = 1 (`APPROVED`).
+See `src/main/java/org/openhmis/code/ConsentApprovalStatus.java` for the
+list of possible values for this field.
+     ex: `INSERT INTO TMP_CONSENT (submitterId, clientKey, approvalStatusCode, dateCreated) values (1, 558360, 1, NOW());`
+
+2. Add fields to the TMP_CONSENT_FIELD table.  The values for
+`fieldCode` are in `src/main/java/org/openhmis/code/ConsentField.java`
+and for `requestTypeCode` see
+`src/main/java/org/openhmis/code/ConsentRequestType.java`.
+     # to grant access to the first name field of this client:
+     ex: `INSERT INTO TMP_CONSENT_FIELD (consentId, fieldCode, requestTypeCode, dateCreated) values (1, 2, 1, NOW());`
+3. Make sure that your user has a CoC and an Organization in the `TMP_USER` table.
+4. Grant your CoC *or* your organization access to the consent.
+     ex: `INSERT INTO TMP_CONSENT_COC (consentId, coCId, dateCreated) values (1, 1, NOW());`
+     ex: `INSERT INTO TMP_CONSENT_ORGANIZATION (consentId, organizationId, dateCreated) values (1, 2, NOW());`
+5. When making changes directly to the database, you need to redeploy the project for them to take effect.
+   `mvn tomcat7:redeploy`
 
 # Errors and Exceptions
 

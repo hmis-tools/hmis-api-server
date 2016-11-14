@@ -14,7 +14,6 @@ import org.openhmis.code.YesNoReason;
 import org.openhmis.dao.TmpChronicHealthConditionDAO;
 import org.openhmis.domain.TmpProject;
 import org.openhmis.domain.TmpChronicHealthCondition;
-import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.ChronicHealthConditionDTO;
 import org.openhmis.dto.search.ChronicHealthConditionSearchDTO;

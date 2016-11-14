@@ -13,7 +13,6 @@ import org.openhmis.code.ProjectYouthAgeGroup;
 import org.openhmis.dao.TmpContactDAO;
 import org.openhmis.domain.TmpProject;
 import org.openhmis.domain.TmpContact;
-import org.openhmis.dto.CoCDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.ContactDTO;
 import org.openhmis.dto.search.ContactSearchDTO;

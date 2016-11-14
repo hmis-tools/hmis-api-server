@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 @XmlSeeAlso({
 	org.openhmis.dto.ChronicHealthConditionDTO.class,
 	org.openhmis.dto.ClientDTO.class,
+	org.openhmis.dto.ProjectCoCDTO.class,
 	org.openhmis.dto.CoCDTO.class,
 	org.openhmis.dto.ContactDTO.class,
 	org.openhmis.dto.DevelopmentalDisabilityDTO.class,
@@ -44,7 +45,9 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 	org.openhmis.dto.ServiceDTO.class,
 	org.openhmis.dto.SiteDTO.class,
 	org.openhmis.dto.SubstanceAbuseDTO.class,
-	org.openhmis.dto.UserDTO.class
+	org.openhmis.dto.UserDTO.class,
+	org.openhmis.dto.ConsentDTO.class,
+	org.openhmis.dto.ConsentFieldsDTO.class,
 })
 public class DataResultDTO<T> {
 

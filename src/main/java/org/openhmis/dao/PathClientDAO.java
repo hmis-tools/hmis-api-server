@@ -10,6 +10,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.openhmis.domain.PathClient;
+import org.openhmis.domain.TmpConsent;
 import org.openhmis.dto.search.ClientSearchDTO;
 import org.openhmis.util.DateParser;
 
@@ -67,5 +68,10 @@ public class PathClientDAO extends BaseDAO {
 		List<PathClient> results = query.list();
 		session.close();
 		return results;
+	}
+	
+	public PathClient getReference(Integer clientKey) {
+		Session session = getSession();
+		return (PathClient)session.load(PathClient.class, clientKey);
 	}
 }

@@ -21,14 +21,14 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
-import org.openhmis.dto.CoCDTO;
-import org.openhmis.dto.search.CoCSearchDTO;
+import org.openhmis.dto.ProjectCoCDTO;
+import org.openhmis.dto.search.ProjectCoCSearchDTO;
 import org.openhmis.dto.InventoryDTO;
 import org.openhmis.dto.search.InventorySearchDTO;
 import org.openhmis.dto.SiteDTO;
 import org.openhmis.dto.search.SiteSearchDTO;
 import org.openhmis.exception.AccessDeniedException;
-import org.openhmis.manager.CoCManager;
+import org.openhmis.manager.ProjectCoCManager;
 import org.openhmis.manager.InventoryManager;
 import org.openhmis.manager.SiteManager;
 import org.openhmis.util.Authentication;
@@ -39,93 +39,93 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 
-@Path("/cocs")
-public class CoCService {
-	private static final Logger log = Logger.getLogger(CoCService.class);
-	public CoCService() {}
+@Path("/project-cocs")
+public class ProjectCoCService {
+	private static final Logger log = Logger.getLogger(ProjectCoCService.class);
+	public ProjectCoCService() {}
 
 	@GET
 	@Path("/")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<CoCDTO> getCoCs(@HeaderParam("Authorization") String authorization, @BeanParam CoCSearchDTO searchDTO) throws JsonProcessingException {
+	public List<ProjectCoCDTO> getProjectCoCs(@HeaderParam("Authorization") String authorization, @BeanParam ProjectCoCSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
-                List<CoCDTO> coCDTOs = CoCManager.getCoCs(searchDTO);
-                log.info("GET /cocs (" + coCDTOs.size() + " results)");
-                return coCDTOs;
+                List<ProjectCoCDTO> projectCoCDTOs = ProjectCoCManager.getProjectCoCs(searchDTO);
+                log.info("GET /project-cocs (" + projectCoCDTOs.size() + " results)");
+                return projectCoCDTOs;
 	}
 	
 	@POST
 	@Path("/")
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public CoCDTO createCoC(@HeaderParam("Authorization") String authorization, CoCDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
+	public ProjectCoCDTO createProjectCoC(@HeaderParam("Authorization") String authorization, ProjectCoCDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
-		CoCDTO outputDTO = CoCManager.addCoC(inputDTO);
-                log.info("POST /cocs (new id: " + outputDTO.getId() + ")");
+		ProjectCoCDTO outputDTO = ProjectCoCManager.addProjectCoC(inputDTO);
+                log.info("POST /project-cocs (new id: " + outputDTO.getId() + ")");
 		return outputDTO;
 	}
 	
 	@GET
-	@Path("/{coCId}")
+	@Path("/{projectCoCId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public CoCDTO getCoC(@HeaderParam("Authorization") String authorization, @PathParam("coCId") String coCId) throws JsonProcessingException {
+	public ProjectCoCDTO getProjectCoC(@HeaderParam("Authorization") String authorization, @PathParam("projectCoCId") String projectCoCId) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
-		CoCDTO outputDTO = CoCManager.getCoCByProjectCoCId(coCId);
-                log.info("GET /cocs/" + coCId);
+		ProjectCoCDTO outputDTO = ProjectCoCManager.getProjectCoCByProjectCoCId(projectCoCId);
+                log.info("GET /cocs/" + projectCoCId);
 		return outputDTO;
 	}
 	
 	@PUT
-	@Path("/{coCId}")
+	@Path("/{projectCoCId}")
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public CoCDTO updateCoC(@HeaderParam("Authorization") String authorization, @PathParam("coCId") String coCId, CoCDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
+	public ProjectCoCDTO updateCoC(@HeaderParam("Authorization") String authorization, @PathParam("projectCoCId") String projectCoCId, ProjectCoCDTO inputDTO) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
-		inputDTO.setProjectCoCId(coCId);
+		inputDTO.setProjectCoCId(projectCoCId);
 		
-		CoCDTO outputDTO = CoCManager.updateCoC(inputDTO);
-                log.info("PUT /cocs/" + coCId);
+		ProjectCoCDTO outputDTO = ProjectCoCManager.updateProjectCoC(inputDTO);
+                log.info("PUT /cocs/" + projectCoCId);
 		return outputDTO;
 	}
 	
 	@DELETE
-	@Path("/{coCId}")
+	@Path("/{projectCoCId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public String deleteCoC(@HeaderParam("Authorization") String authorization, @PathParam("coCId") String coCId) throws JsonParseException, JsonMappingException, IOException {
+	public String deleteCoC(@HeaderParam("Authorization") String authorization, @PathParam("projectCoCId") String projectCoCId) throws JsonParseException, JsonMappingException, IOException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.WRITE))
                         throw new AccessDeniedException();
-		CoCManager.deleteCoC(coCId);
-                log.info("DELETE /cocs/" + coCId);
+		ProjectCoCManager.deleteProjectCoC(projectCoCId);
+                log.info("DELETE /cocs/" + projectCoCId);
 		return "true";
 	}
 
 	/* Inventory Endpoints */
 	@GET
-	@Path("/{coCId}/inventories")
+	@Path("/{projectCoCId}/inventories")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<InventoryDTO> getInventories(@HeaderParam("Authorization") String authorization, @PathParam("coCId") String coCId, @BeanParam InventorySearchDTO searchDTO) throws JsonProcessingException {
+	public List<InventoryDTO> getInventories(@HeaderParam("Authorization") String authorization, @PathParam("projectCoCId") String projectCoCId, @BeanParam InventorySearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
-                searchDTO.setProjectCocId(coCId);
+                searchDTO.setProjectCocId(projectCoCId);
                 List<InventoryDTO> inventoryDTOs = InventoryManager.getInventories(searchDTO);
-                log.info("GET /cocs/" + coCId + "/inventories (" + inventoryDTOs.size() + " results)");
+                log.info("GET /cocs/" + projectCoCId + "/inventories (" + inventoryDTOs.size() + " results)");
                 return inventoryDTOs;
 	}
 
 	/* Site Endpoints */
 	@GET
-	@Path("/{coCId}/sites")
+	@Path("/{projectCoCId}/sites")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<SiteDTO> getSites(@HeaderParam("Authorization") String authorization, @PathParam("coCId") String coCId, @BeanParam SiteSearchDTO searchDTO) throws JsonProcessingException {
+	public List<SiteDTO> getSites(@HeaderParam("Authorization") String authorization, @PathParam("projectCoCId") String projectCoCId, @BeanParam SiteSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
-                searchDTO.setProjectCocId(coCId);
+                searchDTO.setProjectCocId(projectCoCId);
                 List<SiteDTO> siteDTOs = SiteManager.getSites(searchDTO);
-                log.info("GET /cocs/" + coCId + "/sites (" + siteDTOs.size() + " results)");
+                log.info("GET /cocs/" + projectCoCId + "/sites (" + siteDTOs.size() + " results)");
                 return siteDTOs;
 	}
 

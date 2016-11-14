@@ -22,8 +22,8 @@ public class TmpUser implements java.io.Serializable {
 	private Integer canRead;
 	private Integer canWrite;
 	private Integer canAdmin;
-        private String organization;
-        private String coC;
+        private String organizationId;
+        private String coCId;
 	private Date dateCreated;
 	private Date dateUpdated;
 
@@ -32,16 +32,16 @@ public class TmpUser implements java.io.Serializable {
 
 	public TmpUser(Integer userId, String externalId,
 			Integer canRead, Integer canWrite,
-                        Integer canAdmin, String organization,
-                        String coC,
+                        Integer canAdmin, String organizationId,
+                        String coCId,
 			Date dateCreated, Date dateUpdated) {
 		this.userId = userId;
 		this.externalId = externalId;
 		this.canRead = canRead;
 		this.canWrite = canWrite;
 		this.canAdmin = canAdmin;
-                this.organization = organization;
-                this.coC = coC;
+                this.organizationId = organizationId;
+                this.coCId = coCId;
 		this.dateCreated = dateCreated;
 		this.dateUpdated = dateUpdated;
 	}
@@ -93,23 +93,23 @@ public class TmpUser implements java.io.Serializable {
 		this.canAdmin = canAdmin;
 	}
 
-        @Column(name = "organization")
-	public String getOrganization() {
-		return this.organization;
+        @Column(name = "organizationId")
+	public String getOrganizationId() {
+		return this.organizationId;
 	}
 
-	public void setOrganization(String organization) {
-		this.organization = organization;
+	public void setOrganizationId(String organizationId) {
+		this.organizationId = organizationId;
 	}
 
 
-        @Column(name = "coC")
-	public String getCoC() {
-		return this.coC;
+        @Column(name = "coCId")
+	public String getCoCId() {
+		return this.coCId;
 	}
 
-	public void setCoC(String coC) {
-		this.coC = coC;
+	public void setCoCId(String coCId) {
+		this.coCId = coCId;
 	}
 
         @Temporal(TemporalType.DATE)

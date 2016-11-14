@@ -134,6 +134,27 @@ public class Authentication {
                 }
                 return false;
 	}
+	
+	public static TmpUser getCurrentUser(String tokenString) {
+		// TODO: This entire object needs to be refactored, but this in
+		// particular is a sloppy method -- it uses the same code t
+		AccountDTO account = resolveIdentity(tokenString);
+	
+        // If the user doesn't exist for Google, then the account
+        // should be null and they aren't authorized
+        if(account.getExternalId() == null)
+        	return null;
+        
+        // Make sure this user has the requested credentials
+        TmpUserDAO tmpUserDAO = new TmpUserDAO();
+        
+        // get the user from the account
+        UserDTO user = account.getUser();
+        if (user != null) {
+        	return tmpUserDAO.getTmpUserById(Integer.parseInt(user.getUserId()));
+        }
+        return null;
+	}
 
         public static Boolean getAuthEnabled() {
             return AUTH_ENABLED;

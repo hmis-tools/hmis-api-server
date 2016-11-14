@@ -28,8 +28,8 @@ public class UserDTO extends BaseDTO {
 	private Integer canRead;
 	private Integer canWrite;
 	private Integer canAdmin;
-        private String organization;
-        private String coC;
+        private String organizationId;
+        private String coCId;
 
 	// Export Standard Fields
 	private Date dateCreated;
@@ -98,22 +98,22 @@ public class UserDTO extends BaseDTO {
 	}
 
         @JsonProperty
-	public String getOrganization() {
-		return this.organization;
+	public String getOrganizationId() {
+		return this.organizationId;
 	}
 
-	public void setOrganization(String organization) {
-		this.organization = organization;
+	public void setOrganizationId(String organizationId) {
+		this.organizationId = organizationId;
 	}
 
 
         @JsonProperty
-	public String getCoC() {
-		return this.coC;
+	public String getCoCId() {
+		return this.coCId;
 	}
 
-	public void setCoC(String coC) {
-		this.coC = coC;
+	public void setCoCId(String coCId) {
+		this.coCId = coCId;
 	}
 
         @JsonProperty

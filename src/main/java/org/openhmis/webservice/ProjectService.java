@@ -24,15 +24,17 @@ import org.openhmis.dto.search.CoCSearchDTO;
 import org.openhmis.dto.FunderDTO;
 import org.openhmis.dto.search.FunderSearchDTO;
 import org.openhmis.dto.InventoryDTO;
+import org.openhmis.dto.ProjectCoCDTO;
 import org.openhmis.dto.search.InventorySearchDTO;
+import org.openhmis.dto.search.ProjectCoCSearchDTO;
 import org.openhmis.dto.SiteDTO;
 import org.openhmis.dto.search.SiteSearchDTO;
 import org.openhmis.dto.ProjectDTO;
 import org.openhmis.dto.search.ProjectSearchDTO;
 import org.openhmis.exception.AccessDeniedException;
-import org.openhmis.manager.CoCManager;
 import org.openhmis.manager.FunderManager;
 import org.openhmis.manager.InventoryManager;
+import org.openhmis.manager.ProjectCoCManager;
 import org.openhmis.manager.ProjectManager;
 import org.openhmis.manager.SiteManager;
 import org.openhmis.util.Authentication;
@@ -114,13 +116,13 @@ public class ProjectService {
 	@GET
 	@Path("/{projectId}/cocs")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<CoCDTO> getCoCs(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @BeanParam CoCSearchDTO searchDTO) throws JsonProcessingException {
+	public List<ProjectCoCDTO> getCoCs(@HeaderParam("Authorization") String authorization, @PathParam("projectId") String projectId, @BeanParam ProjectCoCSearchDTO searchDTO) throws JsonProcessingException {
 		if(!Authentication.googleAuthenticate(authorization, Authentication.READ))
                         throw new AccessDeniedException();
                 searchDTO.setProjectId(projectId);
-                List<CoCDTO> coCDTOs = CoCManager.getCoCs(searchDTO);
-                log.info("GET /projects/" + projectId + "/cocs (" + coCDTOs.size() + " results)");
-                return coCDTOs;
+                List<ProjectCoCDTO> projectCoCDTOs = ProjectCoCManager.getProjectCoCs(searchDTO);
+                log.info("GET /projects/" + projectId + "/cocs (" + projectCoCDTOs.size() + " results)");
+                return projectCoCDTOs;
 	}
 	
 	/* Funder Endpoints */
