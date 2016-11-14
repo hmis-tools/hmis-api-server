@@ -18,7 +18,7 @@ public class ConsentProfileDAO extends BaseDAO {
 	private static final Logger log = Logger.getLogger(ConsentProfileDAO.class);
 	public ConsentProfileDAO() { }
 
-	public ConsentProfile getConsentProfile(Integer coCId, Integer organizationId)  {
+        public ConsentProfile getConsentProfile(Integer organizationId, Integer coCId)  {
 		
 		// Collect a summarized consent map for this client
 		// TODO: This HQL query is probably generating a whole bunch of extra stuff since I can't GROUP BY.
