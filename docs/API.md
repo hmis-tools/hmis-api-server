@@ -1160,23 +1160,32 @@ returned in the response.
 In order to grant consent for a user to view and edit a client in our
 testing phase *only*, please do the following:
 
-1. Add a consent to the TMP_CONSENT table with `approvalStatusCode` = 1 (`APPROVED`).
-See `src/main/java/org/openhmis/code/ConsentApprovalStatus.java` for the
-list of possible values for this field.
-     ex: `INSERT INTO TMP_CONSENT (submitterId, clientKey, approvalStatusCode, dateCreated) values (1, 558360, 1, NOW());`
+1. Add a consent to the `TMP_CONSENT` table with `approvalStatusCode` = 1 (`APPROVED`).  See [src/main/java/org/openhmis/code/ConsentApprovalStatus.java](../src/main/java/org/openhmis/code/ConsentApprovalStatus.java) for the
+list of possible values for this field.  
 
-2. Add fields to the TMP_CONSENT_FIELD table.  The values for
-`fieldCode` are in `src/main/java/org/openhmis/code/ConsentField.java`
+    For example:
+
+        SQL> INSERT INTO TMP_CONSENT (submitterId, clientKey, approvalStatusCode, dateCreated) values (1, 558360, 1, NOW());
+
+2. Add fields to the `TMP_CONSENT_FIELD` table.  The values for
+`fieldCode` are in [src/main/java/org/openhmis/code/ConsentField.java](../src/main/java/org/openhmis/code/ConsentApprovalStatus.java)
 and for `requestTypeCode` see
-`src/main/java/org/openhmis/code/ConsentRequestType.java`.
-     # to grant access to the first name field of this client:
-     ex: `INSERT INTO TMP_CONSENT_FIELD (consentId, fieldCode, requestTypeCode, dateCreated) values (1, 2, 1, NOW());`
+[src/main/java/org/openhmis/code/ConsentRequestType.java](../src/main/java/org/openhmis/code/ConsentApprovalStatus.java).
+
+   To grant access to the first name field of this client:
+
+        SQL> INSERT INTO TMP_CONSENT_FIELD (consentId, fieldCode, requestTypeCode, dateCreated) values (1, 2, 1, NOW());
+
 3. Make sure that your user has a CoC and an Organization in the `TMP_USER` table.
-4. Grant your CoC *or* your organization access to the consent.
-     ex: `INSERT INTO TMP_CONSENT_COC (consentId, coCId, dateCreated) values (1, 1, NOW());`
-     ex: `INSERT INTO TMP_CONSENT_ORGANIZATION (consentId, organizationId, dateCreated) values (1, 2, NOW());`
+
+4. Grant your CoC *or* your organization access to the consent.  Examples:
+
+        SQL> INSERT INTO TMP_CONSENT_COC (consentId, coCId, dateCreated) values (1, 1, NOW());
+        SQL> INSERT INTO TMP_CONSENT_ORGANIZATION (consentId, organizationId, dateCreated) values (1, 2, NOW());
+
 5. When making changes directly to the database, you need to redeploy the project for them to take effect.
-   `mvn tomcat7:redeploy`
+
+        $ mvn tomcat7:redeploy
 
 # Errors and Exceptions
 
