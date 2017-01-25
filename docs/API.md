@@ -1168,9 +1168,9 @@ list of possible values for this field.
         SQL> INSERT INTO TMP_CONSENT (submitterId, clientKey, approvalStatusCode, dateCreated) values (1, 558360, 1, NOW());
 
 2. Add fields to the `TMP_CONSENT_FIELD` table.  The values for
-`fieldCode` are in [src/main/java/org/openhmis/code/ConsentField.java](../src/main/java/org/openhmis/code/ConsentApprovalStatus.java)
+`fieldCode` are in [src/main/java/org/openhmis/code/ConsentField.java](../src/main/java/org/openhmis/code/ConsentField.java)
 and for `requestTypeCode` see
-[src/main/java/org/openhmis/code/ConsentRequestType.java](../src/main/java/org/openhmis/code/ConsentApprovalStatus.java).
+[src/main/java/org/openhmis/code/ConsentRequestType.java](../src/main/java/org/openhmis/code/ConsentRequestType.java).
 
    To grant access to the first name field of this client:
 
